@@ -1,0 +1,1522 @@
+{
+  "checkedAt": "2026-10-21T11:21:38.965Z",
+  "source": "https://api.theparaglider.com/v1/weather/sites",
+  "localSource": "src/plugin.svelte:spotText",
+  "localCount": 95,
+  "sourceIslandCount": 90,
+  "method": "Manual name, terrain-area and launch-variant assessment supported by coordinate distances. Distances alone never determine identity. Candidate classifications are not verified launch access or exact launch equivalence.",
+  "newAreaGroups": [
+    {
+      "region": "Northern Ireland",
+      "name": "Gortin",
+      "ids": [
+        14732
+      ]
+    },
+    {
+      "region": "Northern Ireland",
+      "name": "Flagstaff",
+      "ids": [
+        15458
+      ]
+    },
+    {
+      "region": "Donegal",
+      "name": "Scalp",
+      "ids": [
+        11470
+      ]
+    },
+    {
+      "region": "Donegal",
+      "name": "Mamore / Urris Hills",
+      "ids": [
+        11471,
+        12912
+      ]
+    },
+    {
+      "region": "Donegal",
+      "name": "Croaghmuckros",
+      "ids": [
+        12905
+      ]
+    },
+    {
+      "region": "Sligo",
+      "name": "Knocknarea",
+      "ids": [
+        12851
+      ]
+    },
+    {
+      "region": "Sligo",
+      "name": "Truskmore",
+      "ids": [
+        12853
+      ]
+    },
+    {
+      "region": "Mayo",
+      "name": "Croagh Patrick",
+      "ids": [
+        12844,
+        14020,
+        14362
+      ]
+    },
+    {
+      "region": "Mayo",
+      "name": "Croaghmoyle",
+      "ids": [
+        12845
+      ]
+    },
+    {
+      "region": "Mayo",
+      "name": "Maumtrasna",
+      "ids": [
+        12847
+      ]
+    },
+    {
+      "region": "Galway",
+      "name": "Benglenesky",
+      "ids": [
+        12833
+      ]
+    },
+    {
+      "region": "Galway",
+      "name": "Sky Road",
+      "ids": [
+        13887
+      ]
+    },
+    {
+      "region": "Galway",
+      "name": "Silver Strand",
+      "ids": [
+        14042
+      ]
+    },
+    {
+      "region": "Clare",
+      "name": "Slieve Elva",
+      "ids": [
+        12874
+      ]
+    },
+    {
+      "region": "Clare",
+      "name": "Slievecarran",
+      "ids": [
+        14265,
+        14437
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Seefin NE (Co.Kerry)",
+      "ids": [
+        9899
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Clara",
+      "ids": [
+        9922
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Gneeves",
+      "ids": [
+        9923,
+        14349
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Mweelin",
+      "ids": [
+        9926
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Caherdaniel - Cahernageeha Mtn.",
+      "ids": [
+        9936
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Dunworly Bay",
+      "ids": [
+        12830
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Mullaghanish",
+      "ids": [
+        12881
+      ]
+    },
+    {
+      "region": "Cork / Kerry",
+      "name": "Seefin - Bantry Bay",
+      "ids": [
+        12882
+      ]
+    },
+    {
+      "region": "Tipperary / Waterford",
+      "name": "Arra",
+      "ids": [
+        12896
+      ]
+    },
+    {
+      "region": "Tipperary / Waterford",
+      "name": "Slievenamon",
+      "ids": [
+        12900
+      ]
+    },
+    {
+      "region": "Tipperary / Waterford",
+      "name": "Monavullagh",
+      "ids": [
+        9562
+      ]
+    },
+    {
+      "region": "Tipperary / Waterford",
+      "name": "The Vee",
+      "ids": [
+        9564
+      ]
+    },
+    {
+      "region": "Tipperary / Waterford",
+      "name": "Knockanaffrin",
+      "ids": [
+        9565
+      ]
+    },
+    {
+      "region": "Dublin / Wicklow",
+      "name": "Croaghanmoira",
+      "ids": [
+        14687
+      ]
+    },
+    {
+      "region": "Dublin / Wicklow",
+      "name": "Kadeen",
+      "ids": [
+        10683
+      ]
+    },
+    {
+      "region": "Dublin / Wicklow",
+      "name": "Bournabrena",
+      "ids": [
+        12857
+      ]
+    },
+    {
+      "region": "Dublin / Wicklow",
+      "name": "Arklow Rock",
+      "ids": [
+        12863
+      ]
+    },
+    {
+      "region": "Dublin / Wicklow",
+      "name": "Church Mt.",
+      "ids": [
+        12864
+      ]
+    },
+    {
+      "region": "Dublin / Wicklow",
+      "name": "Djouce Mtn.",
+      "ids": [
+        12866
+      ]
+    },
+    {
+      "region": "Longford",
+      "name": "Corn Hill",
+      "ids": [
+        12858
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "flybubble_id": 8840,
+      "flybubble_name": "Rosbeigh",
+      "latitude": 52.0475,
+      "longitude": -9.9802,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Rossbeigh Mountain",
+      "nearest_local_site": "Rossbeigh Mountain",
+      "distance_km": 0.123,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/rosbeigh-8840"
+    },
+    {
+      "flybubble_id": 9562,
+      "flybubble_name": "Monavullagh",
+      "latitude": 52.19,
+      "longitude": -7.5887,
+      "status": "new_area_candidate",
+      "group": "Monavullagh",
+      "region": "Tipperary / Waterford",
+      "local_counterpart": "",
+      "nearest_local_site": "Blackstairs",
+      "distance_km": 63.362,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/monavullagh-9562"
+    },
+    {
+      "flybubble_id": 9564,
+      "flybubble_name": "The Vee",
+      "latitude": 52.2471,
+      "longitude": -7.943,
+      "status": "new_area_candidate",
+      "group": "The Vee",
+      "region": "Tipperary / Waterford",
+      "local_counterpart": "",
+      "nearest_local_site": "Ballyhoura",
+      "distance_km": 38.992,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/the-vee-9564"
+    },
+    {
+      "flybubble_id": 9565,
+      "flybubble_name": "Knockanaffrin",
+      "latitude": 52.3024,
+      "longitude": -7.5945,
+      "status": "new_area_candidate",
+      "group": "Knockanaffrin",
+      "region": "Tipperary / Waterford",
+      "local_counterpart": "",
+      "nearest_local_site": "Blackstairs",
+      "distance_km": 57.041,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/knockanaffrin-9565"
+    },
+    {
+      "flybubble_id": 9884,
+      "flybubble_name": "Minaun, Achill Island",
+      "latitude": 53.9547,
+      "longitude": -10.0292,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Minaun Heights",
+      "nearest_local_site": "Minaun Heights",
+      "distance_km": 0.243,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/minaun-achill-island-9884"
+    },
+    {
+      "flybubble_id": 9899,
+      "flybubble_name": "Seefin NE (Co.Kerry)",
+      "latitude": 52.058,
+      "longitude": -9.9,
+      "status": "new_area_candidate",
+      "group": "Seefin NE (Co.Kerry)",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Rossbeigh Mountain",
+      "distance_km": 5.724,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/seefin-ne-co-kerry-9899"
+    },
+    {
+      "flybubble_id": 9906,
+      "flybubble_name": "Trawalua Strand",
+      "latitude": 54.4338,
+      "longitude": -8.4707,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Cliffony Bay Beach",
+      "nearest_local_site": "Cliffony Bay Beach",
+      "distance_km": 0.64,
+      "notes": "Likely same Trawalua / Cliffony beach area; launch-point difference is not enough to count as a new site.",
+      "url": "https://weather.flybubble.com/trawalua-strand-9906"
+    },
+    {
+      "flybubble_id": 9922,
+      "flybubble_name": "Clara",
+      "latitude": 52.049,
+      "longitude": -9.094,
+      "status": "new_area_candidate",
+      "group": "Clara",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Ballyhoura",
+      "distance_km": 49.63,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/clara-9922"
+    },
+    {
+      "flybubble_id": 9923,
+      "flybubble_name": "Gneeves NE",
+      "latitude": 52.017,
+      "longitude": -9.117,
+      "status": "new_area_candidate",
+      "group": "Gneeves",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Inchydoney Beach",
+      "distance_km": 49.749,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/gneeves-ne-9923"
+    },
+    {
+      "flybubble_id": 9926,
+      "flybubble_name": "Mweelin",
+      "latitude": 51.89,
+      "longitude": -9.264,
+      "status": "new_area_candidate",
+      "group": "Mweelin",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Castlefreke",
+      "distance_km": 42.34,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/mweelin-9926"
+    },
+    {
+      "flybubble_id": 9927,
+      "flybubble_name": "Dingle Bowl",
+      "latitude": 52.176,
+      "longitude": -10.198,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Ballingarraun",
+      "nearest_local_site": "Ballingarraun",
+      "distance_km": 0.247,
+      "notes": "Probable Dingle Bowl / Ballingarraun counterpart in the same bowl; local naming should be confirmed.",
+      "url": "https://weather.flybubble.com/dingle-bowl-9927"
+    },
+    {
+      "flybubble_id": 9936,
+      "flybubble_name": "Caherdaniel - Cahernageeha Mtn.",
+      "latitude": 51.798,
+      "longitude": -10.0854,
+      "status": "new_area_candidate",
+      "group": "Caherdaniel - Cahernageeha Mtn.",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Knocknagantee",
+      "distance_km": 14.858,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/caherdaniel-cahernageeha-mtn-9936"
+    },
+    {
+      "flybubble_id": 11470,
+      "flybubble_name": "Scalp",
+      "latitude": 55.0819,
+      "longitude": -7.38393,
+      "status": "new_area_candidate",
+      "group": "Scalp",
+      "region": "Donegal",
+      "local_counterpart": "",
+      "nearest_local_site": "Buncrana",
+      "distance_km": 5.645,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/scalp-11470"
+    },
+    {
+      "flybubble_id": 11471,
+      "flybubble_name": "Mamore Gap",
+      "latitude": 55.2465,
+      "longitude": -7.4981,
+      "status": "new_area_candidate",
+      "group": "Mamore / Urris Hills",
+      "region": "Donegal",
+      "local_counterpart": "",
+      "nearest_local_site": "Leenakeel Bay Beach",
+      "distance_km": 1.465,
+      "notes": "Hill / pass site, not Leenakeel Bay Beach. Grouped with Urris Hills; distinct launch entries retained.",
+      "url": "https://weather.flybubble.com/mamore-gap-11471"
+    },
+    {
+      "flybubble_id": 11472,
+      "flybubble_name": "Five Finger Strand",
+      "latitude": 55.3281,
+      "longitude": -7.33554,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Five Finger Strand",
+      "nearest_local_site": "Five Finger Strand",
+      "distance_km": 0.894,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/five-finger-strand-11472"
+    },
+    {
+      "flybubble_id": 12830,
+      "flybubble_name": "Dunworly Bay",
+      "latitude": 51.5795,
+      "longitude": -8.7506,
+      "status": "new_area_candidate",
+      "group": "Dunworly Bay",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Seven Heads Bay",
+      "distance_km": 3.919,
+      "notes": "Separate bay / launch candidate on the same Seven Heads peninsula; local launch identity needs confirmation.",
+      "url": "https://weather.flybubble.com/dunworly-bay-12830"
+    },
+    {
+      "flybubble_id": 12831,
+      "flybubble_name": "Old Head of Kinsale (Cork)",
+      "latitude": 51.6204,
+      "longitude": -8.5451,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Old Head of Kinsale",
+      "nearest_local_site": "Old Head of Kinsale",
+      "distance_km": 0.159,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/old-head-of-kinsale-cork-12831"
+    },
+    {
+      "flybubble_id": 12833,
+      "flybubble_name": "Benglenesky",
+      "latitude": 53.4864,
+      "longitude": -9.85902,
+      "status": "new_area_candidate",
+      "group": "Benglenesky",
+      "region": "Galway",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 46.552,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/benglenesky-12833"
+    },
+    {
+      "flybubble_id": 12844,
+      "flybubble_name": "Croagh Patrick",
+      "latitude": 53.7599,
+      "longitude": -9.65878,
+      "status": "new_area_candidate",
+      "group": "Croagh Patrick",
+      "region": "Mayo",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 26.699,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/croagh-patrick-12844"
+    },
+    {
+      "flybubble_id": 12845,
+      "flybubble_name": "Croaghmoyle",
+      "latitude": 53.926,
+      "longitude": -9.3741,
+      "status": "new_area_candidate",
+      "group": "Croaghmoyle",
+      "region": "Mayo",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 40.599,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/croaghmoyle-12845"
+    },
+    {
+      "flybubble_id": 12847,
+      "flybubble_name": "Maumtrasna",
+      "latitude": 53.6186,
+      "longitude": -9.5533,
+      "status": "new_area_candidate",
+      "group": "Maumtrasna",
+      "region": "Mayo",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 42.359,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/maumtrasna-12847"
+    },
+    {
+      "flybubble_id": 12850,
+      "flybubble_name": "Ben Bulbin",
+      "latitude": 54.3651,
+      "longitude": -8.47229,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Ben Bulben",
+      "nearest_local_site": "Ben Bulben",
+      "distance_km": 1.208,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/ben-bulbin-12850"
+    },
+    {
+      "flybubble_id": 12851,
+      "flybubble_name": "Knocknarea",
+      "latitude": 54.2587,
+      "longitude": -8.57388,
+      "status": "new_area_candidate",
+      "group": "Knocknarea",
+      "region": "Sligo",
+      "local_counterpart": "",
+      "nearest_local_site": "Ben Bulben",
+      "distance_km": 12.891,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/knocknarea-12851"
+    },
+    {
+      "flybubble_id": 12853,
+      "flybubble_name": "Truskmore",
+      "latitude": 54.3745,
+      "longitude": -8.37084,
+      "status": "new_area_candidate",
+      "group": "Truskmore",
+      "region": "Sligo",
+      "local_counterpart": "",
+      "nearest_local_site": "Ben Bulben",
+      "distance_km": 7.86,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/truskmore-12853"
+    },
+    {
+      "flybubble_id": 12871,
+      "flybubble_name": "Fanore",
+      "latitude": 53.1166,
+      "longitude": -9.28739,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Fanore",
+      "nearest_local_site": "Fanore",
+      "distance_km": 0.969,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/fanore-12871"
+    },
+    {
+      "flybubble_id": 12874,
+      "flybubble_name": "Slieve Elva",
+      "latitude": 53.0835,
+      "longitude": -9.2685,
+      "status": "new_area_candidate",
+      "group": "Slieve Elva",
+      "region": "Clare",
+      "local_counterpart": "",
+      "nearest_local_site": "Fanore",
+      "distance_km": 3.39,
+      "notes": "Named upland site rather than Fanore beach.",
+      "url": "https://weather.flybubble.com/slieve-elva-12874"
+    },
+    {
+      "flybubble_id": 12878,
+      "flybubble_name": "Inchadoney",
+      "latitude": 51.5985,
+      "longitude": -8.86217,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Inchydoney Beach",
+      "nearest_local_site": "Inchydoney Beach",
+      "distance_km": 0.235,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/inchadoney-12878"
+    },
+    {
+      "flybubble_id": 12879,
+      "flybubble_name": "Knockgour / Allihies",
+      "latitude": 51.6417,
+      "longitude": -10.0007,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Knockgour mountain",
+      "nearest_local_site": "Knockgour mountain",
+      "distance_km": 0.242,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/knockgour-allihies-12879"
+    },
+    {
+      "flybubble_id": 12881,
+      "flybubble_name": "Mullaghanish",
+      "latitude": 51.983,
+      "longitude": -9.14256,
+      "status": "new_area_candidate",
+      "group": "Mullaghanish",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Inchydoney Beach",
+      "distance_km": 46.942,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/mullaghanish-12881"
+    },
+    {
+      "flybubble_id": 12882,
+      "flybubble_name": "Seefin - Bantry Bay",
+      "latitude": 51.5989,
+      "longitude": -9.69576,
+      "status": "new_area_candidate",
+      "group": "Seefin - Bantry Bay",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Maulin",
+      "distance_km": 15.215,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/seefin-bantry-bay-12882"
+    },
+    {
+      "flybubble_id": 12894,
+      "flybubble_name": "Seefin - Ballyhoura Mts.",
+      "latitude": 52.3136,
+      "longitude": -8.522,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Ballyhoura",
+      "nearest_local_site": "Ballyhoura",
+      "distance_km": 1.086,
+      "notes": "Same Ballyhoura / Seefin mountain area; exact launch correspondence is provisional.",
+      "url": "https://weather.flybubble.com/seefin-ballyhoura-mts-12894"
+    },
+    {
+      "flybubble_id": 12896,
+      "flybubble_name": "Arra",
+      "latitude": 52.8467,
+      "longitude": -8.39407,
+      "status": "new_area_candidate",
+      "group": "Arra",
+      "region": "Tipperary / Waterford",
+      "local_counterpart": "",
+      "nearest_local_site": "Ballyhoura",
+      "distance_km": 59.909,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/arra-12896"
+    },
+    {
+      "flybubble_id": 12900,
+      "flybubble_name": "Slievenamon",
+      "latitude": 52.4272,
+      "longitude": -7.56192,
+      "status": "new_area_candidate",
+      "group": "Slievenamon",
+      "region": "Tipperary / Waterford",
+      "local_counterpart": "",
+      "nearest_local_site": "Blackstairs",
+      "distance_km": 50.104,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/slievenamon-12900"
+    },
+    {
+      "flybubble_id": 12905,
+      "flybubble_name": "Croaghmuckros",
+      "latitude": 54.6207,
+      "longitude": -8.58206,
+      "status": "new_area_candidate",
+      "group": "Croaghmuckros",
+      "region": "Donegal",
+      "local_counterpart": "",
+      "nearest_local_site": "Ballinreavy Strand",
+      "distance_km": 21.352,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/croaghmuckros-12905"
+    },
+    {
+      "flybubble_id": 12912,
+      "flybubble_name": "Mamore - Urris Hills",
+      "latitude": 55.2372,
+      "longitude": -7.49071,
+      "status": "new_area_candidate",
+      "group": "Mamore / Urris Hills",
+      "region": "Donegal",
+      "local_counterpart": "",
+      "nearest_local_site": "Leenakeel Bay Beach",
+      "distance_km": 1.902,
+      "notes": "Upland site, not nearby Leenakeel Bay Beach. Grouped with Mamore Gap.",
+      "url": "https://weather.flybubble.com/mamore-urris-hills-12912"
+    },
+    {
+      "flybubble_id": 13668,
+      "flybubble_name": "Killiney Hill",
+      "latitude": 53.0246,
+      "longitude": -6.54147,
+      "status": "suspect_source_record",
+      "group": "",
+      "region": "",
+      "local_counterpart": "",
+      "nearest_local_site": "Tonelagee",
+      "distance_km": 10.365,
+      "notes": "Suspect name / coordinates: 53.0246,-6.54147; do not add as a new Killiney. Flybubble Killiney 15461 matches the local Killiney Hill Park.",
+      "url": "https://weather.flybubble.com/killiney-hill-13668"
+    },
+    {
+      "flybubble_id": 13887,
+      "flybubble_name": "Sky Road",
+      "latitude": 53.5006,
+      "longitude": -10.0962,
+      "status": "new_area_candidate",
+      "group": "Sky Road",
+      "region": "Galway",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 44.671,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/sky-road-13887"
+    },
+    {
+      "flybubble_id": 14020,
+      "flybubble_name": "Croagh Patrick South take-off",
+      "latitude": 53.7628,
+      "longitude": -9.6364,
+      "status": "new_area_candidate",
+      "group": "Croagh Patrick",
+      "region": "Mayo",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 27.739,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/croagh-patrick-south-take-off-14020"
+    },
+    {
+      "flybubble_id": 14042,
+      "flybubble_name": "Silver Strand",
+      "latitude": 53.2503,
+      "longitude": -9.1224,
+      "status": "new_area_candidate",
+      "group": "Silver Strand",
+      "region": "Galway",
+      "local_counterpart": "",
+      "nearest_local_site": "Fanore",
+      "distance_km": 18.216,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/silver-strand-14042"
+    },
+    {
+      "flybubble_id": 14265,
+      "flybubble_name": "Slivecarran",
+      "latitude": 53.1081,
+      "longitude": -9.014,
+      "status": "new_area_candidate",
+      "group": "Slievecarran",
+      "region": "Clare",
+      "local_counterpart": "",
+      "nearest_local_site": "Fanore",
+      "distance_km": 17.341,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/slivecarran-14265"
+    },
+    {
+      "flybubble_id": 14349,
+      "flybubble_name": "Gneeves (E)",
+      "latitude": 52.0275,
+      "longitude": -9.125,
+      "status": "new_area_candidate",
+      "group": "Gneeves",
+      "region": "Cork / Kerry",
+      "local_counterpart": "",
+      "nearest_local_site": "Inchydoney Beach",
+      "distance_km": 51.035,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/gneeves-e-14349"
+    },
+    {
+      "flybubble_id": 14362,
+      "flybubble_name": "Croagh Patrick East Site",
+      "latitude": 53.7628,
+      "longitude": -9.6351,
+      "status": "new_area_candidate",
+      "group": "Croagh Patrick",
+      "region": "Mayo",
+      "local_counterpart": "",
+      "nearest_local_site": "Atlantic Drive",
+      "distance_km": 27.81,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/croagh-patrick-east-site-14362"
+    },
+    {
+      "flybubble_id": 14437,
+      "flybubble_name": "Slievecarran North",
+      "latitude": 53.1249,
+      "longitude": -9.0253,
+      "status": "new_area_candidate",
+      "group": "Slievecarran",
+      "region": "Clare",
+      "local_counterpart": "",
+      "nearest_local_site": "Fanore",
+      "distance_km": 16.617,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/slievecarran-north-14437"
+    },
+    {
+      "flybubble_id": 14687,
+      "flybubble_name": "Croaghanmoira",
+      "latitude": 52.917,
+      "longitude": -6.33928,
+      "status": "new_area_candidate",
+      "group": "Croaghanmoira",
+      "region": "Dublin / Wicklow",
+      "local_counterpart": "",
+      "nearest_local_site": "Croghan Mountain",
+      "distance_km": 13.705,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/croaghanmoira-14687"
+    },
+    {
+      "flybubble_id": 9412,
+      "flybubble_name": "Lough Bray",
+      "latitude": 53.1888,
+      "longitude": -6.3097,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Lough Bray Lower",
+      "nearest_local_site": "Lough Bray Lower",
+      "distance_km": 0.119,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/lough-bray-9412"
+    },
+    {
+      "flybubble_id": 9875,
+      "flybubble_name": "Bray Head",
+      "latitude": 53.1875,
+      "longitude": -6.0802,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Bray Head",
+      "nearest_local_site": "Bray Head",
+      "distance_km": 0.526,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/bray-head-9875"
+    },
+    {
+      "flybubble_id": 9966,
+      "flybubble_name": "Ballyvaldon beach",
+      "latitude": 52.4633,
+      "longitude": -6.29728,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Blackwater",
+      "nearest_local_site": "Blackwater",
+      "distance_km": 0.091,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/ballyvaldon-beach-9966"
+    },
+    {
+      "flybubble_id": 10683,
+      "flybubble_name": "Kadeen",
+      "latitude": 52.951,
+      "longitude": -6.58948,
+      "status": "new_area_candidate",
+      "group": "Kadeen",
+      "region": "Dublin / Wicklow",
+      "local_counterpart": "",
+      "nearest_local_site": "Tonelagee",
+      "distance_km": 17.063,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/kadeen-10683"
+    },
+    {
+      "flybubble_id": 12857,
+      "flybubble_name": "Bournabrena",
+      "latitude": 53.2365,
+      "longitude": -6.37801,
+      "status": "new_area_candidate",
+      "group": "Bournabrena",
+      "region": "Dublin / Wicklow",
+      "local_counterpart": "",
+      "nearest_local_site": "Lough Bray Lower",
+      "distance_km": 7.034,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/bournabrena-12857"
+    },
+    {
+      "flybubble_id": 12858,
+      "flybubble_name": "Corn Hill",
+      "latitude": 53.8069,
+      "longitude": -7.71464,
+      "status": "new_area_candidate",
+      "group": "Corn Hill",
+      "region": "Longford",
+      "local_counterpart": "",
+      "nearest_local_site": "Bencroy Coal Mines",
+      "distance_km": 37.261,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/corn-hill-12858"
+    },
+    {
+      "flybubble_id": 12859,
+      "flybubble_name": "Clermont Cairns SW",
+      "latitude": 54.0794,
+      "longitude": -6.32086,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Clermont Carn",
+      "nearest_local_site": "Clermont Carn",
+      "distance_km": 0.118,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/clermont-cairns-sw-12859"
+    },
+    {
+      "flybubble_id": 12860,
+      "flybubble_name": "Carlingford Mt.",
+      "latitude": 54.0429,
+      "longitude": -6.21547,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Carlingford",
+      "nearest_local_site": "Carlingford",
+      "distance_km": 1.287,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/carlingford-mt-12860"
+    },
+    {
+      "flybubble_id": 12861,
+      "flybubble_name": "Gormanstown Dunes",
+      "latitude": 53.6521,
+      "longitude": -6.22219,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Gormanston",
+      "nearest_local_site": "Gormanston",
+      "distance_km": 0.887,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/gormanstown-dunes-12861"
+    },
+    {
+      "flybubble_id": 12862,
+      "flybubble_name": "Annagh Hill",
+      "latitude": 52.752,
+      "longitude": -6.37088,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Annagh Hill",
+      "nearest_local_site": "Annagh Hill",
+      "distance_km": 0.024,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/annagh-hill-12862"
+    },
+    {
+      "flybubble_id": 12863,
+      "flybubble_name": "Arklow Rock",
+      "latitude": 52.7695,
+      "longitude": -6.15093,
+      "status": "new_area_candidate",
+      "group": "Arklow Rock",
+      "region": "Dublin / Wicklow",
+      "local_counterpart": "",
+      "nearest_local_site": "Croghan Mountain",
+      "distance_km": 12.522,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/arklow-rock-12863"
+    },
+    {
+      "flybubble_id": 12864,
+      "flybubble_name": "Church Mt.",
+      "latitude": 53.054,
+      "longitude": -6.58472,
+      "status": "new_area_candidate",
+      "group": "Church Mt.",
+      "region": "Dublin / Wicklow",
+      "local_counterpart": "",
+      "nearest_local_site": "Kilbeg",
+      "distance_km": 12.505,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/church-mt-12864"
+    },
+    {
+      "flybubble_id": 12865,
+      "flybubble_name": "Croghan Mountain",
+      "latitude": 52.7954,
+      "longitude": -6.3233,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Croghan Mountain",
+      "nearest_local_site": "Croghan Mountain",
+      "distance_km": 0.658,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/croghan-mountain-12865"
+    },
+    {
+      "flybubble_id": 12866,
+      "flybubble_name": "Djouce Mtn.",
+      "latitude": 53.1303,
+      "longitude": -6.24007,
+      "status": "new_area_candidate",
+      "group": "Djouce Mtn.",
+      "region": "Dublin / Wicklow",
+      "local_counterpart": "",
+      "nearest_local_site": "Lough Tay View Point",
+      "distance_km": 2.435,
+      "notes": "Djouce is a separate named mountain from nearby Lough Tay launches and Maulin Peak.",
+      "url": "https://weather.flybubble.com/djouce-mtn-12866"
+    },
+    {
+      "flybubble_id": 12869,
+      "flybubble_name": "Sugar Loaf Mountain",
+      "latitude": 53.1541,
+      "longitude": -6.1494,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Great Sugar Loaf",
+      "nearest_local_site": "Great Sugar Loaf",
+      "distance_km": 0.059,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/sugar-loaf-mountain-12869"
+    },
+    {
+      "flybubble_id": 12870,
+      "flybubble_name": "Tonelagee",
+      "latitude": 53.0532,
+      "longitude": -6.38191,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Tonelagee",
+      "nearest_local_site": "Tonelagee",
+      "distance_km": 0.889,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/tonelagee-12870"
+    },
+    {
+      "flybubble_id": 13145,
+      "flybubble_name": "Mount Leinster (carpark)",
+      "latitude": 52.6578,
+      "longitude": -6.77283,
+      "status": "existing_area_launch_variant",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Mount Leinster / Mount Leinster N",
+      "nearest_local_site": "Mount Leinster N",
+      "distance_km": 3.649,
+      "notes": "Carpark entry in the Mount Leinster area; coordinates / launch need checking before adding.",
+      "url": "https://weather.flybubble.com/mount-leinster-carpark-13145"
+    },
+    {
+      "flybubble_id": 13463,
+      "flybubble_name": "White Mountain",
+      "latitude": 54.8507,
+      "longitude": -6.85525,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "White Mountain S",
+      "nearest_local_site": "White Mountain S",
+      "distance_km": 0.445,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/white-mountain-13463"
+    },
+    {
+      "flybubble_id": 13514,
+      "flybubble_name": "Sorrel hill",
+      "latitude": 53.1478,
+      "longitude": -6.44242,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Sorrel Hill",
+      "nearest_local_site": "Sorrel Hill",
+      "distance_km": 0.399,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/sorrel-hill-13514"
+    },
+    {
+      "flybubble_id": 14732,
+      "flybubble_name": "Gortin",
+      "latitude": 54.7032,
+      "longitude": -7.25543,
+      "status": "new_area_candidate",
+      "group": "Gortin",
+      "region": "Northern Ireland",
+      "local_counterpart": "",
+      "nearest_local_site": "Craigagh Hill",
+      "distance_km": 27.707,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/gortin-14732"
+    },
+    {
+      "flybubble_id": 14753,
+      "flybubble_name": "Lurigethan",
+      "latitude": 55.0592,
+      "longitude": -6.09247,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Lurigethan",
+      "nearest_local_site": "Lurigethan",
+      "distance_km": 0.179,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/lurigethan-14753"
+    },
+    {
+      "flybubble_id": 14979,
+      "flybubble_name": "Blackstairs",
+      "latitude": 52.5472,
+      "longitude": -6.81693,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Blackstairs",
+      "nearest_local_site": "Blackstairs",
+      "distance_km": 2.41,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/blackstairs-14979"
+    },
+    {
+      "flybubble_id": 15008,
+      "flybubble_name": "Mount Leinster",
+      "latitude": 52.6395,
+      "longitude": -6.80537,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Mount Leinster N",
+      "nearest_local_site": "Mount Leinster N",
+      "distance_km": 0.659,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/mount-leinster-15008"
+    },
+    {
+      "flybubble_id": 15447,
+      "flybubble_name": "Dungiven",
+      "latitude": 54.9331,
+      "longitude": -6.86599,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Dungiven",
+      "nearest_local_site": "Dungiven",
+      "distance_km": 0.216,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/dungiven-15447"
+    },
+    {
+      "flybubble_id": 15448,
+      "flybubble_name": "Hells Hole",
+      "latitude": 55.1391,
+      "longitude": -6.88509,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Magilligan Hells Hole",
+      "nearest_local_site": "Magilligan Hells Hole",
+      "distance_km": 0.096,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/hells-hole-15448"
+    },
+    {
+      "flybubble_id": 15449,
+      "flybubble_name": "Sallagh Braes",
+      "latitude": 54.8905,
+      "longitude": -5.91383,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Robin Youngs",
+      "nearest_local_site": "Robin Youngs",
+      "distance_km": 0.218,
+      "notes": "Probable Robin Youngs / Sallagh Braes counterpart: same ridge, close marker and compatible northeasterly sectors.",
+      "url": "https://weather.flybubble.com/sallagh-braes-15449"
+    },
+    {
+      "flybubble_id": 15450,
+      "flybubble_name": "Sallagh Braes E",
+      "latitude": 54.8812,
+      "longitude": -5.91594,
+      "status": "existing_area_launch_variant",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Robin Youngs",
+      "nearest_local_site": "Robin Youngs",
+      "distance_km": 1.185,
+      "notes": "Same Sallagh Braes / Robin Youngs ridge, but E-facing launch sectors differ from the local 0-60 degree sector.",
+      "url": "https://weather.flybubble.com/sallagh-braes-e-15450"
+    },
+    {
+      "flybubble_id": 15451,
+      "flybubble_name": "Agnews Hill",
+      "latitude": 54.845,
+      "longitude": -5.93238,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Agnews",
+      "nearest_local_site": "Agnews",
+      "distance_km": 0.044,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/agnews-hill-15451"
+    },
+    {
+      "flybubble_id": 15452,
+      "flybubble_name": "Knockagh",
+      "latitude": 54.7135,
+      "longitude": -5.87752,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Knockagh Monument",
+      "nearest_local_site": "Knockagh Monument",
+      "distance_km": 0.281,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/knockagh-15452"
+    },
+    {
+      "flybubble_id": 15453,
+      "flybubble_name": "Big Collin",
+      "latitude": 54.8034,
+      "longitude": -6.08133,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Big Colin",
+      "nearest_local_site": "Big Colin",
+      "distance_km": 0.222,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/big-collin-15453"
+    },
+    {
+      "flybubble_id": 15454,
+      "flybubble_name": "Meelmore",
+      "latitude": 54.1966,
+      "longitude": -6.00794,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Slieve Meelmore",
+      "nearest_local_site": "Slieve Meelmore",
+      "distance_km": 0.329,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/meelmore-15454"
+    },
+    {
+      "flybubble_id": 15455,
+      "flybubble_name": "Spelga",
+      "latitude": 54.1896,
+      "longitude": -6.0613,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Spelga",
+      "nearest_local_site": "Spelga",
+      "distance_km": 0.302,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/spelga-15455"
+    },
+    {
+      "flybubble_id": 15456,
+      "flybubble_name": "Mayobridge N",
+      "latitude": 54.1701,
+      "longitude": -6.16833,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Mayobridge North",
+      "nearest_local_site": "Mayobridge North",
+      "distance_km": 0.907,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/mayobridge-n-15456"
+    },
+    {
+      "flybubble_id": 15457,
+      "flybubble_name": "Mayobridge W",
+      "latitude": 54.1719,
+      "longitude": -6.19127,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Mayobridge",
+      "nearest_local_site": "Mayobridge",
+      "distance_km": 0.185,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/mayobridge-w-15457"
+    },
+    {
+      "flybubble_id": 15458,
+      "flybubble_name": "Flagstaff",
+      "latitude": 54.1254,
+      "longitude": -6.31433,
+      "status": "new_area_candidate",
+      "group": "Flagstaff",
+      "region": "Northern Ireland",
+      "local_counterpart": "",
+      "nearest_local_site": "Ometh",
+      "distance_km": 4.555,
+      "notes": "No corresponding named site or mountain area identified in the local catalogue.",
+      "url": "https://weather.flybubble.com/flagstaff-15458"
+    },
+    {
+      "flybubble_id": 15459,
+      "flybubble_name": "Gullion",
+      "latitude": 54.124,
+      "longitude": -6.43988,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Slieve Gullion S",
+      "nearest_local_site": "Slieve Gullion S",
+      "distance_km": 0.495,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/gullion-15459"
+    },
+    {
+      "flybubble_id": 15461,
+      "flybubble_name": "Killiney",
+      "latitude": 53.2655,
+      "longitude": -6.11188,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Killiney Hill Park",
+      "nearest_local_site": "Killiney Hill Park",
+      "distance_km": 0.03,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/killiney-15461"
+    },
+    {
+      "flybubble_id": 15462,
+      "flybubble_name": "Skerries",
+      "latitude": 53.5956,
+      "longitude": -6.15884,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Ardgillan Demesne Bay Beach",
+      "nearest_local_site": "Ardgillan Demesne Bay Beach",
+      "distance_km": 0.234,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/skerries-15462"
+    },
+    {
+      "flybubble_id": 15463,
+      "flybubble_name": "Black hill",
+      "latitude": 53.1277,
+      "longitude": -6.44334,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Kilbeg",
+      "nearest_local_site": "Kilbeg",
+      "distance_km": 0.333,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/black-hill-15463"
+    },
+    {
+      "flybubble_id": 15477,
+      "flybubble_name": "Tonelagee ENE",
+      "latitude": 53.0796,
+      "longitude": -6.38864,
+      "status": "existing_area_launch_variant",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Tonelagee",
+      "nearest_local_site": "Tonelagee",
+      "distance_km": 3.577,
+      "notes": "ENE launch variant on the Tonelagee massif; not counted as a new mountain.",
+      "url": "https://weather.flybubble.com/tonelagee-ene-15477"
+    },
+    {
+      "flybubble_id": 15478,
+      "flybubble_name": "Croghan SE",
+      "latitude": 52.7898,
+      "longitude": -6.28503,
+      "status": "existing_area_launch_variant",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Croghan Mountain",
+      "nearest_local_site": "Croghan Mountain",
+      "distance_km": 3.238,
+      "notes": "SE launch variant in the Croghan area; not counted as a new mountain.",
+      "url": "https://weather.flybubble.com/croghan-se-15478"
+    },
+    {
+      "flybubble_id": 15479,
+      "flybubble_name": "Clermont Cairns",
+      "latitude": 54.084,
+      "longitude": -6.30064,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Ometh",
+      "nearest_local_site": "Ometh",
+      "distance_km": 0.135,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/clermont-cairns-15479"
+    },
+    {
+      "flybubble_id": 15761,
+      "flybubble_name": "White Mountain NW",
+      "latitude": 54.8608,
+      "longitude": -6.85573,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "White Mountain W",
+      "nearest_local_site": "White Mountain W",
+      "distance_km": 0.397,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/white-mountain-nw-15761"
+    },
+    {
+      "flybubble_id": 15840,
+      "flybubble_name": "Boviel",
+      "latitude": 54.9229,
+      "longitude": -6.85308,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Dungiven Boviel",
+      "nearest_local_site": "Dungiven Boviel",
+      "distance_km": 0.392,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/boviel-15840"
+    },
+    {
+      "flybubble_id": 15863,
+      "flybubble_name": "Craigagh Hill",
+      "latitude": 54.8283,
+      "longitude": -6.89392,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Craigagh Hill",
+      "nearest_local_site": "Craigagh Hill",
+      "distance_km": 0.665,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/craigagh-hill-15863"
+    },
+    {
+      "flybubble_id": 15872,
+      "flybubble_name": "Mt. Leinster (Mast)",
+      "latitude": 52.618,
+      "longitude": -6.78071,
+      "status": "represented_or_probable_counterpart",
+      "group": "",
+      "region": "",
+      "local_counterpart": "Mount Leinster",
+      "nearest_local_site": "Mount Leinster",
+      "distance_km": 0.178,
+      "notes": "Name / local terrain identity considered together with marker proximity; exact launch equivalence is not guaranteed.",
+      "url": "https://weather.flybubble.com/mt-leinster-mast-15872"
+    }
+  ]
+}

@@ -1,0 +1,1653 @@
+{
+  "checkedAt": "2026-10-22T09:13:14.826Z",
+  "source": "https://www.paraglidingmap.com/app/",
+  "scope": "77 owner-approved additions; original 136 sites unchanged; 2 rejected candidates excluded",
+  "method": "Opened each public source detail card. Read takesWindDirectionsEN and windDirectionsUnknown. Compared marker categories and the source compass rose.",
+  "conversion": "Eight 45-degree wedges centered on N=0, NE=45, E=90, SE=135, S=180, SW=225, W=270, NW=315. Clockwise start included, end excluded; north-crossing and disconnected sectors preserved. Degree edges express the source compass categories, not independently measured launch limits.",
+  "roseEvidence": "https://www.paraglidingmap.com/app/images/windzeiger-s-green.png",
+  "counts": {
+    "approved": 77,
+    "active": 57,
+    "missingDirections": 20,
+    "catalogueTotal": 213,
+    "forecastSites": 193
+  },
+  "sites": [
+    {
+      "id": "pgmap-127756",
+      "name": "Aconeera or Cnoc Mordain",
+      "lat": 53.3842,
+      "lon": -9.6772,
+      "status": "active",
+      "sourceDirections": "SE, S, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 202.5,
+          "endExclusive": true
+        },
+        {
+          "start": 292.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127756",
+      "upstreamSources": [
+        {
+          "name": "Aconeera or Cnoc Mordain",
+          "url": "http://www.paraglidingearth.com/?site=14338"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-153939",
+      "name": "Ardara",
+      "lat": 54.764744,
+      "lon": -8.538297,
+      "status": "active",
+      "sourceDirections": "N, NE, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/153939",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-156227",
+      "name": "Arroo",
+      "lat": 54.4149,
+      "lon": -8.2435,
+      "status": "active",
+      "sourceDirections": "N",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 22.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/156227",
+      "upstreamSources": [
+        {
+          "name": "Arroo",
+          "url": "http://www.paraglidingearth.com/?site=19454"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127565",
+      "name": "Ballaghasheen Gap",
+      "lat": 51.9479,
+      "lon": -9.9334,
+      "status": "active",
+      "sourceDirections": "N, NE, E",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 112.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127565",
+      "upstreamSources": [
+        {
+          "name": "Ballaghasheen Gap",
+          "url": "http://www.paraglidingearth.com/?site=11627"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-133439",
+      "name": "Ballinglen",
+      "lat": 52.8238,
+      "lon": -6.45197,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/133439",
+      "upstreamSources": [
+        {
+          "name": "Ballinglen",
+          "url": "http://www.paraglidingearth.com/?site=16491"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-159819",
+      "name": "Ballybanaun Mountain",
+      "lat": 53.6738,
+      "lon": -9.4101,
+      "status": "active",
+      "sourceDirections": "SE, S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/159819",
+      "upstreamSources": [
+        {
+          "name": "Ballybanaun",
+          "url": "http://www.paraglidingearth.com/?site=19738"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-173407",
+      "name": "Ballycrenane",
+      "lat": 51.867219,
+      "lon": -7.972498,
+      "status": "active",
+      "sourceDirections": "SE, S",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 202.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/173407",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-127770",
+      "name": "Banagher Hill",
+      "lat": 54.72,
+      "lon": -8.07914,
+      "status": "active",
+      "sourceDirections": "NE, E",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 22.5,
+          "end": 112.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127770",
+      "upstreamSources": [
+        {
+          "name": "Banagher Hill",
+          "url": "http://www.paraglidingearth.com/?site=14409"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-189983",
+      "name": "Ben Bulbin - West",
+      "lat": 54.355537,
+      "lon": -8.466565,
+      "status": "active",
+      "sourceDirections": "W",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 247.5,
+          "end": 292.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/189983",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-184435",
+      "name": "Benbeg",
+      "lat": 54.175217,
+      "lon": -7.818005,
+      "status": "active",
+      "sourceDirections": "S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/184435",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-153942",
+      "name": "Benlevy",
+      "lat": 53.5285,
+      "lon": -9.409656,
+      "status": "active",
+      "sourceDirections": "S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/153942",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-134499",
+      "name": "Bentee",
+      "lat": 51.9356,
+      "lon": -10.2173,
+      "status": "active",
+      "sourceDirections": "N, NE, S, SW, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134499",
+      "upstreamSources": [
+        {
+          "name": "Bentee",
+          "url": "http://www.paraglidingearth.com/?site=17447"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127890",
+      "name": "Bloody Foreland",
+      "lat": 55.1374,
+      "lon": -8.26028,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127890",
+      "upstreamSources": [
+        {
+          "name": "Bloody Foreland",
+          "url": "http://www.paraglidingearth.com/?site=14410"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127626",
+      "name": "Bolus Head",
+      "lat": 51.8012,
+      "lon": -10.321,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127626",
+      "upstreamSources": [
+        {
+          "name": "Bolus Head",
+          "url": "http://www.paraglidingearth.com/?site=14389"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134498",
+      "name": "Brandon Mtn",
+      "lat": 52.2479,
+      "lon": -10.2607,
+      "status": "active",
+      "sourceDirections": "W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 247.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134498",
+      "upstreamSources": [
+        {
+          "name": "Brandon Mtn",
+          "url": "http://www.paraglidingearth.com/?site=17688"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134488",
+      "name": "Breanlee (Hydro Road)",
+      "lat": 52.0152,
+      "lon": -9.7813,
+      "status": "active",
+      "sourceDirections": "W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 247.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134488",
+      "upstreamSources": [
+        {
+          "name": "Breanlee (Hydro Road)",
+          "url": "http://www.paraglidingearth.com/?site=17136"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127367",
+      "name": "Carrigeenina (Slievenamuck)",
+      "lat": 52.4342,
+      "lon": -8.17643,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127367",
+      "upstreamSources": [
+        {
+          "name": "Carrigeenina (Slievenamuck)",
+          "url": "http://www.paraglidingearth.com/?site=14403"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127493",
+      "name": "Castle (Castlegoat) Rock",
+      "lat": 51.8184,
+      "lon": -9.5908,
+      "status": "active",
+      "sourceDirections": "SE, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 157.5,
+          "endExclusive": true
+        },
+        {
+          "start": 247.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127493",
+      "upstreamSources": [
+        {
+          "name": "Castle (Castlegoat) Rock",
+          "url": "http://www.paraglidingearth.com/?site=14390"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134460",
+      "name": "Caum",
+      "lat": 51.9018,
+      "lon": -8.8837,
+      "status": "active",
+      "sourceDirections": "S",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 202.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134460",
+      "upstreamSources": [
+        {
+          "name": "Caum",
+          "url": "http://www.paraglidingearth.com/?site=17434"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-146080",
+      "name": "Comeragh N-NE",
+      "lat": 52.2627,
+      "lon": -7.5094,
+      "status": "active",
+      "sourceDirections": "N, NE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/146080",
+      "upstreamSources": [
+        {
+          "name": "Comeragh N-NE",
+          "url": "http://www.paraglidingearth.com/?site=18502"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134496",
+      "name": "Connor Pass",
+      "lat": 52.1809,
+      "lon": -10.2063,
+      "status": "active",
+      "sourceDirections": "N, NE, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134496",
+      "upstreamSources": [
+        {
+          "name": "Connor Pass",
+          "url": "http://www.paraglidingearth.com/?site=17454"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-157103",
+      "name": "Corranabinnia",
+      "lat": 53.9595,
+      "lon": -9.6843,
+      "status": "active",
+      "sourceDirections": "S, SW, W",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 292.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/157103",
+      "upstreamSources": [
+        {
+          "name": "Corranabinnia",
+          "url": "http://www.paraglidingearth.com/?site=19483"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134474",
+      "name": "Crohane",
+      "lat": 51.9911,
+      "lon": -9.3829,
+      "status": "active",
+      "sourceDirections": "N, NE, SE, SW, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 157.5,
+          "endExclusive": true
+        },
+        {
+          "start": 202.5,
+          "end": 247.5,
+          "endExclusive": true
+        },
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134474",
+      "upstreamSources": [
+        {
+          "name": "Crohane",
+          "url": "http://www.paraglidingearth.com/?site=17444"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127681",
+      "name": "Cruach Marthain",
+      "lat": 52.1495,
+      "lon": -10.4311,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127681",
+      "upstreamSources": [
+        {
+          "name": "Cruach Marthain",
+          "url": "http://www.paraglidingearth.com/?site=14391"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-182659",
+      "name": "Delphi Hike and Fly",
+      "lat": 53.621002,
+      "lon": -9.721351,
+      "status": "active",
+      "sourceDirections": "SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 202.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/182659",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-127388",
+      "name": "Devil's Bit Mountain",
+      "lat": 52.8207,
+      "lon": -7.91397,
+      "status": "active",
+      "sourceDirections": "SW, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 202.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127388",
+      "upstreamSources": [
+        {
+          "name": "Devil's Bit Mountain",
+          "url": "http://www.paraglidingearth.com/?site=14404"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-207802",
+      "name": "Divis Hill",
+      "lat": 54.610908,
+      "lon": -6.017868,
+      "status": "active",
+      "sourceDirections": "SE, S",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 202.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/207802",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-162917",
+      "name": "Doolin 2",
+      "lat": 53.0135,
+      "lon": -9.39033,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/162917",
+      "upstreamSources": [
+        {
+          "name": "Doolin 2",
+          "url": "http://www.paraglidingearth.com/?site=20083"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127205",
+      "name": "Dunran Hill",
+      "lat": 53.0556,
+      "lon": -6.11782,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127205",
+      "upstreamSources": [
+        {
+          "name": "Dunran Hill",
+          "url": "http://www.paraglidingearth.com/?site=14373"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127656",
+      "name": "Englishman's",
+      "lat": 54.2637,
+      "lon": -7.98465,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127656",
+      "upstreamSources": [
+        {
+          "name": "Englishman's",
+          "url": "http://www.paraglidingearth.com/?site=14345"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-133473",
+      "name": "Faher Mountain",
+      "lat": 51.9096,
+      "lon": -9.8458,
+      "status": "active",
+      "sourceDirections": "E, SE, S",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 67.5,
+          "end": 202.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/133473",
+      "upstreamSources": [
+        {
+          "name": "Faher Mountain",
+          "url": "http://www.paraglidingearth.com/?site=16893"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-146770",
+      "name": "Farrandalouge",
+      "lat": 52.2378,
+      "lon": -10.1276,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/146770",
+      "upstreamSources": [
+        {
+          "name": "Farrandalouge",
+          "url": "http://www.paraglidingearth.com/?site=18731"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127366",
+      "name": "Galty Mountains",
+      "lat": 52.3469,
+      "lon": -8.25679,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127366",
+      "upstreamSources": [
+        {
+          "name": "Galty Mountains",
+          "url": "http://www.paraglidingearth.com/?site=14399"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-146769",
+      "name": "Galtymore Anteny NW,N",
+      "lat": 52.3137,
+      "lon": -8.3097,
+      "status": "active",
+      "sourceDirections": "N, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 22.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/146769",
+      "upstreamSources": [
+        {
+          "name": "Galtymore Anteny NW,N",
+          "url": "http://www.paraglidingearth.com/?site=18712"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-146768",
+      "name": "Galtymore NE ,N",
+      "lat": 52.3731,
+      "lon": -8.16928,
+      "status": "active",
+      "sourceDirections": "N, NE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/146768",
+      "upstreamSources": [
+        {
+          "name": "Galtymore NE ,N",
+          "url": "http://www.paraglidingearth.com/?site=18722"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134484",
+      "name": "Gap of Dunloe",
+      "lat": 52.0384,
+      "lon": -9.6478,
+      "status": "active",
+      "sourceDirections": "N, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 22.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134484",
+      "upstreamSources": [
+        {
+          "name": "Gap of Dunloe",
+          "url": "http://www.paraglidingearth.com/?site=17137"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-132964",
+      "name": "Glengarriff",
+      "lat": 51.772,
+      "lon": -9.582,
+      "status": "active",
+      "sourceDirections": "SE, S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/132964",
+      "upstreamSources": [
+        {
+          "name": "Glengarriff",
+          "url": "http://www.paraglidingearth.com/?site=15942"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127852",
+      "name": "Glengesh Hill",
+      "lat": 54.7461,
+      "lon": -8.46274,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127852",
+      "upstreamSources": [
+        {
+          "name": "Glengesh Hill",
+          "url": "http://www.paraglidingearth.com/?site=14414"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127638",
+      "name": "Gleninagh Mt.",
+      "lat": 53.1289,
+      "lon": -9.2063,
+      "status": "active",
+      "sourceDirections": "N, NE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127638",
+      "upstreamSources": [
+        {
+          "name": "Gleninagh Mt.",
+          "url": "http://www.paraglidingearth.com/?site=14378"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134473",
+      "name": "Gougane Barra",
+      "lat": 51.8436,
+      "lon": -9.3249,
+      "status": "active",
+      "sourceDirections": "SE, S",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 202.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134473",
+      "upstreamSources": [
+        {
+          "name": "Gougane Barra",
+          "url": "http://www.paraglidingearth.com/?site=17138"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127502",
+      "name": "Healy Pass",
+      "lat": 51.7247,
+      "lon": -9.75836,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127502",
+      "upstreamSources": [
+        {
+          "name": "Healy Pass",
+          "url": "http://www.paraglidingearth.com/?site=14382"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127501",
+      "name": "Hungry Hill",
+      "lat": 51.676,
+      "lon": -9.76515,
+      "status": "active",
+      "sourceDirections": "S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127501",
+      "upstreamSources": [
+        {
+          "name": "Hungry Hill",
+          "url": "http://www.paraglidingearth.com/?site=14383"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134491",
+      "name": "Kerry Head (West)",
+      "lat": 52.4122,
+      "lon": -9.9429,
+      "status": "active",
+      "sourceDirections": "SW, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 202.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134491",
+      "upstreamSources": [
+        {
+          "name": "Kerry Head (West)",
+          "url": "http://www.paraglidingearth.com/?site=17410"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-189986",
+      "name": "Kesh",
+      "lat": 54.060764,
+      "lon": -8.443554,
+      "status": "active",
+      "sourceDirections": "N, W",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 22.5,
+          "endExclusive": true
+        },
+        {
+          "start": 247.5,
+          "end": 292.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/189986",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-134501",
+      "name": "Kilkeaveragh",
+      "lat": 51.868,
+      "lon": -10.3326,
+      "status": "active",
+      "sourceDirections": "N, SE, S, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 202.5,
+          "endExclusive": true
+        },
+        {
+          "start": 292.5,
+          "end": 22.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134501",
+      "upstreamSources": [
+        {
+          "name": "Kilkeaveragh",
+          "url": "http://www.paraglidingearth.com/?site=17451"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127835",
+      "name": "Kingarrow Mtn",
+      "lat": 55.0613,
+      "lon": -7.91549,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127835",
+      "upstreamSources": [
+        {
+          "name": "Kingarrow Mtn",
+          "url": "http://www.paraglidingearth.com/?site=14415"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134494",
+      "name": "Knockavahaun",
+      "lat": 51.9228,
+      "lon": -10.1153,
+      "status": "active",
+      "sourceDirections": "NE, E, SE, S, SW, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 22.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134494",
+      "upstreamSources": [
+        {
+          "name": "Knockavahaun",
+          "url": "http://www.paraglidingearth.com/?site=17449"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134465",
+      "name": "Knocknabro",
+      "lat": 52.0135,
+      "lon": -9.2323,
+      "status": "active",
+      "sourceDirections": "SE, S, SW, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 247.5,
+          "endExclusive": true
+        },
+        {
+          "start": 292.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134465",
+      "upstreamSources": [
+        {
+          "name": "Knocknabro",
+          "url": "http://www.paraglidingearth.com/?site=17440"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127627",
+      "name": "Knocknadobar",
+      "lat": 51.9927,
+      "lon": -10.1751,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127627",
+      "upstreamSources": [
+        {
+          "name": "Knocknadobar",
+          "url": "http://www.paraglidingearth.com/?site=14393"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-132966",
+      "name": "Knocknakilton",
+      "lat": 52.19,
+      "lon": -9.988,
+      "status": "active",
+      "sourceDirections": "N, NE, SE, S, SW, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 247.5,
+          "endExclusive": true
+        },
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/132966",
+      "upstreamSources": [
+        {
+          "name": "Knocknakilton",
+          "url": "http://www.paraglidingearth.com/?site=15941"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127722",
+      "name": "Lackadunna",
+      "lat": 53.3954,
+      "lon": -9.49724,
+      "status": "active",
+      "sourceDirections": "SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 202.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127722",
+      "upstreamSources": [
+        {
+          "name": "Lackadunna",
+          "url": "http://www.paraglidingearth.com/?site=14341"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127846",
+      "name": "Loughcrillan RTE Transmitter",
+      "lat": 54.817,
+      "lon": -8.3189,
+      "status": "active",
+      "sourceDirections": "SE, S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127846",
+      "upstreamSources": [
+        {
+          "name": "Loughcrillan RTE Transmitter",
+          "url": "http://www.paraglidingearth.com/?site=14857"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134483",
+      "name": "Madman's Seat",
+      "lat": 51.9915,
+      "lon": -9.6355,
+      "status": "active",
+      "sourceDirections": "SE, S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134483",
+      "upstreamSources": [
+        {
+          "name": "Madman's Seat",
+          "url": "http://www.paraglidingearth.com/?site=17404"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-177385",
+      "name": "Magheraroaty Beach",
+      "lat": 55.149971,
+      "lon": -8.154523,
+      "status": "active",
+      "sourceDirections": "NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/177385",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-127496",
+      "name": "Mass Mt.",
+      "lat": 51.6996,
+      "lon": -9.69374,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127496",
+      "upstreamSources": [
+        {
+          "name": "Mass Mt.",
+          "url": "http://www.paraglidingearth.com/?site=14386"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134486",
+      "name": "Maulin Mtn (Kerry Head)",
+      "lat": 52.416,
+      "lon": -9.8608,
+      "status": "active",
+      "sourceDirections": "NE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 22.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134486",
+      "upstreamSources": [
+        {
+          "name": "Maulin Mtn (Kerry Head)",
+          "url": "http://www.paraglidingearth.com/?site=17409"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127775",
+      "name": "Maumturk Mts",
+      "lat": 53.4943,
+      "lon": -9.664,
+      "status": "active",
+      "sourceDirections": "S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127775",
+      "upstreamSources": [
+        {
+          "name": "Maumturk Mts",
+          "url": "http://www.paraglidingearth.com/?site=14342"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127462",
+      "name": "Mt.Gabriel",
+      "lat": 51.5586,
+      "lon": -9.5402,
+      "status": "active",
+      "sourceDirections": "N, NE, SE, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 157.5,
+          "endExclusive": true
+        },
+        {
+          "start": 247.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127462",
+      "upstreamSources": [
+        {
+          "name": "Mt.Gabriel",
+          "url": "http://www.paraglidingearth.com/?site=14335"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127442",
+      "name": "Mullaghmesha Mtn. (W)",
+      "lat": 51.702,
+      "lon": -9.33058,
+      "status": "active",
+      "sourceDirections": "N, W, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 247.5,
+          "end": 22.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127442",
+      "upstreamSources": [
+        {
+          "name": "Mullaghmesha Mtn. (W)",
+          "url": "http://www.paraglidingearth.com/?site=12567"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127825",
+      "name": "Mulmosog Mountain",
+      "lat": 54.732,
+      "lon": -8.39117,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127825",
+      "upstreamSources": [
+        {
+          "name": "Mulmosog Mountain",
+          "url": "http://www.paraglidingearth.com/?site=14421"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127423",
+      "name": "Mushera (N)",
+      "lat": 52.0231,
+      "lon": -8.9553,
+      "status": "active",
+      "sourceDirections": "N, NE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127423",
+      "upstreamSources": [
+        {
+          "name": "Mushera (N)",
+          "url": "http://www.paraglidingearth.com/?site=14435"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-153941",
+      "name": "O' Donell's Rock",
+      "lat": 54.266464,
+      "lon": -8.184647,
+      "status": "active",
+      "sourceDirections": "NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 337.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/153941",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-182662",
+      "name": "Old Bawn",
+      "lat": 52.537713,
+      "lon": -6.209294,
+      "status": "active",
+      "sourceDirections": "NE, E, SE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 22.5,
+          "end": 157.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/182662",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-146765",
+      "name": "Old Leighlin",
+      "lat": 52.723519,
+      "lon": -7.028787,
+      "status": "active",
+      "sourceDirections": "SE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 157.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/146765",
+      "upstreamSources": [
+        {
+          "name": "Rafal's Marius ESE",
+          "url": "http://www.paraglidingearth.com/?site=18732"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134478",
+      "name": "Parkana",
+      "lat": 51.8439,
+      "lon": -9.428,
+      "status": "active",
+      "sourceDirections": "NE, E, SE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 22.5,
+          "end": 157.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134478",
+      "upstreamSources": [
+        {
+          "name": "Parkana",
+          "url": "http://www.paraglidingearth.com/?site=17142"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-169153",
+      "name": "Rinvill Park",
+      "lat": 53.246016,
+      "lon": -8.956655,
+      "status": "active",
+      "sourceDirections": "SW, W",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 202.5,
+          "end": 292.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/169153",
+      "upstreamSources": []
+    },
+    {
+      "id": "pgmap-127745",
+      "name": "Rocky Hill",
+      "lat": 55.0918,
+      "lon": -7.32654,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127745",
+      "upstreamSources": [
+        {
+          "name": "Rocky Hill",
+          "url": "http://www.paraglidingearth.com/?site=14422"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134469",
+      "name": "Rossacroo",
+      "lat": 52.0324,
+      "lon": -9.3167,
+      "status": "active",
+      "sourceDirections": "N, NE, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134469",
+      "upstreamSources": [
+        {
+          "name": "Rossacroo",
+          "url": "http://www.paraglidingearth.com/?site=17437"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127809",
+      "name": "Scraigs",
+      "lat": 54.8601,
+      "lon": -8.10277,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127809",
+      "upstreamSources": [
+        {
+          "name": "Scraigs",
+          "url": "http://www.paraglidingearth.com/?site=14423"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-146764",
+      "name": "Shillelagh",
+      "lat": 52.7823,
+      "lon": -6.55568,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/146764",
+      "upstreamSources": [
+        {
+          "name": "Shillelagh",
+          "url": "http://www.paraglidingearth.com/?site=18710"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-132961",
+      "name": "Silvermine Mts.",
+      "lat": 52.7771,
+      "lon": -8.2524,
+      "status": "active",
+      "sourceDirections": "N, NE, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/132961",
+      "upstreamSources": [
+        {
+          "name": "Silvermine Mts.",
+          "url": "http://www.paraglidingearth.com/?site=15979"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127483",
+      "name": "Slieve Bernagh",
+      "lat": 52.8239,
+      "lon": -8.55183,
+      "status": "active",
+      "sourceDirections": "S, SW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 157.5,
+          "end": 247.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127483",
+      "upstreamSources": [
+        {
+          "name": "Slieve Bernagh",
+          "url": "http://www.paraglidingearth.com/?site=14379"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127588",
+      "name": "Slieve Gallion",
+      "lat": 54.748525,
+      "lon": -6.736658,
+      "status": "active",
+      "sourceDirections": "N, NE, E",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 112.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127588",
+      "upstreamSources": [
+        {
+          "name": "Slieve Gallion",
+          "url": "http://www.paraglidingearth.com/?site=14000"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127568",
+      "name": "Slieve Mish Mts.",
+      "lat": 52.2125,
+      "lon": -9.71465,
+      "status": "source-directions-missing",
+      "sourceDirections": "",
+      "sourceDirectionsUnknown": true,
+      "windRanges": [],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127568",
+      "upstreamSources": [
+        {
+          "name": "Slieve Mish Mts.",
+          "url": "http://www.paraglidingearth.com/?site=14397"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-127392",
+      "name": "Slievereagh",
+      "lat": 52.3779,
+      "lon": -8.40382,
+      "status": "active",
+      "sourceDirections": "N, NE",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 337.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/127392",
+      "upstreamSources": [
+        {
+          "name": "Slievereagh",
+          "url": "http://www.paraglidingearth.com/?site=14401"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-134480",
+      "name": "Torc",
+      "lat": 51.9982,
+      "lon": -9.5215,
+      "status": "active",
+      "sourceDirections": "N, NE, SE, S, NW",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 112.5,
+          "end": 202.5,
+          "endExclusive": true
+        },
+        {
+          "start": 292.5,
+          "end": 67.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/134480",
+      "upstreamSources": [
+        {
+          "name": "Torc",
+          "url": "http://www.paraglidingearth.com/?site=17445"
+        }
+      ]
+    },
+    {
+      "id": "pgmap-201264",
+      "name": "Youghal Crocodile",
+      "lat": 51.935737,
+      "lon": -7.856644,
+      "status": "active",
+      "sourceDirections": "E, SE, S",
+      "sourceDirectionsUnknown": false,
+      "windRanges": [
+        {
+          "start": 67.5,
+          "end": 202.5,
+          "endExclusive": true
+        }
+      ],
+      "sourceUrl": "https://www.paraglidingmap.com/site/201264",
+      "upstreamSources": []
+    }
+  ]
+}

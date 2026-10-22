@@ -1,0 +1,2091 @@
+{
+  "checkedAt": "2026-10-22T09:42:11.166Z",
+  "counts": {
+    "sitesSearched": 77,
+    "sitesWithVideos": 30,
+    "sitesWithoutVideos": 47,
+    "unknownDirectionSitesWithVideos": 5,
+    "videoAssociations": 51,
+    "uniqueVideos": 50
+  },
+  "method": "Public YouTube searches for every approved addition, with local-name aliases. Selected paragliding, hang-gliding and explicitly labelled related free-flight footage. Public YouTube watch metadata and oEmbed verify video titles and availability. No video has been pre-approved by the owner.",
+  "matching": "site means the name/description identifies the site or mountain, not its exact launch. area means range, foothills, overflight or landing only; the exact marked launch is not confirmed. One Galtee-range video appears for two nearby candidates and requires separate review at each site.",
+  "excluded": "Unrelated same-name foreign places, walking-only, drone-only, powered overflights and clearly different neighbouring launches were omitted. No search result is treated as a verified wind direction.",
+  "sites": [
+    {
+      "siteId": "pgmap-127756",
+      "name": "Aconeera or Cnoc Mordain",
+      "queries": [
+        "paragliding Cnoc Mordain",
+        "site:youtube.com/watch paragliding \"Cnoc Mordain\" OR \"Aconeera\"",
+        "\"Cnoc Mord?in\" paragliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=i2R1uszj2no",
+          "title": "Paragliding - Cnoc Mordain Mt. in Connemara, Ireland",
+          "channel": "Paw",
+          "matchNote": "Title explicitly identifies paragliding at Cnoc Mordain in Connemara, Ireland. The precise launch and published wind sectors are not confirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=i2R1uszj2no",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Cnoc Mordain",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The title supplies the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding - Cnoc Mordain Mt. in Connemara, Ireland",
+            "channel": "Paw",
+            "checkedAt": "2026-10-22T09:36:49.055Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=ekw7B_9s1-I",
+          "title": "CNOC MORDAIN TANDEM PARAGLIDING WITH MARK- 04.06.2012.wmv",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "Title and uploader description identify tandem soaring above Cnoc Mordain (Aconeera) in Connemara. The precise launch and wind sectors are not confirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=ekw7B_9s1-I",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Cnoc Mordain",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "CNOC MORDAIN TANDEM PARAGLIDING WITH MARK- 04.06.2012.wmv",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:36:49.056Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.3842,
+      "lon": -9.6772
+    },
+    {
+      "siteId": "pgmap-153939",
+      "name": "Ardara",
+      "queries": [
+        "paragliding Ardara Donegal",
+        "site:youtube.com/watch paragliding \"Ardara\"",
+        "\"Ardara\" \"paragliding\" video",
+        "paragliding Ardara waterfall ridge Meentashesk"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=bFF2_-EzOxE",
+          "title": "paragliding ardara co donegal (little cloud spiruline)",
+          "channel": "taskmastaz",
+          "matchNote": "Uploader identifies the waterfall ridge outside Ardara, County Donegal. This is a candidate for the Ardara site, but the exact Meentashesk catalogue launch is not established; review the terrain match.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=bFF2_-EzOxE",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "paragliding Ardara Donegal",
+              "summary": "Public watch-page title and description were read directly; playability status was OK. Description identifies the waterfall ridge outside Ardara."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "paragliding ardara co donegal (little cloud spiruline)",
+            "channel": "taskmastaz",
+            "checkedAt": "2026-10-22T09:36:49.056Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=dJ5ITZCvGlg",
+          "title": "Paragliding at Waterfall Ardara, Donegal, Ireland",
+          "channel": "paragliderworld",
+          "matchNote": "Title explicitly identifies paragliding at the Ardara waterfall in Donegal. The exact Meentashesk catalogue launch is not established; review the terrain match.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=dJ5ITZCvGlg",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "paragliding Ardara Donegal",
+              "summary": "Public watch-page title and description were read directly; playability status was OK. Title names the recorded flying location."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding at Waterfall Ardara, Donegal, Ireland",
+            "channel": "paragliderworld",
+            "checkedAt": "2026-10-22T09:36:49.053Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.764744,
+      "lon": -8.538297
+    },
+    {
+      "siteId": "pgmap-156227",
+      "name": "Arroo",
+      "queries": [
+        "paragliding Arroo",
+        "Arroo Mountain paragliding",
+        "Aroo paragliding Ireland",
+        "site:youtube.com/watch paragliding \"Arroo\""
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.4149,
+      "lon": -8.2435
+    },
+    {
+      "siteId": "pgmap-127565",
+      "name": "Ballaghasheen Gap",
+      "queries": [
+        "Ballaghasheen Gap paragliding",
+        "Ballaghisheen paragliding hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9479,
+      "lon": -9.9334
+    },
+    {
+      "siteId": "pgmap-133439",
+      "name": "Ballinglen",
+      "queries": [
+        "Ballinglen paragliding Wicklow",
+        "Ballinglen hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.8238,
+      "lon": -6.45197
+    },
+    {
+      "siteId": "pgmap-159819",
+      "name": "Ballybanaun Mountain",
+      "queries": [
+        "paragliding Ballybanaun",
+        "site:youtube.com/watch paragliding \"Ballybanaun\""
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=I0NTFNi5E_c",
+          "title": "Paragliding Ballybanaun Mountain 17-04-16",
+          "channel": "Brendan Nutley",
+          "matchNote": "Title and description identify a short paragliding flight at Ballybanaun Mountain. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=I0NTFNi5E_c",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Ballybanaun",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Ballybanaun Mountain 17-04-16",
+            "channel": "Brendan Nutley",
+            "checkedAt": "2026-10-22T09:36:49.104Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=UfUC7FS1ZkU",
+          "title": "Paragliding Ballybanaun  11-03-17",
+          "channel": "Brendan Nutley",
+          "matchNote": "Title identifies paragliding at Ballybanaun; uploader describes a West Ireland flying site. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=UfUC7FS1ZkU",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Ballybanaun",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Ballybanaun  11-03-17",
+            "channel": "Brendan Nutley",
+            "checkedAt": "2026-10-22T09:36:49.125Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.6738,
+      "lon": -9.4101
+    },
+    {
+      "siteId": "pgmap-173407",
+      "name": "Ballycrenane",
+      "queries": [
+        "Ballycrenane paragliding",
+        "Ballycrenane hang gliding Cork"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=rhJYCZZrcoU",
+          "title": "Coastal Soaring Paragliding at Ballycrenane",
+          "channel": "TGOTS",
+          "matchNote": "YouTube title explicitly identifies coastal paragliding at Ballycrenane. Exact takeoff point and wind sector have not been checked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=rhJYCZZrcoU",
+            "watchPageTitle": "Coastal Soaring Paragliding at Ballycrenane",
+            "channel": "TGOTS",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Ballycrenane%20paragliding",
+            "locationEvidence": "YouTube title explicitly identifies coastal paragliding at Ballycrenane. Exact takeoff point and wind sector have not been checked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Coastal Soaring Paragliding at Ballycrenane",
+            "channel": "TGOTS",
+            "checkedAt": "2026-10-22T09:39:47.781Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=B4Oyya8rI7o",
+          "title": "Scratching Ballycrenane",
+          "channel": "TGOTS",
+          "matchNote": "Named Ballycrenane soaring clip by the same flying channel. The description says the wind was off the slope; suitability for the published sector has not been checked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=B4Oyya8rI7o",
+            "watchPageTitle": "Scratching Ballycrenane",
+            "channel": "TGOTS",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Ballycrenane%20paragliding",
+            "locationEvidence": "Named Ballycrenane soaring clip by the same flying channel. The description says the wind was off the slope; suitability for the published sector has not been checked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Scratching Ballycrenane",
+            "channel": "TGOTS",
+            "checkedAt": "2026-10-22T09:39:47.782Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.867219,
+      "lon": -7.972498
+    },
+    {
+      "siteId": "pgmap-127770",
+      "name": "Banagher Hill",
+      "queries": [
+        "paragliding Banagher Hill Donegal",
+        "Banagher paragliding Donegal",
+        "paragliding Banagher Hill",
+        "\"Banagher\" paragliding youtube",
+        "\"Banagher Hill\" \"paragliding\" video"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.72,
+      "lon": -8.07914
+    },
+    {
+      "siteId": "pgmap-189983",
+      "name": "Ben Bulbin - West",
+      "queries": [
+        "paragliding Benbulben",
+        "\"Benbulben\" paragliding youtube",
+        "Benbulbin paragliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=xQ021km1hs4",
+          "title": "Paragliding Benbulben, Co. Sligo, Ireland 2025",
+          "channel": "FLY THROUGH LIFE",
+          "matchNote": "Title and description identify paragliding at Benbulben, County Sligo. The additional west-facing launch in this catalogue record is not established.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=xQ021km1hs4",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Benbulben",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Benbulben, Co. Sligo, Ireland 2025",
+            "channel": "FLY THROUGH LIFE",
+            "checkedAt": "2026-10-22T09:36:49.114Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=Tw_DS81BTcU",
+          "title": "Paragliding at Benbulben, Ireland 18/04/2014",
+          "channel": "Zsolt Lengyel",
+          "matchNote": "Title and description identify flying at Benbulben in County Sligo, with a local parking coordinate. The additional west-facing launch is not established.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=Tw_DS81BTcU",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Benbulben",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding at Benbulben, Ireland 18/04/2014",
+            "channel": "Zsolt Lengyel",
+            "checkedAt": "2026-10-22T09:36:49.115Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.355537,
+      "lon": -8.466565
+    },
+    {
+      "siteId": "pgmap-184435",
+      "name": "Benbeg",
+      "queries": [
+        "paragliding Benbeg",
+        "Benbeg Cavan paragliding",
+        "paragliding Ben Beg Cuilcagh",
+        "\"Benbeg\" paragliding youtube"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.175217,
+      "lon": -7.818005
+    },
+    {
+      "siteId": "pgmap-153942",
+      "name": "Benlevy",
+      "queries": [
+        "paragliding Benlevy",
+        "Ben Levy paragliding Ireland",
+        "\"Benlevy\" paragliding youtube",
+        "\"Binn Shleibhe\" \"paragliding\""
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=JVjYfb236ZA",
+          "title": "Paraglide Ben Levy, Ireland - March 2011",
+          "channel": "David May",
+          "matchNote": "Ben Levy is the spaced-name alias of Benlevy. Uploader gives launch 53.530386,-9.40743, approximately 0.26 km from the catalogue point; the exact slope and published wind sectors still need review.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=JVjYfb236ZA",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "paragliding Benlevy",
+              "summary": "Public watch-page description gives launch coordinates 53.530386,-9.40743, near catalogue coordinates 53.5285,-9.409656; playability status was OK."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paraglide Ben Levy, Ireland - March 2011",
+            "channel": "David May",
+            "checkedAt": "2026-10-22T09:36:49.176Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.5285,
+      "lon": -9.409656
+    },
+    {
+      "siteId": "pgmap-134499",
+      "name": "Bentee",
+      "queries": [
+        "Bentee paragliding",
+        "Benatee Cahersiveen hang gliding",
+        "Beenatee paragliding",
+        "Beentee paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9356,
+      "lon": -10.2173
+    },
+    {
+      "siteId": "pgmap-127890",
+      "name": "Bloody Foreland",
+      "queries": [
+        "Bloody Foreland paragliding",
+        "Cnoc Fola hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 55.1374,
+      "lon": -8.26028
+    },
+    {
+      "siteId": "pgmap-127626",
+      "name": "Bolus Head",
+      "queries": [
+        "Bolus Head paragliding",
+        "Bolus Head hang gliding Kerry"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 51.8012,
+      "lon": -10.321
+    },
+    {
+      "siteId": "pgmap-134498",
+      "name": "Brandon Mtn",
+      "queries": [
+        "Mount Brandon paragliding Ireland",
+        "Brandon mountain hang gliding Kerry"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=hsfe25GRt4g",
+          "title": "Winter Paragliding in Ireland | Fly Dingle | Paragliding | Hike and Fly | Paragliding Ireland",
+          "channel": "Markus Wiericks",
+          "matchNote": "The description explicitly places this paragliding flight at Mount Brandon, County Kerry. The approved west/northwest launch is not identified.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=hsfe25GRt4g",
+            "watchPageTitle": "Winter Paragliding in Ireland | Fly Dingle | Paragliding | Hike and Fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Mount%20Brandon%20paragliding%20Ireland",
+            "locationEvidence": "The description explicitly places this paragliding flight at Mount Brandon, County Kerry. The approved west/northwest launch is not identified."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Winter Paragliding in Ireland | Fly Dingle | Paragliding | Hike and Fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "checkedAt": "2026-10-22T09:39:47.782Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=zoJV_2gU8SY",
+          "title": "Brandon Mt.  foot hills, Mar. 15 2014  Paul is soaring",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "The description identifies a tandem paraglider soaring Mount Brandon foothills on the Dingle Peninsula. This is mountain-area footage; the approved west/northwest launch is not established.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=zoJV_2gU8SY",
+            "watchPageTitle": "Brandon Mt.  foot hills, Mar. 15 2014  Paul is soaring",
+            "channel": "Jacek Chodanowski",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Brandon%20mountain%20hang%20gliding%20Kerry",
+            "locationEvidence": "The description identifies a tandem paraglider soaring Mount Brandon foothills on the Dingle Peninsula. This is mountain-area footage; the approved west/northwest launch is not established."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Brandon Mt.  foot hills, Mar. 15 2014  Paul is soaring",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:39:47.794Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.2479,
+      "lon": -10.2607
+    },
+    {
+      "siteId": "pgmap-134488",
+      "name": "Breanlee (Hydro Road)",
+      "queries": [
+        "Breanlee paragliding",
+        "Hydro Road paragliding Kerry"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.0152,
+      "lon": -9.7813
+    },
+    {
+      "siteId": "pgmap-127367",
+      "name": "Carrigeenina (Slievenamuck)",
+      "queries": [
+        "Slievenamuck paragliding Tipperary",
+        "Carrigeenina hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.4342,
+      "lon": -8.17643
+    },
+    {
+      "siteId": "pgmap-127493",
+      "name": "Castle (Castlegoat) Rock",
+      "queries": [
+        "Castlegoat Rock paragliding",
+        "Castle Rock paragliding Glengarriff"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.8184,
+      "lon": -9.5908
+    },
+    {
+      "siteId": "pgmap-134460",
+      "name": "Caum",
+      "queries": [
+        "Caum paragliding",
+        "Caum Macroom hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9018,
+      "lon": -8.8837
+    },
+    {
+      "siteId": "pgmap-146080",
+      "name": "Comeragh N-NE",
+      "queries": [
+        "Comeragh paragliding",
+        "Comeraghs hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=FDfQ4_HL-WA",
+          "title": "Eugene and Michael paragliding the Comeragh's",
+          "channel": "Eugene Gardiner",
+          "matchNote": "Title explicitly identifies paragliding in the Comeragh Mountains and the thumbnail shows a paraglider in flight. The exact N–NE launch at the catalogue coordinates is not established.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=FDfQ4_HL-WA",
+            "watchPageTitle": "Eugene and Michael paragliding the Comeragh's",
+            "channel": "Eugene Gardiner",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Comeragh%20paragliding",
+            "locationEvidence": "Title explicitly identifies paragliding in the Comeragh Mountains and the thumbnail shows a paraglider in flight. The exact N–NE launch at the catalogue coordinates is not established.",
+            "thumbnailUrl": "https://i.ytimg.com/vi/FDfQ4_HL-WA/hqdefault.jpg"
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Eugene and Michael paragliding the Comeragh's",
+            "channel": "Eugene Gardiner",
+            "checkedAt": "2026-10-22T09:39:47.841Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=Zgi2YHw0KCo",
+          "title": "XC Paragliding  in Comeraghs June 2013 ,Irish Open, Camping",
+          "channel": "Rafal Mac",
+          "matchNote": "Irish Open cross-country paragliding footage explicitly named for the Comeraghs. Exact launch and N–NE sector are unverified. A flying-site directory also links this exact video for the Comeraghs.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=Zgi2YHw0KCo",
+            "watchPageTitle": "XC Paragliding  in Comeraghs June 2013 ,Irish Open, Camping",
+            "channel": "Rafal Mac",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Comeragh%20paragliding",
+            "locationEvidence": "Irish Open cross-country paragliding footage explicitly named for the Comeraghs. Exact launch and N–NE sector are unverified. A flying-site directory also links this exact video for the Comeraghs.",
+            "secondarySourceUrl": "https://www.spots.guru/fr/by_country/best_paragliding_sites_in_ireland"
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "XC Paragliding  in Comeraghs June 2013 ,Irish Open, Camping",
+            "channel": "Rafal Mac",
+            "checkedAt": "2026-10-22T09:39:47.845Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.2627,
+      "lon": -7.5094
+    },
+    {
+      "siteId": "pgmap-134496",
+      "name": "Connor Pass",
+      "queries": [
+        "Connor Pass paragliding",
+        "Conor Pass hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=As6b5-OmdVI",
+          "title": "A scenic route along the Conor Pass | Fly Dingle | Paragliding | Hike and fly | Paragliding Ireland",
+          "channel": "Markus Wiericks",
+          "matchNote": "Both title and description identify paragliding along Conor Pass, County Kerry. This is a spelling variant of Connor Pass; the exact approved launch has not been checked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=As6b5-OmdVI",
+            "watchPageTitle": "A scenic route along the Conor Pass | Fly Dingle | Paragliding | Hike and fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Connor%20Pass%20paragliding",
+            "locationEvidence": "Both title and description identify paragliding along Conor Pass, County Kerry. This is a spelling variant of Connor Pass; the exact approved launch has not been checked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "A scenic route along the Conor Pass | Fly Dingle | Paragliding | Hike and fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "checkedAt": "2026-10-22T09:39:47.850Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=W6ydZBeF_Gw",
+          "title": "Conor Pass 18 Sep 2020",
+          "channel": "Gary Wellock",
+          "matchNote": "Description explicitly identifies soaring at Conor Pass, County Kerry, in northeast wind. Exact takeoff coordinates and the published sector limits have not been checked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=W6ydZBeF_Gw",
+            "watchPageTitle": "Conor Pass 18 Sep 2020",
+            "channel": "Gary Wellock",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Connor%20Pass%20paragliding",
+            "locationEvidence": "Description explicitly identifies soaring at Conor Pass, County Kerry, in northeast wind. Exact takeoff coordinates and the published sector limits have not been checked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Conor Pass 18 Sep 2020",
+            "channel": "Gary Wellock",
+            "checkedAt": "2026-10-22T09:39:47.830Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.1809,
+      "lon": -10.2063
+    },
+    {
+      "siteId": "pgmap-157103",
+      "name": "Corranabinnia",
+      "queries": [
+        "paragliding Corranabinnia",
+        "Corranabinnia paragliding Ireland",
+        "paragliding Cushcamcarragh",
+        "\"Corranabinnia\" paragliding youtube"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.9595,
+      "lon": -9.6843
+    },
+    {
+      "siteId": "pgmap-134474",
+      "name": "Crohane",
+      "queries": [
+        "Crohane paragliding",
+        "Crohane hang gliding Killarney",
+        "Crohane flying Kerry"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9911,
+      "lon": -9.3829
+    },
+    {
+      "siteId": "pgmap-127681",
+      "name": "Cruach Marthain",
+      "queries": [
+        "Cruach Marthain paragliding",
+        "Croaghmarhin paragliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=B1F68a7zdR0",
+          "title": "Speedflying @ Cruach Mhárin, Dún Chaoin, West Kerry 23rd Aug 2012",
+          "channel": "podalaigh",
+          "matchNote": "The title names Cruach Mharin at Dunquin in west Kerry, matching the Cruach Marthain location. This is explicitly speedflying footage, included as a related free-flight candidate for review. The exact launch slope and wind suitability remain unverified.",
+          "confidence": "site",
+          "sourceEvidence": "The public YouTube watch-page title identifies speedflying at Cruach Mharin, Dunquin, West Kerry. The uploader describes flying in gusty conditions. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Speedflying @ Cruach Mhárin, Dún Chaoin, West Kerry 23rd Aug 2012",
+            "channel": "podalaigh",
+            "checkedAt": "2026-10-22T09:36:12.757Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.1495,
+      "lon": -10.4311
+    },
+    {
+      "siteId": "pgmap-182659",
+      "name": "Delphi Hike and Fly",
+      "queries": [
+        "paragliding Delphi Ireland",
+        "Delphi hike fly Ireland paragliding",
+        "paragliding Ben Creggan Delphi",
+        "\"Delphi\" \"paragliding\" Ireland youtube"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.621002,
+      "lon": -9.721351
+    },
+    {
+      "siteId": "pgmap-127388",
+      "name": "Devil's Bit Mountain",
+      "queries": [
+        "paragliding Devil's Bit",
+        "\"Devil's Bit\" paragliding youtube"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=blaZCexFCKY",
+          "title": "Paragliding the Devils bit Co. Tipperary Ireland",
+          "channel": "Gerry Kennedy",
+          "matchNote": "Title and description identify a group paragliding flight at the Devil's Bit in County Tipperary. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=blaZCexFCKY",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Devil's Bit",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding the Devils bit Co. Tipperary Ireland",
+            "channel": "Gerry Kennedy",
+            "checkedAt": "2026-10-22T09:36:49.176Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=y88xfwmUJX8",
+          "title": "Flying at Devils bit",
+          "channel": "Evgeny Evstigneev",
+          "matchNote": "Title identifies flying at Devils Bit and the uploader description specifies hang gliding in Ireland. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=y88xfwmUJX8",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Devil's Bit",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Flying at Devils bit",
+            "channel": "Evgeny Evstigneev",
+            "checkedAt": "2026-10-22T09:36:49.176Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.8207,
+      "lon": -7.91397
+    },
+    {
+      "siteId": "pgmap-207802",
+      "name": "Divis Hill",
+      "queries": [
+        "paragliding Divis",
+        "\"Divis\" paragliding youtube",
+        "\"paragliding\" \"Divis Mountain\""
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=Ct3Fjy-Djoo",
+          "title": "Paragliding at Divis and the Black Mountain",
+          "channel": "greenandbluespots",
+          "matchNote": "Title identifies paragliding at Divis and Black Mountain. It does not establish the additional southeast/south launch represented by this catalogue entry.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=Ct3Fjy-Djoo",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Divis",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding at Divis and the Black Mountain",
+            "channel": "greenandbluespots",
+            "checkedAt": "2026-10-22T09:36:49.182Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=bbJ7mJLHcqM",
+          "title": "Paragliding from Divis / Black Mountain",
+          "channel": "greenandbluespots",
+          "matchNote": "Title identifies paragliding from Divis/Black Mountain and description identifies UHPC pilots. The additional southeast/south launch is not established.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=bbJ7mJLHcqM",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Divis",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding from Divis / Black Mountain",
+            "channel": "greenandbluespots",
+            "checkedAt": "2026-10-22T09:36:49.239Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.610908,
+      "lon": -6.017868
+    },
+    {
+      "siteId": "pgmap-162917",
+      "name": "Doolin 2",
+      "queries": [
+        "Doolin paragliding",
+        "Doolin hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 53.0135,
+      "lon": -9.39033
+    },
+    {
+      "siteId": "pgmap-127205",
+      "name": "Dunran Hill",
+      "queries": [
+        "Dunran Hill paragliding",
+        "Dunran hang gliding Wicklow"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 53.0556,
+      "lon": -6.11782
+    },
+    {
+      "siteId": "pgmap-127656",
+      "name": "Englishman's",
+      "queries": [
+        "Englishmans paragliding Ireland",
+        "Englishman's hang gliding Ireland"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 54.2637,
+      "lon": -7.98465
+    },
+    {
+      "siteId": "pgmap-133473",
+      "name": "Faher Mountain",
+      "queries": [
+        "Faher Mountain paragliding",
+        "Faha Mountain paragliding Kerry",
+        "Faher Sneem flying"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9096,
+      "lon": -9.8458
+    },
+    {
+      "siteId": "pgmap-146770",
+      "name": "Farrandalouge",
+      "queries": [
+        "Farrandalouge paragliding",
+        "Farrandalouge hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.2378,
+      "lon": -10.1276
+    },
+    {
+      "siteId": "pgmap-127366",
+      "name": "Galty Mountains",
+      "queries": [
+        "Galty Mountains paragliding",
+        "Galtee Mountains hang gliding",
+        "Temple Hill paragliding Ireland"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=tRhWdwCnHRg",
+          "title": "Galtee hike and fly Nov 2024",
+          "channel": "Joan Ryan",
+          "matchNote": "The title and description explicitly identify paragliding in the Galtee Mountains. The uploader identifies the north side and a flight over Lough Curra. This supports the named mountain range; the launch at the source marker, near Temple Hill, is unverified.",
+          "confidence": "area",
+          "sourceEvidence": "The public YouTube watch-page title identifies a Galtee hike-and-fly outing in November 2024. The description identifies two north-side paragliding flights and Lough Curra. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Galtee hike and fly Nov 2024",
+            "channel": "Joan Ryan",
+            "checkedAt": "2026-10-22T09:36:12.775Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=u_IRDXqVvGg",
+          "title": "Galtee paragliding hike and fly",
+          "channel": "Joan Ryan",
+          "matchNote": "The uploader explicitly identifies the Galty Mountains and a paragliding hike-and-fly outing. This is a candidate for the named mountain range; the exact source-marker launch, slope and wind suitability remain unverified.",
+          "confidence": "area",
+          "sourceEvidence": "The public YouTube watch-page title identifies Galtee paragliding. The description places the flight in the Galty Mountains and mentions northerly conditions and a Brocken spectre. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Galtee paragliding hike and fly",
+            "channel": "Joan Ryan",
+            "checkedAt": "2026-10-22T09:36:12.749Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.3469,
+      "lon": -8.25679
+    },
+    {
+      "siteId": "pgmap-146769",
+      "name": "Galtymore Anteny NW,N",
+      "queries": [
+        "Galtymore paragliding",
+        "Galtee antenna paragliding hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=FzWhwuBjqNk",
+          "title": "Galtymore Mountain Paragliding Ireland 10.10.2021",
+          "channel": "Tomasz Szewczyk",
+          "matchNote": "Title explicitly identifies paragliding on Galtymore in Ireland. The antenna launch in this catalogue record is not identified; review the location before accepting.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=FzWhwuBjqNk",
+            "watchPageTitle": "Galtymore Mountain Paragliding Ireland 10.10.2021",
+            "channel": "Tomasz Szewczyk",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Galtymore%20paragliding",
+            "locationEvidence": "Title explicitly identifies paragliding on Galtymore in Ireland. The antenna launch in this catalogue record is not identified; review the location before accepting."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Galtymore Mountain Paragliding Ireland 10.10.2021",
+            "channel": "Tomasz Szewczyk",
+            "checkedAt": "2026-10-22T09:39:47.903Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=ohMfu3vvsr4",
+          "title": "Flying Galtee mor 1st paragliding flight constant big ears .m4v",
+          "channel": "Mark O'Gorman",
+          "matchNote": "Title identifies Galtee Mor, and the description identifies a launch partway down its north face. This supports the named mountain but does not establish the antenna launch or the exact catalogue coordinates.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=ohMfu3vvsr4",
+            "watchPageTitle": "Flying Galtee mor 1st paragliding flight constant big ears .m4v",
+            "channel": "Mark O'Gorman",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Galtymore%20paragliding",
+            "locationEvidence": "Title identifies Galtee Mor, and the description identifies a launch partway down its north face. This supports the named mountain but does not establish the antenna launch or the exact catalogue coordinates."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Flying Galtee mor 1st paragliding flight constant big ears .m4v",
+            "channel": "Mark O'Gorman",
+            "checkedAt": "2026-10-22T09:39:47.903Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.3137,
+      "lon": -8.3097
+    },
+    {
+      "siteId": "pgmap-146768",
+      "name": "Galtymore NE ,N",
+      "queries": [
+        "Galtymore north paragliding",
+        "Galtee Mountains paragliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=JGC3hS5aJdw",
+          "title": "Paragliding Galtees Dec 2023",
+          "channel": "Joan Ryan",
+          "matchNote": "Description identifies a hike and fly from the north of the Galtees, flying the cliffs around Lough Curra. This is relevant northern Galtees footage; the exact Galtymore N/NE catalogue launch is unverified.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=JGC3hS5aJdw",
+            "watchPageTitle": "Paragliding Galtees Dec 2023",
+            "channel": "Joan Ryan",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Galtee%20Mountains%20paragliding",
+            "locationEvidence": "Description identifies a hike and fly from the north of the Galtees, flying the cliffs around Lough Curra. This is relevant northern Galtees footage; the exact Galtymore N/NE catalogue launch is unverified."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Galtees Dec 2023",
+            "channel": "Joan Ryan",
+            "checkedAt": "2026-10-22T09:39:47.900Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=tRhWdwCnHRg",
+          "title": "Galtee hike and fly Nov 2024",
+          "channel": "Joan Ryan",
+          "matchNote": "Description identifies paragliding on the Galtees north side over Lough Curra. The exact Galtymore N/NE takeoff at the catalogue coordinates is not established.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=tRhWdwCnHRg",
+            "watchPageTitle": "Galtee hike and fly Nov 2024",
+            "channel": "Joan Ryan",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Galtee%20Mountains%20paragliding",
+            "locationEvidence": "Description identifies paragliding on the Galtees north side over Lough Curra. The exact Galtymore N/NE takeoff at the catalogue coordinates is not established."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Galtee hike and fly Nov 2024",
+            "channel": "Joan Ryan",
+            "checkedAt": "2026-10-22T09:36:12.775Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.3731,
+      "lon": -8.16928
+    },
+    {
+      "siteId": "pgmap-134484",
+      "name": "Gap of Dunloe",
+      "queries": [
+        "Gap of Dunloe paragliding",
+        "Dunloe hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.0384,
+      "lon": -9.6478
+    },
+    {
+      "siteId": "pgmap-132964",
+      "name": "Glengarriff",
+      "queries": [
+        "Glengarriff paragliding",
+        "Glengarriff hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.772,
+      "lon": -9.582
+    },
+    {
+      "siteId": "pgmap-127852",
+      "name": "Glengesh Hill",
+      "queries": [
+        "Glengesh paragliding",
+        "Glengeesh hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=QxmCi7K5OcI",
+          "title": "Paragliding Glengesh - County Donegal - Mike Launch",
+          "channel": "Martin Birrane",
+          "matchNote": "The title and uploader description explicitly identify a paragliding launch at Glengesh in County Donegal. The named-site match is strong; the exact source-marker slope and wind suitability remain unverified.",
+          "confidence": "site",
+          "sourceEvidence": "The public YouTube watch-page title and description both identify Glengesh, County Donegal, and a paraglider launch. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Glengesh - County Donegal - Mike Launch",
+            "channel": "Martin Birrane",
+            "checkedAt": "2026-10-22T09:36:12.750Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=JjIRuvQUZKc",
+          "title": "Paragliding Glengesh - County Donegal - My Flight",
+          "channel": "Martin Birrane",
+          "matchNote": "The title and uploader description explicitly identify a paragliding flight at Glengesh in County Donegal. The named-site match is strong; the exact source-marker slope and wind suitability remain unverified.",
+          "confidence": "site",
+          "sourceEvidence": "The public YouTube watch-page title and description both identify a paragliding flight at Glengesh, County Donegal. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Glengesh - County Donegal - My Flight",
+            "channel": "Martin Birrane",
+            "checkedAt": "2026-10-22T09:36:12.822Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": true,
+      "lat": 54.7461,
+      "lon": -8.46274
+    },
+    {
+      "siteId": "pgmap-127638",
+      "name": "Gleninagh Mt.",
+      "queries": [
+        "paragliding Gleninagh",
+        "\"Gleninagh\" paragliding youtube"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=sID2Fz_RcXk",
+          "title": "Gleninagh Mt.- Soraya & Keith are Soaring Above- 07.07.2012.wmv",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "Uploader describes tandem paragliding at Gleninagh Mountain in the Burren, County Clare. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=sID2Fz_RcXk",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Gleninagh",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Gleninagh Mt.- Soraya & Keith are Soaring Above- 07.07.2012.wmv",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:36:49.241Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=vN-y8I8peK0",
+          "title": "Gleninagh 04 Nov. 2012 24 km XC Flight",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "Uploader identifies a paragliding XC flight from Gleninagh Mountain, County Clare. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=vN-y8I8peK0",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding Gleninagh",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Gleninagh 04 Nov. 2012 24 km XC Flight",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:36:49.248Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.1289,
+      "lon": -9.2063
+    },
+    {
+      "siteId": "pgmap-134473",
+      "name": "Gougane Barra",
+      "queries": [
+        "Gougane Barra paragliding",
+        "Gouganebarra hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=oEPFUAPecTA",
+          "title": "Flight over Gougane Barra-seen from above, Paragliding Xc From Mweelin ending in Borlin valley.",
+          "channel": "digitalkicks",
+          "matchNote": "Actual paragliding cross-country footage explicitly passes over Gougane Barra. The title states that launch was at Mweelin, so this does not establish a launch from the Gougane Barra catalogue point.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=oEPFUAPecTA",
+            "watchPageTitle": "Flight over Gougane Barra-seen from above, Paragliding Xc From Mweelin ending in Borlin valley.",
+            "channel": "digitalkicks",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Gougane%20Barra%20paragliding",
+            "locationEvidence": "Actual paragliding cross-country footage explicitly passes over Gougane Barra. The title states that launch was at Mweelin, so this does not establish a launch from the Gougane Barra catalogue point."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Flight over Gougane Barra-seen from above, Paragliding Xc From Mweelin ending in Borlin valley.",
+            "channel": "digitalkicks",
+            "checkedAt": "2026-10-22T09:39:47.900Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.8436,
+      "lon": -9.3249
+    },
+    {
+      "siteId": "pgmap-127502",
+      "name": "Healy Pass",
+      "queries": [
+        "Healy Pass paragliding Ireland",
+        "Healy Pass hang gliding Ireland"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=whaqT_LWvdk",
+          "title": "Paragliding Ireland Healy Pass-march 2009 Bantry, Glengarriff",
+          "channel": "mirek717171",
+          "matchNote": "The title explicitly identifies paragliding at Healy Pass in Ireland, with Bantry and Glengarriff as regional context. The exact launch slope and wind suitability remain unverified.",
+          "confidence": "site",
+          "sourceEvidence": "The public YouTube watch-page title names Healy Pass and Irish locations, and its player metadata reports the video available and embeddable. A separate flying-site directory links this same URL with the same title: https://www.spedmo.com/site.pg?id=3349.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Ireland Healy Pass-march 2009 Bantry, Glengarriff",
+            "channel": "mirek717171",
+            "checkedAt": "2026-10-22T09:36:12.829Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=1dC5b6-askI",
+          "title": "Paragliding in Ireland-Healy Pass...march2009 ...Latanie w Irlandii-Healy Pass west cork",
+          "channel": "mirek717171",
+          "matchNote": "The title explicitly identifies paragliding at Healy Pass in west Cork. The exact launch slope and wind suitability remain unverified.",
+          "confidence": "site",
+          "sourceEvidence": "The public YouTube watch-page title identifies Healy Pass, Ireland, west Cork. The uploader description discusses remaining airborne and the windy conditions. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding in Ireland-Healy Pass...march2009 ...Latanie w Irlandii-Healy Pass west cork",
+            "channel": "mirek717171",
+            "checkedAt": "2026-10-22T09:36:12.818Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": true,
+      "lat": 51.7247,
+      "lon": -9.75836
+    },
+    {
+      "siteId": "pgmap-127501",
+      "name": "Hungry Hill",
+      "queries": [
+        "Hungry Hill paragliding Ireland",
+        "Hungry Hill Beara hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=jTFbDAxEvsg",
+          "title": "Video0041",
+          "channel": "Owen Boyden",
+          "matchNote": "Despite its generic title, the watch-page description explicitly identifies paragliding at Hungry Hill, West Cork. This excludes the same-name Nova Scotia site; the exact launch and wind sector remain unchecked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=jTFbDAxEvsg",
+            "watchPageTitle": "Video0041",
+            "channel": "Owen Boyden",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Hungry%20Hill%20paragliding%20Ireland",
+            "locationEvidence": "Despite its generic title, the watch-page description explicitly identifies paragliding at Hungry Hill, West Cork. This excludes the same-name Nova Scotia site; the exact launch and wind sector remain unchecked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Video0041",
+            "channel": "Owen Boyden",
+            "checkedAt": "2026-10-22T09:39:47.951Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.676,
+      "lon": -9.76515
+    },
+    {
+      "siteId": "pgmap-134491",
+      "name": "Kerry Head (West)",
+      "queries": [
+        "Kerry Head paragliding",
+        "Kerry Head hang gliding",
+        "Kerryhead paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.4122,
+      "lon": -9.9429
+    },
+    {
+      "siteId": "pgmap-189986",
+      "name": "Kesh",
+      "queries": [
+        "paragliding Kesh Sligo",
+        "Keshcorran paragliding",
+        "paragliding Keash Kesh Corann",
+        "\"Kesh\" paragliding youtube Ireland"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.060764,
+      "lon": -8.443554
+    },
+    {
+      "siteId": "pgmap-134501",
+      "name": "Kilkeaveragh",
+      "queries": [
+        "Kilkeaveragh paragliding",
+        "Kilkeeveragh hang gliding",
+        "Killkeaveragh paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.868,
+      "lon": -10.3326
+    },
+    {
+      "siteId": "pgmap-127835",
+      "name": "Kingarrow Mtn",
+      "queries": [
+        "Kingarrow paragliding",
+        "Kingarrow hang gliding Donegal"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 55.0613,
+      "lon": -7.91549
+    },
+    {
+      "siteId": "pgmap-134494",
+      "name": "Knockavahaun",
+      "queries": [
+        "Knockavahaun paragliding",
+        "Knockavahaun hang gliding Kerry",
+        "Knockavahaun flying"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9228,
+      "lon": -10.1153
+    },
+    {
+      "siteId": "pgmap-134465",
+      "name": "Knocknabro",
+      "queries": [
+        "Knocknabro paragliding",
+        "Knocknabro hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.0135,
+      "lon": -9.2323
+    },
+    {
+      "siteId": "pgmap-127627",
+      "name": "Knocknadobar",
+      "queries": [
+        "Knocknadobar paragliding",
+        "Knocknadobar hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=4b8_JmszcOQ",
+          "title": "Rossbeigh Paraglider Tour, Part 1, Knocknadobar",
+          "channel": "Tony Taylor",
+          "matchNote": "The title explicitly identifies Knocknadobar on a Rossbeigh paragliding tour. The uploader describes a coastal flight past mountains and sea cliffs. This is a named-mountain flight candidate; the takeoff at the source marker and its wind suitability remain unverified.",
+          "confidence": "site",
+          "sourceEvidence": "The public YouTube watch-page title identifies Knocknadobar as part one of the Rossbeigh paragliding tour. The description describes the westward coastal flight and return and links a flight track. The player metadata reports the video available and embeddable.",
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Rossbeigh Paraglider Tour, Part 1, Knocknadobar",
+            "channel": "Tony Taylor",
+            "checkedAt": "2026-10-22T09:36:12.827Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": true,
+      "lat": 51.9927,
+      "lon": -10.1751
+    },
+    {
+      "siteId": "pgmap-132966",
+      "name": "Knocknakilton",
+      "queries": [
+        "Knocknakilton paragliding",
+        "Knocknakilton hang gliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=M1UAmhuYywA",
+          "title": "Knocknakilton Triangle | Fly Dingle | Paragliding | Hike and fly | Paragliding Ireland",
+          "channel": "Markus Wiericks",
+          "matchNote": "Title explicitly identifies a paragliding triangle from Knocknakilton, with the description placing it in Dingle, County Kerry. Exact launch and wind sector remain unchecked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=M1UAmhuYywA",
+            "watchPageTitle": "Knocknakilton Triangle | Fly Dingle | Paragliding | Hike and fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Knocknakilton%20paragliding",
+            "locationEvidence": "Title explicitly identifies a paragliding triangle from Knocknakilton, with the description placing it in Dingle, County Kerry. Exact launch and wind sector remain unchecked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Knocknakilton Triangle | Fly Dingle | Paragliding | Hike and fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "checkedAt": "2026-10-22T09:39:47.953Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=KgzaGSGdyPw",
+          "title": "Mini XC Knocknakilton | Fly Dingle | Paragliding | Hike and Fly | Paragliding Ireland",
+          "channel": "Markus Wiericks",
+          "matchNote": "Title explicitly identifies a short cross-country paraglider flight at Knocknakilton; description places it near Dingle, County Kerry. Exact launch and wind sector remain unchecked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=KgzaGSGdyPw",
+            "watchPageTitle": "Mini XC Knocknakilton | Fly Dingle | Paragliding | Hike and Fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Knocknakilton%20paragliding",
+            "locationEvidence": "Title explicitly identifies a short cross-country paraglider flight at Knocknakilton; description places it near Dingle, County Kerry. Exact launch and wind sector remain unchecked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Mini XC Knocknakilton | Fly Dingle | Paragliding | Hike and Fly | Paragliding Ireland",
+            "channel": "Markus Wiericks",
+            "checkedAt": "2026-10-22T09:39:47.963Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.19,
+      "lon": -9.988
+    },
+    {
+      "siteId": "pgmap-127722",
+      "name": "Lackadunna",
+      "queries": [
+        "paragliding Lackadunna",
+        "Knocknasilloge paragliding",
+        "paragliding Cnoc na Saileog",
+        "\"Lackadunna\" paragliding youtube"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.3954,
+      "lon": -9.49724
+    },
+    {
+      "siteId": "pgmap-127846",
+      "name": "Loughcrillan RTE Transmitter",
+      "queries": [
+        "paragliding Loughcrillan",
+        "Lough Crillan paragliding Donegal",
+        "paragliding Glenties transmitter",
+        "\"Loughcrillan\" paragliding youtube"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.817,
+      "lon": -8.3189
+    },
+    {
+      "siteId": "pgmap-134483",
+      "name": "Madman's Seat",
+      "queries": [
+        "Madmans Seat paragliding",
+        "Madman's Seat hang gliding Kerry"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9915,
+      "lon": -9.6355
+    },
+    {
+      "siteId": "pgmap-177385",
+      "name": "Magheraroaty Beach",
+      "queries": [
+        "paragliding Magheraroarty",
+        "Machaire Rabhartaigh paragliding",
+        "paragliding Magheroarty beach",
+        "\"Magheraroarty\" paragliding youtube",
+        "\"Magheraroaty\" paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 55.149971,
+      "lon": -8.154523
+    },
+    {
+      "siteId": "pgmap-127496",
+      "name": "Mass Mt.",
+      "queries": [
+        "Mass Mountain paragliding Cork",
+        "Mass Mt hang gliding Ireland"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 51.6996,
+      "lon": -9.69374
+    },
+    {
+      "siteId": "pgmap-134486",
+      "name": "Maulin Mtn (Kerry Head)",
+      "queries": [
+        "Maulin Kerry Head paragliding",
+        "Maulin Mountain Kerry hang gliding",
+        "Maulin Ballyheigue paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.416,
+      "lon": -9.8608
+    },
+    {
+      "siteId": "pgmap-127775",
+      "name": "Maumturk Mts",
+      "queries": [
+        "paragliding Maumturks",
+        "\"Maumturk\" paragliding youtube",
+        "\"paragliding\" \"Maamturk\" video"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=ZkMDJfhH1l4",
+          "title": "Paragliding Maumturks, Co. Galway",
+          "channel": "Martin Mc Mahon",
+          "matchNote": "Title explicitly identifies paragliding in the Maumturks, County Galway. The range matches; the particular catalogue launch is not identified.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=ZkMDJfhH1l4",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "paragliding Maumturks",
+              "summary": "Public watch-page title and description were read directly; playability status was OK. Title names the recorded flying location."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Maumturks, Co. Galway",
+            "channel": "Martin Mc Mahon",
+            "checkedAt": "2026-10-22T09:36:49.230Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=L0jQE60kAPA",
+          "title": "Maumturks Hike & Fly",
+          "channel": "Uli's Flights",
+          "matchNote": "Uploader describes a hike and flight in the Irish Maumturks, including a trail from the official car park. The particular catalogue launch is not identified.",
+          "confidence": "area",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=L0jQE60kAPA",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "paragliding Maumturks",
+              "summary": "Public watch-page title and description were read directly; playability status was OK. Description identifies a hike and flight in the Maumturks of Ireland."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Maumturks Hike & Fly",
+            "channel": "Uli's Flights",
+            "checkedAt": "2026-10-22T09:36:49.308Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.4943,
+      "lon": -9.664
+    },
+    {
+      "siteId": "pgmap-127462",
+      "name": "Mt.Gabriel",
+      "queries": [
+        "Mount Gabriel paragliding",
+        "Mount Gabriel hang gliding Cork"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=omOgWeUhxNg",
+          "title": "Mt.Gabriel 230111.mp4",
+          "channel": "Gilbert McGlennon",
+          "matchNote": "Watch-page description explicitly identifies paragliding at Mount Gabriel, County Cork, Ireland. Exact launch and wind sector remain unchecked.",
+          "confidence": "site",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=omOgWeUhxNg",
+            "watchPageTitle": "Mt.Gabriel 230111.mp4",
+            "channel": "Gilbert McGlennon",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Mount%20Gabriel%20paragliding",
+            "locationEvidence": "Watch-page description explicitly identifies paragliding at Mount Gabriel, County Cork, Ireland. Exact launch and wind sector remain unchecked."
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Mt.Gabriel 230111.mp4",
+            "channel": "Gilbert McGlennon",
+            "checkedAt": "2026-10-22T09:39:47.941Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.5586,
+      "lon": -9.5402
+    },
+    {
+      "siteId": "pgmap-127442",
+      "name": "Mullaghmesha Mtn. (W)",
+      "queries": [
+        "Mullaghmesha paragliding",
+        "Mullaghmesha hang gliding",
+        "Mullaghmisha paragliding",
+        "Mullaghmesha flying Ireland"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.702,
+      "lon": -9.33058
+    },
+    {
+      "siteId": "pgmap-127825",
+      "name": "Mulmosog Mountain",
+      "queries": [
+        "Mulmosog paragliding",
+        "Mulmosog hang gliding Donegal"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 54.732,
+      "lon": -8.39117
+    },
+    {
+      "siteId": "pgmap-127423",
+      "name": "Mushera (N)",
+      "queries": [
+        "Mushera paragliding",
+        "Musheramore hang gliding",
+        "Musheramore paragliding",
+        "Musherabeg paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.0231,
+      "lon": -8.9553
+    },
+    {
+      "siteId": "pgmap-153941",
+      "name": "O' Donell's Rock",
+      "queries": [
+        "paragliding O'Donnells Rock Leitrim",
+        "\"O'Donnell's Rock\" paragliding youtube"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=tBprK3qsgEk",
+          "title": "Paragliding O'donnells Rock Co Leitrim Ireland",
+          "channel": "Simon Finlay",
+          "matchNote": "Title identifies paragliding at O'Donnell's Rock, County Leitrim; uploader places the flight near Manorhamilton. Exact launch and published wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=tBprK3qsgEk",
+              "method": "YouTube public search metadata",
+              "searchQuery": "paragliding O'Donnells Rock Leitrim",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding O'donnells Rock Co Leitrim Ireland",
+            "channel": "Simon Finlay",
+            "checkedAt": "2026-10-22T09:36:49.308Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.266464,
+      "lon": -8.184647
+    },
+    {
+      "siteId": "pgmap-182662",
+      "name": "Old Bawn",
+      "queries": [
+        "Old Bawn paragliding Wexford",
+        "Oldbawn beach hang gliding",
+        "Oldbawn paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.537713,
+      "lon": -6.209294
+    },
+    {
+      "siteId": "pgmap-146765",
+      "name": "Old Leighlin",
+      "queries": [
+        "Old Leighlin paragliding",
+        "Oldleighlin hang gliding",
+        "Old Leighlin flying"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.723519,
+      "lon": -7.028787
+    },
+    {
+      "siteId": "pgmap-134478",
+      "name": "Parkana",
+      "queries": [
+        "Parkana paragliding",
+        "Parkana hang gliding Cork"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.8439,
+      "lon": -9.428
+    },
+    {
+      "siteId": "pgmap-169153",
+      "name": "Rinvill Park",
+      "queries": [
+        "paragliding Rinville Park",
+        "Rinvill paragliding Galway",
+        "paragliding Renville Park Oranmore",
+        "\"Rinville\" paragliding youtube",
+        "\"Rinvill Park\" paragliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 53.246016,
+      "lon": -8.956655
+    },
+    {
+      "siteId": "pgmap-127745",
+      "name": "Rocky Hill",
+      "queries": [
+        "Rocky Hill paragliding Inishowen",
+        "Granias Gap hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 55.0918,
+      "lon": -7.32654
+    },
+    {
+      "siteId": "pgmap-134469",
+      "name": "Rossacroo",
+      "queries": [
+        "Rossacroo paragliding",
+        "Rossacroo hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.0324,
+      "lon": -9.3167
+    },
+    {
+      "siteId": "pgmap-127809",
+      "name": "Scraigs",
+      "queries": [
+        "Scraigs paragliding Donegal",
+        "Scraigs hang gliding"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 54.8601,
+      "lon": -8.10277
+    },
+    {
+      "siteId": "pgmap-146764",
+      "name": "Shillelagh",
+      "queries": [
+        "Shillelagh paragliding",
+        "Shillelagh hang gliding Wicklow"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.7823,
+      "lon": -6.55568
+    },
+    {
+      "siteId": "pgmap-132961",
+      "name": "Silvermine Mts.",
+      "queries": [
+        "paragliding Silvermines Ireland",
+        "Silvermines paragliding",
+        "\"Silvermine\" paragliding youtube Ireland"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=d368gqT5JTA",
+          "title": "Paragliding Ireland, Silvermines Mountains, Independence Pioneer, 360 video, insta360",
+          "channel": "MsPfpfpf",
+          "matchNote": "Title identifies paragliding in the Silvermines Mountains, Ireland. Exact launch and wind sectors are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=d368gqT5JTA",
+              "method": "YouTube public search metadata",
+              "searchQuery": "Silvermines paragliding",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Ireland, Silvermines Mountains, Independence Pioneer, 360 video, insta360",
+            "channel": "MsPfpfpf",
+            "checkedAt": "2026-10-22T09:36:49.308Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=lFwaG5MLSYo",
+          "title": "Silvermine Mountains, Apr 27 2013- Patricia is Flying Like a Bird",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "Title and uploader description identify a tandem paragliding flight in the Silvermine Mountains. The Irish pilot/channel and local search match support the Irish range; exact launch is unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=lFwaG5MLSYo",
+              "method": "YouTube public search metadata",
+              "searchQuery": "Silvermines paragliding",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Silvermine Mountains, Apr 27 2013- Patricia is Flying Like a Bird",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:36:49.302Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.7771,
+      "lon": -8.2524
+    },
+    {
+      "siteId": "pgmap-127483",
+      "name": "Slieve Bernagh",
+      "queries": [
+        "paragliding Slieve Bernagh Clare",
+        "Slieve Bernagh paragliding",
+        "\"Slieve Bernagh\" paragliding youtube Clare"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=VnP0MvW2zhY",
+          "title": "Slieve Bernagh, Apr. 06 2013- Soaring Above Irish Mountains",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "Uploader explicitly identifies tandem paragliding at Slieve Bernagh in County Clare, distinguishing it from the similarly named Mourne mountain. Exact launch is unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=VnP0MvW2zhY",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "Slieve Bernagh paragliding",
+              "summary": "Public watch-page title and description were read directly; playability status was OK. Description explicitly identifies County Clare."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Slieve Bernagh, Apr. 06 2013- Soaring Above Irish Mountains",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:36:49.345Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=FhTW0h54d64",
+          "title": "Slieve Bernagh, Apr.06.2013- Frances Is Flying Free",
+          "channel": "Jacek Chodanowski",
+          "matchNote": "Uploader identifies a paragliding flight at Slieve Bernagh and explicitly places the scenery in County Clare. Exact launch is unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=FhTW0h54d64",
+              "method": "YouTube public search metadata and watch-page description",
+              "searchQuery": "Slieve Bernagh paragliding",
+              "summary": "Public watch-page title and description were read directly; playability status was OK. Description explicitly identifies County Clare."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Slieve Bernagh, Apr.06.2013- Frances Is Flying Free",
+            "channel": "Jacek Chodanowski",
+            "checkedAt": "2026-10-22T09:36:49.359Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.8239,
+      "lon": -8.55183
+    },
+    {
+      "siteId": "pgmap-127588",
+      "name": "Slieve Gallion",
+      "queries": [
+        "paragliding Slieve Gallion",
+        "Slieve Gallion paragliding",
+        "\"Slieve Gallion\" paragliding youtube"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=-vCQA3BfRX8",
+          "title": "Paragliding Slieve Gallion NE face 17/6/21",
+          "channel": "PJC Adventures",
+          "matchNote": "Title and uploader description identify paragliding at Slieve Gallion in Northern Ireland, specifically the NE face. The footage has not been used to infer or validate wind limits.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=-vCQA3BfRX8",
+              "method": "YouTube public search metadata",
+              "searchQuery": "Slieve Gallion paragliding",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Slieve Gallion NE face 17/6/21",
+            "channel": "PJC Adventures",
+            "checkedAt": "2026-10-22T09:36:49.359Z"
+          }
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=kuLwv_gCsyQ",
+          "title": "Paragliding Slieve Gallion  Ireland",
+          "channel": "Simon Finlay",
+          "matchNote": "Title identifies Slieve Gallion, Ireland; uploader places the flight near Moneymore. Exact launch and published wind limits are unconfirmed.",
+          "confidence": "site",
+          "sourceEvidence": [
+            {
+              "url": "https://www.youtube.com/watch?v=kuLwv_gCsyQ",
+              "method": "YouTube public search metadata",
+              "searchQuery": "Slieve Gallion paragliding",
+              "summary": "Public YouTube search returned the exact video ID, title and uploader. The result description supports the location/activity association."
+            }
+          ],
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Paragliding Slieve Gallion  Ireland",
+            "channel": "Simon Finlay",
+            "checkedAt": "2026-10-22T09:36:49.366Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 54.748525,
+      "lon": -6.736658
+    },
+    {
+      "siteId": "pgmap-127568",
+      "name": "Slieve Mish Mts.",
+      "queries": [
+        "Slieve Mish paragliding",
+        "Knockmoyle paragliding Kerry"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": true,
+      "lat": 52.2125,
+      "lon": -9.71465
+    },
+    {
+      "siteId": "pgmap-127392",
+      "name": "Slievereagh",
+      "queries": [
+        "Slievereagh paragliding",
+        "Slieve Reagh paragliding Ballylanders"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=kFnJy_DD53g",
+          "title": "Slievereagh",
+          "channel": "Gilbert McGlennon",
+          "matchNote": "Title identifies Slievereagh and the inspected thumbnail shows an apparent hang-glider launch. The description is empty, so the county and exact launch require visual review.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=kFnJy_DD53g",
+            "watchPageTitle": "Slievereagh",
+            "channel": "Gilbert McGlennon",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Slievereagh%20paragliding",
+            "locationEvidence": "Title identifies Slievereagh and the inspected thumbnail shows an apparent hang-glider launch. The description is empty, so the county and exact launch require visual review.",
+            "thumbnailUrl": "https://i.ytimg.com/vi/kFnJy_DD53g/hqdefault.jpg"
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Slievereagh",
+            "channel": "Gilbert McGlennon",
+            "checkedAt": "2026-10-22T09:39:48.019Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 52.3779,
+      "lon": -8.40382
+    },
+    {
+      "siteId": "pgmap-134480",
+      "name": "Torc",
+      "queries": [
+        "Torc paragliding",
+        "Torc Mountain hang gliding",
+        "Torc Mountain paragliding"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=EvzC8qj83Us",
+          "title": "Torc Waterfall and watch paragliding land",
+          "channel": "Michael Herlihy",
+          "matchNote": "The title identifies Torc Waterfall and a paraglider landing; the inspected thumbnail also shows a paraglider beside the road. This supports flying in the Torc area but does not identify a launch on Torc Mountain.",
+          "confidence": "area",
+          "sourceEvidence": {
+            "watchPageUrl": "https://www.youtube.com/watch?v=EvzC8qj83Us",
+            "watchPageTitle": "Torc Waterfall and watch paragliding land",
+            "channel": "Michael Herlihy",
+            "playability": "OK",
+            "searchPageUrl": "https://www.youtube.com/results?search_query=Torc%20paragliding",
+            "locationEvidence": "The title identifies Torc Waterfall and a paraglider landing; the inspected thumbnail also shows a paraglider beside the road. This supports flying in the Torc area but does not identify a launch on Torc Mountain.",
+            "thumbnailUrl": "https://i.ytimg.com/vi/EvzC8qj83Us/hqdefault.jpg"
+          },
+          "availability": {
+            "status": 200,
+            "available": true,
+            "title": "Torc Waterfall and watch paragliding land",
+            "channel": "Michael Herlihy",
+            "checkedAt": "2026-10-22T09:39:48.023Z"
+          }
+        }
+      ],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.9982,
+      "lon": -9.5215
+    },
+    {
+      "siteId": "pgmap-201264",
+      "name": "Youghal Crocodile",
+      "queries": [
+        "Youghal Crocodile paragliding",
+        "Youghal paragliding hang gliding",
+        "Crocodile Rock paragliding Ireland"
+      ],
+      "videos": [],
+      "sourceDirectionsUnknown": false,
+      "lat": 51.935737,
+      "lon": -7.856644
+    }
+  ]
+}

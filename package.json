@@ -1,0 +1,39 @@
+{
+    "name": "windy-plugin-fly-ireland",
+    "version": "1.0.0",
+    "description": "Paragliding sites, wind roses and forecast matching across the island of Ireland for Windy.com.",
+    "private": true,
+    "main": "dist/plugin.min.js",
+    "type": "module",
+    "scripts": {
+        "build": "node scripts/build.mjs",
+        "build:win": "npm run build",
+        "start": "rollup -w -c",
+        "package:github": "node scripts/package-github.mjs",
+        "test": "node --test tests/*.test.mjs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KamilYS2b7/fly-ireland.git"
+    },
+    "keywords": [
+        "windy",
+        "windy.com",
+        "plugins",
+        "paragliding",
+        "ireland",
+        "wind"
+    ],
+    "author": "KamilYS2b7",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/KamilYS2b7/fly-ireland/issues"
+    },
+    "homepage": "https://github.com/KamilYS2b7/fly-ireland#readme",
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "dependencies": {
+        "@windycom/plugin-devtools": "3.0.2"
+    }
+}
