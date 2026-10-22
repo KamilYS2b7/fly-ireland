@@ -1,6 +1,6 @@
 {
     "name": "windy-plugin-fly-ireland",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Paragliding sites, wind roses and forecast matching across the island of Ireland for Windy.com.",
     "private": true,
     "main": "dist/plugin.min.js",

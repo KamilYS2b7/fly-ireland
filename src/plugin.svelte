@@ -1390,6 +1390,7 @@ function highlightSite(id: string){
 
 function onMapClick(event: any){
   if (event?.originalEvent?.target?.closest?.('.wind-rose-icon')) return;
+  sitePanelComponent?.collapseOnMapClick?.();
   if (!selectedSiteId && !hoveredSiteId) return;
   selectedSiteId = '';
   highlightSite('');

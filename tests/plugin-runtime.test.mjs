@@ -249,7 +249,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         emitStorage(key) {browserListeners.get('storage')?.({key});},
         get browserListenerCount(){return browserListeners.size;},
         selectFirstSite() { vm.runInContext('focusSite(sitePanel.sites[0])', context); },
-        connectPanel(onReveal) {context.onRevealTest=onReveal;vm.runInContext('sitePanelComponent={revealSite:onRevealTest}',context);},
+        connectPanel(onReveal, onCollapse = () => {}) {context.onRevealTest=onReveal;context.onCollapseTest=onCollapse;vm.runInContext('sitePanelComponent={revealSite:onRevealTest,collapseOnMapClick:onCollapseTest}',context);},
         get selectedSiteId() {return vm.runInContext('selectedSiteId',context);},
         hoverSite(id) { context.hoverTestId=id; vm.runInContext('highlightSite(hoverTestId)', context); },
         get lastView() { return lastView; },
@@ -465,6 +465,19 @@ test('a map background click clears selected and hovered roses without navigatin
     assert.equal(app.reads,reads);
     app.destroy();
     assert.equal(app.listenerCount('click'),0,'The map listener is removed when the plugin closes');
+});
+
+test('background map clicks request panel collapse even without a selected site and keep map layers active',async()=>{
+    const app=runtime();app.mount();await app.flush();await app.flush();
+    let collapsed=0;app.connectPanel(()=>{},()=>collapsed++);
+    const layers=app.layers.size,reads=app.reads;
+    app.emit('click',{originalEvent:{target:{closest:()=>null}}});
+    assert.equal(collapsed,1);
+    assert.equal(app.layers.size,layers);
+    assert.equal(app.reads,reads);
+    app.emit('click',{originalEvent:{target:{closest:()=>({})}}});
+    assert.equal(collapsed,1,'Rose clicks must not collapse a revealed card');
+    app.destroy();
 });
 
 test('wind units update cached roses and cards together and survive reopening without changing wind matches',async()=>{

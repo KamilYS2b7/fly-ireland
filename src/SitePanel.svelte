@@ -95,6 +95,15 @@
     onWindUnitChange(value as WindUnit);
   }
 
+  export function collapseOnMapClick() {
+    if (!window.matchMedia('(max-width: 600px)').matches) return;
+    revealRequest++;
+    stopReveal?.();
+    stopReveal = undefined;
+    hoverSite('');
+    collapsed = true;
+  }
+
   export async function revealSite(id: string) {
     const request = ++revealRequest;
     stopReveal?.();
@@ -428,6 +437,6 @@
   .empty{padding:17px 7px;color:#526b73;line-height:1.6;margin:0;}
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
   .collapsed{width:285px;}
-  @media(max-width:600px){.site-panel{left:8px;top:72px;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
-  @media(max-height:500px){.site-panel{top:55px;}}
+  @media(max-width:600px){.site-panel{left:8px;top:calc(120px + env(safe-area-inset-top, 0px));width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
+  @media(max-height:500px) and (min-width:601px){.site-panel{top:55px;}}
 </style>
