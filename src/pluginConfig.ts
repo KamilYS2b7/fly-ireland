@@ -9,7 +9,7 @@ const config: ExternalPluginConfig = {
     author: 'KamilYS2b7',
     repository: 'https://github.com/KamilYS2b7/fly-ireland',
     desktopUI: 'embedded',
-    mobileUI: 'embedded',
+    mobileUI: 'fullscreen',
     routerPath: '/fly-ireland',
     private: true,
 };
