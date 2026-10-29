@@ -37,7 +37,9 @@ test('malformed coordinates and unsafe photo paths never reach map or image attr
  assert.deepEqual(guide.images,['assets/sites/ok.jpg']);assert.equal(guide.points.length,2);
  assert.equal(guide.points[1].kind,'reference');
  assert.throws(()=>guideAssetUrl('../secret','https://localhost:9999/plugin.js'));
- assert.equal(guideAssetUrl('assets/sites/ok.jpg','https://windy-plugins.com/12509319/windy-plugin-fly-ireland/1.1.0/plugin.min.js'),'https://windy-plugins.com/12509319/windy-plugin-fly-ireland/1.1.0/assets/sites/ok.jpg');
+ assert.equal(guideAssetUrl('assets/sites/ok.jpg','https://windy-plugins.com/12509319/windy-plugin-fly-ireland/1.1.28/plugin.min.js'),'https://raw.githubusercontent.com/KamilYS2b7/fly-ireland/9c31a9a32f52f7876c3fd0ba5d9a282a8bcc85c2/assets/assets/sites/ok.jpg');
+ assert.equal(guideAssetUrl('assets/site_descriptions.json','https://windy-plugins.com/12509319/windy-plugin-fly-ireland/1.1.28/plugin.min.js'),'https://windy-plugins.com/12509319/windy-plugin-fly-ireland/1.1.28/assets/site_descriptions.json');
+ assert.equal(guideAssetUrl('assets/sites/ok.jpg','https://localhost:9999/plugin.js'),'https://localhost:9999/assets/sites/ok.jpg');
 });
 
 test('description loading is on demand, shared across sites, retriable, and abortable on plugin destruction',async()=>{
