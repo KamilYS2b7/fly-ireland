@@ -45,3 +45,17 @@ GitHub udostępnia kod. Instalacja deweloperska odbywa się w [Windy Developer M
 Po zmianie nazwy z szablonu użyj ponownie **Install & open plugin**. Nowa ścieżka wtyczki to `/plugin/fly-ireland`.
 
 Workflow publikujący do Windy jest uruchamiany ręcznie i wymaga sekretu repozytorium `WINDY_API_KEY`. Nie uruchamia się przy zwykłym wysłaniu kodu na GitHub. Domyślna konfiguracja zachowuje prywatną widoczność w galerii Windy.
+
+## Poprawka 1.0.1 — wyświetlanie panelu
+
+Zachowaj `desktopUI: 'embedded'` oraz `mobileUI: 'small'` w `src/pluginConfig.ts`. Tryb `fullscreen` otwiera zbędną pełnoekranową osłonę, a `embedded` nie jest obsługiwane jako tryb mobilny przez klienta Windy. Pusty kontener z krzyżykiem jest ukryty tylko dla Fly Ireland; własny panel i rozety nadal działają. Przycisk „−” zwija listę bez wyłączania wtyczki.
+
+Wyślij poprawione źródła na GitHub i uruchom **Actions → Publish Fly Ireland to Windy → Run workflow**. W logu otrzymasz adres nowej wersji. Samo odświeżenie strony nie zastąpi opublikowanej wersji 1.0.0 lokalną poprawką.
+
+## Wersja 1.1.0 — przewodniki po miejscówkach
+
+Przycisk **Site guide** na kafelku oraz ikonka informacji przy dużej rozecie otwierają opisy i zdjęcia. **Show on map** pokazuje punkty startu, lądowania i parkingi wybranej miejscówki. Pasek **Site points** pozwala wrócić do opisu albo ukryć punkty. Zamknięcie przewodnika nie zamyka wtyczki.
+
+Do źródeł na GitHubie dołącz katalog `assets/assets` z plikiem `site_descriptions.json` i podkatalogiem `sites`. Kompilacja kopiuje wymagane pliki do `dist/assets`; workflow publikuje je razem z wtyczką. Zdjęcia nie są osadzane w pliku JavaScript i są wczytywane dopiero po otwarciu opisu.
+
+Punkty Lough Navar wymagają weryfikacji. Opisy źródłowe nie mają daty potwierdzenia aktualności zasad dostępu ani ograniczeń przestrzeni powietrznej.

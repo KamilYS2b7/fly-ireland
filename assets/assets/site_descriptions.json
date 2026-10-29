@@ -1,0 +1,2717 @@
+{
+  "Big Colin": {
+    "title": "Big Colin",
+    "summary": "Big Collin is a south-facing hill with a launch site at 1000 ft above sea level. The gentle slopes produce good thermals and, despite its modest 200 ft elevation, it has yielded many successful XC flights. The site is generally safe, and student pilots frequently fly here under supervision. Due to the shallow slope, the lift band can be narrow, making soaring conditions marginal at times, so extra care is necessary when multiple pilots are soaring. Standard air rules apply.",
+    "takeoff": "The smooth, grassy slope provides a straightforward launch.",
+    "landing": "Land directly below the hill, being careful to avoid the drainage holes, metal rods, and trenches beside the lane.",
+    "toplanding": "The hill’s smooth, rounded top makes for an easy top landing.",
+    "access": "From Ballyclare, drive northwest on the B94 (Collin Road) for about 4 miles. At the summit, look for a large white arrow painted on the road directing traffic to the left over the next crest—this points to the access gate. When entering, pull well into the lane before opening the gate. Caution is also needed when exiting, as the junction with the main road has a partially blind view of oncoming traffic.",
+    "parking": "Use the small lay-bys at the foot of the hill. Avoid obstructing the lane or the landing zone approach. Be mindful of student pilots who may be approaching the landing area.",
+    "hazards": "Strong Winds: Turbulent conditions are often reported in southerly winds above 14 mph.\nWind Farm: A wind turbine farm is located on the west side of the hill but does not interfere with flight paths.\nDrainage Hazards: Large drainage holes are located on the lower side of the lane. These should be avoided when bottom landing, as they are deep enough to be hazardous.\nPosts and Signage: Maintenance crews have installed black and white plastic posts, some replaced by wooden ones, along both sides of the lane. A metal speed limit sign is also present near the bottom landing approach on the SSW face.",
+    "airtrafficcontrolrestrictions": "Class D airspace begins at 2000 ft AMSL. This site lies within ‘Big Collin/Agnews – Designated Area 1,’ as outlined in the Letter of Agreement (LOA) with Aldergrove ATC. UHPC members can extend the ceiling to 5000 ft by following procedures outlined in the LOA.",
+    "images": [
+      "assets/sites/big_colin_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Top launch A",
+        "code": "A",
+        "lat": 54.802089,
+        "lon": -6.083553
+      },
+      {
+        "label": "Lower launch B",
+        "code": "B",
+        "lat": 54.801345,
+        "lon": -6.082059
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main landing field C",
+        "code": "C",
+        "lat": 54.800345,
+        "lon": -6.079921
+      },
+      {
+        "label": "Paramotor landing field D",
+        "code": "D",
+        "lat": 54.802307,
+        "lon": -6.076503
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Main lay-by E",
+        "code": "E",
+        "lat": 54.80111125662587,
+        "lon": -6.079408524065345
+      }
+    ],
+    "parkingMarkers": [],
+    "accessPoints": [
+      {
+        "label": "Site access gate",
+        "code": "F",
+        "lat": 54.806302,
+        "lon": -6.073211
+      }
+    ]
+  },
+  "Agnews Hill": {
+    "title": "Agnew’s Hill",
+    "summary": "Agnew’s Hill is an easterly-facing ridge linked to Shane’s Hill, with launches around 1300 ft and a high point near 1550 ft. It offers excellent ridge soaring in light NE–E winds and smooth evening conditions, with regular out-and-return flights along the 3-mile ridge.",
+    "takeoff": "Smooth, rounded grass launch above the ridge; generally straightforward for both HG and PG.",
+    "landing": "Bottom landing is on flat fields near the parking areas on each slope; avoid overflying parked vehicles and be aware of possible wake turbulence from the turbines if they are running.",
+    "toplanding": "The broad launch area doubles as a top-landing zone in suitable conditions.",
+    "access": "From the main Larne–Ballymena road, turn onto Starbog Road to reach the base of the hill. Access to the W and SW faces is via a 2-mile lane with a locked gate; this access is currently restricted to training schools only and must be arranged through the UHPC/approved schools.",
+    "parking": "Park in the field just past the lay-by, leaving space for other vehicles and closing the gate carefully. For the W/SW slopes, use the small roadside lay-by at the base of the hill.",
+    "hazards": "Wind Farm Wake: Ballykeel Windfarm to the NE can generate severe wake turbulence in stronger winds or when the wind is north of east, especially in bottom landing areas if the turbines are not stopped.\nWindfarm Procedures: UHPC has an agreement with the operators; only UHPC members may request shutdown and must call again to restart when flying is finished.\nGround Conditions: The walk-up is steep and very boggy, even in summer—proper boots essential.\nFences and Stile: Cross the wire fence only at the metal stile and avoid damaging fences.",
+    "airtrafficcontrolrestrictions": "Class D airspace lies above 2000 ft AMSL. Agnew’s Hill is part of the ‘Big Collin/Agnew’s – Designated Area 1’ covered by a Letter of Agreement (LOA) with Aldergrove ATC. UHPC members can extend the ceiling from 2000 ft up to 5000 ft by activating the designated area according to the LOA procedures.",
+    "images": [
+      "assets/sites/agnews_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.847957,
+        "lon": -5.931086
+      },
+      {
+        "label": "Lower launch B",
+        "code": "B",
+        "lat": 54.853467,
+        "lon": -5.933467
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main bottom landing C",
+        "code": "C",
+        "lat": 54.854447,
+        "lon": -5.930599
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Main parking field D",
+        "code": "D",
+        "lat": 54.854756,
+        "lon": -5.930499
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Clermont Carn": {
+    "title": "Clermont Carn",
+    "summary": "Clermont Cairn (1674 ft) in Co. Louth overlooks Carlingford Lough, about 10 miles from Newry. A steep, well-shaped bowl with a tarmac road to the transmitter at the summit, it offers strong soaring and thermal potential, particularly for paragliders. Bottom landing options are limited due to steep slopes, so the site is less suitable for hang gliders.",
+    "takeoff": "Main launch is on the grassy edge of the bowl close to the access road, providing a steep but convenient takeoff.",
+    "landing": "A small bottom field lies at the base of the bowl, but other fields are limited and on steep down slopes, making bottom landings challenging, especially for hang gliders.",
+    "toplanding": "Top landings are generally straightforward on the broad summit area near the transmitter and along the ridge.",
+    "access": "From Newry, take the Carlingford Road to Omeath. In the village, turn right, then first right and then left; the road to the transmitter is on the right. Use a map app for precise junctions.",
+    "parking": "Park along the road near the summit or at suitable spots beside the road on the way up, taking care not to block access for service vehicles.",
+    "hazards": "Limited bottom landing options with steep slopes mean careful planning is needed, especially for hang gliders. A telecom mast stands at the top but does not significantly affect flying; keep a sensible clearance when low.",
+    "airtrafficcontrolrestrictions": "There are no direct ATC restrictions over Clermont Cairn, but pilots should be aware that the Gormanston Military Flying Training Area lies a few miles to the south and check current activity before flying.",
+    "images": [
+      "assets/sites/clermont_cairn_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.077908,
+        "lon": -6.320181
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main bottom landing B",
+        "code": "B",
+        "lat": 54.068994,
+        "lon": -6.325104
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Roadside parking near summit C",
+        "code": "C",
+        "lat": 54.079821,
+        "lon": -6.320404
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Coolnasillagh": {
+    "title": "Coolnasillagh",
+    "summary": "Coolnasillagh is a shallow south-east facing ridge on the edge of the Sperrin Mountains, about 2 miles long, with launch around 1100 ft ASL. It offers both ridge and thermal soaring in SE winds (120°–150°, best around 135°) and works for both hang gliders and paragliders at BHPA Club Pilot level.",
+    "takeoff": "The launch is a shallow, rounded grassy slope that should not present any particular problems in normal conditions.",
+    "landing": "The main bottom landing field lies roughly half a mile in front of launch and has a noticeable down slope, which can be problematic for hang gliders but is generally manageable for paragliders.",
+    "toplanding": "Top landings are possible but should be approached with extra speed to cope with potential turbulence. Do not undershoot, as the back of the hill falls away steeply, with sinking air that can lead to hard landings.",
+    "access": "From the top of Glenshane Pass, turn near the lay-by, then take a left, followed by another left. Continue for about half a mile and turn right onto a rough lane running behind the hill. Follow this lane for roughly another half mile to a wire gate; open, secure, drive through and close it carefully. Parking is limited, so share cars where possible.",
+    "parking": "Park carefully along the side of the lane without blocking it, keeping clear for local traffic and farm vehicles using the private lane.",
+    "hazards": "Bottom Landing Slope: The sloping bottom field makes landings difficult for hang gliders and requires good planning.\nLane Access: The lane is private and busy with tractors in summer for turf collection; it must never be obstructed.\nTop Landing: Risk of turbulence and strong sink behind the ridge if you undershoot on top-landing approach.",
+    "airtrafficcontrolrestrictions": "There are currently no air traffic control restrictions for this site.",
+    "images": [
+      "assets/sites/coolnasillagh_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.848397,
+        "lon": -6.790764
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main bottom landing B",
+        "code": "B",
+        "lat": 54.840948,
+        "lon": -6.780419
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Lane-side parking C",
+        "code": "C",
+        "lat": 54.850279,
+        "lon": -6.789618
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Craigagh Hill": {
+    "title": "Craigagh Hill",
+    "summary": "Craigagh Hill sits on the eastern edge of the Sperrin Mountains with launch around 1400 ft ASL. The site features sweeping concave bowls on a ridge that runs for about 13 miles toward Plumbridge, working best in E–SE winds (090–130°, optimal around 110°) for both hang gliders and paragliders.",
+    "takeoff": "Launch is from a smooth, rounded grassy slope. In stronger winds, take off from a more forward position to avoid being pushed back toward the ridge top.",
+    "landing": "The main bottom landing zone is directly below launch on down-sloping ground. Be aware of the power lines running through the valley and of possible restrictions when the gun club is active.",
+    "toplanding": "The primary top landing area is directly behind launch. Landing close to the road and parking is possible, but note the proximity of power cables and potential rotor in strong winds.",
+    "access": "From Draperstown, take the B40 toward Moneyneany, then fork left. After about 1 mile, turn left onto a rough track under main power lines. From Dungiven, follow signs to Draperstown, passing White Mountain; after Moydamlaght Forest, turn right about 1 mile before Moneyneany, then after 1 mile take the rough track on the left under the power lines.",
+    "parking": "Park off the lane without blocking it. The rough track is only suitable for prepared 4WD vehicles due to deep standing water about 100 m from the tarmac road.",
+    "hazards": "Gun Club: A rifle range at the base of the hill uses high-velocity ammunition with potential reach of up to 3 miles. Flying on Wednesdays (7–10 pm) and Sundays (10 am–4 pm) should only be planned after contacting the gun club in advance.\nPower Lines: Main grid power lines cross the valley and pass close to the bottom landing zone.\nWind and Rotor: Strong winds can create rotor behind the steep bowl and significantly higher wind speeds on the ridge top, with a risk of being blown back into the forest if flying into the western bowl in strengthening conditions.",
+    "airtrafficcontrolrestrictions": "There are no air traffic control restrictions for Craigagh Hill.",
+    "images": [
+      "assets/sites/craigagh_hill_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.830439,
+        "lon": -6.886119
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Bottom landing B",
+        "code": "B",
+        "lat": 54.832034,
+        "lon": -6.868886
+      },
+      {
+        "label": "Top Landing Zone C",
+        "code": "C",
+        "lat": 54.840597,
+        "lon": -6.882832
+      },
+      {
+        "label": "Top Landing Zone D",
+        "code": "D",
+        "lat": 54.841045,
+        "lon": -6.880852
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Track-side parking E",
+        "code": "E",
+        "lat": 54.840505,
+        "lon": -6.881135
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Divis": {
+    "title": "Divis",
+    "summary": "Divis is a UHPC members-only, easterly-facing ridge site on National Trust land above Belfast, with launch at around 1000 ft ASL. It lies entirely within Belfast TMA Class D restricted airspace and is used only for ridge soaring inside a designated area, with no cross-country flights beyond the site boundaries.",
+    "takeoff": "Smooth, rounded grassy launch on the east-facing ridge, usually straightforward in normal conditions.",
+    "landing": "There are no suitable bottom landing areas in front of launch due to pylons, power lines and rough ground. Any emergency slope landing must be treated as a last resort on uneven terrain.",
+    "toplanding": "Top landing is behind launch on the plateau; assess wind strength and turbulence carefully and give the masts generous clearance.",
+    "access": "Road access via Lyle Hill in Newtownabbey or the B38 from Belfast. From the National Trust car park, it is roughly a 3 km walk towards the masts; a few hundred metres before the first mast, take the black plastic path on the right to reach the launch areas.",
+    "parking": "Use the designated National Trust car park opposite the access road. Do not park on verges or obstruct the entrance road.",
+    "hazards": "Pylons and Power Cables: The front of the site is ringed by pylons and power lines with no safe bottom landing options.\nSlope Landing: Emergency slope landings are possible but on uneven ground.\nMasts Behind Launch: Two large masts sit behind launch; maintain safe separation, especially when top-landing or flying low.\nPilot/Access Restrictions: Due to hazards and controlled airspace, the site is restricted to suitably qualified UHPC members following National Trust and ATC procedures.",
+    "airtrafficcontrolrestrictions": "The site is entirely within Belfast TMA Class D restricted airspace, Class D from the surface. Flying is only permitted when ‘Divis – Designated Area 5’ is activated to 2000 ft by UHPC members following the Letter of Agreement procedures; no cross-country flights are allowed beyond the designated area.",
+    "images": [
+      "assets/sites/divis_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.605442,
+        "lon": -5.998119
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "National Trust car park B",
+        "code": "B",
+        "lat": 54.59907,
+        "lon": -6.04242
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Dungiven North-West": {
+    "title": "Dungiven North-West",
+    "summary": "Dungiven North-West gives access on foot to the steep NW face of Benbradagh when the wind is from the NW (300–340°, best around 310°). The site is known for its cross-country potential and is suitable for paragliders at BHPA Club Pilot + 10 hours.",
+    "takeoff": "From the stiles, walk north-north-east along the ridge, losing a little height, until the ridge lip becomes more rounded. Launch from this more gently shaped section, avoiding the highest, steepest part of the cliffs.",
+    "landing": "There are many large, flat fields beside the road in front of the ridge that are suitable for bottom landings. Choose a field with a clear approach and avoid stock and obstacles.",
+    "toplanding": "In moderate or strong winds, only use the more gradually sloping north-east end of the ridge for top landings. Do not attempt to top-land near the steeper cliff section, where rotor can be significant.",
+    "access": "Park as for Dungiven West. From the Dungiven West parking area, walk up to the gate that blocks the road and turn left onto the private road, closing all gates behind you. After about 700 m, leave the road at the sharp right-hand bend and continue heading north-west, following the fence uphill. After roughly 400 m, cross two fences using the stiles and bear right through deep grass and heather to reach the northern end of the ridge.",
+    "parking": "Use the same parking area as for Dungiven West, ensuring you do not block the track, gateways or farm access.",
+    "hazards": "Rotor: Significant rotor forms behind the cliffs at the south-west end of the ridge, and for about 300 m along the ridge edge downwind of this steep section in strong winds. Take extra care when moving along the ridge and when setting up for top landings.\nCliffs and Steep Ground: The highest, steepest cliff section should be avoided for launch due to turbulence.\nDeep Vegetation: Sections of deep grass and heather on the walk-in and near launch can hide uneven ground and holes.",
+    "airtrafficcontrolrestrictions": "No specific ATC restrictions are published for this site, but pilots must always check current airspace and NOTAMs before flying.",
+    "images": [
+      "assets/sites/dungiven_nw_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "NW ridge launch A",
+        "code": "A",
+        "lat": 54.944801,
+        "lon": -6.87385
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Bottom Landing B",
+        "code": "B",
+        "lat": 54.948255,
+        "lon": -6.89484
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Dungiven West parking C",
+        "code": "C",
+        "lat": 54.93474,
+        "lon": -6.86577
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Dungiven SW (Boviel)": {
+    "title": "Dungiven South-west (Boviel)",
+    "summary": "Boviel is a south-westerly facing ridge with launch at around 1200 ft ASL, offering generally smooth ridge soaring and only a short walk from the road. The air can become turbulent, especially in stronger SSW winds.",
+    "takeoff": "Main launch is above the road near the old wooden wind vane mast, on a grassy slope accessed via the stile.",
+    "landing": "The main bottom landing field lies about a quarter mile to the northwest (right) of launch alongside the access road. The field runs lengthwise into wind; make careful approaches to avoid the barbed wire fence and hedge and do not overshoot.",
+    "toplanding": "Ground behind launch is generally suitable for top landings but can be wet and uneven with peat banks, so approaches must be made with care.",
+    "access": "From Glenshane Pass near Dungiven, turn onto Boviel Road and continue uphill toward the site. Drive slowly (max 5 mph) through the site owner’s housing area, then continue to the end of the road.",
+    "parking": "At the road end, turn around and park tightly on the left side, making sure not to block the road, gate or turning area.",
+    "hazards": "Old Mast: The old wooden mast near launch and landing must be given a wide berth.\nTurbulence: Pilots report turbulent air in stronger south or SSW winds; consider landing early if conditions become rough.\nFences and Hedge: Bottom landing is bordered by a barbed wire fence and hedge plan your approach to avoid overshooting.",
+    "airtrafficcontrolrestrictions": "There are currently no air traffic control restrictions for Boviel.",
+    "images": [
+      "assets/sites/dungiven_sw_boviel_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch near mast A",
+        "code": "A",
+        "lat": 54.920221,
+        "lon": -6.85032
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Bottom landing beside access road B",
+        "code": "B",
+        "lat": 54.916315,
+        "lon": -6.86209
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Road-end parking C",
+        "code": "C",
+        "lat": 54.91958,
+        "lon": -6.849465
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Dungiven West": {
+    "title": "Dungiven West",
+    "summary": "Dungiven West is a westerly-facing ridge on Benbradagh, with launch around 1250 ft ASL rising to about 1400 ft at the cliff. It offers strong soaring and XC potential in W winds (220–290°, best around 250°) for both hang gliders and paragliders and is easily accessed with launch directly beside the car park.",
+    "takeoff": "The main launch is directly in front of the car park, accessed through the gate. The grassy launch area is straightforward in normal conditions; do not step over the fence as requested by the landowner.",
+    "landing": "Hang gliders use the area near the road junction between the access road and the parallel road by the ridge near the site owner’s farmhouse, landing on either side of the road. One of the fields slopes down and has rough ground with a power line near its start. Paragliders can bottom-land near the lower hairpin where a stile has been installed over the fence with the landowner’s permission.",
+    "toplanding": "The primary top-landing area is beside the car park between the gate and the fence. Avoid landing too close to the fence or the road and do not approach directly over parked cars. In strong or gusty winds, hang gliders may use the larger, flatter area behind the gate at the road end, which lies outside the main lift band.",
+    "access": "From Dungiven, turn off the Glenshane Pass onto Curragh Road and drive up to the top of the hill. Pass the site owner’s house slowly and with care, then continue to the end of the road towards the launch gate.",
+    "parking": "Park at the very end of the road, just past the gate leading to launch, leaving space to turn and not blocking the gate, road or access for farm vehicles.",
+    "hazards": "Power Lines: A line runs about 200 m north of launch, and further lines and obstacles lie near the bottom landing areas.\nHidden Obstacles: Old concrete aerial anchor blocks with wires protrude from the ground in some top-landing areas, especially behind the gate.\nWind Turbines: Large wind turbines stand on the hilltop in the first few kilometres behind the ridge and must be given generous clearance on XC.\nParked Vehicles: Approaches over parked cars near the car park are prohibited; plan top-landing circuits accordingly.",
+    "airtrafficcontrolrestrictions": "There are no air traffic control restrictions published for Dungiven West/Benbradagh.",
+    "images": [
+      "assets/sites/dungiven_west_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch by car park A",
+        "code": "A",
+        "lat": 54.934868,
+        "lon": -6.867061
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "HG bottom landing B",
+        "code": "B",
+        "lat": 54.927055,
+        "lon": -6.884934
+      },
+      {
+        "label": "PG bottom landing C",
+        "code": "C",
+        "lat": 54.929246,
+        "lon": -6.875402
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Road-end car park D",
+        "code": "D",
+        "lat": 54.934744,
+        "lon": -6.865766
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Knockagh": {
+    "title": "Knockagh",
+    "summary": "Knockagh is a 2.5-mile cliff ridge above Greenisland, overlooking Belfast Lough. It gives excellent ridge lift in light S–SE winds (110–180°, best around 135°), is close to Belfast, and is suitable for experienced hang glider and paraglider pilots only due to multiple hazards.",
+    "takeoff": "The primary launch is a short walk southwest of the Knockagh war memorial, on the cliff edge about 200 ft below the monument. Carry gliders from the car park before rigging.",
+    "landing": "Bottom landings are difficult because of numerous power lines. Best options are the large fields to the southwest (right of takeoff) or, with sufficient height, fields near the restaurant on the golf course in front of takeoff. Always leave the ridge with plenty of height to clear power cables and pylons, and inspect any chosen field carefully.Avoid landing anywhere near the large paddocks of the Equestrian Centre below and to the E of take-off.",
+    "toplanding": "This is a cliff site and top landing is not recommended. Expect rotor, wind shear and strong gradients. Top landings have only been made well behind launch or near launch in very light winds.",
+    "access": "Access via Slievetrue Road or Knockagh Road running behind the ridge; follow signs uphill to the war memorial. From the memorial car park, walk around the electric gates, follow the access road toward the landowner’s house, then cross the barbed wire fence only at the old path alignment down to takeoff, taking care not to damage the fence.",
+    "parking": "Park at the Knockagh war memorial car park. Do not obstruct access roads, gates or the concrete lane to the house.",
+    "hazards": "Power Cables: Many power cables and pylons lie below and beyond the ridge, particularly beneath the lower southerly launch, making conventional landing circuits impossible.\nRotor: Strong rotor behind the cliff extends well back, affecting any attempted top landing.\nEquestrian Centre: Avoid landing anywhere near the large paddocks of the equestrian centre below and east of takeoff.\nExperience Requirement: Due to the combination of cliffs, cables, rotor and restricted landing options, this site is not suitable for low-hours or inexperienced pilots.",
+    "airtrafficcontrolrestrictions": "Class D airspace starts at 2000 ft AMSL and there is frequent airline traffic overhead on approach to Belfast International. Knockagh is within ‘Knockagh – Designated Area 3’ in the LOA with Aldergrove ATC; UHPC members can activate this area and temporarily raise the ceiling from 2000 ft to 2500 ft by following the LOA procedures.",
+    "images": [
+      "assets/sites/knockagh_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main cliff launch A",
+        "code": "A",
+        "lat": 54.709868,
+        "lon": -5.882728
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "SW bottom fields B",
+        "code": "B",
+        "lat": 54.700441,
+        "lon": -5.895962
+      },
+      {
+        "label": "SW bottom fields C",
+        "code": "C",
+        "lat": 54.699335,
+        "lon": -5.895367
+      },
+      {
+        "label": "Golf course fields SE D",
+        "code": "D",
+        "lat": 54.706104,
+        "lon": -5.87274
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Knockagh war memorial car park E",
+        "code": "E",
+        "lat": 54.711497,
+        "lon": -5.879628
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Lough Navar": {
+    "title": "Lough Navar",
+    "summary": "Lough Navar is a 5-mile north-facing ridge with launches between 900 and 1100 ft ASL, overlooking Lower Lough Erne. It offers strong ridge and thermal soaring in N winds (340–360°, best around 350°) and has good XC potential into central Ireland for competent pilots.",
+    "takeoff": "The primary launch is directly in front of, or just to the side of, the car park on a very steep 70° slope that quickly becomes a cliff. This launch is suitable only for experienced pilots, and a hang glider nose man is recommended. A secondary grassy launch with a gentler slope lies about 500 yards east (right) of the car park and has been used successfully by both HG and PG, though it is still considered experimental.",
+    "landing": "The main bottom landing field is a small flat area about half a mile to the left of launch near Lough Erne, with limited overshoot and a challenging approach for hang gliders. Safer landing fields lie further along the ridge beyond Glenereawon Lough, but the ridge must be soarable to reach them.",
+    "toplanding": "The main top-landing area is roughly a quarter mile behind the steep ridge and is considered suitable for hang gliders only. Expect strong wind gradient and turbulence, with a possible sudden increase in ground speed on final. The area behind the alternative grassy launch may provide a top landing option for paragliders, but this has not yet been confirmed. Do not attempt to land in the car park due to rotor.",
+    "access": "From the main Derrygonnelly–Garrison road, turn at the signposted ‘Forest Drive’ entrance to Lough Navar Forest. Follow the forest drive to the car park beside the north-facing ridge.",
+    "parking": "Park in the car park adjacent to the launch, ensuring you do not obstruct public access or vehicle movement. Rig gliders in the car park with care around members of the public, then carry forward to the launch.",
+    "hazards": "Steep Primary Launch: The main launch is extremely steep and quickly drops into a cliff, making it suitable only for experienced pilots with good launch control.\nWind Gradient and Shear: Severe wind gradient exists in the top-landing area, and pilots may experience sudden changes in ground speed on approach.\nLimited Bottom Landing: The main bottom field is small with limited overshoot, especially challenging for hang gliders.\nGeneral: Pilots unfamiliar with Lough Navar should seek guidance from an experienced local pilot or instructor before flying.",
+    "airtrafficcontrolrestrictions": "There are currently no air traffic control restrictions published for Lough Navar.",
+    "images": [
+      "assets/sites/lough_navar_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Primary cliff launch by car park (to refine)",
+        "code": "A",
+        "lat": 54.4535,
+        "lon": -7.818
+      },
+      {
+        "label": "Alternative grassy launch east (to refine)",
+        "code": "B",
+        "lat": 54.4532,
+        "lon": -7.8115
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main bottom landing near Lough Erne (to refine)",
+        "code": "C",
+        "lat": 54.4555,
+        "lon": -7.8075
+      },
+      {
+        "label": "Safer landing fields beyond Glenereawon Lough (to refine)",
+        "code": "D",
+        "lat": 54.459,
+        "lon": -7.797
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Forest drive car park by launch (to refine)",
+        "code": "E",
+        "lat": 54.4528,
+        "lon": -7.8195
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Hell's Hole (WNW)": {
+    "title": "Magilligan WNW (Hell’s Hole)",
+    "summary": "Magilligan WNW, known as Hell’s Hole, is a coastal ridge site above the cliffs with several launches around the Hell’s Hole gully. It works in W–NW winds (270–330°, best around 300°) and is suitable for hang gliders and paragliders, including BHPA Club Pilots and students.",
+    "takeoff": "Use the recommended launch on the smooth slope to the west (left) of the Hell’s Hole gully, suitable for all pilots and especially paragliders. The alternative launch on the steep eastern cliff edge near a barbed wire fence is only for experienced hang glider pilots and is not recommended for paragliders, particularly in strong winds where turbulence is likely.",
+    "landing": "The main bottom landing field is a flat area about half a mile in front of launch, across the road below the ridge, and is suitable for both hang gliders and paragliders. A large field beside an old farm building about a quarter mile east of Hell’s Hole also offers an easy landing, but watch for the barbed wire fence parallel to the ridge and avoid overshooting near the trees. A small sloping field directly below launch can be used if necessary, though hang glider pilots should assess its suitability before committing to launch.",
+    "toplanding": "Top landing is on the mainly flat area directly behind the launches near the road. The ground slopes down further back, so hang glider pilots are advised to use a cross-wind tracking approach and only turn into wind late on final. Expect some gradient and possible turbulence, especially further from the stiles.",
+    "access": "From Downhill, take Bishop’s Road, which climbs quickly up the cliff, to a tarmac lay-by about 1.5 km west of the Gortmore viewpoint. From the parking spots, use the club stiles to cross the fence (do not climb over it) and walk roughly a quarter mile down to the launches on either side of the Hell’s Hole gully.",
+    "parking": "Park in the tarmac lay-by on Bishop’s Road or carefully on the grass verge near the stile west of the bridge, ensuring you do not obstruct traffic, gateways or tracks.",
+    "hazards": "Turbulence: The eastern launch close to the cliff and gully can be turbulent, particularly in stronger winds, and the site may be challenging for low-airtime pilots.\nBarbed Wire: Barbed wire fencing near the eastern cliff-edge launch and along the additional landing field requires extra care, especially for paraglider launches and landings.\nTerrain: The small sloping field directly below launch and the cliffed terrain around the gully demand accurate approaches and good site judgement.",
+    "airtrafficcontrolrestrictions": "Approximately 1 mile northwest of launch lies Danger Area D505/1 associated with the Magilligan rifle range; this must not be entered under any circumstances. The ILS for Eglinton (City of Derry) Airport runs behind the ridge. Before flying, a UHPC pilot must ensure Eglinton ATC (028 7181 1099) has been notified of intended activity and that flying will continue until dusk, in accordance with club Magilligan procedures.",
+    "images": [
+      "assets/sites/magilligan_hells_hole_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Recommended W launch A",
+        "code": "A",
+        "lat": 55.135715,
+        "lon": -6.887982
+      },
+      {
+        "label": "Alternate E cliff launch (HG only) B",
+        "code": "B",
+        "lat": 55.139654,
+        "lon": -6.885887
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main flat bottom field across road C",
+        "code": "C",
+        "lat": 55.143301,
+        "lon": -6.897421
+      },
+      {
+        "label": "Large field by old farm building E of Hell’s Hole D",
+        "code": "D",
+        "lat": 55.143263,
+        "lon": -6.893057
+      },
+      {
+        "label": "Small sloping field directly below launch E",
+        "code": "E",
+        "lat": 55.137514,
+        "lon": -6.891797
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Bishop’s Road tarmac lay-by F",
+        "code": "F",
+        "lat": 55.137112,
+        "lon": -6.883312
+      },
+      {
+        "label": "Roadside verge by stile west of bridge G",
+        "code": "G",
+        "lat": 55.135725,
+        "lon": -6.883681
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Magilligan North": {
+    "title": "Magilligan North",
+    "summary": "Magilligan North is a north-west to north facing coastal ridge site above the Magilligan strand (290–360°). It offers classic sea-breeze ridge soaring for both hang gliders and paragliders and is suitable for BHPA Club Pilots, and is also used by students.",
+    "takeoff": "Launch is from the bottom of the field at the ridge edge. Do not be tempted to launch half way down the field: the left-hand side drops into a cliff that produces significant turbulence when the wind is off the hill.",
+    "landing": "The main bottom landing is the large flat field with a sand pit in the middle about half a mile in front of launch beside the main coast road. Reaching it requires crossing the railway line, so allow plenty of height. It is suitable for both HG and PG, but you must avoid overshooting into the overhead telephone cable alongside the road. The fields directly below launch may be used if you do not have enough height to cross the railway; land parallel to the ridge and well back on the hill side of the fields to avoid ending up over the trees and railway embankment.",
+    "toplanding": "Top landing is in the flat area directly behind launch. It is possible to land closer to the road, but expect turbulence and wind gradient there. Because the field slopes down toward the road, hang glider pilots should use a cross-wind tracking approach to the west on finals and only turn into wind as late as possible.",
+    "access": "From Downhill, drive up Bishop’s Road, climbing quickly up the cliff, and continue to about 1 km before the Gortmore viewpoint. The club gate into the launch field is on the seaward side of the road about 1 km east of the viewpoint. Access the site on foot through this gate; launch at the ridge edge is only a short walk away.",
+    "parking": "Park beside the club gate into the field, about 1 km east of the Gortmore viewpoint. Park tight to the fence near the gate and do not obstruct passing traffic or the gate access.",
+    "hazards": "Barbed Wire Fence: Barbed wire fence directly in front of the lower launch area.\nCliff Rotor: Turbulence from the cliffs either side of launch if the wind is off the hill.\nHidden Railway: Hidden railway track and embankment in trees at the base of the ridge-low overshoots from the coastal landing field are into trees and railway.\nTurbulence / Wind Shear: Turbulence and wind shear have been experienced as far back as the road, and the site may be challenging for very low airtime pilots.",
+    "airtrafficcontrolrestrictions": "Yes. Danger area D505/1 (Magilligan rifle range) lies approximately 1 mile north-west of launch and must not be entered under any circumstances. The ILS for City of Derry (Eglinton) Airport runs behind the ridge as described on the Magilligan overview page; pilots must carry current air charts and comply with UHPC Magilligan procedures.",
+    "images": [
+      "assets/sites/magilligan_north_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Magilligan North launch A",
+        "code": "A",
+        "lat": 55.153792,
+        "lon": -6.870233
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main bottom field with sand pit B",
+        "code": "B",
+        "lat": 55.159648,
+        "lon": -6.878091
+      },
+      {
+        "label": "Fields directly below launch C",
+        "code": "C",
+        "lat": 55.156975,
+        "lon": -6.876116
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Roadside parking D",
+        "code": "D",
+        "lat": 55.150686,
+        "lon": -6.867198
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Mayobridge": {
+    "title": "Mayobridge",
+    "summary": "Mayobridge is a hill site on the west side of the Mourne Mountains with a northwest-facing launch at about 1100 ft ASL. It offers ridge and thermal soaring with views over the Mournes, and in good conditions flights across the range are possible. Suitable for hang gliders and paragliders, including BHPA Club Pilots and students.",
+    "takeoff": "Launch is from a well-rounded grassy slope that generally gives smooth, straightforward takeoffs in normal conditions.",
+    "landing": "The main bottom landing is an L-shaped field about a quarter mile directly in front of launch, suitable for both HG and PG. Check for stock and avoid fields with cattle; during lambing (March/April) avoid fields with sheep.",
+    "toplanding": "There is a large top-landing area behind launch. Do not go too far back, as the rear of the hill drops away steeply and can produce strong sink and hard landings. A lower shoulder to the right of launch provides an alternative top-landing option.",
+    "access": "From Hilltown, take the Newry (Mayobridge) Road. After roughly 1.5 miles, where the main road bends right, fork left. Take the first left onto New Road. At the T-junction turn right and follow the road up to the car park at the top of the hill.",
+    "parking": "Park in the small lay-by behind the hill, taking care not to obstruct the road or any gateways.",
+    "hazards": "Stone Walls: Small stone walls are present along the top of the hill near launch and top-landing.\nSteep Back of Hill: The back of the hill is steep; being blown over the back can result in rapid descent and hard landings, so avoid drifting too far behind launch.",
+    "airtrafficcontrolrestrictions": "There are no air traffic control restrictions for Mayobridge. As always, pilots should check NOTAMs and airspace before flying, especially if planning XC toward Carlingford Lough.",
+    "images": [
+      "assets/sites/mayobridge_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.170345,
+        "lon": -6.194237
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "L-shaped bottom landing field B",
+        "code": "B",
+        "lat": 54.177928,
+        "lon": -6.201142
+      },
+      {
+        "label": "Alternative top-landing C",
+        "code": "C",
+        "lat": 54.174727,
+        "lon": -6.191818
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Hilltop lay-by behind hill D",
+        "code": "D",
+        "lat": 54.170661,
+        "lon": -6.189155
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Mayobridge North": {
+    "title": "Mayobridge North",
+    "summary": "Mayobridge North is a low, shallow, broken ridge about 3/4 mile long, located adjacent to the main Mayobridge site. It works in NW–NNE winds (340–020°) and can give reasonable ridge soaring and thermal flying. Suitable for both paragliders and hang gliders at BHPA Club Pilot level and also used by students.",
+    "takeoff": "Launch is from a smooth grassy slope with no particular issues in normal conditions.",
+    "landing": "There are large fields directly below takeoff that can be used as bottom landing. Avoid any fields containing cattle, and during lambing season (March/April) avoid fields with sheep. If you intend to drive cars up the lane to the bottom landing field, call at Terence Fitzpatrick’s house first (the first house on the right on the road to the bottom landing) – if he’s not in, he says you may go ahead, but please do call if he is.",
+    "toplanding": "Top landing presents no specific problems on the rounded slopes behind launch, provided normal care is taken with wind strength and direction.",
+    "access": "From Hilltown, take the Newry (Mayobridge) Road. After about 1.5 miles, where the main road veers right, branch left. Take the first left onto New Road. At the T-junction turn right and continue up to the car park at the top of the hill, as for the main Mayobridge site.",
+    "parking": "Park in the lay-by at the hillside beside the road. Do not obstruct the road or any gateways.",
+    "hazards": "Westerly Wind: If the wind comes from the west it can become quite turbulent.\nLee-Side Turbulence: The wind may initially be on the hill, then back to the west, putting this ridge in the lee of the main north-west Mayobridge ridge and creating gusty, thermal-like conditions along the north face.",
+    "airtrafficcontrolrestrictions": "There are no immediate air traffic control restrictions directly over Mayobridge North. However, there are airspace restrictions at the end of Carlingford Lough for pilots flying XC, so current charts and NOTAMs must be checked before any cross-country flights.",
+    "images": [
+      "assets/sites/mayobridge_north_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.170652,
+        "lon": -6.180048
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Bottom landing fields B",
+        "code": "B",
+        "lat": 54.175741,
+        "lon": -6.182933
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Hillside lay-by C",
+        "code": "C",
+        "lat": 54.168843,
+        "lon": -6.176786
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Robin Youngs Hill": {
+    "title": "Robin Young’s Hill",
+    "summary": "At the southern end of the Antrim Glens, Robin Young’s Hill is a bowl-shaped coastal site with launch on a rounded edge near the main cliff. It gives excellent evening ridge soaring in NNE winds (000–060°, best around 020°) with good height gains, flights into the Sallagh bowl and XC potential towards the coast. Suitable for hang gliders and paragliders at BHPA Club Pilot level and also used by students.",
+    "takeoff": "The main launches are on the rounded edge above the bowl. For a northeasterly wind, cross the fence at the gully using the stile and walk to the flat launch area; after takeoff track slightly right to stay clear of the fence below. In easterly winds there is an alternative launch facing the coast before the gully, but this can be turbulent and requires extra care.",
+    "landing": "Bottom landing is near the cement road at the base of the hill in front of takeoff. Check your approach carefully and watch for wire fences and drainage ditches in the fields below the cliff.",
+    "toplanding": "Top land behind either launch or in the open area near the car park. Expect a little gradient close to the edge and be aware of model gliders and walkers sharing the area. Avoid being blown too far back in stronger winds.",
+    "access": "From Ballygally take Ballycoose Road towards Carncastle, then continue up onto Feystown Road and park at Carncastle / Linford car park. From the car park, cross the first stile and follow the path uphill (around 300 ft of ascent) towards launch, crossing a second stile near the cliff. Pilots must inform the landowner before flying; contact details are available in the UHPC sites guide.",
+    "parking": "Use Carncastle / Linford car park on Feystown Road and keep all vehicles well within marked areas, taking care not to block the road, gates or turning space. Paramotors may use the area near the car park for takeoff and landing when no free-flying is taking place.",
+    "hazards": "Wind Direction / Rotor: Wind direction is critical; do not fly with any westerly component and avoid conditions where the wind backs to north or northwest, as this can produce severe rotor and turbulence.\nFence Below Launch: A fence lies below launch and nil-wind or marginal launches have limited clearance over it.\nTurbulence from Terrain: Secondary ridges and broken terrain at the base of the cliff can generate turbulence when flying low.\nModel Gliders / Shared Use: The site is shared with aero modellers flying gliders up to around 1000 ft above launch coordinate before flying.",
+    "airtrafficcontrolrestrictions": "There are no direct ATC restrictions over Robin Young’s Hill. Class D airspace associated with Aldergrove begins at 2000 ft ALT from the southern end of the Sallagh bowl southwards; pilots must consult current airspace charts before planning higher climbs or XC.",
+    "images": [
+      "assets/sites/robin_youngs_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main NNE launch by gully A",
+        "code": "A",
+        "lat": 54.891819,
+        "lon": -5.916592
+      },
+      {
+        "label": "E-facing launch before gully B",
+        "code": "B",
+        "lat": 54.889,
+        "lon": -5.916
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Bottom landing near cement road C",
+        "code": "C",
+        "lat": 54.897075,
+        "lon": -5.912479
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Carncastle / Linford car park D",
+        "code": "D",
+        "lat": 54.895462,
+        "lon": -5.923172
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Slieveban": {
+    "title": "Slieveban",
+    "summary": "Slieveban is a south-west facing grassy slope at around 400 m ASL above Kilbroney Park in Rostrevor, giving soaring over Carlingford Lough with superb views of the Mournes. It works in WSW–SSW winds (245–195°, best SW 220°), is for paragliding only, and is considered an advanced site due to access, forest, and landing constraints.",
+    "takeoff": "There are two launches. Launch 1 is the main and safest launch on an open rounded slope reached via a longer walk from the upper car park; it offers clean airflow and easy top-landing in good conditions. Launch 2 is closer but steeper and more committing, with more demanding top-landing options, and is best left to confident, site-briefed pilots.",
+    "landing": "Top landing is recommended, as there are no official bottom fields. The usual bottom options are the large fields on the seaward side of the A2 near Killowen Point, where you can also land on the beach at low tide; there are domestic power lines in this area and it is a ~3 km walk back to Kilbroney Park. High-altitude landings are possible in large fields behind Kilbroney Park, but only if you arrive with plenty of height to clear the park and tall trees.",
+    "toplanding": "Top land on the open slopes near launch when conditions are good, avoiding fields with stock or crops and always closing gates and respecting farmers. The closer, steeper Launch 2 area offers more challenging top-landing with less room and stronger gradient, so it is best treated with caution.",
+    "access": "Option A: Drive to the upper (Cloughmore) car park in Kilbroney Park. From there, walk up the track opposite the car park towards Carlingford Lough, keeping left to the big stone, then follow the described track round the left side of the hill and along the wall to Launch 1. Option B: Park in the lower car park near the mountain bike area and pay for a lift to the upper car park at the Bike Centre, then walk in as for Launch 1 or follow the bench path for Launch 2.",
+    "parking": "Use the upper Kilbroney Park (Cloughmore) car park or the lower Kilbroney car park by the MTB area. Park only in marked bays and do not block forest roads, gates or the uplift road.",
+    "hazards": "Advanced Site: Access, forest, variable local breeze and limited official landings make this an advanced site; new visitors should seek a full briefing from an experienced pilot.\nWest Face: A small west-facing slope to the right of launch is not part of the guide; trees can create rotor and the accelerated Lough breeze plus tiny landing options make it potentially rough.\nPower Lines and Fields: Domestic power lines cross the landing area near Killowen Point; avoid fields with animals or crops and move to field edges after landing.\nHeight for Back Landings: Landings behind Kilbroney Park require significant spare height to clear tall trees and should never be attempted low.",
+    "airtrafficcontrolrestrictions": "No specific ATC restrictions are listed in the UHPC guide for this site, but pilots are crossing between Northern Ireland and the Republic when flying across Carlingford Lough. Current NOTAMs, airspace charts and any cross-border restrictions must be checked before planning XC.",
+    "images": [
+      "assets/sites/rostrevor_slieveban_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Launch A",
+        "code": "A",
+        "lat": 54.083829,
+        "lon": -6.171046
+      },
+      {
+        "label": "Launch B",
+        "code": "B",
+        "lat": 54.0825,
+        "lon": -6.168
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Fields seaward of A2 near Killowen Point C",
+        "code": "C",
+        "lat": 54.073354,
+        "lon": -6.174577
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Upper Kilbroney (Cloughmore) car park E",
+        "code": "E",
+        "lat": 54.091808,
+        "lon": -6.173158
+      },
+      {
+        "label": "Lower Kilbroney car park / MTB area F",
+        "code": "F",
+        "lat": 54.097463,
+        "lon": -6.187538
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Shanes Hill": {
+    "title": "Shane’s Hill",
+    "summary": "Shane’s Hill is a small south-easterly facing hill at the southern end of Agnew’s ridge, forming part of a 2-mile ridge. Launch is around 1100 ft ASL, rising to 1550 ft at Agnew’s cliff, and in good conditions it is possible to fly out-and-return between Shane’s and Agnew’s. Suitable for both hang gliders and paragliders, including BHPA Club Pilots and students.",
+    "takeoff": "The launch area is smooth and rounded, generally presenting no particular problems in normal conditions.",
+    "landing": "Bottom landings are challenging, especially for hang gliders, because the fields slope and there are power lines and other obstacles. Paragliders can usually land on either side of the road near the bottom lay-by. Hang gliders may need to consider uphill, downwind landings in light winds if using the bottom fields.",
+    "toplanding": "The primary top-landing area lies behind launch at the rear of the hill and offers a good upslope, making top landings straightforward, particularly for hang gliders. Avoid landing too close to the fence.",
+    "access": "Road access is from the main Larne–Ballymena road at its highest point or via a tarmac lay-by at the base of the hill. From the top parking area, unlock and pass through the gate, re-lock it, then follow the path right through another gate and walk along the stone wall to the left for about 100 yards to the summit. From the bottom lay-by, walk through the usually-unlocked gate and straight up the hill to launch. A rough lane behind the hill provides alternative access to the dip between Shane’s and Agnew’s, via the same approach as for Agnew’s W & SW access.",
+    "parking": "Park on the hard shoulder north of the main road near the locked gate, or in the bottom lay-by, taking care not to obstruct traffic, gates or fences. UHPC members with at least BHPA Club Pilot Novice rating can obtain a key for the top gate padlock from the Sites Officer.",
+    "hazards": "Main Road: The road curves around the base of the hill; avoid flying low close to it to prevent startling drivers on the bend.\nQuarry: A small disused quarry lies below and left of launch and may generate turbulence.\nPower Lines and Obstacles: Power lines and other obstacles affect the bottom landing fields, making bottom landings more demanding, especially for hang gliders.",
+    "airtrafficcontrolrestrictions": "Class D airspace begins at 2000 ft ALT. Shane’s Hill lies within ‘Big Collin/Agnew’s – Designated Area 1’ under the LOA with Aldergrove ATC. UHPC members can activate this area and temporarily raise the ceiling from 2000 ft to 5000 ft by following the LOA procedures.",
+    "images": [
+      "assets/sites/shanes_hill_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 54.819144,
+        "lon": -5.927796
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Bottom landing near road B",
+        "code": "B",
+        "lat": 54.82031,
+        "lon": -5.923763
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Top roadside parking by locked gate C",
+        "code": "C",
+        "lat": 54.81749,
+        "lon": -5.932839
+      },
+      {
+        "label": "Bottom lay-by parking D",
+        "code": "D",
+        "lat": 54.821148,
+        "lon": -5.92263
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Torr Head": {
+    "title": "Torr Head",
+    "summary": "Torr Head is a coastal ridge site spanning around 6 miles between Fair Head and Loughan Bay, with spectacular views of Rathlin Island and the Mull of Kintyre. It works in NE winds (030–060°, best around 045°) and is suitable for both paragliders and hang gliders, for BHPA Club Pilots with at least 10 hours airtime.",
+    "takeoff": "The grassy launch area is smooth and generally straightforward. Be aware of a small cliff to the right of launch which can generate turbulence, so avoid launching too close downwind of it.",
+    "landing": "There is no bottom landing directly below launch due to the sea. The designated bottom landing zone is about a quarter mile to the right, in sloping fields which can be demanding for hang gliders and may require a crosswind approach. Paragliders generally find bottom landings easier, and there are shoulder areas that can be used for emergency landings if height is lost.",
+    "toplanding": "A good top landing area lies behind launch. When top-landing, stay well clear of the radio mast and be aware of rotor downwind of the small cliff to the right of launch.",
+    "access": "From the A2 Coast Road, Torr Head is just east of the Torr Head road, a few miles south of Murlough Bay. The site is easily identified by a medium-sized radio mast with a small red light on top. A short private road leads from the gate up towards the summit and launch.",
+    "parking": "Park at the side of the road near the radio mast access gate without obstructing the gate, private road or passing traffic. If driving up to the summit is permitted, use the minimum number of vehicles and make sure all gates are properly secured after passing through.",
+    "hazards": "Sea cliffs and no bottom landing directly below launch: loss of height over the sea is extremely dangerous; never continue out to sea low.\nSmall cliff to the right of launch: creates turbulence; do not launch or top-land downwind of it.\nGate and access: always leave gates secure and never block the private summit road.\nGeneral: pilots unfamiliar with Torr Head should seek advice from an experienced club pilot before flying.",
+    "airtrafficcontrolrestrictions": "There are no air traffic control restrictions published for Torr Head, but pilots must always check current NOTAMs and airspace before flying, especially if planning to go XC along the coast.",
+    "images": [
+      "assets/sites/torr_head_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main launch A",
+        "code": "A",
+        "lat": 55.200222,
+        "lon": -6.094563
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Designated bottom landing B",
+        "code": "B",
+        "lat": 55.19952,
+        "lon": -6.086149
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Roadside parking by mast gate C",
+        "code": "C",
+        "lat": 55.19719,
+        "lon": -6.09336
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Skeagh": {
+    "title": "Skeagh",
+    "summary": "Skeagh is a small training hill with shallow slopes where soaring is rarely possible. It is used mainly for ground-handling and short training hops in NNW–N–ENE winds and is suitable for both paragliders and hang gliders, including student pilots.",
+    "takeoff": "Multiple small, shallow grassy slopes are used as launch points depending on wind direction. Takeoffs are generally straightforward but short, making this primarily a training and ground-handling site.",
+    "landing": "Bottom landing zones are the same shallow fields used for launch, with several options depending on wind direction. Landings are typically short training hops rather than full soaring approaches.",
+    "toplanding": "No distinct top-landing zone is defined; treat all flights as short up-and-down training hops with landings in the lower fields.",
+    "access": "From Belfast (A8), take the first exit off the first roundabout after the Ballymena Road junction. Turn right at the T-junction onto the B148 (Ballymullock Road), then take the first left onto Mullaghsandal Road. Pass the standing stone on the left; Skeagh comes into view straight ahead across the valley.",
+    "parking": "Park on the small grass verge / lay-by on the access road about 100 m past the access gate on the left. Do not obstruct traffic or gateways for any reason.",
+    "hazards": "Barbed wire fences: Barbed wire fence obstructing flight paths to the south, south-east and east; barbed wire fence around the southerly aspect of the hill.\nHigh-voltage power lines: High-voltage power lines on poles across the west and south-west slopes, making those aspects unusable and also to be avoided when on a NNW flight path.\nMain road proximity: Proximity of the main road when flying the NE aspect.\nDrainage ditches: Several narrow, overgrown drainage ditches running diagonally across the NW, N and NE slopes.\n",
+    "airtrafficcontrolrestrictions": "None are published for Skeagh.",
+    "images": [
+      "assets/sites/skeagh_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Typical training launch A",
+        "code": "A",
+        "lat": 54.886319,
+        "lon": -5.972265
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Landing field B",
+        "code": "B",
+        "lat": 54.888039,
+        "lon": -5.974216
+      },
+      {
+        "label": "Landing field B",
+        "code": "C",
+        "lat": 54.884169,
+        "lon": -5.969315
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Roadside small lay-by D",
+        "code": "D",
+        "lat": 54.888027,
+        "lon": -5.967642
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Skerrywhirry": {
+    "title": "Skerrywhirry",
+    "summary": "Skerrywhirry is a small west–south-west facing site west of Shane’s Hill, just off the Larne–Ballymena road. It has a short ridge, rarely gives smooth soaring, and is used by BHPA Club Pilot +10 hrs hang glider and paraglider pilots.",
+    "takeoff": "The main launch is at the northern end of the short ridge, facing west, with a smooth grassy slope and a fence below and to the left of the boulder field. A second launch for SW winds is at the southern end of the ridge on rougher ground, with a rocky outcrop on the right that can create turbulence.",
+    "landing": "Most bottom fields close to the hill slope downwards; these are generally fine for paragliders. Hang gliders should land further out, or on the flat land across the lane and fence at the north end of the ridge. Do not land in crop fields. Paragliders can usually land close to the car.",
+    "toplanding": "Top landings are possible along most of the ridge, avoiding the area near the rocky outcrop where turbulence may be encountered.",
+    "access": "Access is via the Greenmount experimental hill farm. Drive into the hill farm entrance and follow the lane toward the hill to a gate; close it after passing through, then continue on the lane around to the north side of the hill.",
+    "parking": "Park in the small lay-by on the access road, taking care not to obstruct the lane used by large farm vehicles.",
+    "hazards": "Barbed wire fence: A barbed wire fence runs straight down the hill, dividing it in two.\nAir conditions: The site rarely produces smooth soaring and can be rough.\nBoulders: The lower slopes are scattered with boulders that appear much larger from the air than from the ground.\nRocky outcrop: A rocky outcrop near the southern launch can generate turbulence in some conditions.\n",
+    "airtrafficcontrolrestrictions": "No specific airspace or ATC restrictions are published for this site; pilots should always check current NOTAMs and charts before flying.",
+    "images": [
+      "assets/sites/skerrywhirry_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "North ridge W-facing launch A",
+        "code": "A",
+        "lat": 54.835232,
+        "lon": -5.997399
+      },
+      {
+        "label": "South ridge SW-facing launch B",
+        "code": "B",
+        "lat": 54.832853,
+        "lon": -5.995309
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Sloping fields in front C",
+        "code": "C",
+        "lat": 54.834017,
+        "lon": -6.000796
+      },
+      {
+        "label": "Flat land across lane at N end D",
+        "code": "D",
+        "lat": 54.834302,
+        "lon": -6.004469
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Small roadside lay-by E",
+        "code": "E",
+        "lat": 54.835042,
+        "lon": -6.006907
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Spelga": {
+    "title": "Spelga",
+    "summary": "Spelga is a west–south-west to north-west facing site (250–330°, best around 300°) on Spelga Mountain above Spelga Dam on the B27 between Hilltown and Kilkeel. It is suitable for both hang gliding and paragliding by BHPA Club Pilots.",
+    "takeoff": "The take-off area near the summit is large, shallow and very benign, with no fence lines close to launch. The westerly launch faces towards Hen Mountain and drops away into a steep escarpment lower down.",
+    "landing": "The main bottom landing zone is the flat, rough (long grassy) area to the left of the B27 and the River Bann. Do not climb over fences to reach the road. If horses are present, stay well clear. This landing area is suitable for both hang gliders and paragliders.",
+    "toplanding": "Top land back at the launch point on the broad, shallow summit, taking normal care with wind strength and direction.",
+    "access": "Spelga is on the B27 between Hilltown and Kilkeel. From the north, as the road climbs the River Bann valley via two sharp hairpins, Spelga Mountain is on the left. From the car park, walk slightly up the road and use the gate that provides access to the hillside (do not cross the fence), then proceed up the rear of Spelga Mountain towards the summit. The walk takes around 15–20 minutes with a paraglider and involves no fences or walls to cross.",
+    "parking": "Park in the public car park overlooking Spelga Lake and the dam on the right-hand side when coming up the hill, just after passing the dam wall. This is a popular rendezvous point and has public toilets across the road.",
+    "hazards": "Wind & Turbulence: In a westerly wind the air has travelled over Hen Mountain before reaching Spelga; while turbulence has not generally been reported, pilots should remain aware of the possible effect in stronger winds.",
+    "airtrafficcontrolrestrictions": "None.",
+    "images": [
+      "assets/sites/spelga_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main summit launch A",
+        "code": "A",
+        "lat": 54.192129,
+        "lon": -6.056418
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Flat rough field B",
+        "code": "B",
+        "lat": 54.192037,
+        "lon": -6.074191
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Spelga Dam public car park C",
+        "code": "C",
+        "lat": 54.179218,
+        "lon": -6.058674
+      },
+      {
+        "label": "Bottom roadside lay-by D",
+        "code": "D",
+        "lat": 54.191763,
+        "lon": -6.073762
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Slieve Gullion": {
+    "title": "Slieve Gullion",
+    "summary": "Slieve Gullion is a 1900 ft hill site about 5 miles southwest of Newry, offering excellent ridge, thermal and XC potential in W–SW winds (240–270°). It is a popular hiking and MTB area with a busy forest drive and is strictly a UHPC/BHPA members-only site under Newry & Mourne District Council permission (BHPA CP + 50 hours / IPPI 4).",
+    "takeoff": "There are several launches. Launch 1 on the west face is a grassy clearing by the road, about 600 ft below the main ridge, with limited clearance over the trees and potential turbulence. Launch 2, above Launch 1 and reached by a short hike over a fenced stile (with PVC pipe cover), offers a cleaner, safer west-face launch. Launch 3 on the southwest face is reached from the large car park via the track north to the SW summit and cairn; the heather can snag lines. An alternative, less-used launch exists at the northern end of the ridge beyond the car park.",
+    "landing": "West Face: The main bottom landing is a large, up-sloping field just right of a modern bungalow. Approach from the NE corner near the road to avoid power lines in the corner. Southwest Face: Landing options are limited by high ground upwind creating turbulence; paragliders can land before the first fence on the slope, but the ground is rough and sloping and requires care.",
+    "toplanding": "Top landing is at the northern end of the ridge near Launch 2 or directly behind it. Expect turbulence and rough air in this area, especially in stronger winds or with a NW component. Treat all top landings as advanced manoeuvres.",
+    "access": "From the B113 (Newry–Forkhill road), about 1 mile past Meigh, follow the signs for Slieve Gullion Forest Drive. Note that the drive may be closed during forestry work, so check with the Forest Office. Follow the forest drive to the relevant parking areas, then walk on marked paths to the chosen launch, crossing fences only where provided (e.g. PVC-covered stile to Launch 2).",
+    "parking": "Park only in designated forest drive car parks as signed, taking care not to obstruct other visitors, emergency vehicles or pedestrians. Vehicles must display a card in the windscreen showing the driver’s name and contact number.",
+    "hazards": "Turbulence and rough ground: Rough ground, heather and forest turbulence, especially if there is any NW component in the wind.\nBlowback risk: The spine-like shape of Slieve Gullion increases the risk of being blown back in strong winds.\nWest-face Launch 1: West-face Launch 1 has limited clearance over trees and can be turbulent.\nSouthwest face landings: Southwest face has restricted, turbulent landing options due to high ground upwind.\nAccess and closing times: Seasonal opening hours on the forest drive mean you must allow time to pack up and exit before closing.\nPilot experience requirements: This is a members-only, high-experience site: UHPC recommends minimum CP + 10 hrs, with the formal rating requirement CP + 50 hrs (IPPI 4).\n",
+    "airtrafficcontrolrestrictions": "Dublin controlled airspace starts just south of Slieve Gullion at 4500 ft. XC pilots must carry current airspace charts and NOTAMs and avoid entering controlled airspace.",
+    "images": [
+      "assets/sites/slieve_gullion_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Launch A lower west-face",
+        "code": "A",
+        "lat": 54.127911,
+        "lon": -6.446675
+      },
+      {
+        "label": "Launch B upper west-face",
+        "code": "B",
+        "lat": 54.12798,
+        "lon": -6.440621
+      },
+      {
+        "label": "Launch C SW summit / cairn",
+        "code": "C",
+        "lat": 54.121576,
+        "lon": -6.434111
+      },
+      {
+        "label": "Alternative north ridge launch D",
+        "code": "D",
+        "lat": 54.129865,
+        "lon": -6.443629
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main west-face bottom field E",
+        "code": "E",
+        "lat": 54.12474,
+        "lon": -6.462492
+      },
+      {
+        "label": "Slope landing F",
+        "code": "F",
+        "lat": 54.126347,
+        "lon": -6.446175
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Forest Drive designated car parks G",
+        "code": "G",
+        "lat": 54.119401,
+        "lon": -6.443619
+      },
+      {
+        "label": "Roadside lay-by H",
+        "code": "H",
+        "lat": 54.126643,
+        "lon": -6.44547
+      },
+      {
+        "label": "Roadside lay-by I",
+        "code": "I",
+        "lat": 54.128078,
+        "lon": -6.446072
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "White Mountain": {
+    "title": "White Mountain",
+    "summary": "White Mountain is a 1.5-mile ridge site at 1805 ft ASL running towards Coolnasillagh. It offers excellent ridge and thermal soaring in S–NW winds (180–320°), with very easy access via a short, level walk to launch. After a long closure the site has reopened to UHPC members under strict rules; the access lane must never be blocked.",
+    "takeoff": "Southerly launch is smooth and rounded behind the mast, but close to power cables and a small wire fence. Westerly launches are from either the south or north end of the ridge—do not launch from the middle over the cliff. North-westerly launch is anywhere north of the hairpin bend where the ridge is smooth and rounded, accessed via a stile over the fence.",
+    "landing": "On the south face, bottom landing options are limited by forest. A sloping shelf about 100 m below launch can be used by paragliders. If you arrive low, head downwind and turn back into wind to land near the access gate. When landing behind the forest, maintain a high approach or fly over the forest to land in the valley.",
+    "toplanding": "Top landings are usually made in the open ground around or just behind the launch areas. On the southerly side, top landing hazards include power cables, a small wire fence and the mast, aim to land either at or behind launch.",
+    "access": "Access is via a tarmac lane off the Burren Road between Dungiven and Draperstown. Turn in at the gate signed with a BT sign and follow the lane up towards the tower and launch. If the gate is locked, contact the Sites Officer or Club Secretary for a key. After driving through, relock the gate and place the key back in the secure device on the bank to the left of the gate; do not keep the key.",
+    "parking": "Primary parking is in the top car park near the tower (best for S and SW winds). For W and NW winds, use the lay-bys beyond the hairpin bend along the ridge. Do not park at the lower gate, on the approach road or on the hairpin; the lane must be kept clear at all times.",
+    "hazards": "Power cables: High-tension power cables run behind the south and south-west launches and can be hard to see in low light.\nPeat banks: Peat banks are present in the top-landing areas.\nBottom landing: There is no direct bottom landing below the south-facing launch due to dense forest.\nAccess and parking: Access is by lane only, all vehicles must go to the top, parking at the gate or along the approach road is not allowed.\n",
+    "airtrafficcontrolrestrictions": "There are no air traffic control restrictions for White Mountain.",
+    "images": [
+      "assets/sites/white_mountain_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Southerly A",
+        "code": "A",
+        "lat": 54.849292,
+        "lon": -6.851064
+      },
+      {
+        "label": "Southerly B",
+        "code": "B",
+        "lat": 54.848877,
+        "lon": -6.848377
+      },
+      {
+        "label": "Westerly ridge launch C",
+        "code": "C",
+        "lat": 54.860268,
+        "lon": -6.855126
+      },
+      {
+        "label": "NW launch D",
+        "code": "D",
+        "lat": 54.863588,
+        "lon": -6.85186
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "PG sloping shelf below S launch E ",
+        "code": "E",
+        "lat": 54.84923,
+        "lon": -6.851464
+      },
+      {
+        "label": "Valley / gate area landing if low F",
+        "code": "F",
+        "lat": 54.858136,
+        "lon": -6.866303
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Top car park by tower G",
+        "code": "G",
+        "lat": 54.850639,
+        "lon": -6.851237
+      },
+      {
+        "label": "Ridge lay-by H",
+        "code": "H",
+        "lat": 54.862378,
+        "lon": -6.858519
+      },
+      {
+        "label": "Ridge lay-by I",
+        "code": "I",
+        "lat": 54.85868,
+        "lon": -6.856846
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "White Park Bay": {
+    "title": "White Park Bay",
+    "summary": "White Park Bay is a small coastal cliff site on Northern Ireland’s north coast with launch around 200 ft ASL. It is known for very smooth ridge soaring in NW–N winds (315–360°, best about 340°), and has been the start point for notable UHPC coastal cross-country flights between Portbradden and Ballintoy. Suitable for hang gliders and paragliders at BHPA Club Pilot level.",
+    "takeoff": "Launch is from the grassy cliff-top field above the dunes, reached via one field below the road. Turbulence and rotor can be present at launch, especially in stronger winds, so an experienced helper should steady wings and prevent hang gliders lifting off prematurely from too far back.",
+    "landing": "Bottom landing is possible just below launch in the grassy area behind the sand dunes, or on the beach itself. When using the beach, land well back from the sea and be aware of the sharp drop at the dune edge and associated turbulence, especially in stronger winds.",
+    "toplanding": "Top landings require enough extra height to clear the rotor and turbulence from the cliff. In typical conditions, around 300 ft above launch is adequate, but more may be needed in stronger winds. Standard approach is to turn downwind roughly three-quarters of a mile out, then approach with extra speed to punch through any sink or rough air; if in doubt, bottom land instead.",
+    "access": "From the A2 Causeway Coastal Route between Bushmills and Ballycastle, turn off into the signed White Park Bay cliff-top car park. From the car park, walk a short distance west along the A2 (no pavement, take care with traffic) and go through the first gate on the right, securing it behind you. Walk down across one field to reach the launch on the cliff edge.",
+    "parking": "Park in the White Park Bay cliff-top car park above the beach, keeping vehicles tight in and not obstructing other users or the entrance/exit.",
+    "hazards": "Launch turbulence and rotor: Launch turbulence and rotor at the cliff edge, especially in stronger winds; hang gliders may try to lift off prematurely from the rear of launch.\nBottom landing hazards: Turbulence and sharp drop at the sand dunes when bottom landing, aim well back from the dune edge and sea.\nPilot briefing: Pilots unfamiliar with the site are strongly advised to get a full briefing and use an experienced helper for launch.\nSite contact: Pilots should contact the named club contact (currently Willie Kane) for up-to-date site information before flying.\n",
+    "airtrafficcontrolrestrictions": "There are no air traffic control restrictions for White Park Bay.",
+    "images": [
+      "assets/sites/white_park_bay_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main cliff-top launch A",
+        "code": "A",
+        "lat": 55.229321,
+        "lon": -6.395007
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Grassy area behind dunes / beach B",
+        "code": "B",
+        "lat": 55.231607,
+        "lon": -6.400109
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "White Park Bay cliff-top car park C",
+        "code": "C",
+        "lat": 55.230092,
+        "lon": -6.392709
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Slieve Croob": {
+    "title": "Slieve Croob",
+    "summary": "Slieve Croob is a hill site north of the Mourne Mountains near Dromara, standing about 1750 ft ASL. It offers varied ridge soaring in NNE–NE–E and, more marginally, SW–W–NW winds, with a tarmac road to the transmitter at the summit. In practice, the only reliable soaring directions are NE through E; other aspects should be treated as top-to-bottom only.",
+    "takeoff": "On the west, northwest and southwest faces there are shallow grassy slopes that are generally manageable but can be turbulent in strong winds due to upwind terrain. For east and north-north-east winds, descend below the microwave dish on the summit road to find suitable, though rough, launch areas. Southwest–southeast ridges are short and mainly paragliding-only, with very limited soaring.",
+    "landing": "The main bottom landing area is ideal for paragliders and is up-sloping in NNE winds; approach with extra speed to counter wind gradient. In easterly winds, bottom landing is not recommended as the field is small, down-sloping and affected by turbulence from nearby forest.",
+    "toplanding": "Top landings for paragliders are generally straightforward in the open ground near the summit road and below the transmitter. Hang gliders usually top-land near the road below the transmitter, and must allow for turbulence and wind gradient by carrying extra speed on approach.",
+    "access": "From Dromara, take the road to Finnis, then turn left in Finnis up Dree Hill Road to the car park at the foot of the transmitter road. From the car park, follow the tarmac access road on foot to the summit area (about 500 ft of climb and roughly 20 minutes’ walk).",
+    "parking": "Park in the Dree Hill car park or carefully in small lay-bys along the road, depending on wind direction. Do not obstruct the private access road at any time and use the minimum number of vehicles.",
+    "hazards": "Transmitter and power cables: Transmitter compound and power cables on the south-east face.\nRadiation hazard: Microwave radiation hazard close to the summit installations.\nBlowback and rotor: The summit drops steeply on all sides; being blown back onto the lee side can result in very strong rotor and severe turbulence.\nMicrolight activity: Local microlight activity from the nearby Slieve Croob Flying Club.\nLandowner sensitivity: If a landowner asks you to leave, do so immediately.\n",
+    "airtrafficcontrolrestrictions": "Class D airspace begins at 3500 ft AMSL. Slieve Croob lies within ‘Croob – Designated Area 2’ under the LOA with Aldergrove ATC. UHPC members can activate this area and raise the ceiling from 3500 ft to 5000 ft by following the LOA procedures.",
+    "images": [
+      "assets/sites/slieve_croob_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "NE–E launch area below microwave dish A",
+        "code": "A",
+        "lat": 54.34,
+        "lon": -5.9735
+      },
+      {
+        "label": "W–NW–SW shallow slopes B",
+        "code": "B",
+        "lat": 54.341,
+        "lon": -5.976
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main bottom landing C",
+        "code": "C",
+        "lat": 54.3375,
+        "lon": -5.9715
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Dree Hill car park D",
+        "code": "D",
+        "lat": 54.3335,
+        "lon": -5.9725
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Barnavave": {
+    "title": "Barnavave",
+    "summary": "Barnavave is a compact north-facing paragliding hill in the Cooley Mountains above Carlingford, with launches just north of the summit looking out over Carlingford Lough and the Mournes. Flights here feel scenic and exposed despite the modest height, with clear coastal views, simple visual references and a quiet, open hillside atmosphere.",
+    "takeoff": "There are two main take-off places. One is practically on the top and is used for launching in light wind. The second is a little lower and is used when the wind is a bit stronger. Both take-offs are located to the north of the Barnavave summit. The take-off areas are small and are surrounded by small rocks.",
+    "landing": "Bottom landing is possible directly below the take-off, but you must be careful because the ground is covered with boulders and is uneven. A slope landing is possible a little to the north of the take-off, but again the ground is uneven and covered with boulders. The main landing field is on the left side of the access road and is a flat grassy field.",
+    "toplanding": "Top-landing is possible back near the take-off area, choosing the flattest and cleanest grass patches and avoiding the rocks.",
+    "access": "To reach the parking place you need to turn east next to Mullaghbuoy Community Centre, drive through the large gravel car park and continue along the farm track.",
+    "parking": "At the destination there is not much space and there is only room for a few cars. You must remember not to block the gates into the fields.",
+    "hazards": "Take-off area: Small rocky take-off areas with limited space.\nLanding terrain: Uneven, stony ground for bottom and slope landings.\nStrong wind / wind acceleration: Risk of being blown back in stronger conditions due to wind acceleration caused by the terrain shape.\nNorth-east wind: Possible turbulence and rotor in a north-east wind, especially in stronger conditions.\n",
+    "airtrafficcontrolrestrictions": "Dublin controlled airspace starts just south of Slieve Gullion at 4500 ft. XC pilots must carry current airspace charts and NOTAMs and avoid entering controlled airspace.",
+    "images": [
+      "assets/sites/barnavave_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Launch A",
+        "code": "A",
+        "lat": 54.022194,
+        "lon": -6.205929
+      },
+      {
+        "label": "Launch 2 B",
+        "code": "B",
+        "lat": 54.022828,
+        "lon": -6.205706
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Landing field C",
+        "code": "C",
+        "lat": 54.02289,
+        "lon": -6.215479
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Roadside lay-by D",
+        "code": "D",
+        "lat": 54.023825,
+        "lon": -6.214992
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Lacken": {
+    "title": "Lacken",
+    "summary": "Lacken is a west-facing hill site above Blessington Lake in Co. Wicklow, about 50 minutes from Dublin. It offers beginner training hops on the lower western slope and soaring/XC for more experienced pilots from Black Hill in W–NW, with a secondary SW option on Sorrel Hill in stronger conditions.",
+    "takeoff": "Beginner and novice pilots use the western training slope (A) directly above the car park for short hops and ground handling. More experienced pilots walk about 10 minutes up the path to Black Hill (B), a large grassy slope that works best in W–NW. If the wind goes more northerly, avoid Black Hill as rotor can come off Lugnagun, the small hill out in front. Sorrel Hill (E) takes SW but needs strong wind and can generate rotor in the landing zone, so is generally best avoided.",
+    "landing": "The main Landing Zone (C) is the large area in front of the car park. It can suffer from venturi, so approaches need to be planned with care and good airspeed. If conditions are too strong near the car park, fly further out and land in the basin (D) below.",
+    "toplanding": "Top landings are usually made back on the gentle slopes near Black Hill or on the training slope above the car park when conditions allow, taking care with venturi near the car park and any stock in the fields.",
+    "access": "In the village of Lacken, turn into the narrow road beside the shop and drive approximately 2 km up the hill to the car park overlooking Blessington Lake.",
+    "parking": "Park in the hilltop car park above the western slope, keeping vehicles tidy and not blocking the track or turning area.",
+    "hazards": "Mountain Weather: Mountain weather can change quickly, so conditions and wind strength need to be monitored visually over the lake.\nVenturi in Main LZ: The main landing in front of the car park can experience venturi, particularly in stronger winds.\nLugnagun Rotor: Rotor can be produced by Lugnagun when the wind on Black Hill has a more northerly component.\nSorrel Hill: Sorrel Hill requires strong SW wind to work and can produce rotor in the landing area, so is generally not recommended.",
+    "airtrafficcontrolrestrictions": "Local helicopter traffic uses airspace in this area. Before flying, airspace must be closed for helicopters by phoning +353 1 403 7514 and informing them of planned flying activity and duration.",
+    "images": [
+      "assets/sites/lacken_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Beginner / training slope",
+        "lat": 53.139954,
+        "lon": -6.445728,
+        "code": "A"
+      },
+      {
+        "label": "Black Hill – main W–NW launch",
+        "lat": 53.13169,
+        "lon": -6.44255,
+        "code": "B"
+      },
+      {
+        "label": "Sorrel Hill – strong SW only",
+        "lat": 53.145094,
+        "lon": -6.445003,
+        "code": "E"
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Main LZ in front of car park",
+        "lat": 53.13726,
+        "lon": -6.44153,
+        "code": "C"
+      },
+      {
+        "label": "Basin landing",
+        "lat": 53.136216,
+        "lon": -6.450937,
+        "code": "D"
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Hilltop car park",
+        "lat": 53.13817,
+        "lon": -6.440923,
+        "code": "P"
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Lough Bray": {
+    "title": "Lough Bray",
+    "summary": "Lough Bray is an easterly-facing hill site above Glencree in Co. Wicklow, overlooked by the Kippure TV mast. It offers excellent flying for both experienced and novice pilots, with superb views over the lough and out to the coast, but involves a decent hike to launch and has seasonal restrictions for nesting peregrine falcons.",
+    "takeoff": "Take off from the top of the hill (C) above the corrie lake bowl. From launch, pilots typically turn right and fly into the main bowl and lift band; if you do not gain enough height to move above the ridge in the bowl, it is advisable to turn back and head for the landing zone. In some wind conditions it is also possible to fly across to the Upper Lough (D), which works in a SE wind.",
+    "landing": "The main landing area (B) sits roughly halfway between the road (A) and take-off (C). It is a wide, open, soft and safe landing zone, and is also a very good area for novice pilots to practice ground handling. Landings are usually made here rather than at the road.",
+    "toplanding": "Top landings are generally made back on the hill near take-off in suitable conditions. Most pilots, especially newer ones, use the mid-slope landing (B) as the primary LZ, treating top-landing as an option only in stable, well-established conditions.",
+    "access": "Drive from Bray to Enniskerry and take the L1011 to Glencree. From Glencree, turn onto the Old Military Road (towards Sally Gap) and drive for about 1 km until you reach the area below Lough Bray. From the roadside, hike up to the mid-slope landing area (B), then continue the steeper hike up to take-off (C).",
+    "parking": "Park carefully on the roadside / small verge on the Old Military Road below the site, without blocking the carriageway or any access tracks. All vehicles should be well in off the road due to fast traffic.",
+    "hazards": "Wind / Rotor: Avoid take-off with a SE wind—take-off will experience rotor from the spur between the two corrie lake bowls.\nEagle Rock Spur: If the wind veers southerly, rotor from the Eagle Rock spur between the bowls will be felt in the main bowl and along the ridge.\nHeight Gain: If you cannot gain sufficient height in the bowl to move safely above the ridge, turn back early and head to the landing zone rather than pushing deep.\nSeasonal Restrictions: Lough Bray is a Special Protection Area (SPA) for peregrine falcons; no flying is allowed from 1st March to 31st July unless otherwise notified by Wicklow Mountains National Park.",
+    "airtrafficcontrolrestrictions": "No specific ATC restrictions are noted for Lough Bray in the site guide, but pilots must always check current NOTAMs and Irish airspace charts before flying, particularly if planning higher climbs or XC towards Dublin Bay.",
+    "images": [
+      "assets/sites/lough_bray_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "Main take-off above Lough Bray C",
+        "lat": 53.1888,
+        "lon": -6.3097,
+        "code": "C"
+      },
+      {
+        "label": "Upper Lough – SE option D",
+        "lat": 53.177656,
+        "lon": -6.305868,
+        "code": "D"
+      }
+    ],
+    "launchMarkers": [],
+    "landings": [
+      {
+        "label": "Mid-slope landing B",
+        "lat": 53.1891,
+        "lon": -6.2992,
+        "code": "B"
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Roadside parking on Old Military Road A",
+        "lat": 53.189469,
+        "lon": -6.291882,
+        "code": "A"
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Great Sugar Loaf": {
+    "title": "Great Sugar Loaf (west)",
+    "summary": "Great Sugar Loaf (west) is a WSW–SW-facing site above Kilmacanoge, Co. Wicklow, only about 35 minutes from Dublin and just off the N11. It offers excellent soaring and thermal flying for pilots with good ground-handling skills, with launch from the rocky west shoulder and plenty of landing options out in front of the ridge.",
+    "takeoff": "Take off is on the West Shoulder (B), where the ground is rocky with a light covering of heather and care is needed with lines and footing. Good ground-handling skills are advised as the terrain is unforgiving to gliders that drop back after unsuccessful inflations. Once in the air, gain height in front of the shoulder (approx. 50 m) before attempting to connect with the upper ridge and summit (C).",
+    "landing": "You can land anywhere in the flat areas between the base of the ridge and the car park (E), where there are plenty of patches free of gorse. There are also numerous landing fields (F) available, but some may contain livestock or crops, and many are bounded by barbed wire; take care of your glider when exiting.",
+    "toplanding": "Top landings on the west shoulder (B) are possible only in suitable conditions and should be treated as an advanced option due to the rocky, uneven surface and potential venturi either side of the cone. Most pilots plan to land out in front of the ridge.",
+    "access": "Travel south on the N11 and take Exit 9 at Glen of the Downs. Follow Red Lane up to the Great Sugar Loaf south car park (A), then hike up the west side of the hill to reach the West Shoulder take-off (B).",
+    "parking": "Park in the Sugar Loaf south car park (A). Do not leave valuables visible in your vehicle, as break-ins have been reported.",
+    "hazards": "Venturi on Cone: Avoid flying too close either side of the cone, as these areas can suffer from venturi, making it easy to get parked near the edge of the lift band or pushed back into the lee of the ridge.\nQuarry Air (D): The airspace above the flooded quarry beside the Roundwood Road (R755) to the west can, in certain conditions, be turbulent and may require active flying.\nWave Effects: On strong days, wave effects from hills to the west are possible.\nRocky Shoulder: The rocky, heather-covered West Shoulder (B) is hard on gliders and pilots if ground handling goes wrong; failed inflations can result in canopy damage.\nVehicle Security: The south car park (A) has a risk of car break-ins; avoid leaving valuables in sight.",
+    "airtrafficcontrolrestrictions": "No specific ATC restrictions are noted for Great Sugar Loaf (west) in the site guide, but pilots should always check current NOTAMs and Irish airspace charts before flying, especially when climbing in thermals or going XC toward Roundwood or Dublin.",
+    "images": [
+      "assets/sites/great_sugar_loaf_1.jpg"
+    ],
+    "launches": [
+      {
+        "label": "West Shoulder take-off B",
+        "lat": 53.153871,
+        "lon": -6.152706,
+        "code": "B"
+      }
+    ],
+    "launchMarkers": [
+      "C: 53.154069, -6.150257",
+      "D: 53.151400, -6.163423 | #d64f4f"
+    ],
+    "landings": [
+      {
+        "label": "Main flat landing area between ridge and car park E",
+        "lat": 53.144683,
+        "lon": -6.154251,
+        "code": "E"
+      },
+      {
+        "label": "Landing fields F",
+        "lat": 53.15091,
+        "lon": -6.147603,
+        "code": "F"
+      }
+    ],
+    "landingMarkers": [],
+    "parkings": [
+      {
+        "label": "Sugar Loaf south car park A",
+        "lat": 53.144374,
+        "lon": -6.155025,
+        "code": "A"
+      }
+    ],
+    "parkingMarkers": []
+  },
+  "Mount Leinster": {
+    "title": "Mount Leinster",
+    "summary": "Mount Leinster lies at the northern end of the Blackstairs Mountains on the Carlow/Wexford border. Its summit road gives access to several distinct flying areas with different aspects, landing options and levels of difficulty. This regional guide covers Westerly Car Park, Slevebawn / Nine Stones Ridge, Black Banks and the Mast. These are separate launch areas, not alternative names for a single take-off.",
+    "takeoff": "Westerly Car Park (WCP): a west-facing ridge. In stronger wind, the guide describes launching lower down the slope. Gain height along the ridge before considering a crossing towards the forest on the western side of Croaghaun, and retain enough height to clear the trees.\n\nSlevebawn / Nine Stones Ridge: works in N-NE wind. Launch from the slope opposite the Nine Stones car park and work along the ridge. The lift band can become narrow and congested in a NE wind.\n\nBlack Banks: a N-NW option, with launch approximately 20-30 m above the road when conditions allow. Avoid drifting too far behind the ridge and monitor forward progress as wind increases with height.\n\nMast: the high summit launch, approximately 790 m ASL, is the most demanding of these areas. The guide describes substantial XC potential but calls for at least 50 hours of airtime because easy landing options are limited, particularly around the SE Bowl.",
+    "landing": "WCP: paragliders use the field below the ridge, which has a steep slope; hang gliders use the Bonesetters Field.\n\nSlevebawn and Black Banks: the Nine Stones landing area is shared. The guide also describes a Northern Landing Field and some flat areas below the road. Wind at a lower landing can differ from the ridge.\n\nMast: the guide identifies Crossroads Field for paragliders and Diamond Field for hang gliders when top landing is not possible. Under a high-pressure inversion, the SE Bowl and Diamond Field can experience severe wind shear and gusting eddies; the guide advises against using them in these conditions.",
+    "toplanding": "WCP: the described top-landing area is south of the ridge.\n\nSlevebawn: the ground between the car park and ridge is used for top landing but can be affected by venturi.\n\nMast: top landing is possible in suitable conditions, with particular care around the mast, support cables, rocks, boulders, bog holes and heather. The summit landing point is not a general approval of current conditions.",
+    "access": "The Nine Stones car park is the main meeting point, with walking access to Slevebawn and Black Banks. The summit road to the Mast passes through a locked gate. The guide describes a key arrangement for IHPA members with membership and insurance and says non-members or visiting pilots require express permission to pass the gate. Current access arrangements need confirmation.\n\nThe map points distinguish the separate launch areas. The existing Mount Leinster and Mount Leinster N forecast markers retain their original locations; the regional guide does not establish that Mount Leinster N is Black Banks or Slevebawn.",
+    "parking": "Nine Stones car park is opposite the summit-road gate at approximately 400 m ASL. The guide recommends meeting here and sharing vehicles for the summit because parking at the top is limited. Westerly Car Park is a separate access area for the western ridge.",
+    "hazards": "SE Bowl / Scullogue Gap: a high-pressure inversion can produce severe wind shear, gusting eddies and even a 180-degree direction change around Diamond Field despite apparently light conditions elsewhere.\nSouth Wind at the Mast: rotor from the Blackstairs can be hazardous in anything other than light wind.\nPower Lines: cables separate Slevebawn and Black Banks and require care if crossing between ridges.\nWCP Forest: retain enough height to clear the trees when moving towards Croaghaun.\nSummit Obstacles: the mast, support cables, rough ground, rocks and bog holes complicate launching and landing.\nVenturi / Stronger Wind Aloft: assess forward progress and lower landing conditions separately.",
+    "airtrafficcontrolrestrictions": "No site-specific ATC arrangements are described in this guide. The access-key arrangement concerns the summit-road gate and does not establish airspace permission.",
+    "images": [],
+    "launches": [
+      {
+        "label": "Westerly Car Park take-off",
+        "code": "WT",
+        "lat": 52.655618,
+        "lon": -6.770784
+      },
+      {
+        "label": "Slevebawn / Nine Stones Ridge take-off",
+        "code": "ST",
+        "lat": 52.63834,
+        "lon": -6.796259
+      },
+      {
+        "label": "Black Banks take-off",
+        "code": "BT",
+        "lat": 52.63742,
+        "lon": -6.787872
+      },
+      {
+        "label": "Mast summit take-off",
+        "code": "MT",
+        "lat": 52.618455,
+        "lon": -6.781516
+      }
+    ],
+    "landings": [
+      {
+        "label": "WCP bottom landing",
+        "code": "WL",
+        "lat": 52.655807,
+        "lon": -6.775003
+      },
+      {
+        "label": "Nine Stones landing - Slevebawn / Black Banks",
+        "code": "NL",
+        "lat": 52.637325,
+        "lon": -6.795168
+      },
+      {
+        "label": "Mast summit top landing",
+        "code": "ML",
+        "lat": 52.618624,
+        "lon": -6.781043
+      }
+    ],
+    "parkings": [
+      {
+        "label": "Nine Stones car park",
+        "code": "NS",
+        "lat": 52.636843,
+        "lon": -6.793677
+      }
+    ],
+    "source": {
+      "title": "IHPA Site Guide",
+      "edition": "Issue 4, July 2015",
+      "pages": [
+        6,
+        7
+      ],
+      "note": "Source publication date, not a last-verified date. Access, permissions and airspace have not been re-verified."
+    }
+  },
+  "Croagh Patrick": {
+    "title": "Croagh Patrick",
+    "summary": "Croagh Patrick is an isolated 764 m mountain on the southern shore of Clew Bay, west of Westport. The guide describes north, south and west approaches, with a substantial hike to launch and XC potential towards the Sheffries. Strong Atlantic influence can make conditions difficult to judge before reaching the hill and can keep cloud base lower than farther inland.",
+    "takeoff": "North: walk from the main northern car park to the shoulder at point A and choose a suitable launch in that area. With a NW component, flying too far into the bowl can encounter turbulence.\n\nSouth: approach the same shoulder area from the Mountain Rescue station side, following a partly boggy track. This starts higher and can be a shorter walk than the northern approach.\n\nWest: approach between the western flank, Ben Goram, and the smaller hill, Cuillean. The hike reaches a small, steep launch area at point B. Confident launch technique is needed. Points A and B identify launch areas rather than surveyed launch pads.",
+    "landing": "North: the guide describes slope landing above and south of the car park and fields north of the road. It specifically identifies landowner problems with the field immediately east of the field containing the Ship monument; do not infer landing permission from an apparently open field.\n\nSouth: there are open landing possibilities, but landing too far east of the main peak can lead to a difficult walk through forest.\n\nWest: landing options are described near the road used for parking. No precise landing coordinates are supplied.",
+    "toplanding": "The guide does not identify a dedicated top-landing site or provide top-landing coordinates. Its northern slope-landing description should not be treated as a confirmed summit landing area.",
+    "access": "North: use the main car park on the northern side and hike to the shoulder.\n\nSouth: take the road towards the Mountain Rescue station and continue on the track; the first part can be wet and boggy.\n\nWest: follow the road between Ben Goram and Cuillean, park where permitted and make the steep walk to the western launch area.",
+    "parking": "The guide supplies northern car park C, a small southern parking area D and roadside western parking E. The northern car park has a time limit according to the source; longer visits require an appropriate alternative. Check current parking arrangements and keep access clear.",
+    "hazards": "Maritime Weather: cloud and wind can change quickly under Atlantic influence, with a lower cloud base than inland.\nNW Bowl: turbulence can occur if the wind is off to the northwest and the flight goes too deep into the bowl.\nWestern Spine: avoid drifting low behind the ridge, where rotor is described.\nWestern Launch: the launch is small and steep.\nSouthern Approach: wet, boggy ground and forested landing-out areas can complicate access and recovery.",
+    "airtrafficcontrolrestrictions": "No site-specific ATC arrangements are described in this guide.",
+    "images": [],
+    "launches": [
+      {
+        "label": "North / south shoulder launch area A",
+        "code": "A",
+        "lat": 53.761588,
+        "lon": -9.639639,
+        "needsVerification": true
+      },
+      {
+        "label": "Western launch area B",
+        "code": "B",
+        "lat": 53.763008,
+        "lon": -9.698733,
+        "needsVerification": true
+      }
+    ],
+    "landings": [],
+    "parkings": [
+      {
+        "label": "Northern car park C",
+        "code": "C",
+        "lat": 53.779593,
+        "lon": -9.64039
+      },
+      {
+        "label": "Southern parking D",
+        "code": "D",
+        "lat": 53.753634,
+        "lon": -9.638909
+      },
+      {
+        "label": "Western roadside parking E",
+        "code": "E",
+        "lat": 53.763871,
+        "lon": -9.705643
+      }
+    ],
+    "source": {
+      "title": "IHPA Site Guide",
+      "edition": "Issue 4, July 2015",
+      "pages": [
+        8
+      ],
+      "note": "Source publication date, not a last-verified date. Launch coordinates identify areas in which a suitable take-off must be found."
+    }
+  },
+  "Sky Road": {
+    "title": "Sky Road",
+    "summary": "Sky Road is a coastal soaring site west of Clifden, with views towards Slyne Head. It works primarily in a SW wind. The guide describes a relatively low site, around 100 m above the ground below, which may remain usable when higher inland sites are too windy or in cloud; this does not establish conditions on a particular day.",
+    "takeoff": "Park in the small roadside car park at point A and reach the launch just over the low wall. The published coordinates refer to the car park, not a separate surveyed take-off. The site takes a fairly consistent SW wind. The ridge towards Clifden offers a possible short out-and-return, but becomes lower and shallower with increasingly limited landing options.",
+    "landing": "The guide identifies bottom-landing options around point B. Without a lift back, recovery involves a long road walk or a steep climb back up. On a flight east towards Clifden, landing areas become smaller and uneven, with power lines and stone walls. There are no bottom-landing options immediately along the sea line on that route.",
+    "toplanding": "The guide favours returning to the launch area when suitable, but describes it as small and uneven, with the car park behind and a large pond to avoid. Compression over the ridge can push a pilot back towards the wall or fence.",
+    "access": "Drive west from Clifden along Sky Road to the small roadside car park at point A. Launch is just beyond the low wall. Bottom-landing recovery should be planned before flying because the return on foot is long or steep.",
+    "parking": "Small roadside car park A at 53.500679, -10.096485. The guide provides no separate launch coordinates; the map therefore marks A as parking.",
+    "hazards": "Compression: wind over the top can push a pilot towards or over the wall and fence.\nTop Landing: uneven ground, a nearby car park and a large pond constrain the landing.\nClifden Ridge Run: the ridge quickly loses height, with limited uneven landing options, power lines and stone walls.\nSea Line: do not assume a beach or bottom landing is available below the coastal route.",
+    "airtrafficcontrolrestrictions": "No site-specific ATC arrangements are described in this guide.",
+    "images": [],
+    "launches": [],
+    "landings": [
+      {
+        "label": "Bottom landing area B",
+        "code": "B",
+        "lat": 53.497611,
+        "lon": -10.097667
+      }
+    ],
+    "parkings": [
+      {
+        "label": "Sky Road car park A - launch over the wall",
+        "code": "A",
+        "lat": 53.500679,
+        "lon": -10.096485
+      }
+    ],
+    "source": {
+      "title": "IHPA Site Guide",
+      "edition": "Issue 4, July 2015",
+      "pages": [
+        9
+      ],
+      "note": "Source publication date, not a last-verified date. Access, permissions and airspace have not been re-verified."
+    }
+  },
+  "Maumturks": {
+    "title": "Maumturks - Inagh Valley",
+    "summary": "The Maumturks form the northeastern side of the Inagh Valley in Connemara, opposite the Twelve Bens. This guide describes launching from Binn Chaonaigh via the Maumean trail, with soaring along steep, rocky peaks and XC potential towards the Sheffries and Maumtrasna. It is a description of this launch area, not a guide to every summit in the range.",
+    "takeoff": "From the Maumean trail car park, follow the path to the saddle between Binnmore and Binn Chaonaigh, then turn left up the hillside. Look for a suitable flatter area about halfway up. The source marks the launch coordinates as approximate. The contents table describes WSW-SSW wind. Once established above the ridge, the guide describes a run of about 5 km towards Letterbreckaun; a more southerly wind may favour the slope around Binnmore.",
+    "landing": "The guide describes bottom-landing options along the valley but supplies no specific landing coordinates. Assess the selected field and access rather than treating the whole valley as an approved landing area.",
+    "toplanding": "Top landing is described near launch, but the ground is rocky, rough and broken by ledges. The guide does not supply a dedicated top-landing coordinate.",
+    "access": "Follow the N59 from Galway towards Clifden. About 11.8 km after Maam Cross, take the signed turn for the Maumean Trail car park, approximately 3.6 km along the side road. Continue on foot to the saddle, then turn left towards Binn Chaonaigh and find a suitable launch area.",
+    "parking": "Use the small car park at the start of the Maumean trail, point A, 53.483924, -9.669807.",
+    "hazards": "Rapid Cloud Formation: weather can change quickly and orographic cloud may form below the peaks even though the Twelve Bens provide some shelter from the sea.\nRocky Terrain: steep slopes and ledges complicate launching and top landing.\nLee Turbulence: gain adequate clearance before crossing a ridge or going over the back.\nLaunch Position: the published point is approximate and identifies an area in which a suitable take-off must be found.",
+    "airtrafficcontrolrestrictions": "No site-specific ATC arrangements are described in this guide.",
+    "images": [],
+    "launches": [
+      {
+        "label": "Binn Chaonaigh launch area B",
+        "code": "B",
+        "lat": 53.493261,
+        "lon": -9.661877,
+        "needsVerification": true
+      }
+    ],
+    "landings": [],
+    "parkings": [
+      {
+        "label": "Maumean trail car park A",
+        "code": "A",
+        "lat": 53.483924,
+        "lon": -9.669807
+      }
+    ],
+    "source": {
+      "title": "IHPA Site Guide",
+      "edition": "Issue 4, July 2015",
+      "pages": [
+        10
+      ],
+      "note": "Source publication date, not a last-verified date. The take-off coordinates are explicitly approximate."
+    }
+  },
+  "Achill Island": {
+    "title": "Achill Island",
+    "summary": "Achill Island has a long free-flying history and a variety of coastal and hill sites reached over the bridge at Achill Sound. This regional guide covers Minaun Heights, Minaun Lower Cliffs, Keel West / Lough Accorrymore, Knockmore and Atlantic Drive. They are separate sites with different aspects and landing options. Keel West is not the existing Keel Bay forecast location.",
+    "takeoff": "Minaun Heights: the road reaches the transmitter station at approximately 396 m ASL. The main ridge has NW and SE aspects, with northern spurs offering other options. The west cliffs south of the summit can be flown in W-WNW conditions after a crosswind launch from the NW side by the masts; the guide restricts this route to experienced pilots because there are no bottom-landing options along it.\n\nMinaun Lower Cliffs: from the parking area near the sea, walk up the rising ground towards the cliffs and find a suitable launch. The lower site may be usable when the summit is too windy, but can still push a pilot back up the slope. The supplied coordinates locate parking, not the take-off.\n\nKeel West / Lough Accorrymore: an easterly-facing ridge and bowl on the road towards Keem Beach. Launch from the ridge south of the lough and gain height before moving into the bowl. This is a separate western Achill site.\n\nKnockmore: a SW option, described as higher and smoother than Atlantic Drive, with a longer walk to launch. The printed coordinates repeat Keel West's point and are not used for a Knockmore map marker.\n\nAtlantic Drive: a SW-facing series of rocky outcrops extending for roughly two miles, becoming higher and steeper towards the southeast. The source coordinate is shown as a reference point, not a precise, confirmed launch.",
+    "landing": "The general Achill description identifies open peat land and the large Keel beach as bottom-landing possibilities, with each site's actual glide and obstacles assessed separately.\n\nMinaun west cliffs: there are no bottom-landing options along the remote cliff run south of the main hill.\n\nKnockmore and Atlantic Drive: the guide describes landing areas before the road, with the sea beyond it; avoid overshooting.\n\nNo precise landing coordinates are supplied for these individual sites.",
+    "toplanding": "Minaun Heights has several top-landing possibilities around the main hill. Stay clear of the transmitter mast and the power lines beside the road. The guide does not provide dedicated top-landing coordinates for Lower Cliffs, Keel West, Knockmore or Atlantic Drive.",
+    "access": "Minaun Heights: the summit road approaches from the southern side of the hill and reaches the transmitter station.\n\nMinaun Lower Cliffs: on the road towards Keel Beach, turn towards the sea at the church, about 2.7 km from Keel, and follow the lane to the parking area. Continue on foot up the rising ground.\n\nKeel West: follow the road towards Keem Beach and walk to the ridge south of Lough Accorrymore.\n\nKnockmore requires a longer uphill walk than Atlantic Drive. The source contains conflicting Knockmore coordinates, so an exact approach point has not been added. Atlantic Drive's coastal outcrops are described along the southeastern side of the island.",
+    "parking": "The summit road gives access to Minaun Heights. A separate Lower Cliffs parking point is provided at 53.960185, -10.045186. No precise parking coordinates are supplied for Keel West, Knockmore or Atlantic Drive; their launch/reference points should not be treated as parking instructions.",
+    "hazards": "Minaun Mast / Power Lines: keep clear when launching or top landing near the transmitter station and summit road.\nWest Cliffs: crosswind launching and a route without bottom-landing options require particular experience and planning.\nLower Cliffs: compression can blow a pilot too far back up the slope.\nKeel West Bowl: avoid being blown over the back while flying the bowl above the lough.\nAtlantic Drive / Knockmore: rocky outcrops, increasing ridge height towards the southeast and the sea beyond the landing road constrain options.\nCoordinate Uncertainty: Knockmore's printed point duplicates Keel West and has deliberately not been plotted; the Atlantic Drive point is a source reference requiring local verification.",
+    "airtrafficcontrolrestrictions": "No site-specific ATC arrangements are described in this guide.",
+    "images": [],
+    "launches": [
+      {
+        "label": "Minaun Heights summit take-off",
+        "code": "MH",
+        "lat": 53.957373,
+        "lon": -10.026432
+      },
+      {
+        "label": "Keel West / Lough Accorrymore take-off",
+        "code": "KW",
+        "lat": 53.977618,
+        "lon": -10.1708746
+      }
+    ],
+    "landings": [],
+    "parkings": [
+      {
+        "label": "Minaun Lower Cliffs parking",
+        "code": "LC",
+        "lat": 53.960185,
+        "lon": -10.045186
+      }
+    ],
+    "referencePoints": [
+      {
+        "label": "Atlantic Drive coastal ridge reference",
+        "code": "AD",
+        "lat": 53.879717,
+        "lon": -9.966301,
+        "needsVerification": true
+      }
+    ],
+    "source": {
+      "title": "IHPA Site Guide",
+      "edition": "Issue 4, July 2015",
+      "pages": [
+        11,
+        12
+      ],
+      "note": "Source publication date, not a last-verified date. Knockmore's duplicated coordinates are omitted. Lower Cliffs is not automatically associated with Keel Bay."
+    }
+  },
+  "Rossbeigh": {
+    "title": "Rossbeigh",
+    "summary": "Rossbeigh, also written Rossbehy, is a coastal hill above Glenbeigh with views over Rossbeigh beach and across the inlet towards Inch. The guide describes a long, steep soaring ridge, a summit-side parking and launch area, a lower launch for stronger conditions and bottom landing near the beach. Dune soaring in a westerly is described as a separate nearby option.",
+    "takeoff": "The main take-off is above the beach, in front of the upper parking area, at approximately 255 m ASL. A second launch is described about 50 vertical metres below the top, below the wire, with room to prepare two or three gliders. The guide suggests considering this lower position when wind at the top exceeds about 20 km/h, while assessing conditions independently. No separate coordinates are supplied for the lower launch.",
+    "landing": "The guide identifies the football field east of the road behind the beach as the main landing area, point B, at approximately 1 m ASL. It notes a children's playground near the road. The wider beach and public car park lie nearby; this description does not establish current permission to use a field. The dunes for westerly soaring are around a five-minute walk along the beach from the main landing area.",
+    "toplanding": "The main hill is described as unsuitable for top landing. Plan a bottom landing rather than assuming the broad launch area can be used on return.",
+    "access": "From Killarney, take the N72 west to Killorglin, then the N70 towards Glenbeigh. Continue towards the beach on the R564. The hilltop launch and parking are reached by the access road from the west.",
+    "parking": "The upper parking area is beside the main take-off. There is also a public car park behind the beach near the bottom-landing area. The source gives launch and landing coordinates, but no independent parking coordinates.",
+    "hazards": "Top Compression: wind at the upper launch can read up to about 10 km/h more than the wind away from the crest according to the guide; assess the whole site rather than relying on one reading.\nLower Launch: the alternative area is below a wire and has limited preparation space.\nBottom Landing: the road, playground, public use of the beach and actual field availability require assessment.\nTop Landing: the guide specifically describes the hill as unsuitable for it.",
+    "airtrafficcontrolrestrictions": "No site-specific ATC arrangements are described in this guide.",
+    "images": [],
+    "launches": [
+      {
+        "label": "Rossbeigh upper take-off A",
+        "code": "A",
+        "lat": 52.0475,
+        "lon": -9.9802
+      }
+    ],
+    "landings": [
+      {
+        "label": "Rossbeigh football-field landing B",
+        "code": "B",
+        "lat": 52.0552,
+        "lon": -9.9745
+      }
+    ],
+    "parkings": [],
+    "source": {
+      "title": "IHPA Site Guide",
+      "edition": "Issue 4, July 2015",
+      "pages": [
+        13
+      ],
+      "note": "Source publication date, not a last-verified date. Access, permissions and airspace have not been re-verified."
+    }
+  },
+  "Poland: Ciecień": {
+    "title": "Ciecień",
+    "country": "poland",
+    "summary": "Western slope above Wiśniowa, between the Stradomka and Krzyworzeka valleys. Published take-off elevation: 820 m ASL; approximately 400 m height difference.",
+    "takeoff": "Private clearing with room for a few wings. The published direction fields conflict; matching uses only their common W–WNW sector. Southerly deviations can produce turbulence and sink.",
+    "access": "Walk up the green trail from Wiśniowa, approximately 50 minutes. Do not block narrow lanes or park on private land without agreement.",
+    "landing": "The main meadow is about 2 km northwest and is hidden from launch. Inspect it before flying; the slope and thermal activity can cause an overshoot. No landing GPS has been imported.",
+    "airtrafficcontrolrestrictions": "Close to the Kraków/Balice TMA. Check current airspace before flight.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://spbw.pl/node/38",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 49.7724722,
+        "lon": 20.1411944,
+        "needsVerification": false
+      }
+    ],
+    "images": []
+  },
+  "Poland: Szczebel": {
+    "title": "Szczebel",
+    "country": "poland",
+    "summary": "A private, association-managed clearing above Mszana Dolna. Published take-off elevation: 960 m ASL; around 500 m height difference.",
+    "takeoff": "Small clearing, essentially one wing at a time. Matching uses N–NE from the launch instructions; the quick-reference fields also mention E. Obtain a local briefing before relying on the wider directions.",
+    "access": "Walk from Glisne pass, approximately 3 km to the summit. The association requests a daily or annual site contribution.",
+    "landing": "SPBW describes a new Kasinka Mała meadow from October 2025, between road 968 and the Raba. Confirm it using the source map. Keep sawmill truck access clear and do not drive onto the meadow.",
+    "hazards": "Trees and edge-of-sector turbulence. Other meadows near the Luboń trail have power lines.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://spbw.pl/node/50",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 49.6893889,
+        "lon": 20.0093333,
+        "needsVerification": false
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Glisne pass — trail access",
+        "lat": 49.66625,
+        "lon": 20.0069722
+      }
+    ],
+    "images": []
+  },
+  "Poland: Śnieżnica": {
+    "title": "Śnieżnica",
+    "country": "poland",
+    "summary": "North-facing clearing above Kasina Wielka. Published take-off elevation: 980 m ASL, with around 450 m height difference.",
+    "takeoff": "The source gives inconsistent direction summaries. Matching uses the narrower NNW–NNE sector. Strong wind and crosswind deviations can cause collapses immediately after launch.",
+    "access": "Approach from the ski station or follow the blue trail from Gruszowiec pass. Near the summit cross, a small path descends to the north-facing clearing.",
+    "landing": "The usual meadow is roughly 2 km northwest, below the ski-station car park, and is not visible from launch. Wind there may be stronger than expected; inspect it beforehand. No precise landing pin is available.",
+    "airtrafficcontrolrestrictions": "Close to the Kraków/Balice TMA; check current restrictions.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://spbw.pl/node/39",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 49.71675,
+        "lon": 20.1773889,
+        "needsVerification": false
+      }
+    ],
+    "images": []
+  },
+  "Poland: Podobin": {
+    "title": "Podobin",
+    "country": "poland",
+    "summary": "Spyrkowa Góra above Podobin, between Niedźwiedź and Mszana Górna. Published take-off elevation: 680 m ASL; around 220 m height difference.",
+    "takeoff": "Large open summit meadow. Matching uses the preferred S–SW sector rather than the wider possible directions. Southerly conditions require experience and careful observation.",
+    "access": "Approach from Podobin and follow the stony track then the path beside the fields; about 30–35 minutes on foot. Keep farm machinery and village lanes clear.",
+    "landing": "The source states there is no agreed bottom landing. Inspect fields, fences and landowner arrangements before launch. Do not treat the absence of a pin as permission to use any meadow.",
+    "hazards": "Thermal gusts, turbulence and abrupt changes of wind direction in the valley.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://spbw.pl/node/40",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 49.6379722,
+        "lon": 20.0933333,
+        "needsVerification": false
+      }
+    ],
+    "images": []
+  },
+  "Poland: Ćwilin": {
+    "title": "Ćwilin",
+    "country": "poland",
+    "summary": "Open clearing near the summit above Jurków. The current article supplies a precise take-off point and describes mainly southeasterly launches.",
+    "takeoff": "The broad E–S summary conflicts with a quick-reference SE-only entry. Wind tolerance is unverified, so this site is excluded from Wind-matched. Trees ahead can be difficult to clear in weak lift.",
+    "access": "Walk from the Droga Różańcowa car park near Wilczyce, approximately 40–50 minutes.",
+    "landing": "The meadow near the road and car park is hidden from launch. Inspect fences, houses, traffic and the approach; valley wind can change.",
+    "hazards": "Low clearance after take-off, thermal turbulence near trees and landing overshoots.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://spbw.pl/node/47",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 49.687694,
+        "lon": 20.191259,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Landing meadow",
+        "lat": 49.6678056,
+        "lon": 20.20075
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Droga Różańcowa parking",
+        "lat": 49.6677222,
+        "lon": 20.2026389
+      }
+    ],
+    "images": []
+  },
+  "Poland: Skrzętla": {
+    "title": "Skrzętla",
+    "country": "poland",
+    "summary": "Ridge site at Skrzętla–Rojówka on the eastern end of the Łososińskie range. Published take-off elevation: 630 m ASL, approximately 250 m above the valley.",
+    "takeoff": "The launch narrative gives N–NE, while the direction fields extend east. The permitted wind tolerance needs local confirmation and is not automatically matched.",
+    "access": "Road access reaches the summit area. Drive slowly through the village and leave roads, houses and mowing access unobstructed.",
+    "landing": "Two valley landing areas are described, including one near wires and one hidden to the left. Ask local pilots to identify them; no exact pins have been inferred.",
+    "hazards": "Power lines, uneven ground, reported ground fissures, electric fencing and strong rotor behind the launch during top landing.",
+    "airtrafficcontrolrestrictions": "The source identifies the Łososina Dolna aerodrome ATZ. Confirm current procedures and airspace boundaries with the local club.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://spbw.pl/node/41",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 49.7154167,
+        "lon": 20.5879167,
+        "needsVerification": false
+      }
+    ],
+    "images": []
+  },
+  "Poland: Góra Szybowcowa – Jeżów Sudecki": {
+    "title": "Góra Szybowcowa – Jeżów Sudecki",
+    "country": "poland",
+    "summary": "Open flying hill above Jeżów Sudecki, with gliding and powered-aircraft activity as well as paragliding. The catalogue marker is the club KMZ site reference.",
+    "takeoff": "Two separate flying slopes: south 160–220° and north 330–10°. Choose the corresponding launch on arrival. The eastern slope is described for ground handling, not as another flying launch.",
+    "landing": "Agree the landing and traffic pattern with the site operator. The broad site reference is not an instruction to land on an active runway.",
+    "access": "Road access from Jeżów Sudecki. Follow the local aerodrome rules and pilot briefing.",
+    "hazards": "Mixed aircraft traffic, thermals and the changing use of the airfield.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/szybowcowa/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 50.94319239010474,
+        "lon": 15.76358669832717,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Jatki-Mieroszów": {
+    "title": "Jatki-Mieroszów",
+    "country": "poland",
+    "summary": "Low ridge site on Jatki, also known as Krowiara, above Nowe Siodło near Mieroszów. Published take-off elevation around 600 m ASL, with 50–60 m height difference.",
+    "takeoff": "The club specifies a launch wind sector of 180–240°. Open ground in front of the slope supports ridge soaring and thermal flying.",
+    "access": "Obtain the current terms of use from the landowner or site host. Busy weekends can produce substantial traffic.",
+    "landing": "The club KMZ supplies a separate landing point and parking point. Inspect the field and current use before flight.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/krowiara-mieroszow/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.67275699999999,
+        "lon": 16.209839,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Club map landing",
+        "lat": 50.668822,
+        "lon": 16.206601
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Club map parking",
+        "lat": 50.669652,
+        "lon": 16.210124
+      }
+    ],
+    "images": []
+  },
+  "Poland: Kopa": {
+    "title": "Kopa",
+    "country": "poland",
+    "summary": "Grassy high-mountain take-off in Karkonosze National Park. Access and flight operation are subject to specific park permissions and site rules.",
+    "takeoff": "The source provides a direction diagram rather than verified numeric limits for this import. The site is not included in Wind-matched until its sector is confirmed.",
+    "access": "Read the current KPN take-off regulations and obtain the required permission before visiting. The club describes pre-flight notification and seasonal restrictions; verify the current permit conditions.",
+    "landing": "Use the separate landing location shown in the club KMZ, after checking current access and inspecting the approach.",
+    "airtrafficcontrolrestrictions": "Protected wildlife areas, seasonal closures and flight restrictions apply. A favourable weather icon does not indicate park permission.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/kopa/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.747873,
+        "lon": 15.728194,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Club map landing",
+        "lat": 50.777835,
+        "lon": 15.77161
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Club map parking",
+        "lat": 50.76859099999999,
+        "lon": 15.736593
+      }
+    ],
+    "images": []
+  },
+  "Poland: Róg – Chełmsko Śląskie": {
+    "title": "Róg – Chełmsko Śląskie",
+    "country": "poland",
+    "summary": "Small ridge site above Chełmsko Śląskie in the Zawory range. The club describes a replacement launch approximately 100 m from the old clearing.",
+    "takeoff": "Use only the new launch. The old clearing has been replanted. The source gives southwesterly wind and a 250° slope orientation, but no confirmed tolerance; no wind match is assigned.",
+    "access": "Walk the forest road; vehicle access is not permitted. Confirm the new launch position locally, since the club map may use a general reference.",
+    "landing": "Large meadows lie below the hill. Do not land near loose horses; confirm current landowner arrangements.",
+    "hazards": "Steep, limited launch space, forest rotor with wind deviations and horses in the landing area.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/rog-chelmsko-slaskie/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 50.66875206938463,
+        "lon": 16.10152285721401,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Rudnik": {
+    "title": "Rudnik",
+    "country": "poland",
+    "summary": "Prepared grassy clearing above Kowary in Rudawy Janowickie. The club gives a take-off elevation of approximately 840 m ASL and a 290–340 m height difference.",
+    "takeoff": "The stated ideal wind sector is 310–330°. Read the board at launch. Even a small westerly deviation may generate severe rotor; choose a calm interval.",
+    "landing": "The club map marks the triangular meadow northwest of launch. Inspect its approach before going up.",
+    "hazards": "Rough ground lower down, planted beech trees and a fenced section with sharp-topped posts. Do not continue an unsuccessful launch into the fenced plantation.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/rudnik/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.774016,
+        "lon": 15.866959,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Club map landing",
+        "lat": 50.788952,
+        "lon": 15.85472
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Club map parking",
+        "lat": 50.78927084460306,
+        "lon": 15.855381828906
+      }
+    ],
+    "images": []
+  },
+  "Poland: Stóg Izerski": {
+    "title": "Stóg Izerski",
+    "country": "poland",
+    "summary": "Ski-slope launch above Świeradów-Zdrój, near the top gondola station. The club specifies northeasterly winds from 10° to 80°.",
+    "takeoff": "Launch from the ski slope with careful clearance from lift cables and lamps.",
+    "access": "Gondola access. Check current lift operation and local launch arrangements.",
+    "landing": "The separate meadow below Opaleniec slopes east and has trees at its far end. Inspect it from the ground first; valley acceleration and thermals can make landing turbulent.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/stogizerski/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.892419,
+        "lon": 15.309827,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Opaleniec landing meadow",
+        "lat": 50.911993,
+        "lon": 15.313703
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Club map parking",
+        "lat": 50.911726,
+        "lon": 15.312391
+      }
+    ],
+    "images": []
+  },
+  "Poland: Wołowa Góra": {
+    "title": "Wołowa Góra",
+    "country": "poland",
+    "summary": "High clearing above Kowary, with a published take-off elevation of approximately 1,030 m ASL. The club gives 330–10° as the ideal wind sector.",
+    "takeoff": "Uneven ground, rocks and bilberry bushes can catch lines and cause trips. Check the canopy and lines carefully before committing.",
+    "hazards": "Easterly or southeasterly flow can create rotor even when launch appears calm. The nearby lower meadow has power lines; loose horses may occupy other fields.",
+    "landing": "The club KMZ identifies a separate landing farther north. Retain sufficient height to reach a clear field and inspect the current landing before flight.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://kkp.net.pl/wolowa-gora/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.768554,
+        "lon": 15.816439,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Club map landing",
+        "lat": 50.79109856293304,
+        "lon": 15.81223576468189
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Club map parking",
+        "lat": 50.747075,
+        "lon": 15.823396
+      }
+    ],
+    "images": []
+  },
+  "Poland: Dzikowiec": {
+    "title": "Dzikowiec",
+    "country": "poland",
+    "summary": "Northeasterly mountain launch near Boguszów-Gorce. The association gives an 800 m ASL take-off and a preferred wind bearing of 45° within a 0–75° sector.",
+    "takeoff": "Use the prepared clearing and inspect the edge of the forest before launch.",
+    "landing": "The club KMZ identifies a separate landing to the east. Check the meadow and approach before going up.",
+    "hazards": "Forest edges and nearby power infrastructure require careful clearance.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/opis/dzikowiec/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.720596,
+        "lon": 16.210896,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Club map landing",
+        "lat": 50.72009001752384,
+        "lon": 16.22773094869249
+      }
+    ],
+    "images": []
+  },
+  "Poland: Srebrna Góra": {
+    "title": "Srebrna Góra",
+    "country": "poland",
+    "summary": "Northeast-facing hillside launch near Srebrna Góra. The association lists a 537 m ASL start and a northern-to-eastern wind sector.",
+    "takeoff": "Steep, uneven ground with little room to abandon a launch. The description mentions thorny vegetation.",
+    "landing": "The published meadow lies east of launch. Earlier access conditions depend on the landowner; confirm the current agreement instead of assuming an open gate means permission.",
+    "hazards": "Limited abort space, trees and uneven ground.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/opis/srebrna-gora/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.570084,
+        "lon": 16.657957,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Published landing meadow",
+        "lat": 50.571163,
+        "lon": 16.667221
+      }
+    ],
+    "images": []
+  },
+  "Poland: Andrzejówka (Klin)": {
+    "title": "Andrzejówka (Klin)",
+    "country": "poland",
+    "summary": "Forest-edge launch on Klin above Andrzejówka. Published take-off elevation: 816 m ASL.",
+    "takeoff": "Matching uses the explicit 315–330° narrative limits rather than the conflicting N heading. Westerly deviations can produce dangerous turbulence.",
+    "landing": "The separate meadow below the hill is reached after crossing the tree line. Inspect the field before launch.",
+    "hazards": "Tree clearance and crosswind rotor.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/opis/andrzejowka-klin/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.692204,
+        "lon": 16.276079,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Published landing meadow",
+        "lat": 50.696625,
+        "lon": 16.274221
+      }
+    ],
+    "images": []
+  },
+  "Poland: Kudowa-Zdrój – Czermna": {
+    "title": "Kudowa-Zdrój – Czermna",
+    "country": "poland",
+    "summary": "Small forest-gap launch near Czermna. The association gives a preferred southwesterly bearing, without a numeric usable sector.",
+    "takeoff": "Wind tolerance needs confirmation. Forecast readings remain available, but the site is excluded from Wind-matched.",
+    "hazards": "Narrow launch gap and nearby trees.",
+    "landing": "A separate landing and parking point are supplied by the association. Inspect the current field and approach; the source elevation figures conflict and are not used as measured heights.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/opis/kudowa-zdroj-czermna/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.459366,
+        "lon": 16.249779,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Published landing meadow",
+        "lat": 50.458,
+        "lon": 16.247032
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Published parking",
+        "lat": 50.457478,
+        "lon": 16.247082
+      }
+    ],
+    "images": []
+  },
+  "Poland: Chełmiec": {
+    "title": "Chełmiec",
+    "country": "poland",
+    "summary": "Launch near Chełmiec with a published elevation of 785 m ASL. The association lists an easterly preferred bearing, without a confirmed wind tolerance.",
+    "takeoff": "This import does not infer a sector around 90°. Obtain an experienced local pilot’s briefing before choosing the launch.",
+    "hazards": "Forested terrain and limited launch options. No verified landing coordinates have been imported.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/opis/chelmiec/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.77972,
+        "lon": 16.214443,
+        "needsVerification": false
+      }
+    ],
+    "images": []
+  },
+  "Poland: Grzmiąca": {
+    "title": "Grzmiąca",
+    "country": "poland",
+    "summary": "Southeast-facing launch above Grzmiąca, with a published take-off elevation of 707 m ASL. Numeric wind tolerance remains unverified.",
+    "takeoff": "The source prefers SE; southerly deviations can create rotor. A preferred bearing alone is not a verified wind sector.",
+    "landing": "The published Arkadia meadow landing contains a pond. Inspect the approach and current use before flight.",
+    "hazards": "Rotor, forest edges and the pond near the landing.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/opis/grzmiaca/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "launches": [
+      {
+        "code": "A",
+        "label": "Take-off",
+        "lat": 50.693947,
+        "lon": 16.323845,
+        "needsVerification": false
+      }
+    ],
+    "landings": [
+      {
+        "code": "L",
+        "label": "Arkadia landing meadow",
+        "lat": 50.695267,
+        "lon": 16.33032
+      }
+    ],
+    "parkings": [
+      {
+        "code": "P",
+        "label": "Published parking",
+        "lat": 50.693565,
+        "lon": 16.329954
+      }
+    ],
+    "images": []
+  },
+  "Poland: Skrzyczne": {
+    "title": "Skrzyczne",
+    "country": "poland",
+    "summary": "BSP maintains several distinct launch faces below the summit. This marker represents the east take-off area, not a combined wind sector for the whole mountain.",
+    "takeoff": "East face: NE–ESE, steep and short. Separate N–NE and NW–N ski-run launches also exist; their exact pins are not confirmed here. The marker position is approximate, derived from flight-track starts, and needs on-site confirmation.",
+    "landing": "Kaimówka is no longer an official landing and is not mapped. BSP recommends Lipowa: Pańskie Pola, northwest of the runway, and the meadow Nad kościołem. Stay clear of runway traffic and inspect both approaches.",
+    "hazards": "Rotor near the NW launch and trees. Do not land on the east take-off or fly close to pilots preparing there.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://bsp.beskidy.pl/skrzyczne/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.6878,
+        "lon": 19.0317,
+        "needsVerification": true
+      }
+    ],
+    "landings": [
+      {
+        "code": "L1",
+        "label": "Lipowa — Pańskie Pola",
+        "lat": 49.697102,
+        "lon": 19.089718
+      },
+      {
+        "code": "L2",
+        "label": "Lipowa — Nad kościołem",
+        "lat": 49.678713,
+        "lon": 19.086896
+      }
+    ],
+    "images": []
+  },
+  "Poland: Żar": {
+    "title": "Żar",
+    "country": "poland",
+    "summary": "Busy mountain flying area with gliding, powered aircraft and paragliding operations. The catalogue marker is an approximate northern launch-area reference from flight-track starts.",
+    "takeoff": "BSP describes separate N, W and S launches, with SW/NW only for experienced pilots. No single combined tolerance is inferred for this marker. Easterly deviations are hazardous.",
+    "landing": "The northern landing is the Kozubnik meadow; inspect drainage ditches and current obstructions. No precise landing pin has been inferred from the description.",
+    "airtrafficcontrolrestrictions": "Read the current IWLPL instructions and follow EPZR aerodrome procedures. Check the site board or contact flight operations before flying.",
+    "hazards": "NW rotor, southerly valley acceleration, aircraft traffic and restricted landing options.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://bsp.beskidy.pl/zar/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.7875,
+        "lon": 19.2251,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Działy – Korczyna": {
+    "title": "Działy – Korczyna",
+    "country": "poland",
+    "summary": "Low ridge near Korczyna and Krosno with roughly 50–60 m height difference. The historical PSP description gives a S–SSW wind sector.",
+    "takeoff": "Wide meadow above a tree line. The APPI catalogue location is unverified; confirm the active launch locally. The neighbouring fenced meadow described in the source is not open for public use.",
+    "landing": "The bottom meadow is partly hidden, slopes and contains a road and ditch. Inspect the approach before flight. No exact landing pin is imported.",
+    "hazards": "Trees, gullies, local lee-side sink, power lines and landing overshoots.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://psp.org.pl/dzialy-meteo/",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.7373,
+        "lon": 21.841,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Bezmiechowa": {
+    "title": "Bezmiechowa",
+    "country": "poland",
+    "summary": "Published start: 650 m ASL; relief about 100 m. On aeroclub land, approached from Lesko via Bezmiechowa.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.52172610218224,
+        "lon": 22.410478591918945,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Weremień": {
+    "title": "Weremień",
+    "country": "poland",
+    "summary": "Published start: 540 m ASL; relief about 70 m. Aeroclub site near the ski lift, approached from Lesko.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.44373343989441,
+        "lon": 22.314897607624175,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Dźwiniacz": {
+    "title": "Dźwiniacz",
+    "country": "poland",
+    "summary": "Published start: 720 m ASL; relief about 150 m. Private land; confirm current access with the local school.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.46466565503903,
+        "lon": 22.53622055053711,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Laworta": {
+    "title": "Laworta",
+    "country": "poland",
+    "summary": "Published start: 750 m ASL; relief about 250 m. Private land; access requires confirmation.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.44469133832174,
+        "lon": 22.58244037628174,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Tokarnia": {
+    "title": "Tokarnia",
+    "country": "poland",
+    "summary": "Published start: 780 m ASL; relief about 200 m.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.42973316993069,
+        "lon": 22.048444747924805,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Makówka": {
+    "title": "Makówka",
+    "country": "poland",
+    "summary": "Published start: 550 m ASL; relief about 140 m.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.464763,
+        "lon": 22.262603,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Małe Jasło": {
+    "title": "Małe Jasło",
+    "country": "poland",
+    "summary": "Published start: 1,050 m ASL; relief about 350 m.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.17433915234302,
+        "lon": 22.350740432739258,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  },
+  "Poland: Dziurkowiec": {
+    "title": "Dziurkowiec",
+    "country": "poland",
+    "summary": "Published start: 1,200 m ASL.",
+    "takeoff": "Brief source card only. The map reference is not a surveyed take-off. Wind tolerance is unverified; no automatic wind match is assigned.",
+    "landing": "No confirmed landing point is available in this source card.",
+    "source": {
+      "title": "Polish club site guide",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "edition": "",
+      "pages": [],
+      "note": "Original English summary of published site information; not a live access status."
+    },
+    "referencePoints": [
+      {
+        "code": "A",
+        "label": "Source map position — take-off to verify",
+        "lat": 49.09851507725685,
+        "lon": 22.428245544433594,
+        "needsVerification": true
+      }
+    ],
+    "images": []
+  }
+}

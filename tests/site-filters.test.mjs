@@ -3,6 +3,16 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {getSiteMetadata, REGIONS} from '../src/siteCatalog.ts';
 import {defaultSiteFilters, normalizeSiteFilters, matchesSiteArea, scopeSitePanel, sitesForView, readSiteFilters, saveSiteFilters, FILTER_STORAGE_KEY} from '../src/siteFilters.ts';
+import {POLAND_ENABLED,releaseSiteFilters} from '../src/siteFilters.ts';
+
+test('country availability follows the release switch without losing unrelated preferences',()=>{
+    const saved={...defaultSiteFilters(),country:'poland',wind:'direction-review',withVideos:true,withGuide:true,siteType:'inland'};
+    assert.deepEqual(releaseSiteFilters(saved,false),{...saved,country:'ireland',wind:'all'});
+    assert.deepEqual(releaseSiteFilters(saved),POLAND_ENABLED?saved:{...saved,country:'ireland',wind:'all'});
+    assert.deepEqual(releaseSiteFilters(saved,true),saved,'The preserved Polish workflow can be re-enabled');
+    const ireland={...defaultSiteFilters(),regions:['north-east'],wind:'matched',withVideos:true};
+    assert.deepEqual(releaseSiteFilters(ireland),ireland);
+});
 
 test('every source site has explicit metadata with the agreed region counts', () => {
     const source=readFileSync(new URL('../src/plugin.svelte',import.meta.url),'utf8');
@@ -23,6 +33,27 @@ const entries=[
     {id:'d',name:'D',region:'south-west',siteType:'coastal',status:'unavailable'},
 ];
 const snapshot={allSites:entries,sites:[entries[0]],loading:1,unavailable:1,settings:false,time:'now'};
+test('Polish direction review isolates remaining unknown sectors and survives saved filters',()=>{
+ const sites=[{id:'unknown',country:'poland',directionUnverified:true},{id:'saved',country:'poland',directionUnverified:true,windReviewConfirmed:true},{id:'known',country:'poland'},{id:'irish',directionUnverified:true}];
+ assert.deepEqual(sitesForView({...snapshot,allSites:sites},'direction-review').map(s=>s.id),['unknown']);
+ assert.equal(normalizeSiteFilters({country:'poland',wind:'direction-review'}).wind,'direction-review');
+ assert.equal(normalizeSiteFilters({country:'ireland',wind:'direction-review'}).wind,'all');
+});
+test('country filters preserve legacy Ireland settings and scope Polish map and panel membership',()=>{
+    assert.equal(defaultSiteFilters().country,'ireland');
+    const pl={id:'pl',name:'Dzikowiec',country:'poland',siteType:'inland',status:'pass'};
+    const mixed={...snapshot,allSites:[...entries,pl],sites:[entries[0],pl]};
+    assert.deepEqual(scopeSitePanel(mixed,defaultSiteFilters()).allSites,entries);
+    const filters=normalizeSiteFilters({...defaultSiteFilters(),country:'poland',regions:['north-east']});
+    assert.deepEqual(filters.regions,[],'Ireland regions must not exclude Polish sites');
+    const scoped=scopeSitePanel(mixed,filters);
+    assert.deepEqual(scoped.allSites,[pl]);assert.deepEqual(sitesForView(scoped,'matched'),[pl]);
+    assert.equal(normalizeSiteFilters({country:'unknown'}).country,'ireland');
+    const saved=new Map();const storage={getItem:key=>saved.get(key)??null,setItem:(key,value)=>saved.set(key,value)};
+    saveSiteFilters(filters,storage);assert.deepEqual(readSiteFilters(storage),filters);
+    storage.setItem(FILTER_STORAGE_KEY,JSON.stringify({regions:['north-east'],wind:'matched'}));
+    assert.equal(readSiteFilters(storage).country,'ireland');
+});
 test('region selection is OR and type selection is AND, with scoped status counts', () => {
     const filters={regions:['north-east','north-west'],siteType:'coastal',wind:'matched'};
     const scoped=scopeSitePanel(snapshot,filters);
@@ -84,11 +115,43 @@ test('YouTube-only filtering combines with area and wind while keeping scoped co
 test('YouTube filter defaults off for older settings and only accepts a boolean',()=>{
     assert.equal(defaultSiteFilters().withVideos,false);
     const old={regions:['north-east'],siteType:'inland',wind:'matched'};
-    assert.deepEqual(normalizeSiteFilters(old),{...old,withVideos:false});
+    assert.deepEqual(normalizeSiteFilters(old),{...old,country:'ireland',withVideos:false,withGuide:false});
     assert.equal(normalizeSiteFilters({...old,withVideos:true}).withVideos,true);
     for(const withVideos of [undefined,null,'true','false',1,{}]){
         assert.equal(normalizeSiteFilters({...old,withVideos}).withVideos,false);
     }
+});
+
+test('site guide filtering combines with videos, area and wind, retaining light-wind matches and accurate counts',()=>{
+    const youtube=['https://www.youtube.com/watch?v=whaqT_LWvdk'];
+    const allSites=[
+        {id:'colin',name:'Big Colin',region:'north-east',siteType:'inland',status:'pass',youtube},
+        {id:'divis',name:'Divis',region:'north-east',siteType:'inland',status:'fail'},
+        {id:'mayo',name:'Mayobridge',region:'north-east',siteType:'inland',status:'loading',youtube},
+        {id:'torr',name:'Torr Head',region:'north-east',siteType:'coastal',status:'unavailable'},
+        {id:'unknown',name:'No guide here',region:'north-east',siteType:'inland',status:'pass',youtube},
+        {id:'different',name:'White Mountain W',lat:52,lon:-9,region:'south-west',siteType:'inland',status:'pass'},
+    ];
+    const panel={allSites,sites:[allSites[0],allSites[1],allSites[4],allSites[5]],loading:1,unavailable:1};
+    const filters={...defaultSiteFilters(),withGuide:true};
+    const scoped=scopeSitePanel(panel,filters);
+    assert.deepEqual(sitesForView(scoped,'all').map(site=>site.id),['colin','divis','mayo','torr']);
+    assert.deepEqual(sitesForView(scoped,'matched').map(site=>site.id),['colin','divis']);
+    assert.equal(scoped.loading,1);assert.equal(scoped.unavailable,1);
+    const combined=scopeSitePanel(panel,{...filters,regions:['north-east'],siteType:'inland',withVideos:true});
+    assert.deepEqual(combined.allSites.map(site=>site.id),['colin','mayo']);
+    assert.deepEqual(combined.sites.map(site=>site.id),['colin']);assert.equal(combined.unavailable,0);
+    assert.deepEqual(scopeSitePanel(panel,defaultSiteFilters()),panel);
+});
+
+test('site guide preference survives reopening and reset while older settings default off',()=>{
+    const values=new Map(),storage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};
+    const selected={...defaultSiteFilters(),withGuide:true,withVideos:true};
+    saveSiteFilters(selected,storage);assert.deepEqual(readSiteFilters(storage),selected);
+    saveSiteFilters(defaultSiteFilters(),storage);assert.equal(readSiteFilters(storage).withGuide,false);
+    for(const withGuide of [undefined,null,'true','false',1,{}])assert.equal(normalizeSiteFilters({withGuide}).withGuide,false);
+    storage.setItem(FILTER_STORAGE_KEY,JSON.stringify({regions:['north-east'],wind:'matched',withVideos:true}));
+    assert.equal(readSiteFilters(storage).withGuide,false);assert.equal(readSiteFilters(storage).withVideos,true);
 });
 
 test('video-review view includes only sites with undecided candidates, including unknown winds and loading forecasts',()=>{

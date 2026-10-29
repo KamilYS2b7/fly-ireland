@@ -7,10 +7,12 @@ import { createPointWindForecast as createWindForecast } from '../src/pointForec
 import { buildSitePanel } from '../src/sitePanel.ts';
 import { getSiteMetadata } from '../src/siteCatalog.ts';
 import { defaultSiteFilters, normalizeSiteFilters, scopeSitePanel, sitesForView, readSiteFilters, saveSiteFilters } from '../src/siteFilters.ts';
+import * as filterRelease from '../src/siteFilters.ts';
 import { rainDisplay } from '../src/rainForecast.ts';
 import {gustWarningDisplay,GUST_WARNING_SVG} from '../src/gustWarning.ts';
 import {weatherDisplay,weatherIconUrl,cloudBaseDisplay} from '../src/weatherForecast.ts';
 import {flybubbleSites} from '../src/flybubbleSites.ts';
+import {polandSites} from '../src/polandSites.ts';
 import {paraglidingMapSites,approvedParaglidingMapSites,paraglidingMapReviewCandidates} from '../src/paraglidingMapSites.ts';
 import {paraglidingMapVideos} from '../src/paraglidingMapVideos.ts';
 import {createSiteReview,SITE_REVIEW_STORAGE_KEY} from '../src/siteReview.ts';
@@ -20,7 +22,14 @@ import * as modelHelpers from '../src/forecastModels.ts';
 import {normalizeWindUnit,readWindUnit,saveWindUnit,convertWindSpeed,formatWindSpeed,windSpeedRange} from '../src/windUnits.ts';
 import {windLevelLabel} from '../src/windLayers.ts';
 import {formatForecastTime} from '../src/forecastTime.ts';
-import {createVideoReview,applyVideoDecisions,mapVideoButtonHTML,VIDEO_REVIEW_STORAGE_KEY} from '../src/siteVideos.ts';
+import {createVideoReview,applyVideoDecisions,mapVideoButtonHTML,canonicalYouTubeUrl,VIDEO_REVIEW_STORAGE_KEY} from '../src/siteVideos.ts';
+import {guideKeyForSite,createSiteGuideLoader} from '../src/siteGuides.ts';
+import {createSiteGuideMap} from '../src/siteGuideMap.ts';
+import {createAutomaticGuidePoints} from '../src/automaticGuidePoints.ts';
+import {readLargeRosesVisible,readSiteRoseVisibility,saveSiteRoseVisibility,LARGE_ROSES_STORAGE_KEY} from '../src/mapDisplay.ts';
+import {roseControlHTML,updateRoseControl} from '../src/roseControls.ts';
+import {createWindDirectionReview,parseDirectionRanges} from '../src/windDirectionReview.ts';
+const guideSource=JSON.parse(readFileSync(new URL('../assets/assets/site_descriptions.json',import.meta.url),'utf8'));
 
 const source = readFileSync(new URL('../src/plugin.svelte', import.meta.url), 'utf8');
 const script = source.match(/<script lang="ts">([\s\S]*?)<\/script>/)[1]
@@ -31,7 +40,7 @@ const code = ts.transpileModule(script, {
 
 // Windy owns the browser/map. Exercise the plugin against that boundary without
 // a WebGL context, including Leaflet GL's lack of the old L.point factory.
-function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = new Map(), honorForecastStep = false, productMetadata = {}, asyncProductWrites = false, nativeDetailNavigation = false, enableCandidateReview = false, includeApprovedSites = false, testVideos = false, enableVideoReview = false, projectionScale = 1 } = {}) {
+function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = new Map(), honorForecastStep = false, productMetadata = {}, asyncProductWrites = false, nativeDetailNavigation = false, enableCandidateReview = false, includeApprovedSites = false, includePolishSites = false, polandEnabled = includePolishSites, testVideos = false, enableVideoReview = false, projectionScale = 1, deferredGuides = false, guideFailures = 0 } = {}) {
     const filterStorage={getItem:key=>savedFilters.get(key)??null,setItem:(key,value)=>savedFilters.set(key,value)};
     // Legacy wind fixtures retain the original 136-site catalogue. Dedicated
     // cases opt into either the historical review flow or approved additions.
@@ -48,6 +57,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
     let zoom = 10;
     let additions = 0;
     let reads = 0;
+    let guideReads=0,resolveGuide;
     let profileReads = 0;
     let pointProductQueries = 0;
     const requestedModels = [];
@@ -62,6 +72,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         reading: { textContent: '' },
         unit: {textContent:''},
         arrow: { setAttribute(name, value) { this[name] = value; } },
+        rangeArc: {setAttribute(name,value){this[name]=value;}},
         sky: {style:{},attributes:{},getAttribute(name){return this.attributes[name];},setAttribute(name,value){this.attributes[name]=value;},removeAttribute(name){delete this.attributes[name];}},
         gustWarning: {style:{display:'none'},attributes:{},setAttribute(name,value){this.attributes[name]=value;}},
         setLatLng() { return this; },
@@ -79,6 +90,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
                 : ['.mini-wind-reading','.forecast-wind-reading'].includes(selector) ? this.reading
                 : ['.mini-wind-unit','.forecast-wind-unit'].includes(selector) ? this.unit
                 : ['.mini-wind-direction','.forecast-wind-direction'].includes(selector) ? this.arrow
+                : selector === '.use-arc' ? this.rangeArc
                 : selector === '.map-weather-icon' ? this.sky
                 : selector === '.map-gust-warning' && this.options?.icon?.html?.includes('map-gust-warning') ? this.gustWarning : null };
         },
@@ -121,7 +133,9 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
             selectedAtNavigation = [...layers].filter(layer=>layer.getElement().classList.contains('site-selected')).map(layer=>layer.flySpot?.id);
             zoom = z; lastView = { coords, zoom, options };
         },
-        getPixelBounds: () => ({ min: { x: west, y: -5600 }, max: { x: west + 500, y: -5100 } }),
+        getPixelBounds: () => lastView?.coords[1]>0
+            ? {min:{x:1400,y:-5520},max:{x:2500,y:-4880}}
+            : { min: { x: west, y: -5600 }, max: { x: west + 500, y: -5100 } },
         unproject: p => ({ lat: -(p.y ?? p[1]) / 100, lng: (p.x ?? p[0]) / 100 }),
         project: p => ({ x: p.lng * 100 * projectionScale, y: -p.lat * 100 * projectionScale }),
         getPane: name => panes.get(name),
@@ -150,23 +164,31 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
     };
     const context = vm.createContext({
         map, L, console, store, broadcast: weatherEvents, AbortController, buildSitePanel, localStorage:filterStorage,
+        guideKeyForSite,createSiteGuideMap,
+        createSiteGuideLoader:()=>createSiteGuideLoader({fetch:async()=>{guideReads++;if(deferredGuides)await new Promise(resolve=>{resolveGuide=resolve;});if(guideReads<=guideFailures)return {ok:false,status:503};return {ok:true,json:async()=>guideSource};}}),
+        createAutomaticGuidePoints,
         window:{addEventListener(name,callback){browserListeners.set(name,callback);},removeEventListener(name,callback){if(browserListeners.get(name)===callback)browserListeners.delete(name);}},
+        createWindDirectionReview:sites=>createWindDirectionReview(sites,filterStorage),parseDirectionRanges,
         getSiteMetadata, defaultSiteFilters, normalizeSiteFilters, scopeSitePanel, sitesForView, rainDisplay, gustWarningDisplay, GUST_WARNING_SVG, flybubbleSites, windRanges, formatWindRanges, forecastModelLabel,
+        POLAND_ENABLED:polandEnabled,releaseSiteFilters:value=>filterRelease.releaseSiteFilters(value,polandEnabled),
+        polandSites:includePolishSites?polandSites:[],
         ...reviewWorkflow,SITE_REVIEW_STORAGE_KEY,
         paraglidingMapReviewCandidates:reviewCandidates,
         approvedParaglidingMapSites:includeApprovedSites?approvedParaglidingMapSites.map(site=>enableVideoReview?{...site,videoCandidates:paraglidingMapVideos[site.id]??[],youtube:(paraglidingMapVideos[site.id]??[]).map(v=>v.url)}:site).map(site=>testVideos&&['pgmap-127756','pgmap-127890'].includes(site.id)
             ?{...site,...(site.id==='pgmap-127890'?{toVerify:true,windRanges:[],sectorStart:NaN,sectorEnd:NaN}:{}),youtube:['https://www.youtube.com/watch?v=whaqT_LWvdk'],videoCandidates:[{url:'https://www.youtube.com/watch?v=whaqT_LWvdk',title:'Test flight'}]}:site):[],
         readSiteReview:(_storage,fallback)=>reviewWorkflow.readSiteReview(filterStorage,fallback),saveSiteReview:value=>reviewWorkflow.saveSiteReview(value,filterStorage),
-        applyVideoDecisions,mapVideoButtonHTML,VIDEO_REVIEW_STORAGE_KEY,
+        applyVideoDecisions,mapVideoButtonHTML,canonicalYouTubeUrl,VIDEO_REVIEW_STORAGE_KEY,
         createVideoReview:sites=>{const w=createVideoReview(sites);return {...w,read:(_storage,fallback)=>w.read(filterStorage,fallback),save:decisions=>w.save(decisions,filterStorage)};},
         iconsDir:'https://www.windy.com/test-icons',weatherDisplay,weatherIconUrl,cloudBaseDisplay,
         normalizeWindUnit,convertWindSpeed,formatWindSpeed,windSpeedRange,windLevelLabel,formatForecastTime,
         readWindUnit:()=>readWindUnit(filterStorage),saveWindUnit:value=>saveWindUnit(value,filterStorage),
+        readLargeRosesVisible:()=>readLargeRosesVisible(filterStorage),readSiteRoseVisibility:()=>readSiteRoseVisibility(filterStorage),saveSiteRoseVisibility:value=>saveSiteRoseVisibility(value,filterStorage),roseControlHTML,updateRoseControl,
         readSiteFilters:()=>readSiteFilters(filterStorage), saveSiteFilters:value=>saveSiteFilters(value,filterStorage),
         pointModelSupported, forecastModelOptions:modelHelpers.forecastModelOptions,
         products:productMetadata,createDetailModelSync:deps=>{detailSyncDependencies=deps;return {select:model=>detailSyncSelections.push(model),getNativeModel:()=>nativeDetailModel,destroy:()=>{detailSyncDestroyed=true;}};},
-        getAllPointProducts:({lat})=>{
+        getAllPointProducts:({lat,lon})=>{
             pointProductQueries++;
+            if(lon>0)return ['ecmwf','gfs','mblue','iconEu'];
             return ['ukv','ecmwf','gfs','mblue',...(lat>54?['iconEu']:['aromeFrance'])];
         },
         watchTimelinePreview:()=>()=>{},watchModelRunRefresh:refresh=>{refreshModelMetadata=refresh;return()=>{refreshModelMetadata=undefined;};},
@@ -213,8 +235,19 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
     vm.runInContext(code, context);
     return {
         mount: () => mount(),
+        openGuide(name) {context.guideTestName=name;return vm.runInContext('openSiteGuide(spots.find(spot=>spot.name===guideTestName))',context);},
+        closeGuide() {vm.runInContext('closeSiteGuide()',context);},
+        get guideState() {return JSON.parse(vm.runInContext('JSON.stringify({open:guideOpen,key:guideData?.key,loading:guideLoading,error:guideError})',context));},
+        showGuidePoint(code) {context.guidePointCode=code;vm.runInContext('showGuideOnMap(guideData.points.find(point=>point.code===guidePointCode))',context);},
+        hideGuidePoints() {vm.runInContext('hideGuidePoints()',context);},
+        get guideReads(){return guideReads;},
+        resolveGuide(){resolveGuide?.();},
         destroy: () => destroy(),
-        layers,
+        // Weather roses and auxiliary guide points have independent membership.
+        get layers(){return new Set([...layers].filter(layer=>layer.flySpot));},
+        get guideLayers(){return new Set([...layers].filter(layer=>layer.flyGuideKey));},
+        get roseControls(){return new Set([...layers].filter(layer=>layer.flyRoseControlSpot));},
+        get allLayers(){return layers;},
         store,
         broadcasts,
         detailSyncSelections,
@@ -231,7 +264,13 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
             }
         },
         setGustValues(value) {for(const response of pointResponses)response.data.data.windGust.fill(value);},
+        setProjectionScale(value) {projectionScale=value;},
         setFilter(value) { vm.runInContext(value === 'matched' ? "setSiteFilter('matched')" : "setSiteFilter('all')", context); },
+        editDirection(id) {context.reviewDirectionId=id;vm.runInContext('openDirectionEditor(spots.find(s=>s.id===reviewDirectionId))',context);},
+        draftDirection(text) {context.reviewDirectionText=text;vm.runInContext('draftDirectionRange(reviewDirectionText)',context);},
+        confirmDirection() {vm.runInContext('confirmDirectionRange()',context);},
+        nextDirection() {vm.runInContext('nextDirectionSite()',context);},
+        get directionEditor(){return vm.runInContext('directionEditorSite',context);},
         get panel() { return vm.runInContext('sitePanel', context); },
         dialHTML(name) {context.dialTestName=name;return vm.runInContext('buildDialHTML(spots.find(s=>s.name===dialTestName),200,false)',context);},
         setFilters(value) {context.testFilters=value;vm.runInContext('setSiteFilters(testFilters)',context);},
@@ -249,7 +288,9 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         emitStorage(key) {browserListeners.get('storage')?.({key});},
         get browserListenerCount(){return browserListeners.size;},
         selectFirstSite() { vm.runInContext('focusSite(sitePanel.sites[0])', context); },
-        connectPanel(onReveal, onCollapse = () => {}) {context.onRevealTest=onReveal;context.onCollapseTest=onCollapse;vm.runInContext('sitePanelComponent={revealSite:onRevealTest,collapseOnMapClick:onCollapseTest}',context);},
+        connectPanel(onReveal,onCollapse=()=>{}) {context.onRevealTest=onReveal;context.onCollapseTest=onCollapse;vm.runInContext('sitePanelComponent={revealSite:onRevealTest,collapsePanel:onCollapseTest}',context);},
+        setViewportWidth(value){context.window.innerWidth=value;},
+        clickRoseControl(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker,`Missing rose control for ${name}`);marker.getElement().click();},
         get selectedSiteId() {return vm.runInContext('selectedSiteId',context);},
         hoverSite(id) { context.hoverTestId=id; vm.runInContext('highlightSite(hoverTestId)', context); },
         get lastView() { return lastView; },
@@ -272,6 +313,342 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         },
     };
 }
+
+test('Ireland release hides Polish locations and forecasts even with saved or requested Polish filters',async()=>{
+    for(const wind of ['all','matched','direction-review']){
+        const savedFilters=new Map([['fly-ireland.site-filters.v1',JSON.stringify({...defaultSiteFilters(),country:'poland',wind})]]);
+        const app=runtime({includeApprovedSites:true,includePolishSites:true,polandEnabled:false,savedFilters});
+        app.mount();await app.flush();await app.flush();
+        assert.equal(app.filters.country,'ireland');
+        assert.equal(app.filters.wind,wind==='direction-review'?'all':wind);
+        assert.equal(app.panel.allSites.length,207);
+        assert.equal(app.scopedPanel.allSites.length,207);
+        assert.ok(app.panel.allSites.every(site=>site.country!=='poland'));
+        assert.ok([...app.layers].every(layer=>layer.flySpot.country!=='poland'));
+        assert.equal(app.reads,207,'Only Irish locations must join the weather queue');
+        assert.equal(app.panel.model,'ukv','Hidden Poland must not force a model switch');
+        assert.ok(app.lastView.coords[1]<0,'Saved Polish preferences must open Ireland');
+        const reads=app.reads;
+        app.setFilters({...defaultSiteFilters(),country:'poland',wind:'direction-review'});await app.flush();
+        assert.equal(app.filters.country,'ireland');assert.equal(app.filters.wind,'all');
+        assert.equal(app.layers.size,207);assert.equal(app.reads,reads);
+        assert.equal(app.directionEditor,undefined);
+        app.destroy();
+    }
+});
+
+test('Poland country selection updates all map tiers, coverage, guides and persisted startup location',async()=>{
+    const savedFilters=new Map();const options={includeApprovedSites:true,includePolishSites:true,savedFilters};
+    let app=runtime(options);app.mount();await app.flush();await app.flush();
+    assert.equal(app.scopedPanel.allSites.length,207);
+    app.setFilters({...defaultSiteFilters(),country:'poland'});await app.flush();await app.flush();await app.flush();
+    assert.equal(app.scopedPanel.allSites.length,96);
+    assert.equal(app.layers.size,96,'The whole selected-country map must actually render');
+    assert.ok([...app.layers].every(layer=>layer.flySpot.country==='poland'));
+    assert.equal(app.panel.model,'ecmwf','UKV does not cover Poland');
+    assert.ok(app.lastView.coords[1]>14,'Country selection must move to Poland');
+    await app.openGuide('Dzikowiec');assert.equal(app.guideState.key,'Poland: Dzikowiec');app.closeGuide();
+    app.destroy();app=runtime(options);app.mount();await app.flush();await app.flush();
+    assert.equal(app.scopedPanel.allSites.length,96);assert.ok(app.lastView.coords[1]>14);
+    assert.equal(app.panel.model,'ecmwf');
+    const reads=app.reads;app.previewTime(Date.UTC(2026,9,22,13));await app.flush();assert.equal(app.reads,reads);
+    app.setFilters(defaultSiteFilters());await app.flush();await app.flush();
+    assert.equal(app.scopedPanel.allSites.length,207);assert.ok(app.lastView.coords[1]<0);
+    app.destroy();
+});
+
+test('the owner-confirmed Just take-off uses its corrected GPS and imported 120-160 degree sector',async()=>{
+    const savedFilters=new Map();
+    savedFilters.set('fly-ireland.site-filters.v1',JSON.stringify({...defaultSiteFilters(),country:'poland',wind:'video-review'}));
+    savedFilters.set(VIDEO_REVIEW_STORAGE_KEY,JSON.stringify({version:1,decisions:{'pl-map-just-roznowskie:mcBsqPUUaWU':'rejected'}}));
+    const app=runtime({includeApprovedSites:true,includePolishSites:true,savedFilters});app.mount();
+    assert.equal(app.filters.wind,'all','Completed video review must not reopen an empty review view');
+    assert.deepEqual(app.videoSummary,{pending:0,accepted:0,rejected:0,total:0});
+    app.setFilters({...defaultSiteFilters(),country:'poland'});await app.flush();await app.flush();await app.flush();
+    const site=app.scopedPanel.allSites.find(s=>s.id==='pl-map-just-roznowskie');
+    assert.equal(site.status,'fail');assert.equal(site.windMatched,false);assert.equal(site.label,'Direction outside range');
+    assert.equal(site.directionUnverified,false);assert.deepEqual(Array.from(site.windRanges,range=>[range.start,range.end]),[[120,160]]);
+    assert.equal(site.lat,49.722607);assert.equal(site.lon,20.645784);
+    assert.ok(!site.toVerify);assert.equal(site.locationNeedsVerification,false);
+    const pin=[...app.layers].find(layer=>layer.flySpot.id===site.id);
+    assert.ok(!pin.options.icon.className.includes('review-site-icon'));
+    assert.ok(site.youtube.some(url=>url.includes('mcBsqPUUaWU')));
+    const film=site.videoCandidates[0];const reads=app.reads;
+    app.reviewVideo(site.id,film.url,'accepted');await app.flush();
+    assert.equal(app.scopedPanel.allSites.find(s=>s.id===site.id).videoCandidates[0].reviewStatus,'accepted');
+    assert.equal(app.reads,reads,'Video approval must not reload forecasts');
+    app.setFilters({...defaultSiteFilters(),country:'poland',wind:'review'});await app.flush();
+    assert.equal(app.layers.size,0,'Confirmed Just must no longer appear in location review');
+    const radians=140*Math.PI/180;app.setWindValues([-4*Math.sin(radians),-4*Math.cos(radians)]);
+    app.store.set('timestamp',1792674000000);await app.flush();
+    app.setFilters({...defaultSiteFilters(),country:'poland',wind:'matched'});await app.flush();
+    assert.ok(app.scopedPanel.sites.some(site=>site.id==='pl-map-just-roznowskie'),'The imported owner sector must participate in real forecast matching');
+    assert.ok([...app.layers].some(marker=>marker.flySpot.id==='pl-map-just-roznowskie'));
+    app.destroy();
+});
+
+test('Polish direction drafts preview a forced large rose and confirmed checkpoints survive reload without enabling wind matches',async()=>{
+ const savedFilters=new Map(),options={includeApprovedSites:true,includePolishSites:true,savedFilters};
+ let app=runtime(options);app.mount();app.setFilters({...defaultSiteFilters(),country:'poland',wind:'direction-review'});
+ await app.flush();await app.flush();await app.flush();
+ assert.equal(app.layers.size,34);
+ const target=polandSites.find(site=>site.directionUnverified),id=target.id,reads=app.reads;
+ assert.ok([...app.layers].find(m=>m.flySpot.id===id).getElement().classList.contains('wind-direction-pending'));
+ app.editDirection(id);app.draftDirection('285-15');await app.flush();
+ assert.deepEqual(Array.from(app.lastView.coords),[target.lat,target.lon],'Editing from the sidebar must bring an offscreen launch into view');
+ assert.equal(app.directionEditor.id,id);
+ const edited=[...app.layers].find(m=>m.flySpot.id===id&&m.options.icon.className==='wind-rose-icon dial-icon');
+ app.draftDirection('80-130 / 280-360');assert.equal(edited.rangeArc.d.match(/M /g).length,2,'Typing must update both arcs on the existing large rose');
+ app.draftDirection('285-15');assert.ok(edited.rangeArc.d.length>0);
+ assert.ok([...app.layers].some(m=>m.flySpot.id===id&&m.options.icon.className.includes('dial-icon')&&!m.options.icon.className.includes('mini-dial')));
+ assert.equal(app.reads,reads);
+ app.confirmDirection();await app.flush();
+ assert.equal(sitesForView(app.scopedPanel,'direction-review').length,33);
+ assert.equal(app.scopedPanel.allSites.find(s=>s.id===id).directionUnverified,true);
+ assert.deepEqual(Array.from(app.scopedPanel.allSites.find(s=>s.id===id).windRanges),[]);
+ assert.equal(app.reads,reads);app.destroy();
+ app=runtime(options);app.mount();await app.flush();await app.flush();
+ assert.equal(app.filters.wind,'direction-review');assert.equal(app.layers.size,33);
+ app.setFilters({...defaultSiteFilters(),country:'poland'});await app.flush();
+ assert.equal(app.scopedPanel.allSites.find(s=>s.id===id).windReviewConfirmed,true);
+ app.editDirection(id);assert.equal(app.directionEditor.id,id);app.destroy();
+});
+
+test('Next site advances through successive unconfirmed Polish launches instead of bouncing between the first two',async()=>{
+ const app=runtime({includeApprovedSites:true,includePolishSites:true});app.mount();
+ app.setFilters({...defaultSiteFilters(),country:'poland',wind:'direction-review'});await app.flush();await app.flush();
+ const ordered=app.scopedPanel.allSites.filter(site=>site.directionUnverified);
+ app.editDirection(ordered[0].id);app.draftDirection('285-15');
+ const seen=[app.directionEditor.id],reads=app.reads;
+ for(let index=1;index<5;index++){app.nextDirection();seen.push(app.directionEditor.id);}
+ assert.deepEqual(seen,ordered.slice(0,5).map(site=>site.id));
+ assert.equal(new Set(seen).size,5);assert.equal(app.reads,reads);
+ app.editDirection(ordered[0].id);app.confirmDirection();app.nextDirection();
+ assert.equal(app.directionEditor.id,ordered[1].id);
+ app.destroy();
+});
+
+test('site guide filter shares rose membership across zooms, persists and loads the guide asset only once',async()=>{
+    const savedFilters=new Map();let app=runtime({includeApprovedSites:true,savedFilters,projectionScale:10000});
+    app.mount();await app.flush();await app.flush();const reads=app.reads;
+    app.setFilters({...defaultSiteFilters(),withGuide:true});await app.flush();
+    assert.equal(app.scopedPanel.allSites.length,43);
+    assert.ok(app.scopedPanel.allSites.some(site=>site.name==='Big Colin'));
+    assert.ok(app.scopedPanel.allSites.some(site=>site.name==='White Mountain S'));
+    for(const name of ['Mount Leinster','Mount Leinster N','Croagh Patrick','Croagh Patrick South take-off','Croagh Patrick East Site','Sky Road','Maumturk Mts','Minaun Heights','Atlantic Drive','Rossbeigh Mountain'])
+        assert.ok(app.scopedPanel.allSites.some(site=>site.name===name),`New guide missing from filter: ${name}`);
+    assert.ok(!app.scopedPanel.allSites.some(site=>site.name==='Keel Bay'),'Unconfirmed nearby site must not inherit a guide');
+    assert.ok(!app.scopedPanel.allSites.some(site=>site.name==='Monavullagh'));
+    const ids=new Set(app.scopedPanel.allSites.map(site=>site.id));
+    for(const zoom of [10,15,13]){
+        app.setZoom(zoom);app.emit('zoomend');await app.flush();
+        assert.deepEqual(new Set([...app.layers].map(layer=>layer.flySpot.id)),ids);
+    }
+    assert.equal(app.guideReads,1);assert.equal(app.reads,reads);app.destroy();
+    app=runtime({includeApprovedSites:true,savedFilters});app.mount();await app.flush();await app.flush();
+    assert.equal(app.filters.withGuide,true);assert.equal(app.layers.size,43);
+    app.setFilters(defaultSiteFilters());await app.flush();assert.equal(app.layers.size,207);app.destroy();
+});
+
+test('site guide actions show imported points without weather requests or native forecast navigation',async()=>{
+    const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+    const reads=app.reads,view=app.lastView,broadcasts=app.broadcasts.length;
+    assert.equal(app.guideReads,0);
+    await app.openGuide('Big Colin');assert.equal(app.guideState.key,'Big Colin');assert.equal(app.guideState.open,true);
+    assert.equal(app.reads,reads);assert.equal(app.broadcasts.length,broadcasts);assert.deepEqual(app.lastView,view);
+    app.showGuidePoint('E');assert.equal(app.guideState.open,false);
+    assert.equal(app.guideLayers.size,6);
+    assert.deepEqual(Array.from(app.lastView.coords),[54.80111125662587,-6.079408524065345]);
+    app.showGuidePoint('F');assert.deepEqual(Array.from(app.lastView.coords),[54.806302,-6.073211]);
+    assert.equal(app.reads,reads);assert.equal(app.broadcasts.length,broadcasts);
+    app.hideGuidePoints();assert.equal(app.guideLayers.size,0);
+    await app.openGuide('Dungiven');assert.equal(app.guideReads,1);assert.equal(app.guideState.key,'Dungiven West');
+    app.setZoom(15);app.emit('zoomend');await app.flush();
+    const info=[...app.layers].find(layer=>layer.flySpot?.name==='Big Colin'&&layer.options.icon.className.includes('ui-icon'));
+    info.getElement().click({closest:()=>({matches:selector=>selector==='.info-main'})});await Promise.resolve();await Promise.resolve();
+    assert.equal(app.guideState.open,true);assert.equal(app.broadcasts.length,broadcasts);assert.equal(app.reads,reads);
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('guide points follow actual large roses automatically without navigation, duplicate markers or extra weather requests',async()=>{
+    const app=runtime({includeApprovedSites:true,projectionScale:10000});app.mount();await app.flush();await app.flush();
+    const reads=app.reads,view=JSON.stringify(app.lastView),broadcasts=app.broadcasts.length;
+    assert.equal(app.guideReads,0);assert.equal(app.guideLayers.size,0);
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    const gate=[...app.guideLayers].find(layer=>layer.flyGuideKey==='Big Colin'&&layer.flyGuidePoint.code==='F');
+    assert.ok(gate,'Big Colin access gate must appear with its large rose without Show on map');
+    assert.deepEqual(Array.from(gate.coords),[54.806302,-6.073211]);
+    assert.equal(app.guideReads,1);assert.equal(app.reads,reads);assert.equal(app.broadcasts.length,broadcasts);
+    assert.equal(JSON.stringify(app.lastView),view);assert.equal(app.guideState.open,false);
+    assert.equal([...app.guideLayers].filter(layer=>layer.flyGuideKey==='Lough Bray').length,4,'Shared guides must not be duplicated');
+    const stable=new Set(app.guideLayers);app.emit('moveend');await app.flush();
+    assert.deepEqual(app.guideLayers,stable,'Panning within the same sites must keep guide markers attached');
+    app.previewTime(1792672200000);await app.flush();assert.deepEqual(app.guideLayers,stable);
+    await app.openGuide('Big Colin');app.showGuidePoint('F');assert.deepEqual(app.guideLayers,stable,'Explicit point selection must reuse automatic markers');
+    app.hideGuidePoints();assert.deepEqual(app.guideLayers,stable);
+    app.setFilters({...defaultSiteFilters(),regions:['north-east']});await app.flush();
+    assert.ok(app.guideLayers.size>0);assert.ok(![...app.guideLayers].some(layer=>layer.flyGuideKey==='Achill Island'));
+    app.setZoom(13);app.emit('zoomend');await app.flush();assert.equal(app.guideLayers.size,0);
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
+    assert.ok(app.guideLayers.size>0);assert.equal(app.guideReads,1);assert.equal(app.reads,reads);
+    app.emit('click',{});app.setWest(2000);app.emit('moveend');await app.flush();assert.equal(app.guideLayers.size,0);
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('zooming out to miniature roses clears manually selected guide points and restores them from cache when zooming in',async()=>{
+    for(const selection of ['guide','map-point']){
+        const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+        app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+        const gate=[...app.guideLayers].find(layer=>layer.flyGuideKey==='Big Colin'&&layer.flyGuidePoint.code==='F');
+        assert.ok(gate);
+        if(selection==='guide'){await app.openGuide('Big Colin');app.showGuidePoint('F');}else gate.getElement().click();
+        const reads=app.reads,guideReads=app.guideReads;
+        app.setZoom(14);app.emit('zoomend');await app.flush();
+        assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),'Keep icons while its large rose remains visible');
+        app.setZoom(13);app.emit('zoomend');await app.flush();
+        assert.ok([...app.layers].some(layer=>layer.options.icon.className.includes('mini-dial-icon')));
+        assert.equal(app.guideLayers.size,0,`${selection}: manually pinned icons must disappear with the large roses`);
+        app.previewTime(1792672200000);app.emit('moveend');for(let i=0;i<3;i++)await app.flush();
+        assert.equal(app.guideLayers.size,0,'Timeline and pan updates cannot revive hidden points');
+        app.setZoom(14);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
+        assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),'Icons return automatically with large roses');
+        assert.equal(app.reads,reads);assert.equal(app.guideReads,guideReads);
+        app.destroy();assert.equal(app.allLayers.size,0);
+    }
+});
+
+test('manual guide points also disappear when zooming makes their large roses fall back to crowded miniatures',async()=>{
+    const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    const gate=[...app.guideLayers].find(layer=>layer.flyGuideKey==='Big Colin'&&layer.flyGuidePoint.code==='F');
+    assert.ok(gate);gate.getElement().click();const reads=app.reads,guideReads=app.guideReads;
+    // Closer screen projections reproduce adjacent sites colliding during zoom.
+    app.setProjectionScale(1);app.setZoom(14);app.emit('zoomend');await app.flush();
+    assert.ok([...app.layers].every(layer=>!layer.options.icon.className.endsWith(' dial-icon')));
+    assert.equal(app.guideLayers.size,0,'A manual pin cannot leave icons above crowded miniature roses');
+    app.setProjectionScale(10000);app.setZoom(15);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
+    assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'));
+    assert.equal(app.reads,reads);assert.equal(app.guideReads,guideReads);
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('late automatic guide responses cannot revive points after zooming out or closing the plugin',async()=>{
+    const app=runtime({projectionScale:10000,deferredGuides:true});app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');await app.flush();
+    assert.equal(app.guideReads,1);assert.equal(app.guideLayers.size,0);
+    app.setZoom(13);app.emit('zoomend');await app.flush();app.resolveGuide();for(let i=0;i<6;i++)await app.flush();
+    assert.equal(app.guideLayers.size,0);
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<4;i++)await app.flush();assert.ok(app.guideLayers.size>0);
+    app.destroy();assert.equal(app.allLayers.size,0);
+    const closing=runtime({projectionScale:10000,deferredGuides:true});closing.mount();await closing.flush();
+    closing.setZoom(15);closing.emit('zoomend');await closing.flush();closing.destroy();closing.resolveGuide();
+    for(let i=0;i<6;i++)await closing.flush();assert.equal(closing.allLayers.size,0);
+});
+
+test('collision fallback to miniature roses does not load or show automatic guide markers',async()=>{
+    const app=runtime();app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<4;i++)await app.flush();
+    assert.ok([...app.layers].every(layer=>!layer.options.icon.className.endsWith(' dial-icon')),'This fixture must contain only crowded miniature roses');
+    assert.equal(app.guideLayers.size,0);assert.equal(app.guideReads,0);app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('an automatic guide asset failure can retry without disrupting weather or repeatedly fetching on time changes',async()=>{
+    const app=runtime({projectionScale:10000,guideFailures:1});app.mount();await app.flush();await app.flush();
+    const reads=app.reads;app.setZoom(15);app.emit('zoomend');for(let i=0;i<7;i++)await app.flush();
+    assert.equal(app.guideReads,1);assert.equal(app.guideLayers.size,0);assert.ok(app.layers.size>0);
+    app.previewTime(1792672200000);await app.flush();assert.equal(app.guideReads,1);
+    app.emit('moveend');for(let i=0;i<7;i++)await app.flush();assert.equal(app.guideReads,2);assert.ok(app.guideLayers.size>0);
+    assert.equal(app.reads,reads);app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('automatic point selection collapses the phone sidebar so it cannot cover the centered location',async()=>{
+    for(const width of [390,1280]){
+        const app=runtime({projectionScale:10000});let collapsed=0;
+        app.setViewportWidth(width);app.connectPanel(()=>{},()=>collapsed++);
+        app.mount();await app.flush();await app.flush();app.setZoom(15);app.emit('zoomend');
+        for(let i=0;i<6;i++)await app.flush();
+        const gate=[...app.guideLayers].find(layer=>layer.flyGuideKey==='Big Colin'&&layer.flyGuidePoint.code==='F');
+        assert.ok(gate);gate.getElement().click();
+        assert.equal(collapsed,width<=600?1:0,'Only phone panels should collapse on point selection');
+        assert.deepEqual(Array.from(app.lastView.coords),[54.806302,-6.073211]);
+        app.destroy();assert.equal(app.allLayers.size,0);
+    }
+});
+
+test('a nearby eye hides and restores only its own large rose without changing guide points or rebuilding layers',async()=>{
+    const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    const large=name=>[...app.layers].filter(layer=>layer.flySpot.name===name&&/ (dial-icon|ui-icon)$/.test(layer.options.icon.className));
+    assert.equal(large('Big Colin').length,2);assert.ok(app.guideLayers.size);assert.ok(app.roseControls.size);
+    const guides=new Set(app.guideLayers),layers=new Set(app.allLayers),reads=app.reads,guideReads=app.guideReads,additions=app.additions;
+    const view=JSON.stringify(app.lastView),broadcasts=app.broadcasts.length;
+    app.clickRoseControl('Big Colin');assert.ok(large('Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
+    assert.ok(large('Dungiven').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')),'A neighbouring rose must remain visible');
+    const control=[...app.roseControls].find(layer=>layer.flyRoseControlSpot.name==='Big Colin');
+    assert.ok(control.getElement().classList.contains('rose-is-hidden'),'A restore control must remain beside the hidden site');
+    assert.deepEqual(app.guideLayers,guides);assert.deepEqual(app.allLayers,layers);assert.equal(app.additions,additions);
+    app.previewTime(1792672200000);await app.flush();assert.deepEqual(app.guideLayers,guides);
+    app.clickRoseControl('Big Colin');assert.ok(large('Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
+    assert.deepEqual(app.allLayers,layers);assert.equal(app.reads,reads);assert.equal(app.guideReads,guideReads);
+    assert.equal(JSON.stringify(app.lastView),view);assert.equal(app.broadcasts.length,broadcasts);
+    app.clickRoseControl('Big Colin');app.setZoom(16);app.emit('zoomend');await app.flush();
+    assert.ok(large('Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));assert.ok(app.guideLayers.size);
+    app.setZoom(13);app.emit('zoomend');await app.flush();
+    assert.ok([...app.layers].every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')),'Miniature roses remain visible');
+    assert.equal(app.roseControls.size,0);
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('per-site rose choices survive late guide data and reopening without hiding other locations',async()=>{
+    const savedFilters=new Map();let app=runtime({projectionScale:10000,savedFilters,deferredGuides:true});
+    app.mount();await app.flush();await app.flush();app.setZoom(15);app.emit('zoomend');await app.flush();
+    app.clickRoseControl('Big Colin');app.resolveGuide();for(let i=0;i<6;i++)await app.flush();assert.ok(app.guideLayers.size);
+    assert.ok([...app.layers].filter(layer=>layer.flySpot.name==='Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.destroy();app=runtime({projectionScale:10000,savedFilters});app.mount();await app.flush();await app.flush();
+    assert.ok([...app.layers].every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    assert.ok(app.guideLayers.size);assert.ok([...app.layers].filter(layer=>layer.flySpot.name==='Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
+    assert.ok([...app.layers].filter(layer=>layer.flySpot.name!=='Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.clickRoseControl('Big Colin');app.destroy();app=runtime({projectionScale:10000,savedFilters});app.mount();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    assert.ok([...app.layers].every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('a legacy globally hidden preference permits restoring a single site while its neighbours stay hidden',async()=>{
+    const savedFilters=new Map([[LARGE_ROSES_STORAGE_KEY,'false']]);
+    const app=runtime({projectionScale:10000,savedFilters});app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    assert.ok([...app.layers].every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
+    assert.ok(app.roseControls.size);app.clickRoseControl('Big Colin');
+    assert.ok([...app.layers].filter(layer=>layer.flySpot.name==='Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
+    assert.ok([...app.layers].filter(layer=>layer.flySpot.name!=='Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('local rose controls follow filtered large sites and restore saved state after the site reappears',async()=>{
+    const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();app.clickRoseControl('Big Colin');
+    app.setFilters({...defaultSiteFilters(),regions:['south-west']});await app.flush();
+    assert.ok(![...app.roseControls].some(layer=>layer.flyRoseControlSpot.name==='Big Colin'));
+    app.setFilters(defaultSiteFilters());await app.flush();
+    const control=[...app.roseControls].find(layer=>layer.flyRoseControlSpot.name==='Big Colin');
+    assert.ok(control.getElement().classList.contains('rose-is-hidden'));
+    app.emit('click',{});app.setWest(2000);app.emit('moveend');await app.flush();assert.equal(app.roseControls.size,0);
+    app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('a delayed guide cannot reopen a closed dialog, overwrite a newer site or survive plugin destruction',async()=>{
+    const app=runtime({deferredGuides:true});app.mount();await app.flush();await app.flush();
+    const old=app.openGuide('Big Colin');app.closeGuide();app.resolveGuide();await old;
+    assert.equal(app.guideState.open,false);assert.equal(app.guideState.key,undefined);
+    const first=app.openGuide('Big Colin'),second=app.openGuide('Dungiven');await Promise.all([first,second]);
+    assert.equal(app.guideState.key,'Dungiven West');
+    app.destroy();assert.equal(app.guideState.open,false);
+    const closing=runtime({deferredGuides:true});closing.mount();await closing.flush();await closing.flush();
+    const pending=closing.openGuide('Big Colin');closing.destroy();closing.resolveGuide();await pending;
+    assert.equal(closing.guideState.open,false);assert.equal(closing.layers.size,0);
+});
 
 test('sidebar model selection changes the shared Windy product without opening the forecast, preserves time and altitude, and reuses cached data',async()=>{
     const app=runtime();app.mount();await app.flush();await app.flush();
@@ -467,19 +844,6 @@ test('a map background click clears selected and hovered roses without navigatin
     assert.equal(app.listenerCount('click'),0,'The map listener is removed when the plugin closes');
 });
 
-test('background map clicks request panel collapse even without a selected site and keep map layers active',async()=>{
-    const app=runtime();app.mount();await app.flush();await app.flush();
-    let collapsed=0;app.connectPanel(()=>{},()=>collapsed++);
-    const layers=app.layers.size,reads=app.reads;
-    app.emit('click',{originalEvent:{target:{closest:()=>null}}});
-    assert.equal(collapsed,1);
-    assert.equal(app.layers.size,layers);
-    assert.equal(app.reads,reads);
-    app.emit('click',{originalEvent:{target:{closest:()=>({})}}});
-    assert.equal(collapsed,1,'Rose clicks must not collapse a revealed card');
-    app.destroy();
-});
-
 test('wind units update cached roses and cards together and survive reopening without changing wind matches',async()=>{
     const savedFilters=new Map();let app=runtime({savedFilters});app.mount();await app.flush();await app.flush();
     const matches=app.panel.sites.map(site=>site.id),reads=app.reads,additions=app.additions;
@@ -487,7 +851,7 @@ test('wind units update cached roses and cards together and survive reopening wi
     app.setUnit('km/h');
     assert.equal(app.panel.allSites[0].speed,'18.0 km/h');
     assert.equal(app.panel.allSites[0].gust,'21.6 km/h');
-    assert.match(app.panel.allSites[0].required,/8–20.9 km\/h/);
+    assert.match(app.panel.allSites[0].required,/8–24.1 km\/h/);
     assert.equal(marker.reading.textContent,'18.0');assert.equal(marker.unit.textContent,'km/h');
     assert.match(marker.root.title,/18.0 km\/h/);
     assert.deepEqual(app.panel.sites.map(site=>site.id),matches);
@@ -830,7 +1194,7 @@ test('light wind has a blue center and an English hover explanation', async () =
     assert.equal(marker.center.fill, '#2563eb');
     assert.equal(marker.reading.textContent, '2.2');
     assert.match(marker.getElement().title, /Too light/);
-    assert.match(marker.getElement().title, /5–13 mph/);
+    assert.match(marker.getElement().title, /5–15 mph/);
     app.destroy();
 });
 
@@ -937,6 +1301,28 @@ test('matched filter removes every marker and label tier for excessive wind', as
     app.destroy();
 });
 
+test('matched map and cards keep winds through 15 mph and reject stronger wind at every zoom', async()=>{
+    const app=runtime({windValues:[0,14*.44704,0],projectionScale:10000});
+    app.mount();await app.flush();await app.flush();
+    app.setFilter('matched');await app.flush();
+    const time=app.store.get('timestamp'),reads=app.reads;
+    let previewStep=0;
+    for(const zoom of [10,13,15]){
+        app.setZoom(zoom);app.emit('zoomend');await app.flush();
+        for(const mph of [14,15,15.001]){
+            app.setWindValues([0,mph*.44704,0]);app.previewTime(time+3600000+previewStep++*60000);await app.flush();
+            const site=app.panel.allSites.find(site=>site.name==='Big Colin');
+            const rose=[...app.layers].find(marker=>marker.flySpot?.id===site.id);
+            assert.equal(site.status,mph<=15?'pass':'fail');
+            assert.equal(app.panel.sites.some(candidate=>candidate.id===site.id),mph<=15);
+            assert.equal(Boolean(rose),mph<=15);
+            if(rose) assert.match(rose.options.icon.html,/class="(?:mini|large)-wind-center forecast-wind-center"[^>]*fill="#15803d"/);
+        }
+    }
+    assert.equal(app.reads,reads,'Changing the threshold must keep timeline previews cached');
+    app.destroy();
+});
+
 test('matched map removes old matches for products without a wind forecast', async () => {
     const app=runtime(); app.mount(); await app.flush(); await app.flush();
     app.setFilter('matched'); await app.flush(); assert.ok(app.layers.size>0);
@@ -981,7 +1367,7 @@ test('Skeagh uses the corrected 50–120 degree range for forecasts and map rose
     const app=runtime({windValues:[-4.330127018922193,-2.5,0]});app.mount();await app.flush();await app.flush();
     let site=app.panel.allSites.find(site=>site.name==='Skeagh');
     assert.equal(site.status,'pass','A wind from 60 degrees is in the corrected sector');
-    assert.equal(site.required,'5–13 mph · 50°–120°');
+    assert.equal(site.required,'5–15 mph · 50°–120°');
     app.setWindValues([-2.5,4.330127018922193,0]);app.store.set('timestamp',1792674000000);
     site=app.panel.allSites.find(site=>site.name==='Skeagh');
     assert.equal(site.status,'fail');assert.equal(site.label,'Direction outside range');app.destroy();

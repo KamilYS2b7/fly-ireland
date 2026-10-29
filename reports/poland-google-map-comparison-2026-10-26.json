@@ -1,0 +1,2626 @@
+{
+  "checkedOn": "2026-10-26",
+  "source": {
+    "title": "Miejsca do latania Polska",
+    "url": "https://maps.app.goo.gl/2HK9AYoaNehaKZ6p8",
+    "totalEntries": 96
+  },
+  "totals": {
+    "sourceEntries": 96,
+    "addedSites": 66,
+    "existingSitesEnriched": 25,
+    "entriesMatchedExisting": 26,
+    "additionalSourceDuplicates": 1,
+    "excludedForeignPins": 3,
+    "polandCatalogueTotal": 96,
+    "videoAssociations": 117,
+    "distinctActiveVideos": 114,
+    "sitesWithVideos": 85,
+    "additionalVideos": 13
+  },
+  "matchPolicy": "Reviewed names, source notes, titles and context together with GPS. Nearby launch variants remain separate; distance alone never creates a match.",
+  "duplicateGroups": [
+    {
+      "targetId": "pl-klin",
+      "sourceIndices": [
+        85,
+        86
+      ],
+      "reason": "Same named area and video identity."
+    },
+    {
+      "targetId": "pl-map-klonowka",
+      "sourceIndices": [
+        61,
+        95
+      ],
+      "reason": "Video title and geographic area identify Klonówka despite one incorrect Bubusiowa note."
+    }
+  ],
+  "metadataUnconfirmed": [
+    {
+      "sourceIndex": 38,
+      "url": "https://www.youtube.com/watch?v=GhcGG-DcMyM",
+      "status": 403
+    },
+    {
+      "sourceIndex": 65,
+      "url": "https://www.youtube.com/watch?v=h7PGJqA5f4o",
+      "status": 404
+    },
+    {
+      "sourceIndex": 84,
+      "url": "https://www.youtube.com/watch?v=7XCAMKWW_cw",
+      "status": 403
+    },
+    {
+      "sourceIndex": 91,
+      "url": "https://www.youtube.com/watch?v=sz8IjV1IKIo",
+      "status": 404
+    }
+  ],
+  "entries": [
+    {
+      "index": 0,
+      "name": "Skrzętla- startowisko paralotniowe",
+      "lat": 49.715419,
+      "lon": 20.5881257,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=TS_Sj98BCak",
+          "url": "https://www.youtube.com/watch?v=TS_Sj98BCak",
+          "metadataStatus": 200,
+          "title": "Skrzętla - Przyszowa 03.06.2023",
+          "channel": "włosy na wietrze"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=AHHyYnsCGFQ&t=907s",
+          "url": "https://www.youtube.com/watch?v=AHHyYnsCGFQ",
+          "metadataStatus": 200,
+          "title": "Paralotnie - Beskid Wyspowy - Skrzętla - Limanowa - 03.06.2021",
+          "channel": "Zbyszek Wrona"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=nCsEHXmhrF4",
+          "url": "https://www.youtube.com/watch?v=nCsEHXmhrF4",
+          "metadataStatus": 200,
+          "title": "Paralotnie Skrzętla - Łącko",
+          "channel": "Matełusz"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-skrzetla",
+      "reason": "Name or supplied film identifies Skrzętla; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 15
+      }
+    },
+    {
+      "index": 1,
+      "name": "Hala Bieguńska",
+      "lat": 49.528705099999996,
+      "lon": 19.2100038,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=6J2nExKA4bo",
+          "url": "https://www.youtube.com/watch?v=6J2nExKA4bo",
+          "metadataStatus": 200,
+          "title": "Paralotnia 17.01.2026. Hala Bieguńska i mocna turbulencja zaraz po starcie.",
+          "channel": "Studio Słonecznik"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-hala-biegunska",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzyczne",
+        "name": "Skrzyczne",
+        "distanceM": 21877
+      }
+    },
+    {
+      "index": 2,
+      "name": "Pinezka",
+      "lat": 54.4500025,
+      "lon": -6.7750873,
+      "note": "",
+      "videos": [],
+      "action": "exclude",
+      "reason": "Irish pin: excluded from the Poland import; the Ireland catalogue is unchanged.",
+      "nearestExisting": {
+        "id": "pl-stog",
+        "name": "Stóg Izerski",
+        "distanceM": 1481649
+      }
+    },
+    {
+      "index": 3,
+      "name": "Mieroszów - Krowiara Startowisko paralotniowe",
+      "lat": 50.6730975,
+      "lon": 16.2096355,
+      "note": "Mierszów",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=xApWUq-Ws44",
+          "url": "https://www.youtube.com/watch?v=xApWUq-Ws44",
+          "metadataStatus": 200,
+          "title": "Mieroszów 15 07 2023",
+          "channel": "slawek 931"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=wVF6AkkbTow",
+          "url": "https://www.youtube.com/watch?v=wVF6AkkbTow",
+          "metadataStatus": 200,
+          "title": "170 km TRIP by paraglider AXIS Vega 6",
+          "channel": "Matlas PARAGLIDING"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-mieroszow",
+      "reason": "Name or supplied film identifies Jatki-Mieroszów; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-mieroszow",
+        "name": "Jatki-Mieroszów",
+        "distanceM": 40
+      }
+    },
+    {
+      "index": 4,
+      "name": "Jezioro Rożnowskie",
+      "lat": 49.7272489,
+      "lon": 20.7020074,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=mcBsqPUUaWU",
+          "url": "https://www.youtube.com/watch?v=mcBsqPUUaWU",
+          "metadataStatus": 200,
+          "title": "Paralotnie Just",
+          "channel": "Matełusz"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-just-roznowskie",
+      "reason": "The source pin marked the lake and was initially shown in purple. The owner confirmed the take-off at 49.722607, 20.645784 on 26 October 2026. Its wind sector remains unverified.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 8306
+      },
+      "ownerCorrection": {
+        "date": "2026-10-26",
+        "source": "Take-off coordinates supplied by the owner in chat",
+        "lat": 49.722607,
+        "lon": 20.645784,
+        "locationConfirmed": true,
+        "windRangeVerified": false
+      }
+    },
+    {
+      "index": 5,
+      "name": "54°37'40.8\"N 18°46'25.0\"E",
+      "lat": 54.628,
+      "lon": 18.7736,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=7iFqEuphNHk",
+          "url": "https://www.youtube.com/watch?v=7iFqEuphNHk",
+          "metadataStatus": 200,
+          "title": "Hel  24.11.2025",
+          "channel": "KLIF"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-hel",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 453253
+      }
+    },
+    {
+      "index": 6,
+      "name": "49°08'38.0\"N 22°21'12.6\"E",
+      "lat": 49.143899999999995,
+      "lon": 22.3535,
+      "note": "Roztoki Górne",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=aIsnMdzhNrE",
+          "url": "https://www.youtube.com/watch?v=aIsnMdzhNrE",
+          "metadataStatus": 200,
+          "title": "Szybowisko Okrąglik 2016",
+          "channel": "Prowing"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=rut7cBpdXHk",
+          "url": "https://www.youtube.com/watch?v=rut7cBpdXHk",
+          "metadataStatus": 200,
+          "title": "ROZTOKI - POLSKA ZŁOTA JESIEŃ. BIESZCZADY",
+          "channel": "Robert Rachalski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-roztoki-okraglik",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-male-jaslo",
+        "name": "Małe Jasło",
+        "distanceM": 3391
+      }
+    },
+    {
+      "index": 7,
+      "name": "Pinezka",
+      "lat": 54.033865,
+      "lon": -6.1940997,
+      "note": "",
+      "videos": [],
+      "action": "exclude",
+      "reason": "Irish pin: excluded from the Poland import; the Ireland catalogue is unchanged.",
+      "nearestExisting": {
+        "id": "pl-stog",
+        "name": "Stóg Izerski",
+        "distanceM": 1447184
+      }
+    },
+    {
+      "index": 8,
+      "name": "54°39'07.7\"N 18°26'13.6\"E",
+      "lat": 54.652142,
+      "lon": 18.437117,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=hjZYcBjxxuY",
+          "url": "https://www.youtube.com/watch?v=hjZYcBjxxuY",
+          "metadataStatus": 200,
+          "title": "3 etap Mrzezino",
+          "channel": "KLIF"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-mrzezino-north",
+      "reason": "A separate northern point from Górka Południowa. Keep both map references; the exact launch face needs verification.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 446862
+      }
+    },
+    {
+      "index": 9,
+      "name": "M2 - Mszana Południe - Startowisko paralotniowe",
+      "lat": 49.5104003,
+      "lon": 21.6532105,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=iowZCgYuSb4",
+          "url": "https://www.youtube.com/watch?v=iowZCgYuSb4",
+          "metadataStatus": 200,
+          "title": "Mszana M2 paralotnie 23.04.2023",
+          "channel": "Stratosferus KR"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=ACteLgmFzDc",
+          "url": "https://www.youtube.com/watch?v=ACteLgmFzDc",
+          "metadataStatus": 200,
+          "title": "MSZANA. Taka mała i niepozorona górka ... a ile szczęścia potrafi dać ...",
+          "channel": "Robert Rachalski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-mszana-m2",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-dzialy",
+        "name": "Działy – Korczyna",
+        "distanceM": 28644
+      }
+    },
+    {
+      "index": 10,
+      "name": "49°41'12.8\"N 20°11'34.4\"E",
+      "lat": 49.686899999999994,
+      "lon": 20.192899999999998,
+      "note": "Ćwilin",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=WqQ_80Ay9ew",
+          "url": "https://www.youtube.com/watch?v=WqQ_80Ay9ew",
+          "metadataStatus": 200,
+          "title": "Ćwilin 03.03.2024",
+          "channel": "włosy na wietrze"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=9zMSjhluD3k",
+          "url": "https://www.youtube.com/watch?v=9zMSjhluD3k",
+          "metadataStatus": 200,
+          "title": "Hike & Fly, Ćwilin 15.06.2024",
+          "channel": "Póki sił"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=LwzATxpO650",
+          "url": "https://www.youtube.com/watch?v=LwzATxpO650",
+          "metadataStatus": 200,
+          "title": "Ćwilin paralotnia  zlot 10.10.2024",
+          "channel": "Karol Chmielewski"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-cwilin",
+      "reason": "Name or supplied film identifies Ćwilin; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-cwilin",
+        "name": "Ćwilin",
+        "distanceM": 147
+      }
+    },
+    {
+      "index": 11,
+      "name": "54°49'39.0\"N 17°56'24.4\"E",
+      "lat": 54.8275,
+      "lon": 17.940099999999997,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=vUPfcBhXGWk",
+          "url": "https://www.youtube.com/watch?v=vUPfcBhXGWk",
+          "metadataStatus": 200,
+          "title": "Białogóra",
+          "channel": "KLIF"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=h8GvgR6POXE&t=510s",
+          "url": "https://www.youtube.com/watch?v=h8GvgR6POXE",
+          "metadataStatus": 200,
+          "title": "Wielkanocne klifowanie. Genialny dzień w doborowym gronie.",
+          "channel": "Za horyzont! "
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-bialogora",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 453878
+      }
+    },
+    {
+      "index": 12,
+      "name": "54°48'39.6\"N 18°22'21.7\"E",
+      "lat": 54.811,
+      "lon": 18.3727,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=cjHHZAbgpDw",
+          "url": "https://www.youtube.com/watch?v=cjHHZAbgpDw",
+          "metadataStatus": 200,
+          "title": "[4K] It's all about dreams - sunrise soaring session",
+          "channel": "Robert Grubba"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=h8GvgR6POXE&t=70s",
+          "url": "https://www.youtube.com/watch?v=h8GvgR6POXE",
+          "metadataStatus": 200,
+          "title": "Wielkanocne klifowanie. Genialny dzień w doborowym gronie.",
+          "channel": "Za horyzont! "
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-chlapowo",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 461455
+      }
+    },
+    {
+      "index": 13,
+      "name": "54°50'06.0\"N 18°18'04.3\"E",
+      "lat": 54.835,
+      "lon": 18.301199999999998,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=l4Wwz4KvHNo",
+          "url": "https://www.youtube.com/watch?v=l4Wwz4KvHNo",
+          "metadataStatus": 200,
+          "title": "Jastrzębia Góra Paragliding - Paralotnia - Paralotnie 16.04.2022",
+          "channel": "Miras Cegła Dobrzyński"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=h8GvgR6POXE&t=280s",
+          "url": "https://www.youtube.com/watch?v=h8GvgR6POXE",
+          "metadataStatus": 200,
+          "title": "Wielkanocne klifowanie. Genialny dzień w doborowym gronie.",
+          "channel": "Za horyzont! "
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-jastrzebia-gora",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 462278
+      }
+    },
+    {
+      "index": 14,
+      "name": "Szybowisko w Bezmiechowej Górnej",
+      "lat": 49.5221257,
+      "lon": 22.4099583,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=3f4TvniAIXw",
+          "url": "https://www.youtube.com/watch?v=3f4TvniAIXw",
+          "metadataStatus": 200,
+          "title": "Mega żagiel Bezmiechowa.Pełna relacja.",
+          "channel": "Robert Rachalski"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=OMTPu9zOk3Y",
+          "url": "https://www.youtube.com/watch?v=OMTPu9zOk3Y",
+          "metadataStatus": 200,
+          "title": "Bezmiechowa 28.04.2024",
+          "channel": "arosabat"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-bezmiechowa",
+      "reason": "Name or supplied film identifies Bezmiechowa; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-bezmiechowa",
+        "name": "Bezmiechowa",
+        "distanceM": 58
+      }
+    },
+    {
+      "index": 15,
+      "name": "49°44'10.3\"N 21°50'22.2\"E",
+      "lat": 49.7362,
+      "lon": 21.839499999999997,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=vDcTv1rl1MA",
+          "url": "https://www.youtube.com/watch?v=vDcTv1rl1MA",
+          "metadataStatus": 200,
+          "title": "Działy paralotnie 21.09.2018",
+          "channel": "Stratosferus KR"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=0qn52UAfiq8",
+          "url": "https://www.youtube.com/watch?v=0qn52UAfiq8",
+          "metadataStatus": 200,
+          "title": "Paralotnie Działy 25 03 2018",
+          "channel": "Stratosferus KR"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-dzialy",
+      "reason": "Name or supplied film identifies Działy – Korczyna; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-dzialy",
+        "name": "Działy – Korczyna",
+        "distanceM": 163
+      }
+    },
+    {
+      "index": 16,
+      "name": "50°46'26.4\"N 15°52'01.9\"E",
+      "lat": 50.774,
+      "lon": 15.867199999999999,
+      "note": "Ródnik",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=5U_oH8P6IsQ",
+          "url": "https://www.youtube.com/watch?v=5U_oH8P6IsQ",
+          "metadataStatus": 200,
+          "title": "Rudnik #2 paralotnie 10.07.21",
+          "channel": "Viader_Pilot"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=S3LlS2i-aWg",
+          "url": "https://www.youtube.com/watch?v=S3LlS2i-aWg",
+          "metadataStatus": 200,
+          "title": "Rudnik #3 dupozlot full flight 15.08.21",
+          "channel": "Viader_Pilot"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-rudnik",
+      "reason": "Name or supplied film identifies Rudnik; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-rudnik",
+        "name": "Rudnik",
+        "distanceM": 17
+      }
+    },
+    {
+      "index": 17,
+      "name": "49°27'52.2\"N 22°32'11.3\"E",
+      "lat": 49.464490999999995,
+      "lon": 22.536482,
+      "note": "Dźwiniacz Dolny",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=sQPJvCbqDAo",
+          "url": "https://www.youtube.com/watch?v=sQPJvCbqDAo",
+          "metadataStatus": 200,
+          "title": "Paragliding w Bieszczadach",
+          "channel": "Prowing"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=GjexI_lvWWM",
+          "url": "https://www.youtube.com/watch?v=GjexI_lvWWM",
+          "metadataStatus": 200,
+          "title": "Paralotnie Dźwiniacz Dolny 2022",
+          "channel": "Jakub Kwolek"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-dzwiniacz",
+      "reason": "Name or supplied film identifies Dźwiniacz; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-dzwiniacz",
+        "name": "Dźwiniacz",
+        "distanceM": 27
+      }
+    },
+    {
+      "index": 18,
+      "name": "50°38'09.2\"N 16°32'43.1\"E",
+      "lat": 50.6359,
+      "lon": 16.5453,
+      "note": "Żmij",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=N-iLmOar19g",
+          "url": "https://www.youtube.com/watch?v=N-iLmOar19g",
+          "metadataStatus": 200,
+          "title": "Reaktywacja Żmij - 2023-09-10 Paragliding",
+          "channel": "Piotr Jasinski"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=IDDfJDk6o0E",
+          "url": "https://www.youtube.com/watch?v=IDDfJDk6o0E",
+          "metadataStatus": 200,
+          "title": "Żmij 2014 06 08",
+          "channel": "Dariusz Fly"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-zmij",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 10803
+      }
+    },
+    {
+      "index": 19,
+      "name": "49°42'59.0\"N 20°10'40.1\"E",
+      "lat": 49.7164,
+      "lon": 20.177799999999998,
+      "note": "Śnieżnica",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=0uthSUcXSVc",
+          "url": "https://www.youtube.com/watch?v=0uthSUcXSVc",
+          "metadataStatus": 200,
+          "title": "Śnieżnica paralotnie",
+          "channel": "Matełusz"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=yX-05sHrG4U",
+          "url": "https://www.youtube.com/watch?v=yX-05sHrG4U",
+          "metadataStatus": 200,
+          "title": "#2 Zlot paralotnią ze Śnieżnicy / Paragliding from Śnieżnica #shorts",
+          "channel": "latające dzumandzi"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-snieznica",
+      "reason": "Name or supplied film identifies Śnieżnica; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-snieznica",
+        "name": "Śnieżnica",
+        "distanceM": 49
+      }
+    },
+    {
+      "index": 20,
+      "name": "53°33'25.6\"N 18°46'04.4\"E",
+      "lat": 53.5571,
+      "lon": 18.7679,
+      "note": "Łosiowa Góra",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=rdEeKnlfRwc",
+          "url": "https://www.youtube.com/watch?v=rdEeKnlfRwc",
+          "metadataStatus": 200,
+          "title": "Łosiowa Góra",
+          "channel": "KLIF"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-losiowa-gora",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-chelmiec",
+        "name": "Chełmiec",
+        "distanceM": 351901
+      }
+    },
+    {
+      "index": 21,
+      "name": "50°46'09.8\"N 15°48'56.2\"E",
+      "lat": 50.7694,
+      "lon": 15.8156,
+      "note": "Wołowa Góra",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=JU2vSu_J0MI",
+          "url": "https://www.youtube.com/watch?v=JU2vSu_J0MI",
+          "metadataStatus": 200,
+          "title": "Wołowa Góra 24.03.2022",
+          "channel": "Marcin Gurtatowski"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-wolowa",
+      "reason": "Name or supplied film identifies Wołowa Góra; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-wolowa",
+        "name": "Wołowa Góra",
+        "distanceM": 111
+      }
+    },
+    {
+      "index": 22,
+      "name": "53°25'09.1\"N 18°30'51.1\"E",
+      "lat": 53.4192,
+      "lon": 18.5142,
+      "note": "Wiąg",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=viYqF1c_eMQ",
+          "url": "https://www.youtube.com/watch?v=viYqF1c_eMQ",
+          "metadataStatus": 200,
+          "title": "Klifowe latanie na paralotni we Wiągu koło Świecia. Paragliding soaring Wiąg, Świecie, Poland.",
+          "channel": "3citiZEN"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=rYWmZpHFtts",
+          "url": "https://www.youtube.com/watch?v=rYWmZpHFtts",
+          "metadataStatus": 200,
+          "title": "Wiąg - paralotnie - 15.02.2020r.",
+          "channel": "Sebastian Torzewski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-wiag",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 330205
+      }
+    },
+    {
+      "index": 23,
+      "name": "50°47'42.7\"N 16°06'52.9\"E",
+      "lat": 50.7952,
+      "lon": 16.1147,
+      "note": "Witków",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-witkow",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-chelmiec",
+        "name": "Chełmiec",
+        "distanceM": 7219
+      }
+    },
+    {
+      "index": 24,
+      "name": "49°26'34.1\"N 22°18'48.2\"E",
+      "lat": 49.4428,
+      "lon": 22.313399999999998,
+      "note": "Weremień",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=HuvcxnOAe7w",
+          "url": "https://www.youtube.com/watch?v=HuvcxnOAe7w",
+          "metadataStatus": 200,
+          "title": "Weremień - On silent wings",
+          "channel": "Fundacja Prowing"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-weremien",
+      "reason": "Name or supplied film identifies Weremień; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-weremien",
+        "name": "Weremień",
+        "distanceM": 150
+      }
+    },
+    {
+      "index": 25,
+      "name": "53°13'02.3\"N 18°22'49.8\"E",
+      "lat": 53.217299999999994,
+      "lon": 18.380499999999998,
+      "note": "Unisław",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=H_9GT4PETe4",
+          "url": "https://www.youtube.com/watch?v=H_9GT4PETe4",
+          "metadataStatus": 200,
+          "title": "Unisław - Paralotnie - 09.06.20201r.",
+          "channel": "Sebastian Torzewski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-unislaw",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-chelmiec",
+        "name": "Chełmiec",
+        "distanceM": 307041
+      }
+    },
+    {
+      "index": 26,
+      "name": "50°19'57.7\"N 16°32'44.9\"E",
+      "lat": 50.332699999999996,
+      "lon": 16.5458,
+      "note": "trójkąt na Hucie",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=kGrKyJ37Rho",
+          "url": "https://www.youtube.com/watch?v=kGrKyJ37Rho",
+          "metadataStatus": 200,
+          "title": "Trójkąt na Hucie 6.09.2023",
+          "channel": "pablox11NEW"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-huta-triangle",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-kudowa",
+        "name": "Kudowa-Zdrój – Czermna",
+        "distanceM": 25296
+      }
+    },
+    {
+      "index": 27,
+      "name": "Panoramiczny Punkt Widokowy Trzęsacz Klif",
+      "lat": 54.0786709,
+      "lon": 14.996711699999999,
+      "note": "Trzęsacz",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=4OS4DDaLYow",
+          "url": "https://www.youtube.com/watch?v=4OS4DDaLYow",
+          "metadataStatus": 200,
+          "title": "Trzęsacz 2019 - lot na paralotni.",
+          "channel": "BushcraftASMR"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-trzesacz",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 352236
+      }
+    },
+    {
+      "index": 28,
+      "name": "49°35'01.3\"N 20°04'12.4\"E",
+      "lat": 49.5837,
+      "lon": 20.0701,
+      "note": "Tobałów",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-tobolow",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-podobin",
+        "name": "Podobin",
+        "distanceM": 6263
+      }
+    },
+    {
+      "index": 29,
+      "name": "50°21'11.9\"N 16°42'48.6\"E",
+      "lat": 50.3533,
+      "lon": 16.7135,
+      "note": "Sędzisz",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-sedzisz",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 24426
+      }
+    },
+    {
+      "index": 30,
+      "name": "49°28'57.7\"N 22°38'59.6\"E",
+      "lat": 49.4827,
+      "lon": 22.6499,
+      "note": "Szukalowy Garb",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=3Dl78uxxhEg",
+          "url": "https://www.youtube.com/watch?v=3Dl78uxxhEg",
+          "metadataStatus": 200,
+          "title": "Bieszczady. OKOLICE USTRZYKI DOLNE.   PILOT ORZEŁ",
+          "channel": "Adrian Orłowski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-szukalowy-garb",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-laworta",
+        "name": "Laworta",
+        "distanceM": 6451
+      }
+    },
+    {
+      "index": 31,
+      "name": "49°41'20.0\"N 20°00'49.0\"E",
+      "lat": 49.6889,
+      "lon": 20.0136,
+      "note": "Szczebel",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=hzqGJUVgDIk",
+          "url": "https://www.youtube.com/watch?v=hzqGJUVgDIk",
+          "metadataStatus": 200,
+          "title": "Paralotnie - Beskid Wyspowy - Szczebel - 21.07.2022",
+          "channel": "Zbyszek Wrona"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=4WigwF1Li5w",
+          "url": "https://www.youtube.com/watch?v=4WigwF1Li5w",
+          "metadataStatus": 200,
+          "title": "Szczebel Beskid Wyspowy. 27.04.2021 Pierwszy przelot paralotnia na 20km",
+          "channel": "Adam Adampol"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-szczebel",
+      "reason": "Name or supplied film identifies Szczebel; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-szczebel",
+        "name": "Szczebel",
+        "distanceM": 312
+      }
+    },
+    {
+      "index": 32,
+      "name": "50°53'31.9\"N 15°18'33.8\"E",
+      "lat": 50.892199999999995,
+      "lon": 15.3094,
+      "note": "Stóg Izerski",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=gUy6X1qfosA",
+          "url": "https://www.youtube.com/watch?v=gUy6X1qfosA",
+          "metadataStatus": 200,
+          "title": "Paralotnią po Górach Izerskich/ Stóg Izerski, Hejnice, Liberec",
+          "channel": "damianogryf POV  "
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=T-M8TENpU1I",
+          "url": "https://www.youtube.com/watch?v=T-M8TENpU1I",
+          "metadataStatus": 200,
+          "title": "Stóg Izerski Paragliding | 48km XC | 03.05.23",
+          "channel": "damianogryf POV  "
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-stog",
+      "reason": "Name or supplied film identifies Stóg Izerski; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-stog",
+        "name": "Stóg Izerski",
+        "distanceM": 39
+      }
+    },
+    {
+      "index": 33,
+      "name": "53°17'43.4\"N 18°22'38.3\"E",
+      "lat": 53.2954,
+      "lon": 18.377299999999998,
+      "note": "Starogród",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=2hICU8h6CVM",
+          "url": "https://www.youtube.com/watch?v=2hICU8h6CVM",
+          "metadataStatus": 200,
+          "title": "Starogród - Paralotnie 20.06.2018r.",
+          "channel": "Sebastian Torzewski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-starogrod",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 313996
+      }
+    },
+    {
+      "index": 34,
+      "name": "Startowisko paralotniowe Srebrna Góra",
+      "lat": 50.571684,
+      "lon": 16.656463,
+      "note": "Srebrna Góra",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=1iJrvF2xGrc",
+          "url": "https://www.youtube.com/watch?v=1iJrvF2xGrc",
+          "metadataStatus": 200,
+          "title": "Srebrna Góra - Czyli jak nie latać na paralotni :)",
+          "channel": "Daria&Dawid"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=liFzWlAFF-8",
+          "url": "https://www.youtube.com/watch?v=liFzWlAFF-8",
+          "metadataStatus": 200,
+          "title": "Srebrna Góra",
+          "channel": "Łukasz Prokop"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-srebrna",
+      "reason": "Name or supplied film identifies Srebrna Góra; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 207
+      }
+    },
+    {
+      "index": 35,
+      "name": "50°39'12.2\"N 16°28'50.2\"E",
+      "lat": 50.6534,
+      "lon": 16.4806,
+      "note": "Sokolec",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=SoVH0Y4vBQU",
+          "url": "https://www.youtube.com/watch?v=SoVH0Y4vBQU",
+          "metadataStatus": 200,
+          "title": "Paragliding Sokolec",
+          "channel": "paragliding pj"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-sokolec",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-grzmiaca",
+        "name": "Grzmiąca",
+        "distanceM": 11936
+      }
+    },
+    {
+      "index": 36,
+      "name": "50°09'15.8\"N 16°50'15.7\"E",
+      "lat": 50.154399999999995,
+      "lon": 16.837699999999998,
+      "note": "Slamnik",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=VbbsBc_11GM",
+          "url": "https://www.youtube.com/watch?v=VbbsBc_11GM",
+          "metadataStatus": 200,
+          "title": "Paragliding - Dolní Morava - Slamník - Sletík na pohodu s Frantou 8.7.23",
+          "channel": "Dangerous Dawe"
+        }
+      ],
+      "action": "exclude",
+      "reason": "Slamník is in Czechia; the video names Dolní Morava. Not a Polish flying site.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 47965
+      }
+    },
+    {
+      "index": 37,
+      "name": "49°41'16.4\"N 19°01'51.6\"E",
+      "lat": 49.6879,
+      "lon": 19.031,
+      "note": "Skrzyczne",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=kUqQkgyP2qk",
+          "url": "https://www.youtube.com/watch?v=kUqQkgyP2qk",
+          "metadataStatus": 200,
+          "title": "Paralotnia - Skrzyczne. Lipiec 2022. Było latane.",
+          "channel": "Filip Byrdy"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=7d0rDvDdMKI",
+          "url": "https://www.youtube.com/watch?v=7d0rDvDdMKI",
+          "metadataStatus": 200,
+          "title": "Paralotnie, Skrzyczne, Kaimówka, Szczyrk. Tu nie ląduję, czy dolecę na przedpole! Jak latać BGD Base",
+          "channel": "MegaEfekt"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-skrzyczne",
+      "reason": "Name or supplied film identifies Skrzyczne; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-skrzyczne",
+        "name": "Skrzyczne",
+        "distanceM": 52
+      }
+    },
+    {
+      "index": 38,
+      "name": "Startowisko Paralotniowe Góra Róg",
+      "lat": 50.670164299999996,
+      "lon": 16.1007653,
+      "note": "Góra Róg",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=GhcGG-DcMyM",
+          "url": "https://www.youtube.com/watch?v=GhcGG-DcMyM",
+          "metadataStatus": 403
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-rog",
+      "reason": "Name or supplied film identifies Róg – Chełmsko Śląskie; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-rog",
+        "name": "Róg – Chełmsko Śląskie",
+        "distanceM": 166
+      }
+    },
+    {
+      "index": 39,
+      "name": "54°39'37.1\"N 17°02'12.8\"E",
+      "lat": 54.6603,
+      "lon": 17.0369,
+      "note": "Dębnia Rowy",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=E1TFdx-EORo&t=5s",
+          "url": "https://www.youtube.com/watch?v=E1TFdx-EORo",
+          "metadataStatus": 200,
+          "title": "psycho paragliding Dębina paralotnie Rowy",
+          "channel": "Rafał Świętochowski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-rowy",
+      "reason": "Map note says Dębina/Rowy. This point corresponds to the Rowy area, separate from the Dębina pin about 3 km southwest.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 421378
+      }
+    },
+    {
+      "index": 40,
+      "name": "49°33'51.1\"N 19°08'40.2\"E",
+      "lat": 49.5642,
+      "lon": 19.1445,
+      "note": "Prusów",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=dqNipmQHH90",
+          "url": "https://www.youtube.com/watch?v=dqNipmQHH90",
+          "metadataStatus": 200,
+          "title": "Prusów bez cięcia",
+          "channel": "krzcho\"Harnaś\""
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=Ae0ivsRhcrQ",
+          "url": "https://www.youtube.com/watch?v=Ae0ivsRhcrQ",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 22/23 - Prusów",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-prusow",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzyczne",
+        "name": "Skrzyczne",
+        "distanceM": 15972
+      }
+    },
+    {
+      "index": 41,
+      "name": "49°37'36.5\"N 20°03'43.6\"E",
+      "lat": 49.626799999999996,
+      "lon": 20.062099999999997,
+      "note": "Potaczkowa",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=Cyn7KRWpCZk",
+          "url": "https://www.youtube.com/watch?v=Cyn7KRWpCZk",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 22/23 - Potaczkowa",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-potaczkowa",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-podobin",
+        "name": "Podobin",
+        "distanceM": 2570
+      }
+    },
+    {
+      "index": 42,
+      "name": "49°38'14.6\"N 20°05'33.7\"E",
+      "lat": 49.6374,
+      "lon": 20.0927,
+      "note": "Podobin",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=o-cCS76Ld7s",
+          "url": "https://www.youtube.com/watch?v=o-cCS76Ld7s",
+          "metadataStatus": 200,
+          "title": "Paralotnie - Beskid Wyspowy - Podobin - 10.04.2021",
+          "channel": "Zbyszek Wrona"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-podobin",
+      "reason": "Name or supplied film identifies Podobin; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-podobin",
+        "name": "Podobin",
+        "distanceM": 78
+      }
+    },
+    {
+      "index": 43,
+      "name": "54°26'29.0\"N 19°36'21.6\"E",
+      "lat": 54.441399999999994,
+      "lon": 19.605999999999998,
+      "note": "Piaski",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=U2Xt3VilHQY",
+          "url": "https://www.youtube.com/watch?v=U2Xt3VilHQY",
+          "metadataStatus": 200,
+          "title": "Piaski 25 09 2021",
+          "channel": "Paraodloty Bartosz Kowalski "
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-piaski",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 461586
+      }
+    },
+    {
+      "index": 44,
+      "name": "53°31'30.0\"N 18°45'48.2\"E",
+      "lat": 53.525,
+      "lon": 18.7634,
+      "note": "Parski nad wisłą",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=BO4NflL4LiU",
+          "url": "https://www.youtube.com/watch?v=BO4NflL4LiU",
+          "metadataStatus": 200,
+          "title": "Parski 2023",
+          "channel": "KLIF"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-parski",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-chelmiec",
+        "name": "Chełmiec",
+        "distanceM": 348690
+      }
+    },
+    {
+      "index": 45,
+      "name": "53°39'07.6\"N 18°44'07.4\"E",
+      "lat": 53.6521,
+      "lon": 18.7354,
+      "note": "Nowe Nad Wisłą",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=yqHN03VkbBU&t=116s",
+          "url": "https://www.youtube.com/watch?v=yqHN03VkbBU",
+          "metadataStatus": 200,
+          "title": "Paralotnie Nowe nad Wisłą 14.03.2022. PARAGLIDING 2K",
+          "channel": "Miras Cegła Dobrzyński"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-nowe",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 359308
+      }
+    },
+    {
+      "index": 46,
+      "name": "53°27'59.4\"N 18°38'52.8\"E",
+      "lat": 53.466499999999996,
+      "lon": 18.648,
+      "note": "Nowe Marzy",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=HRASuj7hY2M",
+          "url": "https://www.youtube.com/watch?v=HRASuj7hY2M",
+          "metadataStatus": 200,
+          "title": "Paralotnie - Nowe Marzy - 18.09.2023r.",
+          "channel": "Sebastian Torzewski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-nowe-marzy",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 339395
+      }
+    },
+    {
+      "index": 47,
+      "name": "54°38'59.6\"N 18°25'40.1\"E",
+      "lat": 54.649899999999995,
+      "lon": 18.427799999999998,
+      "note": "Mrzezino Górka Południowa",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=dJjNy7SzZhs",
+          "url": "https://www.youtube.com/watch?v=dJjNy7SzZhs",
+          "metadataStatus": 200,
+          "title": "[4K] Żagielek - Mrzezino Górka Południowa",
+          "channel": "Robert Grubba"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-mrzezino-south",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 446405
+      }
+    },
+    {
+      "index": 48,
+      "name": "49°26'55.0\"N 22°09'32.4\"E",
+      "lat": 49.4486,
+      "lon": 22.159,
+      "note": "Mokre",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-mokre",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-makowka",
+        "name": "Makówka",
+        "distanceM": 7703
+      }
+    },
+    {
+      "index": 49,
+      "name": "49°39'34.2\"N 20°16'34.0\"E",
+      "lat": 49.659499999999994,
+      "lon": 20.2761,
+      "note": "Mogielica",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=wetcuzMnBmU",
+          "url": "https://www.youtube.com/watch?v=wetcuzMnBmU",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 22/23 - Mogielica",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-mogielica",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-cwilin",
+        "name": "Ćwilin",
+        "distanceM": 6865
+      }
+    },
+    {
+      "index": 50,
+      "name": "50°34'52.3\"N 23°43'04.8\"E",
+      "lat": 50.581199999999995,
+      "lon": 23.718,
+      "note": "Milukin",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=pi1JnLfHN3o",
+          "url": "https://www.youtube.com/watch?v=pi1JnLfHN3o",
+          "metadataStatus": 200,
+          "title": "Latanie 2010 Mikulin",
+          "channel": "Kamil Łygas"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-mikulin",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-dzwiniacz",
+        "name": "Dźwiniacz",
+        "distanceM": 149595
+      }
+    },
+    {
+      "index": 51,
+      "name": "50°21'18.4\"N 16°39'45.0\"E",
+      "lat": 50.3551,
+      "lon": 16.662499999999998,
+      "note": "Mielnik",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=Te09vHPDUrE",
+          "url": "https://www.youtube.com/watch?v=Te09vHPDUrE",
+          "metadataStatus": 200,
+          "title": "Mielnik 2019.09.15",
+          "channel": "roland250"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-mielnik",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 23908
+      }
+    },
+    {
+      "index": 52,
+      "name": "54°36'04.5\"N 18°31'16.3\"E",
+      "lat": 54.601256,
+      "lon": 18.521179999999998,
+      "note": "KLIF Mechelinki",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-mechelinki",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 443868
+      }
+    },
+    {
+      "index": 53,
+      "name": "49°29'47.4\"N 20°41'59.6\"E",
+      "lat": 49.4965,
+      "lon": 20.6999,
+      "note": "Makowica",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=6aptjBGifJE",
+          "url": "https://www.youtube.com/watch?v=6aptjBGifJE",
+          "metadataStatus": 200,
+          "title": "Makowica Rytro paralotnie",
+          "channel": "Jerzy Adamczyk"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-makowica",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 25652
+      }
+    },
+    {
+      "index": 54,
+      "name": "49°39'11.2\"N 20°00'11.2\"E",
+      "lat": 49.653099999999995,
+      "lon": 20.0031,
+      "note": "Luboń Wielki",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=0VtJQvh6r50",
+          "url": "https://www.youtube.com/watch?v=0VtJQvh6r50",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 22/23 - Luboń Wielki",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-lubon-wielki",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szczebel",
+        "name": "Szczebel",
+        "distanceM": 4060
+      }
+    },
+    {
+      "index": 55,
+      "name": "49°46'08.8\"N 20°03'19.8\"E",
+      "lat": 49.769099999999995,
+      "lon": 20.0555,
+      "note": "Lubomir",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=CjN-uPxpONk",
+          "url": "https://www.youtube.com/watch?v=CjN-uPxpONk",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 22/23 - Lubomir",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-lubomir",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-ciecien",
+        "name": "Ciecień",
+        "distanceM": 6166
+      }
+    },
+    {
+      "index": 56,
+      "name": "49°41'43.1\"N 20°04'21.4\"E",
+      "lat": 49.695299999999996,
+      "lon": 20.072599999999998,
+      "note": "Lubogoszcz",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=hjP8VPWj5hk",
+          "url": "https://www.youtube.com/watch?v=hjP8VPWj5hk",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 22/23 - Lubogoszcz (Szenderówka)",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-lubogoszcz",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szczebel",
+        "name": "Szczebel",
+        "distanceM": 4598
+      }
+    },
+    {
+      "index": 57,
+      "name": "54°43'31.4\"N 18°36'42.5\"E",
+      "lat": 54.7254,
+      "lon": 18.6118,
+      "note": "",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-hel-peninsula-reference",
+      "reason": "Unnamed source pin on the Hel Peninsula, with no linked video. Retained as an unverified map reference.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 458632
+      }
+    },
+    {
+      "index": 58,
+      "name": "49°26'41.5\"N 22°34'55.7\"E",
+      "lat": 49.444854,
+      "lon": 22.582141999999997,
+      "note": "Laworta",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=pWq2ypy-rGs",
+          "url": "https://www.youtube.com/watch?v=pWq2ypy-rGs",
+          "metadataStatus": 200,
+          "title": "Laworta",
+          "channel": "Prowing"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-laworta",
+      "reason": "Name or supplied film identifies Laworta; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-laworta",
+        "name": "Laworta",
+        "distanceM": 28
+      }
+    },
+    {
+      "index": 59,
+      "name": "54°21'14.8\"N 19°13'31.4\"E",
+      "lat": 54.354099999999995,
+      "lon": 19.2254,
+      "note": "Kąty Rybackie",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-katy-rybackie",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 440672
+      }
+    },
+    {
+      "index": 60,
+      "name": "54°22'52.3\"N 19°24'54.7\"E",
+      "lat": 54.3812,
+      "lon": 19.4152,
+      "note": "Krynica Morska",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=XqxXAn29EvM",
+          "url": "https://www.youtube.com/watch?v=XqxXAn29EvM",
+          "metadataStatus": 200,
+          "title": "Krynica Morska Paralotnie - paragliding in Krynica Morska🤘🤘🤘",
+          "channel": "Miras Cegła Dobrzyński"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-krynica-morska",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 449537
+      }
+    },
+    {
+      "index": 61,
+      "name": "50°54'27.0\"N 20°45'12.6\"E",
+      "lat": 50.9075,
+      "lon": 20.7535,
+      "note": "Klonówka",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=O47S_SopBz0&t=166s",
+          "url": "https://www.youtube.com/watch?v=O47S_SopBz0",
+          "metadataStatus": 200,
+          "title": "Klonówka paralotnie 1.1.2023",
+          "channel": "Myszake"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-klonowka",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 133067
+      }
+    },
+    {
+      "index": 62,
+      "name": "49°44'06.0\"N 19°00'32.8\"E",
+      "lat": 49.735,
+      "lon": 19.0091,
+      "note": "Klimczok",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=PrYlRhF1f3s",
+          "url": "https://www.youtube.com/watch?v=PrYlRhF1f3s",
+          "metadataStatus": 200,
+          "title": "Kibel na Klimczoku czyli podejście od zawietrznej",
+          "channel": "Łukasz Janda"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-klimczok",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzyczne",
+        "name": "Skrzyczne",
+        "distanceM": 5494
+      }
+    },
+    {
+      "index": 63,
+      "name": "49°13'46.6\"N 19°59'11.4\"E",
+      "lat": 49.2296,
+      "lon": 19.9865,
+      "note": "Kasprowy Wierch",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=dTYM4vFPZPA",
+          "url": "https://www.youtube.com/watch?v=dTYM4vFPZPA",
+          "metadataStatus": 200,
+          "title": "Na Kasprowy bez kolejki",
+          "channel": "waldek wiciarz"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-kasprowy",
+      "reason": "A map reference is not confirmation of access or flying permission in the Tatra National Park. Verify the current local rules separately.",
+      "nearestExisting": {
+        "id": "pl-podobin",
+        "name": "Podobin",
+        "distanceM": 46069
+      }
+    },
+    {
+      "index": 64,
+      "name": "49°48'01.1\"N 20°02'17.5\"E",
+      "lat": 49.8003,
+      "lon": 20.0382,
+      "note": "Kamiennik",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=DEjnMPgSIzc",
+          "url": "https://www.youtube.com/watch?v=DEjnMPgSIzc",
+          "metadataStatus": 200,
+          "title": "Kamiennik - Zimowy Puchar Beskidu Wyspowego 2016",
+          "channel": "SRUdoChmury"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-kamiennik",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-ciecien",
+        "name": "Ciecień",
+        "distanceM": 8014
+      }
+    },
+    {
+      "index": 65,
+      "name": "49°45'50.0\"N 19°13'23.2\"E",
+      "lat": 49.7639,
+      "lon": 19.2231,
+      "note": "Jaworzynka",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=h7PGJqA5f4o",
+          "url": "https://www.youtube.com/watch?v=h7PGJqA5f4o",
+          "metadataStatus": 404
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-jaworzynka",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-zar",
+        "name": "Żar",
+        "distanceM": 2628
+      }
+    },
+    {
+      "index": 66,
+      "name": "49°24'50.8\"N 20°53'52.1\"E",
+      "lat": 49.4141,
+      "lon": 20.8978,
+      "note": "Jaworzyna Krynicka",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=zF9drGLuc1w",
+          "url": "https://www.youtube.com/watch?v=zF9drGLuc1w",
+          "metadataStatus": 200,
+          "title": "Jaworzyna Krynicka 01.05.2023",
+          "channel": "włosy na wietrze"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-jaworzyna-krynicka",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 40315
+      }
+    },
+    {
+      "index": 67,
+      "name": "49°39'41.4\"N 19°19'25.7\"E",
+      "lat": 49.6615,
+      "lon": 19.3238,
+      "note": "Janikowa Grapa",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=wlW5-FnLNSY",
+          "url": "https://www.youtube.com/watch?v=wlW5-FnLNSY",
+          "metadataStatus": 200,
+          "title": "Janikowa Grapa 13.06.2015",
+          "channel": "jasiu88888"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-janikowa-grapa",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-zar",
+        "name": "Żar",
+        "distanceM": 15709
+      }
+    },
+    {
+      "index": 68,
+      "name": "50°29'55.0\"N 16°36'36.7\"E",
+      "lat": 50.498599999999996,
+      "lon": 16.6102,
+      "note": "Huberek",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-huberek",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 8637
+      }
+    },
+    {
+      "index": 69,
+      "name": "49°24'25.2\"N 22°32'31.2\"E",
+      "lat": 49.407,
+      "lon": 22.541999999999998,
+      "note": "Holnica",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=68xOxP9fQzo&t=25s",
+          "url": "https://www.youtube.com/watch?v=68xOxP9fQzo",
+          "metadataStatus": 200,
+          "title": "Holica 15.09.2024.  Krótka relacja.",
+          "channel": "Robert Rachalski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-holica",
+      "reason": "Map note spells Holnica; the supplied video identifies Holica.",
+      "nearestExisting": {
+        "id": "pl-laworta",
+        "name": "Laworta",
+        "distanceM": 5112
+      }
+    },
+    {
+      "index": 70,
+      "name": "50°41'38.0\"N 16°19'25.7\"E",
+      "lat": 50.6939,
+      "lon": 16.3238,
+      "note": "Grzmiąca",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=EhHlWvBqdMA",
+          "url": "https://www.youtube.com/watch?v=EhHlWvBqdMA",
+          "metadataStatus": 200,
+          "title": "Startowisko Grzmiąca - ostatni dzień zimy :)",
+          "channel": "Viader_Pilot"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-grzmiaca",
+      "reason": "Name or supplied film identifies Grzmiąca; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-grzmiaca",
+        "name": "Grzmiąca",
+        "distanceM": 6
+      }
+    },
+    {
+      "index": 71,
+      "name": "50°28'22.1\"N 16°37'26.8\"E",
+      "lat": 50.4728,
+      "lon": 16.6241,
+      "note": "Gołogłowy",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=ofrM1g3MZY8",
+          "url": "https://www.youtube.com/watch?v=ofrM1g3MZY8",
+          "metadataStatus": 200,
+          "title": "Gołogłowy",
+          "channel": "Sebastian Zowada"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-gologlowy",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 11080
+      }
+    },
+    {
+      "index": 72,
+      "name": "50°56'38.8\"N 15°45'51.8\"E",
+      "lat": 50.9441,
+      "lon": 15.764399999999998,
+      "note": "Góra szybowcowa Jeżów Sudecki",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=5TYIJnzmUy4",
+          "url": "https://www.youtube.com/watch?v=5TYIJnzmUy4",
+          "metadataStatus": 200,
+          "title": "Poranek na Szybowcowej - Paralotnia Jeżów Sudecki",
+          "channel": "Viader_Pilot"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-szybowcowa",
+      "reason": "Name or supplied film identifies Góra Szybowcowa – Jeżów Sudecki; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 116
+      }
+    },
+    {
+      "index": 73,
+      "name": "54°29'17.5\"N 18°33'59.8\"E",
+      "lat": 54.4882,
+      "lon": 18.566599999999998,
+      "note": "Gdynia Orłowo Górne",
+      "videos": [],
+      "action": "add",
+      "targetId": "pl-map-orlowo-upper",
+      "reason": "Upper Orłowo reference; kept separate from the lower cliff launch.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 433795
+      }
+    },
+    {
+      "index": 74,
+      "name": "54°28'44.4\"N 18°33'49.0\"E",
+      "lat": 54.479,
+      "lon": 18.563599999999997,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=MzNtMb-clp4",
+          "url": "https://www.youtube.com/watch?v=MzNtMb-clp4",
+          "metadataStatus": 200,
+          "title": "Najpiękniejszy klif w Polsce ? Tego dnia wszystko było wspaniałe paralotnia Gdynia Orłowo3.07.2022 🤘",
+          "channel": "Miras Cegła Dobrzyński"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-orlowo-lower",
+      "reason": "Lower Orłowo reference; kept separate from the upper launch.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 432802
+      }
+    },
+    {
+      "index": 75,
+      "name": "54°38'13.9\"N 17°00'05.0\"E",
+      "lat": 54.6372,
+      "lon": 17.0014,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=68G_5st046k&t=115s",
+          "url": "https://www.youtube.com/watch?v=68G_5st046k",
+          "metadataStatus": 200,
+          "title": "dębina ustka rowy paralotnią - paragliding no music orginal sound",
+          "channel": "Rafał Świętochowski"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=E1TFdx-EORo",
+          "url": "https://www.youtube.com/watch?v=E1TFdx-EORo",
+          "metadataStatus": 200,
+          "title": "psycho paragliding Dębina paralotnie Rowy",
+          "channel": "Rafał Świętochowski"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=l2oCRmIEXcE",
+          "url": "https://www.youtube.com/watch?v=l2oCRmIEXcE",
+          "metadataStatus": 200,
+          "title": "Dębina lądowanie na topie na uszach",
+          "channel": "Rafał Świętochowski"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-debina",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-szybowcowa",
+        "name": "Góra Szybowcowa – Jeżów Sudecki",
+        "distanceM": 418427
+      }
+    },
+    {
+      "index": 76,
+      "name": "50°43'14.9\"N 16°12'40.7\"E",
+      "lat": 50.7208,
+      "lon": 16.211299999999998,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=lNTR6mGY8yE&t=15s",
+          "url": "https://www.youtube.com/watch?v=lNTR6mGY8yE",
+          "metadataStatus": 200,
+          "title": "Dzik jest Dziki !!! Dzikowiec 05 2017",
+          "channel": "Piotr Jasinski"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-dzikowiec",
+      "reason": "Name or supplied film identifies Dzikowiec; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-dzikowiec",
+        "name": "Dzikowiec",
+        "distanceM": 36
+      }
+    },
+    {
+      "index": 77,
+      "name": "50°37'43.3\"N 16°36'23.0\"E",
+      "lat": 50.628699999999995,
+      "lon": 16.6064,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=Y5LXbSmVzU0",
+          "url": "https://www.youtube.com/watch?v=Y5LXbSmVzU0",
+          "metadataStatus": 200,
+          "title": "Speedflying with Hang Glider",
+          "channel": "Greg Wings"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-czeszka",
+      "reason": "APPI places Czeszka near this pin. The supplied film is hang-gliding/speedflying footage; verify its relevance to the intended launch.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 7464
+      }
+    },
+    {
+      "index": 78,
+      "name": "Czarna trasa narciarska z wyciągu LuxTorpeda",
+      "lat": 50.2536445,
+      "lon": 16.808543399999998,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=9ArQqx-35WM&t=59s",
+          "url": "https://www.youtube.com/watch?v=9ArQqx-35WM",
+          "metadataStatus": 200,
+          "title": "Czarna Góra Speedflying",
+          "channel": "Greg Wings"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-czarna-gora-sienna",
+      "reason": "Polish Czarna Góra at Sienna; distinct from Litwinka and Czech Slamník. The source film shows speedflying.",
+      "nearestExisting": {
+        "id": "pl-srebrna",
+        "name": "Srebrna Góra",
+        "distanceM": 36781
+      }
+    },
+    {
+      "index": 79,
+      "name": "49°22'53.8\"N 20°07'15.4\"E",
+      "lat": 49.381598999999994,
+      "lon": 20.12095,
+      "note": "Litwinka (Czarna Góra)",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=WzaME2jHFpM",
+          "url": "https://www.youtube.com/watch?v=WzaME2jHFpM",
+          "metadataStatus": 200,
+          "title": "MaŻyŚ 23/24 - Litwinka (Czarna Góra)",
+          "channel": "Mariusz Górka"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-litwinka",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-podobin",
+        "name": "Podobin",
+        "distanceM": 28579
+      }
+    },
+    {
+      "index": 80,
+      "name": "Polana",
+      "lat": 49.7725253,
+      "lon": 20.141147,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=dsUgm5Y4AKw",
+          "url": "https://www.youtube.com/watch?v=dsUgm5Y4AKw",
+          "metadataStatus": 200,
+          "title": "Ciecień na szybko -paragliding ciecień GIN atlas 2",
+          "channel": "piotr650"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-ciecien",
+      "reason": "Name or supplied film identifies Ciecień; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-ciecien",
+        "name": "Ciecień",
+        "distanceM": 7
+      }
+    },
+    {
+      "index": 81,
+      "name": "50°46'46.6\"N 16°12'53.3\"E",
+      "lat": 50.779599999999995,
+      "lon": 16.2148,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=26ZEg4kgVlg&t=4s",
+          "url": "https://www.youtube.com/watch?v=26ZEg4kgVlg",
+          "metadataStatus": 200,
+          "title": "Chełmiec 01.07.2015",
+          "channel": "Jaroslaw Kuchta"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-chelmiec",
+      "reason": "Name or supplied film identifies Chełmiec; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-chelmiec",
+        "name": "Chełmiec",
+        "distanceM": 28
+      }
+    },
+    {
+      "index": 82,
+      "name": "Startowisko Paralotniowe",
+      "lat": 49.598478899999996,
+      "lon": 20.9960827,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=-kfdzpLEW1g",
+          "url": "https://www.youtube.com/watch?v=-kfdzpLEW1g",
+          "metadataStatus": 200,
+          "title": "Paragliding flight Poland 2022 from the Chełm mountain near Grybów.",
+          "channel": "Andrzej Rusztowicz"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-chelm-grybow",
+      "reason": "Chełm near Grybów, not Chełmiec in the Sudetes. The supplied video names the Grybów mountain.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 32164
+      }
+    },
+    {
+      "index": 83,
+      "name": "MIEJSCE STARTU PARALOTNIARZY",
+      "lat": 49.5315677,
+      "lon": 21.719115199999997,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=kPSbBFmkHo4&t=160s",
+          "url": "https://www.youtube.com/watch?v=kPSbBFmkHo4",
+          "metadataStatus": 200,
+          "title": "Cergowa Paralotnie 06 06 2021",
+          "channel": "Stratosferus KR"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-cergowa",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-dzialy",
+        "name": "Działy – Korczyna",
+        "distanceM": 24510
+      }
+    },
+    {
+      "index": 84,
+      "name": "50°41'56.4\"N 16°15'13.3\"E",
+      "lat": 50.699,
+      "lon": 16.2537,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=7XCAMKWW_cw",
+          "url": "https://www.youtube.com/watch?v=7XCAMKWW_cw",
+          "metadataStatus": 403
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-bukowiec",
+      "reason": "Bukowiec in the Sudetes, near Andrzejówka. Not a duplicate of Klin. Exact launch remains unverified.",
+      "nearestExisting": {
+        "id": "pl-klin",
+        "name": "Andrzejówka (Klin)",
+        "distanceM": 1748
+      }
+    },
+    {
+      "index": 85,
+      "name": "Startowisko Paralotniowe",
+      "lat": 50.6921579,
+      "lon": 16.2761234,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=tWkf3LG-HR0",
+          "url": "https://www.youtube.com/watch?v=tWkf3LG-HR0",
+          "metadataStatus": 200,
+          "title": "Klin - Andrzejówka 25.04.21 Paralotnie",
+          "channel": "Viader_Pilot"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=tWkf3LG-HR0",
+          "url": "https://www.youtube.com/watch?v=tWkf3LG-HR0",
+          "metadataStatus": 200,
+          "title": "Klin - Andrzejówka 25.04.21 Paralotnie",
+          "channel": "Viader_Pilot"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-klin",
+      "reason": "Name or supplied film identifies Andrzejówka (Klin); geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-klin",
+        "name": "Andrzejówka (Klin)",
+        "distanceM": 6
+      }
+    },
+    {
+      "index": 86,
+      "name": "50°41'37.9\"N 16°16'42.1\"E",
+      "lat": 50.693869,
+      "lon": 16.278354,
+      "note": "Anrzejówka Klin",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=tWkf3LG-HR0",
+          "url": "https://www.youtube.com/watch?v=tWkf3LG-HR0",
+          "metadataStatus": 200,
+          "title": "Klin - Andrzejówka 25.04.21 Paralotnie",
+          "channel": "Viader_Pilot"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-klin",
+      "reason": "Same Klin area, explicit Andrzejówka/Klin note and the same YouTube ID as entry 85; attach once to the existing record.",
+      "nearestExisting": {
+        "id": "pl-klin",
+        "name": "Andrzejówka (Klin)",
+        "distanceM": 245
+      }
+    },
+    {
+      "index": 87,
+      "name": "49°39'04.0\"N 20°03'37.4\"E",
+      "lat": 49.6511,
+      "lon": 20.060399999999998,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=79Fzu8DS7p8",
+          "url": "https://www.youtube.com/watch?v=79Fzu8DS7p8",
+          "metadataStatus": 200,
+          "title": "Adamczykowa - MaŻyŚ 2022/2023",
+          "channel": "FrozenSandVideo"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-adamczykowa",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-podobin",
+        "name": "Podobin",
+        "distanceM": 2784
+      }
+    },
+    {
+      "index": 88,
+      "name": "Mala Kopa Startowisko Paralotni",
+      "lat": 50.747792999999994,
+      "lon": 15.7281842,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=Q6jorE1_8Ko",
+          "url": "https://www.youtube.com/watch?v=Q6jorE1_8Ko",
+          "metadataStatus": 200,
+          "title": "Przelot Paralotnią / Mała Kopa / Góra Szybowcowa / 2023",
+          "channel": "Paralotnie Karkonosze"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-kopa",
+      "reason": "Name or supplied film identifies Kopa; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-kopa",
+        "name": "Kopa",
+        "distanceM": 9
+      }
+    },
+    {
+      "index": 89,
+      "name": "51°19'27.1\"N 21°54'34.7\"E",
+      "lat": 51.324186,
+      "lon": 21.909629,
+      "note": "Janowiec",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=OZ1mNiHDv4c",
+          "url": "https://www.youtube.com/watch?v=OZ1mNiHDv4c",
+          "metadataStatus": 200,
+          "title": "Niedziela w Janowcu 29.10.2023",
+          "channel": "Krzysztof Drozd"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-janowiec",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-dzialy",
+        "name": "Działy – Korczyna",
+        "distanceM": 176526
+      }
+    },
+    {
+      "index": 90,
+      "name": "49°47'15.2\"N 19°13'29.8\"E",
+      "lat": 49.787552999999996,
+      "lon": 19.22493,
+      "note": "Góra Żar",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=HEta8Dw-Dow",
+          "url": "https://www.youtube.com/watch?v=HEta8Dw-Dow",
+          "metadataStatus": 200,
+          "title": "Mój pierwszy lot na paralotni - Góra Żar",
+          "channel": "Mateusz Strzałka"
+        },
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=dGfSTI498C4",
+          "url": "https://www.youtube.com/watch?v=dGfSTI498C4",
+          "metadataStatus": 200,
+          "title": "Latanie - Góra Żar 11.08.2024",
+          "channel": "Adrian Pudło"
+        }
+      ],
+      "action": "existing",
+      "targetId": "pl-zar",
+      "reason": "Name or supplied film identifies Żar; geographic proximity corroborates the match. Retain its existing coordinates and sectors.",
+      "nearestExisting": {
+        "id": "pl-zar",
+        "name": "Żar",
+        "distanceM": 14
+      }
+    },
+    {
+      "index": 91,
+      "name": "Paralotnie w Pińczowie",
+      "lat": 50.5378009,
+      "lon": 20.511850199999998,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=sz8IjV1IKIo",
+          "url": "https://www.youtube.com/watch?v=sz8IjV1IKIo",
+          "metadataStatus": 404
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-pinczow",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-ciecien",
+        "name": "Ciecień",
+        "distanceM": 89045
+      }
+    },
+    {
+      "index": 92,
+      "name": "49°22'21.4\"N 21°05'01.2\"E",
+      "lat": 49.372609999999995,
+      "lon": 21.083658,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=zLNL8A_wK-w",
+          "url": "https://www.youtube.com/watch?v=zLNL8A_wK-w",
+          "metadataStatus": 200,
+          "title": "Muszynka paralotnie. Test górki",
+          "channel": "ParaVaning "
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-muszynka",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 52360
+      }
+    },
+    {
+      "index": 93,
+      "name": "Góra Wapno Paralotnie",
+      "lat": 49.482833899999996,
+      "lon": 21.644385099999997,
+      "note": "",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=Mqva1M8Dm1U",
+          "url": "https://www.youtube.com/watch?v=Mqva1M8Dm1U",
+          "metadataStatus": 200,
+          "title": "Mszana k. Dukli - Startowisko południe - zlot",
+          "channel": "włosy na wietrze"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-wapno",
+      "reason": "A separately named Wapno pin, about 3 km from Mszana M2. The film title refers broadly to Mszana; verify the precise take-off.",
+      "nearestExisting": {
+        "id": "pl-tokarnia",
+        "name": "Tokarnia",
+        "distanceM": 29782
+      }
+    },
+    {
+      "index": 94,
+      "name": "49°42'46.4\"N 19°14'47.8\"E",
+      "lat": 49.712882,
+      "lon": 19.246622,
+      "note": "Bubusiowa Kopa",
+      "videos": [
+        {
+          "sourceUrl": "https://youtube.com/watch?v=X9w9QkRFVkU",
+          "url": "https://www.youtube.com/watch?v=X9w9QkRFVkU",
+          "metadataStatus": 200,
+          "title": "MaŻYŚ Bubusiowa  Kopa",
+          "channel": "Romek pilot"
+        }
+      ],
+      "action": "add",
+      "targetId": "pl-map-bubusiowa-kopa",
+      "reason": "A distinct named site or independently identified map point, with no matching current catalogue entry. Preserve its source position with a verification label.",
+      "nearestExisting": {
+        "id": "pl-zar",
+        "name": "Żar",
+        "distanceM": 8441
+      }
+    },
+    {
+      "index": 95,
+      "name": "50°54'34.8\"N 20°44'54.2\"E",
+      "lat": 50.909662999999995,
+      "lon": 20.748388,
+      "note": "Bubusiowa Kopa",
+      "videos": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=lLjzFUYt-LI",
+          "url": "https://www.youtube.com/watch?v=lLjzFUYt-LI",
+          "metadataStatus": 200,
+          "title": "Klonówka k. Masłowa (Kieleckie)",
+          "channel": "włosy na wietrze"
+        }
+      ],
+      "action": "merge",
+      "targetId": "pl-map-klonowka",
+      "reason": "The note incorrectly repeats Bubusiowa Kopa. The coordinates and video title indicate Klonówka near Masłów; merge its video with entry 61. The real Bubusiowa Kopa is entry 94.",
+      "nearestExisting": {
+        "id": "pl-skrzetla",
+        "name": "Skrzętla",
+        "distanceM": 133276
+      }
+    }
+  ],
+  "additionalVideoSources": [
+    {
+      "sourceIndex": 28,
+      "targetId": "pl-map-tobolow",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=DXqAiH0fpo4",
+          "status": 200,
+          "title": "MaŻyŚ 22/23 - Koninki (Tobołów)",
+          "channel": "Mariusz Górka",
+          "channelUrl": "https://www.youtube.com/@mariuszgorka4726",
+          "checkedOn": "2026-10-26"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=yVwoZy-_rnk",
+          "status": 200,
+          "title": "Paralotnia Koninki - Tobołów",
+          "channel": "Stanisław Wilczek",
+          "channelUrl": "https://www.youtube.com/@stanisawwilczek3239",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "sourceIndex": 52,
+      "targetId": "pl-map-mechelinki",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=WTidct-Hes8",
+          "status": 200,
+          "title": "Paralotnia na klifie Mechelinki",
+          "channel": "navtexpl",
+          "channelUrl": "https://www.youtube.com/@navtexpl",
+          "checkedOn": "2026-10-26"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=fSQn4_CiyqI",
+          "status": 200,
+          "title": "Lot paralotnią 03.06.2023 | Mechelinki | Paragliding",
+          "channel": "darek014",
+          "channelUrl": "https://www.youtube.com/@darek014",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "sourceIndex": 73,
+      "targetId": "pl-map-orlowo-upper",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=R6abEyRjd3w",
+          "status": 200,
+          "title": "Orłowo Górne",
+          "channel": "KLIF",
+          "channelUrl": "https://www.youtube.com/@paraklif",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "sourceIndex": 91,
+      "targetId": "pl-map-pinczow",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=yxmhRQ9Azqk",
+          "status": 200,
+          "title": "Pińczów 10.04.2021 starty paralotni cz.1",
+          "channel": "Łukasz",
+          "channelUrl": "https://www.youtube.com/@ukasz3883",
+          "checkedOn": "2026-10-26"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=ecFinR-99vc",
+          "status": 200,
+          "title": "Garb Pinczowski Pińczów Paralotnie",
+          "channel": "Carol Cania",
+          "channelUrl": "https://www.youtube.com/@carolcania7503",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "sourceIndex": 38,
+      "targetId": "pl-rog",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=O65fZDDt98g",
+          "status": 200,
+          "title": "Róg solo, paralotnie Chełmsko Śląskie 7.08.21",
+          "channel": "Viader_Pilot",
+          "channelUrl": "https://www.youtube.com/@viader_pilot",
+          "checkedOn": "2026-10-26"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=3jSXFNSo4Bw",
+          "status": 200,
+          "title": "Róg 26.03.2021 - Paralotnie",
+          "channel": "Mariusz Bąk - Zwiedzaczek",
+          "channelUrl": "https://www.youtube.com/@mariuszbak2540",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "sourceIndex": 84,
+      "targetId": "pl-map-bukowiec",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=iA1bnZDpN-w",
+          "status": 200,
+          "title": "Bukowiec Paralotnie 14062017 Nemoxx Air&Earth Super Warun",
+          "channel": "Wojciech Gierak",
+          "channelUrl": "https://www.youtube.com/@wojciechgierak6058",
+          "checkedOn": "2026-10-26"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=qf409HU25r0",
+          "status": 200,
+          "title": "Bukowiec paragliding 03072016 Startowisko",
+          "channel": "Wojciech Gierak",
+          "channelUrl": "https://www.youtube.com/@wojciechgierak6058",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "sourceIndex": 65,
+      "targetId": "pl-map-jaworzynka",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=fpNJa0D22_c",
+          "status": 200,
+          "title": "Jaworzynka - lot paralotnią - bez cięcia",
+          "channel": "SRUdoChmury",
+          "channelUrl": "https://www.youtube.com/@srudochmury",
+          "checkedOn": "2026-10-26"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=FXBU56V9uXA",
+          "status": 200,
+          "title": "Kurs paralotniowy pierwszy stopień Żar - Jaworzynka",
+          "channel": "mac8997",
+          "channelUrl": "https://www.youtube.com/@mac8997",
+          "checkedOn": "2026-10-26"
+        }
+      ]
+    }
+  ],
+  "crossChecks": [
+    {
+      "url": "https://leonardo.pgxc.pl/startowisko/17216&lng=english",
+      "note": "Bukowiec identity and exact matching coordinates; no tolerance was inferred."
+    },
+    {
+      "url": "https://flyappi.org/flight_sites/",
+      "note": "Corroborates Czeszka, Rowy/Dębina and the upper/lower Orłowo area distinction. Imported source data is not current permission."
+    }
+  ],
+  "ownerVideoReview": {
+    "date": "2026-10-26",
+    "source": "Explicit owner instruction in chat",
+    "decision": "accepted",
+    "siteVideoAssociations": 117,
+    "distinctVideos": 114,
+    "sites": 85,
+    "locationAndWindVerificationChanged": false
+  }
+}

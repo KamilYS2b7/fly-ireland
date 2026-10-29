@@ -1,3 +1,5 @@
+import {MIN_MPH,MAX_MPH} from './windForecast.ts';
+
 export const WIND_UNITS = ['mph','km/h','m/s','kt'] as const;
 export type WindUnit = typeof WIND_UNITS[number];
 export const WIND_UNIT_STORAGE_KEY = 'fly-ireland.wind-unit.v1';
@@ -16,7 +18,7 @@ export function formatWindSpeed(mph: number, unit: WindUnit): string {
 export function windSpeedRange(unit: WindUnit): string {
     const normalized = normalizeWindUnit(unit);
     const limit = (mph: number) => convertWindSpeed(mph,normalized).toFixed(1).replace(/\.0$/,'');
-    return `${limit(5)}–${limit(13)} ${normalized}`;
+    return `${limit(MIN_MPH)}–${limit(MAX_MPH)} ${normalized}`;
 }
 export function readWindUnit(storage?: UnitStorage): WindUnit {
     try {return normalizeWindUnit((storage ?? globalThis.localStorage)?.getItem(WIND_UNIT_STORAGE_KEY));}

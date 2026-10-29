@@ -17,8 +17,14 @@
   import type {ForecastModelOption} from './forecastModels';
   import type {SiteReviewDecision} from './siteReview';
   import type {VideoDecision} from './siteVideos';
+  import {canonicalYouTubeUrl,videoPlaybackUrl} from './siteVideos';
+  import {guideKeyForSite} from './siteGuides';
   export let snapshot: ReturnType<typeof buildSitePanel>;
   export let onSelect: (spot: NamedSpot) => void;
+  export let directionReviewRemaining=0;
+  export let directionReviewTotal=0;
+  export let onDirectionEdit:(spot:NamedSpot)=>void=()=>{};
+  export let onGuide: (spot: NamedSpot) => void = () => {};
   export let onHover: (id: string) => void = () => {};
   let hoveredId = '';
   export let selectedId = '';
@@ -33,6 +39,7 @@
   let revealRequest = 0;
   onDestroy(() => { revealRequest++; stopReveal?.(); });
   let collapsed = false;
+  export function collapsePanel() {collapsed=true;}
   export let filters: SiteFilters = defaultSiteFilters();
   export let onFiltersChange: (filters: SiteFilters) => void = () => {};
   export let altitudeEnabled = false;
@@ -78,7 +85,7 @@
   }
 
   function changeFilter(value: SiteFilters['wind']) {
-    changeFilters({...filters,wind:value,...(value === 'review' || value === 'video-review' ? {siteType:'all' as const} : {})});
+    changeFilters({...filters,wind:value,...(value === 'review' || value === 'video-review' ? {siteType:'all' as const} : {}),...(value==='direction-review'?{siteType:'all' as const,withVideos:false,withGuide:false,regions:[]}: {})});
   }
   function changeFilters(value: SiteFilters) {
     filters = value;
@@ -93,15 +100,6 @@
 
   function changeWindUnit(value: string) {
     onWindUnitChange(value as WindUnit);
-  }
-
-  export function collapseOnMapClick() {
-    if (!window.matchMedia('(max-width: 600px)').matches) return;
-    revealRequest++;
-    stopReveal?.();
-    stopReveal = undefined;
-    hoverSite('');
-    collapsed = true;
   }
 
   export async function revealSite(id: string) {
@@ -144,7 +142,7 @@
   </header>
   <div id="fly-ireland-site-list" hidden={collapsed}>
     <div class="forecast-meta">
-      {#if filters.wind === 'review'}<span>Paragliding Map · Location review</span><strong>{reviewSummary.pending} pending · {reviewSummary.accepted} accepted</strong>
+      {#if filters.wind === 'review'}<span>Location review</span><strong>{pendingReviewSites.length} pending · {reviewSites.filter(site=>site.reviewState==='accepted').length} accepted</strong>
       {:else}
         <time>{snapshot.time}</time>
         <div class="forecast-details"><span>{snapshot.modelLabel} · {altitudeEnabled ? 'Launch-height estimate' : snapshot.levelLabel ?? 'Surface wind'}</span>{#if snapshot.weatherResolution}<span class="weather-resolution">{snapshot.weatherResolution}</span>{/if}</div>
@@ -155,6 +153,9 @@
     <div class="filters" role="group" aria-label="Show sites on map and in list">
       <button type="button" class:active={filters.wind === 'matched'} aria-pressed={filters.wind === 'matched'} title="Matching wind direction, including light wind. Strong wind is excluded." on:click={() => changeFilter('matched')}><span class="filter-label">Wind-matched</span><span class="filter-count">{snapshot.sites.length} {snapshot.sites.length === 1 ? 'site' : 'sites'}</span></button>
       <button type="button" class:active={filters.wind === 'all'} aria-pressed={filters.wind === 'all'} on:click={() => changeFilter('all')}><span class="filter-label">All sites</span><span class="filter-count">{snapshot.allSites.length} {snapshot.allSites.length === 1 ? 'site' : 'sites'}</span></button>
+      {#if filters.country==='poland'&&directionReviewTotal}
+      <button type="button" class="direction-review-filter" class:active={filters.wind==='direction-review'} aria-pressed={filters.wind==='direction-review'} on:click={()=>changeFilter(filters.wind==='direction-review'?'all':'direction-review')}><span class="filter-label">Wind ranges to review</span><span class="filter-count">{directionReviewRemaining} remaining · {directionReviewTotal-directionReviewRemaining} saved</span></button>
+      {/if}
       {#if videoSummary.total || filters.wind === 'video-review'}
       <button type="button" class="video-review-filter" class:active={filters.wind === 'video-review'} aria-pressed={filters.wind === 'video-review'}
         title="Show sites with undecided videos across all site types in the selected regions"
@@ -176,10 +177,10 @@
     <button type="button" class="review-filter" class:active={filters.wind === 'review'} aria-pressed={filters.wind === 'review'}
       title="Show candidate and accepted preview locations across all site types in the selected regions"
       on:click={()=>changeFilter(filters.wind === 'review' ? 'all' : 'review')}>Review sites · {pendingReviewSites.length} pending in view</button>
-    <div class="review-tools">
+    {#if reviewSummary.total}<div class="review-tools">
       <span>{reviewSummary.accepted} accepted · {reviewSummary.rejected} rejected</span>
       <button type="button" on:click={onExportReview}>Export decisions</button>
-    </div>
+    </div>{/if}
     {/if}
     {#if reviewMessage}<div class="review-message" role="status"><span>{reviewMessage}</span>{#if canUndoReview}<button type="button" on:click={onUndoReview}>Undo</button>{/if}</div>{/if}
     {#if reviewSaveError}<p class="review-save-error" role="alert">Your browser could not save these choices. Export decisions before closing this page.</p>{/if}
@@ -212,7 +213,7 @@
             on:click={() => selectSite(spot)}>
             <span class="card-top"><strong>{spot.name}</strong><span class="card-icons"><span class="weather-icon-slot">{#if weatherIconUrl(spot.weather,weatherIconsDir)}<img class="weather-icon" src={weatherIconUrl(spot.weather,weatherIconsDir)} alt="Forecast weather" title={spot.weather.description} />{/if}</span><span class="map-arrow" aria-hidden="true">↗</span></span></span>
             {#if spot.toVerify}
-              <span class="review-badge">{spot.reviewState==='accepted'?'✓ Location accepted':'? Location to review'} · {spot.sourceUrl?.includes('paraglidingmap.com')?'Paragliding Map':'Flybubble'}</span>
+              <span class="review-badge">{spot.reviewState==='accepted'?'✓ Location accepted':'? Location to review'} · {spot.sourceName??(spot.sourceUrl?.includes('paraglidingmap.com')?'Paragliding Map':'Flybubble')}</span>
               <span class="review-detail">{spot.lat.toFixed(5)}, {spot.lon.toFixed(5)}</span>
               <span class="review-detail">{spot.region?`${REGIONS.find(region=>region.id === spot.region)?.label} · `:''}{spot.reviewGroup??'Location preview'}</span>
               {#if spot.sourceDirections}<span class="review-detail">Source directions: {spot.sourceDirections} · unverified</span>{/if}
@@ -220,7 +221,9 @@
               {#if spot.reviewNote}<span class="review-note">{spot.reviewNote}</span>{/if}
               <span class="review-detail">Wind criteria not assessed</span>
             {:else}
-            {#if spot.region && spot.siteType}
+            {#if spot.country === 'poland'}
+              <span class="site-area">Poland · {spot.siteType==='coastal'?'Coastal':'Inland'}{spot.locationNeedsVerification ? ' · Map position to verify' : ''}</span>
+            {:else if spot.region && spot.siteType}
               <span class="site-area">{REGIONS.find(region=>region.id === spot.region)?.label} · {spot.siteType === 'coastal' ? 'Coastal' : 'Inland'}</span>
             {/if}
             <span class="match-row">
@@ -255,11 +258,13 @@
             {/if}
             {/if}
           </button>
-          {#if spot.youtube?.length}
-          <div class="card-videos" role="group" aria-label={`Videos for ${spot.name}`}>
-            {#each spot.youtube as url, index (url)}
+          {#if spot.youtube?.length || guideKeyForSite(spot) || (spot.country==='poland'&&spot.directionUnverified)}
+          <div class="card-videos" role="group" aria-label={`Actions for ${spot.name}`}>
+            {#if spot.country==='poland'&&spot.directionUnverified}<button class="card-guide direction-edit" type="button" on:click|stopPropagation={()=>onDirectionEdit(spot)}>{spot.windReviewConfirmed?'Edit saved wind range':'Set wind range'}</button>{/if}
+            {#if guideKeyForSite(spot)}<button class="card-guide" type="button" aria-label={`Open site guide for ${spot.name}`} on:click|stopPropagation={()=>onGuide(spot)}><span aria-hidden="true">ⓘ</span> Site guide</button>{/if}
+            {#each spot.youtube ?? [] as url, index (url)}
               <a class="card-video-link" href={url} target="_blank" rel="noopener noreferrer"
-                title={spot.videoCandidates?.find(video=>video.url===url)?.title ?? `YouTube ${index + 1}: ${spot.name}`}
+                title={spot.videoCandidates?.find(video=>canonicalYouTubeUrl(video.url)===canonicalYouTubeUrl(url))?.title ?? `YouTube ${index + 1}: ${spot.name}`}
                 aria-label={`Open video ${index + 1} for ${spot.name}`} on:click|stopPropagation>
                 <svg viewBox="0 0 24 18" width="20" height="15" aria-hidden="true"><rect width="24" height="18" rx="4" fill="#e62117"/><path d="M9 4.5 17 9 9 13.5Z" fill="#fff"/></svg>
                 {#if spot.youtube.length > 1}<span class="video-number" aria-hidden="true">{index + 1}</span>{/if}
@@ -272,7 +277,7 @@
             <span class="video-heading">Review videos</span>
             {#each spot.videoCandidates.filter(video=>!video.reviewFinalized) as video (video.url)}
               <div class="video-candidate" class:video-rejected={video.reviewStatus==='rejected'}>
-                <a class="video-link" href={video.url} target="_blank" rel="noopener noreferrer" title={video.title}><span aria-hidden="true">▶</span> {video.title}</a>
+                <a class="video-link" href={videoPlaybackUrl(video)} target="_blank" rel="noopener noreferrer" title={video.title}><span aria-hidden="true">▶</span> {video.title}</a>
                 <small class="video-state" class:video-approved={video.reviewStatus==='accepted'}>{video.reviewStatus==='accepted'?'Accepted':video.reviewStatus==='rejected'?'Rejected':'To review'}{video.channel?` · ${video.channel}`:''}</small>
                 {#if !video.reviewFinalized && video.confidence==='area'}<small class="video-state">Area match · exact launch unconfirmed</small>{/if}
                 {#if !video.reviewFinalized && video.matchNote}<small class="video-note" title={video.matchNote}>{video.matchNote}</small>{/if}
@@ -298,7 +303,7 @@
           </div>
         {/each}
         {#if !shownSites.length && (!snapshot.loading || filters.wind === 'video-review')}
-          <p class="empty">{filters.wind === 'video-review' ? 'No sites with videos awaiting review in these regions. Choose All sites to see completed reviews.' : filters.wind === 'review' ? 'No review locations match these filters. Rejected locations are hidden.' : !snapshot.allSites.length ? 'No sites match these region and type filters.' : snapshot.unavailable ? 'No matching sites in the available forecast data.' : 'No sites match the wind direction and speed limit at this time.'}</p>
+          <p class="empty">{filters.wind==='direction-review'?'All wind ranges in this view have been recorded. Use All sites to edit saved entries.':filters.wind === 'video-review' ? 'No sites with videos awaiting review in these regions. Choose All sites to see completed reviews.' : filters.wind === 'review' ? 'No review locations match these filters. Rejected locations are hidden.' : !snapshot.allSites.length ? 'No sites match the selected filters.' : snapshot.unavailable ? 'No matching sites in the available forecast data.' : 'No sites match the wind direction and speed limit at this time.'}</p>
           <button class="empty-reset" type="button" on:click={()=>changeFilters(defaultSiteFilters())}>Reset filters</button>
         {/if}
         {#if snapshot.unavailable}
@@ -311,9 +316,12 @@
 
 <style>
   .filters .video-review-filter{grid-column:1/-1;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;min-height:40px;padding:10px 13px;}
+  .filters .direction-review-filter{grid-column:1/-1;border:1px solid #bfa7ef;background:#f5f3ff;color:#6d28d9;min-height:44px;}.filters .direction-review-filter.active{background:#6d28d9;border-color:#6d28d9;color:white;}
   .video-review-summary{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 14px 6px;font-size:10px;color:#526c75;flex-shrink:0;}
   .video-review-summary button{border:0;background:transparent;color:#1768a0;font:inherit;text-decoration:underline;padding:4px;}
   .card-videos{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:0 10px 10px;}
+  .card-guide{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:30px;padding:4px 9px;border:1px solid #c5dcd0;border-radius:7px;background:#f6fbf8;color:#1c6a48;font-size:11px;}
+  .card-guide:hover{background:#e8f5ed;}.card-guide:focus-visible{outline:2px solid #1768c5;outline-offset:2px;}
   .card-video-link{position:relative;display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;box-sizing:border-box;border:1px solid #d5e1de;border-radius:7px;background:#fff;text-decoration:none;}
   .card-video-link:hover{border-color:#23855b;background:#edf8f1;}
   .card-video-link:focus-visible{outline:2px solid #1768c5;outline-offset:2px;}
@@ -437,6 +445,6 @@
   .empty{padding:17px 7px;color:#526b73;line-height:1.6;margin:0;}
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
   .collapsed{width:285px;}
-  @media(max-width:600px){.site-panel{left:8px;top:calc(120px + env(safe-area-inset-top, 0px));width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
-  @media(max-height:500px) and (min-width:601px){.site-panel{top:55px;}}
+  @media(max-width:600px){.site-panel{left:8px;top:72px;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
+  @media(max-height:500px){.site-panel{top:55px;}}
 </style>

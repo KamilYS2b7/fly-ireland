@@ -58,6 +58,7 @@ export function buildSitePanel(spots: NamedSpot[], getReading: (spot: NamedSpot)
         const speed = valid ? formatWindSpeed(reading.mph!,unit) : reading.status === 'loading' ? 'Loading…' : heightMode ? 'No estimate' : 'No data';
         const label = reading.status === 'pass' ? 'Wind criteria met' : reading.status === 'loading' ? 'Loading forecast'
             : reading.status === 'settings' ? 'Select a weather model / Wind' : reading.status === 'unavailable' ? (heightMode ? 'No height estimate' : level !== 'surface' ? 'No data for this layer' : 'No wind data')
+            : reading.reason === 'unverified-direction' ? 'Wind range not verified'
             : reading.reason === 'too-light' ? 'Too light' : reading.reason === 'too-strong' ? 'Too strong' : 'Direction outside range';
         allSites.push({ ...spot, status: reading.status, windMatched, label, direction, speed, gustWarning:gustWarningDisplay(reading,unit),rain:rainDisplay(reading),weather:weatherDisplay(reading),cloudBase:cloudBaseDisplay(reading),
             levelEstimated:!!reading.levelEstimated,

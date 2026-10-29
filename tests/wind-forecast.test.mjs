@@ -9,11 +9,14 @@ function vector(mph, direction) {
     return [-mph * 0.44704 * Math.sin(radians), -mph * 0.44704 * Math.cos(radians), 0];
 }
 
-test('wind direction is meteorological FROM direction, with a 13 mph inclusive limit', () => {
-    assert.equal(evaluateWind(spot, vector(13, 180)).status, 'pass');
-    assert.equal(evaluateWind(spot, vector(13.001, 180)).status, 'fail');
+test('wind direction is meteorological FROM direction, with a 15 mph inclusive limit', () => {
+    for (const mph of [13, 13.001, 14, 14.999, 15]) {
+        assert.equal(evaluateWind(spot, vector(mph, 180)).status, 'pass', `${mph} mph is within the limit`);
+    }
+    assert.equal(evaluateWind(spot, vector(15.001, 180)).reason, 'too-strong');
     assert.equal(evaluateWind(spot, vector(10, 160)).status, 'pass');
     assert.equal(evaluateWind(spot, vector(10, 340)).status, 'fail');
+    assert.equal(evaluateWind(spot, vector(14, 340)).reason, 'direction');
 });
 
 test('requires at least 5 mph and distinguishes light wind from missing data', () => {
@@ -24,7 +27,7 @@ test('requires at least 5 mph and distinguishes light wind from missing data', (
     }
     assert.equal(evaluateWind(spot, vector(5, 160)).status, 'pass');
     assert.equal(evaluateWind(spot, vector(5.001, 160)).status, 'pass');
-    assert.equal(evaluateWind(spot, vector(13.001, 160)).reason, 'too-strong');
+    assert.equal(evaluateWind(spot, vector(15.001, 160)).reason, 'too-strong');
     assert.equal(evaluateWind(spot, vector(8, 250)).reason, 'direction');
     assert.equal(evaluateWind(spot, [0, 0]).direction, undefined);
 });

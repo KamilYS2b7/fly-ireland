@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-26",
+  "version": "1.1.8",
+  "addedGuideDescriptions": 6,
+  "coveredMissingSourceEntries": 13,
+  "totalGuideDescriptions": 36,
+  "sitesWithGuide": 43,
+  "unchangedCatalogueSites": 207,
+  "visibleSourceDateBadge": false,
+  "imported": [
+    {
+      "key": "Mount Leinster",
+      "sites": [
+        "Mount Leinster",
+        "Mount Leinster N"
+      ],
+      "pointCount": 8,
+      "needsVerification": []
+    },
+    {
+      "key": "Croagh Patrick",
+      "sites": [
+        "Croagh Patrick",
+        "Croagh Patrick South take-off",
+        "Croagh Patrick East Site"
+      ],
+      "pointCount": 5,
+      "needsVerification": [
+        "North / south shoulder launch area A",
+        "Western launch area B"
+      ]
+    },
+    {
+      "key": "Sky Road",
+      "sites": [
+        "Sky Road"
+      ],
+      "pointCount": 2,
+      "needsVerification": []
+    },
+    {
+      "key": "Maumturks",
+      "sites": [
+        "Maumturk Mts"
+      ],
+      "pointCount": 2,
+      "needsVerification": [
+        "Binn Chaonaigh launch area B"
+      ]
+    },
+    {
+      "key": "Achill Island",
+      "sites": [
+        "Atlantic Drive",
+        "Minaun Heights"
+      ],
+      "pointCount": 4,
+      "needsVerification": [
+        "Atlantic Drive coastal ridge reference"
+      ]
+    },
+    {
+      "key": "Rossbeigh",
+      "sites": [
+        "Rossbeigh Mountain"
+      ],
+      "pointCount": 2,
+      "needsVerification": []
+    }
+  ],
+  "unassociatedSites": [
+    "Keel Bay"
+  ],
+  "omittedCoordinates": [
+    {
+      "site": "Knockmore",
+      "reason": "Printed coordinates duplicate Keel West; exact site location is unconfirmed."
+    }
+  ]
+}

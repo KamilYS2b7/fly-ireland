@@ -2,6 +2,7 @@ export type VideoDecision = 'accepted' | 'rejected';
 export type VideoDecisions = Record<string,VideoDecision>;
 export type SiteVideo = {
     url:string;title:string;channel?:string;matchNote?:string;
+    startSeconds?:number;
     confidence?:'site'|'area';reviewStatus?:VideoDecision|'pending';reviewFinalized?:boolean;
 };
 type VideoSite = {id:string;name:string;youtube?:string[];videoCandidates?:SiteVideo[]};
@@ -26,6 +27,12 @@ export function canonicalYouTubeUrl(value:unknown):string|undefined {
 export function videoReviewKey(siteId:string,url:string):string {
     const canonical=canonicalYouTubeUrl(url);
     return canonical?`${siteId}:${canonical.slice(-11)}`:'';
+}
+export function videoPlaybackUrl(video:Pick<SiteVideo,'url'|'startSeconds'>):string|undefined {
+    const url=canonicalYouTubeUrl(video.url);
+    if(!url)return;
+    const start=video.startSeconds;
+    return typeof start==='number'&&Number.isSafeInteger(start)&&start>0&&start<=86400 ? `${url}&t=${start}s` : url;
 }
 
 export function createVideoReview(sites:VideoSite[]) {
@@ -75,7 +82,7 @@ export function applyVideoDecisions<T extends VideoSite>(sites:T[],decisions:Vid
         });
         const visible=candidates.filter(video=>video.reviewStatus!=='rejected')
             .sort((a,b)=>Number(b.reviewStatus==='accepted')-Number(a.reviewStatus==='accepted'));
-        return {...site,videoCandidates:candidates,youtube:visible.map(video=>video.url)};
+        return {...site,videoCandidates:candidates,youtube:visible.map(video=>videoPlaybackUrl(video)!)};
     });
 }
 
@@ -86,6 +93,6 @@ export function mapVideoButtonHTML(site:VideoSite):string {
     if(!videos.length)return '';
     const video=videos[0],accepted=video.reviewStatus==='accepted';
     const label=`${accepted?'Accepted video':'Video to review'}: ${site.name} — ${video.title}${videos.length>1?' · More videos in the site card':''}`;
-    return `<a class="site-video-button${accepted?' video-accepted':''}" href="${canonicalYouTubeUrl(video.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHTML(label)}" aria-label="${escapeHTML(label)}">
+    return `<a class="site-video-button${accepted?' video-accepted':''}" href="${videoPlaybackUrl(video)}" target="_blank" rel="noopener noreferrer" title="${escapeHTML(label)}" aria-label="${escapeHTML(label)}">
         <svg viewBox="0 0 24 18" width="18" height="14" aria-hidden="true"><rect width="24" height="18" rx="4" fill="#e62117"/><path d="M9 4.5 17 9 9 13.5Z" fill="#fff"/></svg>${accepted?'':'<span class="video-review-dot" aria-hidden="true">?</span>'}</a>`;
 }

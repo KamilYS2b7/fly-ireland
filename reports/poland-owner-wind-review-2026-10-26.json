@@ -1,0 +1,728 @@
+{
+  "kind": "fly-ireland-wind-direction-review",
+  "version": 1,
+  "country": "poland",
+  "exportedAt": "2026-10-26T16:41:32.453Z",
+  "sites": [
+    {
+      "id": "pl-bezmiechowa",
+      "name": "Bezmiechowa",
+      "lat": 49.52172610218224,
+      "lon": 22.410478591918945,
+      "draft": "175-220",
+      "updatedAt": "2026-10-26T15:49:49.707Z",
+      "windRanges": [
+        {
+          "start": 175,
+          "end": 220
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:49:49.707Z"
+    },
+    {
+      "id": "pl-map-bialogora",
+      "name": "Białogóra",
+      "lat": 54.8275,
+      "lon": 17.9401,
+      "draft": "310-30",
+      "updatedAt": "2026-10-26T16:01:19.925Z",
+      "windRanges": [
+        {
+          "start": 310,
+          "end": 30
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:01:19.925Z"
+    },
+    {
+      "id": "pl-map-bubusiowa-kopa",
+      "name": "Bubusiowa Kopa",
+      "lat": 49.712882,
+      "lon": 19.246622,
+      "draft": "150-210",
+      "updatedAt": "2026-10-26T16:01:49.202Z",
+      "windRanges": [
+        {
+          "start": 150,
+          "end": 210
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:01:49.202Z"
+    },
+    {
+      "id": "pl-map-cergowa",
+      "name": "Cergowa",
+      "lat": 49.5315677,
+      "lon": 21.7191152,
+      "draft": "10-35",
+      "updatedAt": "2026-10-26T16:04:20.491Z",
+      "windRanges": [
+        {
+          "start": 10,
+          "end": 35
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:04:20.491Z"
+    },
+    {
+      "id": "pl-map-chelm-grybow",
+      "name": "Chełm — Grybów",
+      "lat": 49.5984789,
+      "lon": 20.9960827,
+      "draft": "330-10",
+      "updatedAt": "2026-10-26T16:05:03.254Z",
+      "windRanges": [
+        {
+          "start": 330,
+          "end": 10
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:05:03.254Z"
+    },
+    {
+      "id": "pl-chelmiec",
+      "name": "Chełmiec",
+      "lat": 50.77972,
+      "lon": 16.214443,
+      "draft": "75-100",
+      "updatedAt": "2026-10-26T15:47:46.185Z",
+      "windRanges": [
+        {
+          "start": 75,
+          "end": 100
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:47:46.185Z"
+    },
+    {
+      "id": "pl-map-chlapowo",
+      "name": "Chłapowo",
+      "lat": 54.811,
+      "lon": 18.3727,
+      "draft": "0-60",
+      "updatedAt": "2026-10-26T16:05:17.902Z",
+      "windRanges": [
+        {
+          "start": 0,
+          "end": 60
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:05:17.902Z"
+    },
+    {
+      "id": "pl-cwilin",
+      "name": "Ćwilin",
+      "lat": 49.687694,
+      "lon": 20.191259,
+      "draft": "145-220",
+      "updatedAt": "2026-10-26T15:43:00.381Z",
+      "windRanges": [
+        {
+          "start": 145,
+          "end": 220
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:43:00.381Z"
+    },
+    {
+      "id": "pl-map-czarna-gora-sienna",
+      "name": "Czarna Góra — Sienna",
+      "lat": 50.2536445,
+      "lon": 16.8085434,
+      "draft": "40-80",
+      "updatedAt": "2026-10-26T16:06:49.481Z",
+      "windRanges": [
+        {
+          "start": 40,
+          "end": 80
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:06:49.481Z"
+    },
+    {
+      "id": "pl-map-czeszka",
+      "name": "Czeszka",
+      "lat": 50.6287,
+      "lon": 16.6064,
+      "draft": "55-90",
+      "updatedAt": "2026-10-26T16:08:14.007Z",
+      "windRanges": [
+        {
+          "start": 55,
+          "end": 90
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:08:14.007Z"
+    },
+    {
+      "id": "pl-map-debina",
+      "name": "Dębina",
+      "lat": 54.6372,
+      "lon": 17.0014,
+      "draft": "300-350",
+      "updatedAt": "2026-10-26T16:08:41.854Z",
+      "windRanges": [
+        {
+          "start": 300,
+          "end": 350
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:08:41.854Z"
+    },
+    {
+      "id": "pl-dziurkowiec",
+      "name": "Dziurkowiec",
+      "lat": 49.09851507725685,
+      "lon": 22.428245544433594,
+      "draft": "280-315",
+      "updatedAt": "2026-10-26T16:09:30.851Z",
+      "windRanges": [
+        {
+          "start": 280,
+          "end": 315
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:09:30.851Z"
+    },
+    {
+      "id": "pl-dzwiniacz",
+      "name": "Dźwiniacz",
+      "lat": 49.46466565503903,
+      "lon": 22.53622055053711,
+      "draft": "90-150",
+      "updatedAt": "2026-10-26T15:51:58.470Z",
+      "windRanges": [
+        {
+          "start": 90,
+          "end": 150
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:51:58.470Z"
+    },
+    {
+      "id": "pl-map-orlowo-lower",
+      "name": "Gdynia Orłowo — Dolne",
+      "lat": 54.479,
+      "lon": 18.5636,
+      "draft": "60-130",
+      "updatedAt": "2026-10-26T16:09:42.640Z",
+      "windRanges": [
+        {
+          "start": 60,
+          "end": 130
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:09:42.640Z"
+    },
+    {
+      "id": "pl-map-orlowo-upper",
+      "name": "Gdynia Orłowo — Górne",
+      "lat": 54.4882,
+      "lon": 18.5666,
+      "draft": "60-100",
+      "updatedAt": "2026-10-26T16:09:53.961Z",
+      "windRanges": [
+        {
+          "start": 60,
+          "end": 100
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:09:53.961Z"
+    },
+    {
+      "id": "pl-map-gologlowy",
+      "name": "Gołogłowy",
+      "lat": 50.4728,
+      "lon": 16.6241,
+      "draft": "150-210",
+      "updatedAt": "2026-10-26T16:10:36.096Z",
+      "windRanges": [
+        {
+          "start": 150,
+          "end": 210
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:10:36.096Z"
+    },
+    {
+      "id": "pl-map-wapno",
+      "name": "Góra Wapno — Mszana",
+      "lat": 49.4828339,
+      "lon": 21.6443851,
+      "draft": "10-50",
+      "updatedAt": "2026-10-26T16:11:33.847Z",
+      "windRanges": [
+        {
+          "start": 10,
+          "end": 50
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:11:33.847Z"
+    },
+    {
+      "id": "pl-grzmiaca",
+      "name": "Grzmiąca",
+      "lat": 50.693947,
+      "lon": 16.323845,
+      "draft": "120-180",
+      "updatedAt": "2026-10-26T15:48:42.404Z",
+      "windRanges": [
+        {
+          "start": 120,
+          "end": 180
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:48:42.404Z"
+    },
+    {
+      "id": "pl-map-hala-biegunska",
+      "name": "Hala Bieguńska",
+      "lat": 49.5287051,
+      "lon": 19.2100038,
+      "draft": "120-180",
+      "updatedAt": "2026-10-26T16:12:30.414Z",
+      "windRanges": [
+        {
+          "start": 120,
+          "end": 180
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:12:30.414Z"
+    },
+    {
+      "id": "pl-map-hel",
+      "name": "Hel",
+      "lat": 54.628,
+      "lon": 18.7736,
+      "draft": "210-270",
+      "updatedAt": "2026-10-26T16:12:43.703Z",
+      "windRanges": [
+        {
+          "start": 210,
+          "end": 270
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:12:43.703Z"
+    },
+    {
+      "id": "pl-map-hel-peninsula-reference",
+      "name": "Hel Peninsula — unnamed map point",
+      "lat": 54.7254,
+      "lon": 18.6118,
+      "draft": "0-50",
+      "updatedAt": "2026-10-26T16:13:23.591Z",
+      "windRanges": [
+        {
+          "start": 0,
+          "end": 50
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:13:23.591Z"
+    },
+    {
+      "id": "pl-map-holica",
+      "name": "Holica",
+      "lat": 49.407,
+      "lon": 22.542,
+      "draft": "200-240",
+      "updatedAt": "2026-10-26T16:14:00.198Z",
+      "windRanges": [
+        {
+          "start": 200,
+          "end": 240
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:14:00.198Z"
+    },
+    {
+      "id": "pl-map-janikowa-grapa",
+      "name": "Janikowa Grapa",
+      "lat": 49.6615,
+      "lon": 19.3238,
+      "draft": "200-240",
+      "updatedAt": "2026-10-26T16:15:46.567Z",
+      "windRanges": [
+        {
+          "start": 200,
+          "end": 240
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:15:46.567Z"
+    },
+    {
+      "id": "pl-map-janowiec",
+      "name": "Janowiec",
+      "lat": 51.324186,
+      "lon": 21.909629,
+      "draft": "150-210",
+      "updatedAt": "2026-10-26T16:18:06.401Z",
+      "windRanges": [
+        {
+          "start": 150,
+          "end": 210
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:18:06.401Z"
+    },
+    {
+      "id": "pl-map-jastrzebia-gora",
+      "name": "Jastrzębia Góra",
+      "lat": 54.835,
+      "lon": 18.3012,
+      "draft": "330-30",
+      "updatedAt": "2026-10-26T16:18:30.908Z",
+      "windRanges": [
+        {
+          "start": 330,
+          "end": 30
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:18:30.908Z"
+    },
+    {
+      "id": "pl-map-jaworzyna-krynicka",
+      "name": "Jaworzyna Krynicka",
+      "lat": 49.4141,
+      "lon": 20.8978,
+      "draft": "110-130",
+      "updatedAt": "2026-10-26T16:19:39.765Z",
+      "windRanges": [
+        {
+          "start": 110,
+          "end": 130
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:19:39.765Z"
+    },
+    {
+      "id": "pl-map-jaworzynka",
+      "name": "Jaworzynka — near Żar",
+      "lat": 49.7639,
+      "lon": 19.2231,
+      "draft": "280-330",
+      "updatedAt": "2026-10-26T16:20:00.362Z",
+      "windRanges": [
+        {
+          "start": 280,
+          "end": 330
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:20:00.362Z"
+    },
+    {
+      "id": "pl-map-just-roznowskie",
+      "name": "Just / Jezioro Rożnowskie",
+      "lat": 49.722607,
+      "lon": 20.645784,
+      "draft": "120-160",
+      "updatedAt": "2026-10-26T16:21:11.616Z",
+      "windRanges": [
+        {
+          "start": 120,
+          "end": 160
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:21:11.616Z"
+    },
+    {
+      "id": "pl-map-katy-rybackie",
+      "name": "Kąty Rybackie",
+      "lat": 54.3541,
+      "lon": 19.2254,
+      "draft": "320-30",
+      "updatedAt": "2026-10-26T16:22:36.332Z",
+      "windRanges": [
+        {
+          "start": 320,
+          "end": 30
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:22:36.332Z"
+    },
+    {
+      "id": "pl-map-klimczok",
+      "name": "Klimczok",
+      "lat": 49.735,
+      "lon": 19.0091,
+      "draft": "150-210",
+      "updatedAt": "2026-10-26T16:24:35.540Z",
+      "windRanges": [
+        {
+          "start": 150,
+          "end": 210
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:24:35.540Z"
+    },
+    {
+      "id": "pl-map-klonowka",
+      "name": "Klonówka — Masłów",
+      "lat": 50.9075,
+      "lon": 20.7535,
+      "draft": "190-240",
+      "updatedAt": "2026-10-26T16:26:18.916Z",
+      "windRanges": [
+        {
+          "start": 190,
+          "end": 240
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:26:18.916Z"
+    },
+    {
+      "id": "pl-kopa",
+      "name": "Kopa",
+      "lat": 50.747873,
+      "lon": 15.728194,
+      "draft": "340-40",
+      "updatedAt": "2026-10-26T15:45:01.293Z",
+      "windRanges": [
+        {
+          "start": 340,
+          "end": 40
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:45:01.293Z"
+    },
+    {
+      "id": "pl-map-krynica-morska",
+      "name": "Krynica Morska",
+      "lat": 54.3812,
+      "lon": 19.4152,
+      "draft": "310-30",
+      "updatedAt": "2026-10-26T16:26:36.694Z",
+      "windRanges": [
+        {
+          "start": 310,
+          "end": 30
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:26:36.694Z"
+    },
+    {
+      "id": "pl-kudowa",
+      "name": "Kudowa-Zdrój – Czermna",
+      "lat": 50.459366,
+      "lon": 16.249779,
+      "draft": "200-260",
+      "updatedAt": "2026-10-26T15:46:06.597Z",
+      "windRanges": [
+        {
+          "start": 200,
+          "end": 260
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:46:06.597Z"
+    },
+    {
+      "id": "pl-laworta",
+      "name": "Laworta",
+      "lat": 49.44469133832174,
+      "lon": 22.58244037628174,
+      "draft": "30-60",
+      "updatedAt": "2026-10-26T15:52:08.138Z",
+      "windRanges": [
+        {
+          "start": 30,
+          "end": 60
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:52:08.138Z"
+    },
+    {
+      "id": "pl-map-losiowa-gora",
+      "name": "Łosiowa Góra",
+      "lat": 53.5571,
+      "lon": 18.7679,
+      "draft": "240-290",
+      "updatedAt": "2026-10-26T16:28:41.635Z",
+      "windRanges": [
+        {
+          "start": 240,
+          "end": 290
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:28:41.635Z"
+    },
+    {
+      "id": "pl-map-lubogoszcz",
+      "name": "Lubogoszcz",
+      "lat": 49.6953,
+      "lon": 20.0726,
+      "draft": "130-150",
+      "updatedAt": "2026-10-26T16:31:10.085Z",
+      "windRanges": [
+        {
+          "start": 130,
+          "end": 150
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:31:10.085Z"
+    },
+    {
+      "id": "pl-map-mikulin",
+      "name": "Mikulin",
+      "lat": 50.5812,
+      "lon": 23.718,
+      "draft": "130-230",
+      "updatedAt": "2026-10-26T15:40:57.354Z",
+      "windRanges": [
+        {
+          "start": 130,
+          "end": 230
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:40:57.354Z"
+    },
+    {
+      "id": "pl-rog",
+      "name": "Róg – Chełmsko Śląskie",
+      "lat": 50.66875206938463,
+      "lon": 16.10152285721401,
+      "draft": "220-265",
+      "updatedAt": "2026-10-26T15:45:40.718Z",
+      "windRanges": [
+        {
+          "start": 220,
+          "end": 265
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:45:40.718Z"
+    },
+    {
+      "id": "pl-skrzetla",
+      "name": "Skrzętla",
+      "lat": 49.7154167,
+      "lon": 20.5879167,
+      "draft": "140-230",
+      "updatedAt": "2026-10-26T15:42:06.058Z",
+      "windRanges": [
+        {
+          "start": 140,
+          "end": 230
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:42:06.058Z"
+    },
+    {
+      "id": "pl-map-szukalowy-garb",
+      "name": "Szukalowy Garb",
+      "lat": 49.4827,
+      "lon": 22.6499,
+      "draft": "30-90",
+      "updatedAt": "2026-10-26T15:55:01.000Z",
+      "windRanges": [
+        {
+          "start": 30,
+          "end": 90
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:55:01.000Z"
+    },
+    {
+      "id": "pl-tokarnia",
+      "name": "Tokarnia",
+      "lat": 49.42973316993069,
+      "lon": 22.048444747924805,
+      "draft": "30-120",
+      "updatedAt": "2026-10-26T15:55:27.421Z",
+      "windRanges": [
+        {
+          "start": 30,
+          "end": 120
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:55:27.421Z"
+    },
+    {
+      "id": "pl-map-trzesacz",
+      "name": "Trzęsacz",
+      "lat": 54.0786709,
+      "lon": 14.9967117,
+      "draft": "300-20",
+      "updatedAt": "2026-10-26T15:56:41.216Z",
+      "windRanges": [
+        {
+          "start": 300,
+          "end": 20
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:56:41.216Z"
+    },
+    {
+      "id": "pl-map-unislaw",
+      "name": "Unisław",
+      "lat": 53.2173,
+      "lon": 18.3805,
+      "draft": "280-340",
+      "updatedAt": "2026-10-26T15:57:15.298Z",
+      "windRanges": [
+        {
+          "start": 280,
+          "end": 340
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:57:15.298Z"
+    },
+    {
+      "id": "pl-weremien",
+      "name": "Weremień",
+      "lat": 49.44373343989441,
+      "lon": 22.314897607624175,
+      "draft": "30-70",
+      "updatedAt": "2026-10-26T15:50:21.114Z",
+      "windRanges": [
+        {
+          "start": 30,
+          "end": 70
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:50:21.114Z"
+    },
+    {
+      "id": "pl-map-wiag",
+      "name": "Wiąg",
+      "lat": 53.4192,
+      "lon": 18.5142,
+      "draft": "150-210",
+      "updatedAt": "2026-10-26T15:57:35.901Z",
+      "windRanges": [
+        {
+          "start": 150,
+          "end": 210
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:57:35.901Z"
+    },
+    {
+      "id": "pl-zar",
+      "name": "Żar",
+      "lat": 49.7875,
+      "lon": 19.2251,
+      "draft": "160-210",
+      "updatedAt": "2026-10-26T15:49:15.425Z",
+      "windRanges": [
+        {
+          "start": 160,
+          "end": 210
+        }
+      ],
+      "confirmedAt": "2026-10-26T15:49:15.425Z"
+    },
+    {
+      "id": "pl-map-zmij",
+      "name": "Żmij",
+      "lat": 50.6359,
+      "lon": 16.5453,
+      "draft": "200-240",
+      "updatedAt": "2026-10-26T16:00:33.474Z",
+      "windRanges": [
+        {
+          "start": 200,
+          "end": 240
+        }
+      ],
+      "confirmedAt": "2026-10-26T16:00:33.474Z"
+    }
+  ]
+}

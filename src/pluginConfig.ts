@@ -2,7 +2,7 @@ import type { ExternalPluginConfig } from '@windy/interfaces';
 
 const config: ExternalPluginConfig = {
     name: 'windy-plugin-fly-ireland',
-    version: '1.0.2',
+    version: '1.1.28',
     icon: '🪂',
     title: 'Fly Ireland',
     description: 'Paragliding sites, wind roses and forecast matching across the island of Ireland.',

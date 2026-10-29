@@ -1,6 +1,7 @@
 import {cp, mkdir, readdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {join} from 'node:path';
+import {basename,join} from 'node:path';
+import {copyGuideAssets} from './guide-assets.mjs';
 
 const root = fileURLToPath(new URL('..',import.meta.url));
 const destination = join(root,'release','Fly Ireland');
@@ -8,9 +9,11 @@ const files = ['package.json','package-lock.json','README.md','LICENSE','THIRD_P
     '.gitignore','.gitattributes','.nvmrc','.eslintrc.cjs','.prettierrc','rollup.config.js',
     'svelte.config.js','tsconfig.json','tsconfig.eslint.json'];
 await mkdir(destination,{recursive:true});
+await copyGuideAssets(join(root,'assets','assets'),join(destination,'assets','assets'));
 for (const file of files) await cp(join(root,file),join(destination,file));
 for (const directory of ['src','tests','reports','declarations','scripts','.github']) {
-    await cp(join(root,directory),join(destination,directory),{recursive:true});
+    await cp(join(root,directory),join(destination,directory),{recursive:true,
+        filter:source=>directory!=='reports'||!basename(source).startsWith('workspace-')});
 }
 await mkdir(join(destination,'docs'),{recursive:true});
 for (const file of await readdir(join(root,'docs'),{withFileTypes:true})) {

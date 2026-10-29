@@ -9,7 +9,10 @@ export const REGIONS = [
 ] as const;
 export type RegionId = typeof REGIONS[number]['id'];
 export type SiteType = 'coastal' | 'inland';
+export type SiteCountry = 'ireland' | 'poland';
 export type SiteMetadata = {
+    windReviewConfirmed?:boolean;
+    country?: SiteCountry; locationNeedsVerification?: boolean; sourceName?: string;
     region?: RegionId; siteType?: SiteType; toVerify?: boolean; sourceUrl?: string; reviewGroup?: string;
     reviewState?: 'pending' | 'accepted'; reviewFinalized?: boolean; sourceDirections?: string; reviewNote?: string;
     videoCandidates?:SiteVideo[];

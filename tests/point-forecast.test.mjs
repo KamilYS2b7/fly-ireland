@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createPointWindForecast, samplePointForecast } from '../src/pointForecast.ts';
+import {formatForecastTime} from '../src/forecastTime.ts';
 
 const time = Date.UTC(2026, 9, 22, 12);
 const spot = { id: 'north', lat: 55, lon: -6, sectorStart: 340, sectorEnd: 20 };
@@ -86,6 +87,37 @@ function fixture(loader = async () => payload(), profileLoader, getModelCalendar
         },
     };
 }
+
+test('changing the forecast country cancels the previous batch and retains completed point caches',async()=>{
+ const waiting=[];const app=fixture(async(s,a)=>{
+  if(s.lon<0)await new Promise(resolve=>{waiting.push(resolve);a.signal.addEventListener('abort',resolve,{once:true});});
+  return payload();
+ });
+ const polish={...spot,id:'pl-test',lat:50,lon:19};
+ app.forecast.setSpots([spot]);await app.forecast.start();
+ const previous=app.flush();await Promise.resolve();await Promise.resolve();
+ app.forecast.setSpots([polish]);
+ try{
+  assert.equal(app.calls[0].abort.signal.aborted,true,'Old-country requests must not delay the selected country');
+  await app.flush();assert.equal(app.forecast.get(polish).status,'pass');
+  const reads=app.calls.length;
+  app.forecast.setSpots([polish]);await app.flush();assert.equal(app.calls.length,reads);
+ }finally{waiting.forEach(resolve=>resolve());await previous;app.forecast.stop();}
+});
+
+test('the timeline series follows the selected country even when the model cache holds both countries',async()=>{
+ const app=fixture(async s=>{const p=payload();p.data.header.utcOffset=s.lon>0?2:1;return p;});
+ const polish={...spot,id:'pl-test',lat:50,lon:19};
+ app.forecast.setSpots([spot]);await app.forecast.start();await app.flush();
+ assert.equal(app.forecast.getTimelineSeries().header.utcOffset,1);
+ assert.match(formatForecastTime(time,app.forecast.getTimelineSeries().header.utcOffset),/13:00 UTC\+1/);
+ app.forecast.setSpots([polish]);await app.flush();
+ assert.equal(app.forecast.getTimelineSeries().header.utcOffset,2);
+ assert.match(formatForecastTime(time,app.forecast.getTimelineSeries().header.utcOffset),/14:00 UTC\+2/);
+ const reads=app.calls.length;app.forecast.setSpots([spot]);await app.flush();
+ assert.equal(app.forecast.getTimelineSeries().header.utcOffset,1);
+ assert.equal(app.calls.length,reads,'Returning to a cached country must not reload its point data');app.forecast.stop();
+});
 
 function layerPayload(model,withLayers){
     const p=payload();p.data.header={model,availableLevels:['surface','950h','975h','1000h']};
@@ -191,7 +223,8 @@ test('height mode lazily fetches all profiles, preserves caches across time and 
     assert.equal(profiles, 9); assert.equal(app.calls.length, 9);
     const estimate = app.forecast.get(sites[8]);
     assert.equal(estimate.mph, 6 / 0.44704);
-    assert.equal(estimate.reason, 'too-strong');
+    assert.equal(estimate.status, 'pass', 'An estimated 13.4 mph wind is within the 15 mph limit');
+    assert.equal(estimate.reason, undefined);
     app.forecast.setAltitudeEnabled(false);
     assert.equal(app.forecast.get(sites[8]).status, 'pass');
     app.forecast.setAltitudeEnabled(true);

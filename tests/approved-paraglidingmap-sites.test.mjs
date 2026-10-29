@@ -41,7 +41,7 @@ test('permanent additions preserve accepted locations except for later owner rem
     },timestamp);
     assert.equal(reads,71);assert.equal(panel.allSites.length,71);assert.equal(panel.sites.length,71);
     assert.equal(panel.allSites.filter(site=>site.label==='Location accepted'&&site.toVerify).length,0);
-    assert.ok(panel.sites.every(site=>site.reviewFinalized&&site.status==='pass'&&site.required.includes('5–13 mph')));
+    assert.ok(panel.sites.every(site=>site.reviewFinalized&&site.status==='pass'&&site.required.includes('5–15 mph')));
 });
 
 test('completed review cannot resurrect rejected sites or let stale browser choices hide permanent approved locations',()=>{

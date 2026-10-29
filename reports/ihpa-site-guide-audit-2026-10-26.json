@@ -1,0 +1,289 @@
+{
+  "date": "2026-10-26",
+  "source": {
+    "path": "assets/assets/IHPA Site Guide.pdf",
+    "edition": "Issue 4, July 2015",
+    "pages": 13
+  },
+  "catalogue": {
+    "sites": 207,
+    "guideDescriptions": 30,
+    "sitesWithGuide": 33
+  },
+  "pdfComparison": {
+    "contentsEntries": 16,
+    "existingEntries": 3,
+    "missingEntries": 13,
+    "missingAreaGroups": 6
+  },
+  "rows": [
+    {
+      "name": "Lacken",
+      "group": "Wicklow",
+      "pages": [
+        3
+      ],
+      "status": "Existing guide",
+      "guideKey": "Lacken",
+      "matches": [
+        "Sorrel Hill"
+      ],
+      "note": "Lacken is already mapped to Sorrel Hill. The guide also describes Black Hill and a training slope; these are not additional existing rose associations."
+    },
+    {
+      "name": "Lough Bray",
+      "group": "Wicklow",
+      "pages": [
+        4
+      ],
+      "status": "Existing guide",
+      "guideKey": "Lough Bray",
+      "matches": [
+        "Lough Bray Upper",
+        "Lough Bray Lower"
+      ],
+      "note": "One existing guide serves both catalogue variants."
+    },
+    {
+      "name": "Sugar Loaf / Great Sugar Loaf (west)",
+      "group": "Wicklow",
+      "pages": [
+        5
+      ],
+      "status": "Existing guide",
+      "guideKey": "Great Sugar Loaf",
+      "matches": [
+        "Great Sugar Loaf"
+      ],
+      "note": "The existing guide covers the west shoulder described in the PDF."
+    },
+    {
+      "name": "WCP / Westerly Car Park",
+      "group": "Mount Leinster",
+      "pages": [
+        6,
+        7
+      ],
+      "status": "Missing guide; no confirmed separate rose",
+      "matches": [],
+      "related": [
+        "Mount Leinster",
+        "Mount Leinster N"
+      ],
+      "point": {
+        "role": "take-off",
+        "lat": 52.655618,
+        "lon": -6.770784
+      },
+      "note": "A distinct western take-off described in the PDF. Do not automatically attach it to Mount Leinster N."
+    },
+    {
+      "name": "Black Banks",
+      "group": "Mount Leinster",
+      "pages": [
+        6,
+        7
+      ],
+      "status": "Missing guide; no confirmed separate rose",
+      "matches": [],
+      "related": [
+        "Mount Leinster N"
+      ],
+      "point": {
+        "role": "take-off",
+        "lat": 52.63742,
+        "lon": -6.787872
+      },
+      "note": "Northern/NW take-off. Existing Mount Leinster N has a different position and sector; association requires confirmation."
+    },
+    {
+      "name": "Slevebawn / Nine Stones Ridge",
+      "group": "Mount Leinster",
+      "pages": [
+        6,
+        7
+      ],
+      "status": "Missing guide; no confirmed separate rose",
+      "matches": [],
+      "related": [
+        "Mount Leinster N"
+      ],
+      "point": {
+        "role": "take-off",
+        "lat": 52.63834,
+        "lon": -6.796259
+      },
+      "note": "Northern/NE take-off, separate from Black Banks. Existing Mount Leinster N cannot be assigned solely by proximity."
+    },
+    {
+      "name": "Mast",
+      "group": "Mount Leinster",
+      "pages": [
+        6,
+        7
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Mount Leinster"
+      ],
+      "point": {
+        "role": "take-off",
+        "lat": 52.618455,
+        "lon": -6.781516
+      },
+      "note": "The summit/mast description corresponds to the Mount Leinster area; preserve the existing rose coordinates."
+    },
+    {
+      "name": "Croagh Patrick",
+      "group": "Croagh Patrick",
+      "pages": [
+        8
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Croagh Patrick",
+        "Croagh Patrick South take-off",
+        "Croagh Patrick East Site"
+      ],
+      "note": "The guide describes north, south and west approaches. These must remain distinct point roles/launches rather than replacing all catalogue coordinates with one point. Actual description is on page 8; the contents page says 7."
+    },
+    {
+      "name": "Sky Road",
+      "group": "Sky Road",
+      "pages": [
+        9
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Sky Road"
+      ],
+      "point": {
+        "role": "parking; take-off just over the wall",
+        "lat": 53.500679,
+        "lon": -10.096485
+      },
+      "note": "Direct name and location match."
+    },
+    {
+      "name": "Maumturks",
+      "group": "Maumturks",
+      "pages": [
+        10
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Maumturk Mts"
+      ],
+      "point": {
+        "role": "approximate take-off",
+        "lat": 53.493261,
+        "lon": -9.661877
+      },
+      "note": "The guide describes the Binn Chaonaigh launch via Maumean in Inagh Valley; not all other mountains in the Maumturks range."
+    },
+    {
+      "name": "Minaun Heights",
+      "group": "Achill Island",
+      "pages": [
+        11,
+        12
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Minaun Heights"
+      ],
+      "point": {
+        "role": "take-off",
+        "lat": 53.957373,
+        "lon": -10.026432
+      },
+      "note": "Direct name and ridge match; the text also describes the west cliffs."
+    },
+    {
+      "name": "Minaun - Lower Cliffs",
+      "group": "Achill Island",
+      "pages": [
+        11,
+        12
+      ],
+      "status": "Missing guide; rose association unconfirmed",
+      "matches": [],
+      "related": [
+        "Keel Bay"
+      ],
+      "point": {
+        "role": "parking, not a precise take-off",
+        "lat": 53.960185,
+        "lon": -10.045186
+      },
+      "note": "Keel Bay is nearby, but the PDF point is parking and the names/required sectors differ. Do not equate them by proximity."
+    },
+    {
+      "name": "Keel West / Lough Accorrymore",
+      "group": "Achill Island",
+      "pages": [
+        11,
+        12
+      ],
+      "status": "Missing guide; no matching rose",
+      "matches": [],
+      "point": {
+        "role": "take-off",
+        "lat": 53.977618,
+        "lon": -10.1708746
+      },
+      "note": "Distinct easterly launch above Lough Accorrymore. It is not the existing Keel Bay site."
+    },
+    {
+      "name": "Knockmore",
+      "group": "Achill Island",
+      "pages": [
+        11,
+        12
+      ],
+      "status": "Missing guide; no matching rose",
+      "matches": [],
+      "point": {
+        "role": "suspect printed take-off coordinates",
+        "lat": 53.977618,
+        "lon": -10.170874
+      },
+      "note": "Knockmore shares a paragraph with Atlantic Drive. Its printed coordinates duplicate Keel West to rounding precision and contradict the separate map label. Verify before any location import."
+    },
+    {
+      "name": "Atlantic Drive",
+      "group": "Achill Island",
+      "pages": [
+        11,
+        12
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Atlantic Drive"
+      ],
+      "point": {
+        "role": "site reference",
+        "lat": 53.879717,
+        "lon": -9.966301
+      },
+      "note": "A SW-facing series of outcrops described together with Knockmore. The PDF reference point differs from the existing rose; keep existing coordinates until locally checked."
+    },
+    {
+      "name": "Rossbeigh",
+      "group": "Rossbeigh",
+      "pages": [
+        13
+      ],
+      "status": "Missing guide",
+      "matches": [
+        "Rossbeigh Mountain"
+      ],
+      "point": {
+        "role": "take-off",
+        "lat": 52.0475,
+        "lon": -9.9802
+      },
+      "note": "Name variant Rossbehy. The guide describes top/bottom launches, parking and a bottom landing field; dunes are mentioned as an additional option."
+    }
+  ]
+}

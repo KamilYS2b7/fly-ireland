@@ -1,11 +1,24 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {canonicalYouTubeUrl,videoReviewKey,createVideoReview,applyVideoDecisions,mapVideoButtonHTML,VIDEO_REVIEW_STORAGE_KEY} from '../src/siteVideos.ts';
+import {canonicalYouTubeUrl,videoPlaybackUrl,videoReviewKey,createVideoReview,applyVideoDecisions,mapVideoButtonHTML,VIDEO_REVIEW_STORAGE_KEY} from '../src/siteVideos.ts';
 const url='https://www.youtube.com/watch?v=whaqT_LWvdk';
 const sites=[{id:'pgmap-a',name:'Test hill',toVerify:true,windRanges:[],youtube:[url],videoCandidates:[{url,title:'Flying <Test> "hill"',matchNote:'Hill known; launch side unconfirmed.'}]},
     {id:'pgmap-b',name:'Another hill',youtube:[url],videoCandidates:[{url,title:'Another flight'}]},
     {id:'original',name:'Original site',youtube:[url]}];
 const storage=()=>{const items=new Map();return {items,getItem:key=>items.get(key)??null,setItem:(key,value)=>items.set(key,value)};};
+test('map chapters open at the supplied time without splitting video review identity',()=>{
+ const candidate={url,title:'Coastal flying',startSeconds:510};
+ const site={id:'pl-map-coast',name:'Coast',videoCandidates:[candidate]};
+ assert.equal(videoPlaybackUrl(candidate),url+'&t=510s');
+ assert.equal(videoReviewKey(site.id,url+'&t=510s'),videoReviewKey(site.id,url));
+ const workflow=createVideoReview([site]);const decisions=workflow.set({},site.id,url+'&t=510s','accepted');
+ const applied=applyVideoDecisions([site],decisions)[0];
+ assert.deepEqual(applied.youtube,[url+'&t=510s']);
+ assert.equal(applied.videoCandidates[0].reviewStatus,'accepted');
+ assert.ok(mapVideoButtonHTML(applied).includes(url+'&t=510s'));
+ for(const startSeconds of [-1,Infinity,NaN,1.5,'510',90000])assert.equal(videoPlaybackUrl({...candidate,startSeconds}),url);
+ assert.equal(videoPlaybackUrl({url:'javascript:alert(1)',startSeconds:510}),undefined);
+});
 
 test('YouTube links are canonical and unrelated or malformed URLs are excluded',()=>{
     assert.equal(canonicalYouTubeUrl('https://youtu.be/whaqT_LWvdk?t=30'),url);

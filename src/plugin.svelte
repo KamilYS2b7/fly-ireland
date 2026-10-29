@@ -15,13 +15,23 @@ import { createPointWindForecast as createWindForecast } from './pointForecast';
 import { watchTimelinePreview } from './timelinePreview';
 import { buildSitePanel } from './sitePanel';
 import SitePanel from './SitePanel.svelte';
+import SiteGuide from './SiteGuide.svelte';
+import WindDirectionEditor from './WindDirectionEditor.svelte';
+import {createWindDirectionReview,parseDirectionRanges} from './windDirectionReview';
+import {guideKeyForSite,createSiteGuideLoader} from './siteGuides';
+import type {SiteGuideData,GuidePoint} from './siteGuides';
+import {createSiteGuideMap} from './siteGuideMap';
+import {createAutomaticGuidePoints} from './automaticGuidePoints';
+import {readLargeRosesVisible,readSiteRoseVisibility,saveSiteRoseVisibility} from './mapDisplay';
+import {roseControlHTML,updateRoseControl} from './roseControls';
 import { getSiteMetadata } from './siteCatalog';
-import { defaultSiteFilters, normalizeSiteFilters, scopeSitePanel, sitesForView, readSiteFilters, saveSiteFilters } from './siteFilters';
+import { defaultSiteFilters, POLAND_ENABLED, releaseSiteFilters, scopeSitePanel, sitesForView, readSiteFilters, saveSiteFilters } from './siteFilters';
 import type { SiteFilters } from './siteFilters';
 import {rainDisplay} from './rainForecast';
 import {gustWarningDisplay,GUST_WARNING_SVG} from './gustWarning';
 import {weatherDisplay,weatherIconUrl,cloudBaseDisplay} from './weatherForecast';
 import {flybubbleSites} from './flybubbleSites';
+import {polandSites} from './polandSites';
 import {approvedParaglidingMapSites,paraglidingMapReviewCandidates} from './paraglidingMapSites';
 import {applySiteReview,readSiteReview,saveSiteReview,setSiteReviewDecision,siteReviewCounts,exportSiteReview,SITE_REVIEW_STORAGE_KEY} from './siteReview';
 import type {SiteReviewDecision,SiteReviewDecisions} from './siteReview';
@@ -32,7 +42,7 @@ import {windLevelLabel} from './windLayers';
 import {formatForecastTime} from './forecastTime';
 import {createDetailModelSync} from './detailModelSync';
 import {watchModelRunRefresh} from './modelRunRefresh';
-import {createVideoReview,applyVideoDecisions,mapVideoButtonHTML,VIDEO_REVIEW_STORAGE_KEY} from './siteVideos';
+import {createVideoReview,applyVideoDecisions,mapVideoButtonHTML,canonicalYouTubeUrl,VIDEO_REVIEW_STORAGE_KEY} from './siteVideos';
 import type {VideoDecision,VideoDecisions,SiteVideo} from './siteVideos';
 // @ts-ignore
 declare const L: any;
@@ -666,6 +676,7 @@ type Spot = {
   windRanges?: {start:number;end:number;endExclusive?:boolean}[];
   youtube: string[];
   diff?: number;
+  country?: 'ireland' | 'poland'; directionUnverified?: boolean; sourceName?: string;
   toVerify?: boolean; sourceUrl?: string; reviewGroup?: string;
   reviewState?: 'pending' | 'accepted'; reviewFinalized?: boolean; sourceDirections?: string; reviewNote?: string;
   videoCandidates?:SiteVideo[];
@@ -680,6 +691,7 @@ let reviewSaveError = false;
 let siteStackOrder = new Map<string, number>();
 let dialMarkers: any[] = [];       // rozety (niższy pane)
 let uiMarkers: any[] = [];         // przyciski/menu (wyższy pane)
+let roseControlMarkers: any[] = [];
 let miniDialMarkers: any[] = [];   // miniaturowe rozety dla dalekiego zoomu
 let sitePanel = buildSitePanel([], () => ({ status: 'loading' }), store.get('timestamp'), store.get('product'));
 let availablePointModels: string[] = [];
@@ -695,6 +707,8 @@ let stopModelRunRefresh: (() => void) | undefined;
 let selectedSiteId = '';
 let hoveredSiteId = '';
 let windUnit: WindUnit = 'mph';
+let largeRosesVisible = true;
+let siteRoseVisibility: Record<string,boolean> = {};
 let forecastUtcOffset: number | undefined;
 let siteFilters = defaultSiteFilters();
 let altitudeEnabled = false;
@@ -703,10 +717,73 @@ const altitudeAvailable = false;
 const altitudePreferenceKey = 'fly-ireland.launch-altitude.v1';
 let filteredPanel = scopeSitePanel(sitePanel, siteFilters);
 let sitePanelComponent: SitePanel | undefined;
+let guideOpen = false;
+let guideSite: Spot | undefined;
+let guideData: SiteGuideData | undefined;
+let guideLoading = false;
+let guideError = '';
+let guideRequest = 0;
+let mapGuide: SiteGuideData | undefined;
+const guideLoader = createSiteGuideLoader();
+let guideMap: ReturnType<typeof createSiteGuideMap> | undefined;
+let automaticGuidePoints: ReturnType<typeof createAutomaticGuidePoints> | undefined;
 let videoReview=createVideoReview([]);
 let videoDecisions:VideoDecisions={};
 let videoSummary=videoReview.count(videoDecisions);
 let videoSaveError=false;
+const directionReview=createWindDirectionReview(polandSites);
+let directionState=directionReview.read().state;
+let directionStorageError='';
+let directionEditorSite:Spot|undefined;
+function directionPanel(snapshot:any){
+  return {...snapshot,allSites:snapshot.allSites.map((site:any)=>({...site,windReviewConfirmed:!!directionState[site.id]?.confirmedAt}))};
+}
+function directionRangesFor(spot:Spot){
+  if(directionEditorSite?.id===spot.id)try{return parseDirectionRanges(directionState[spot.id]?.draft??'');}catch{return [];}
+  return windRanges(spot);
+}
+function persistDirectionState(){
+  directionStorageError=directionReview.save(directionState)?'':'Browser could not save this review. Save or download the JSON file before leaving.';
+}
+function openDirectionEditor(spot:Spot){
+  if(!mounted||spot.country!=='poland'||!spot.directionUnverified)return;
+  directionEditorSite=spot;selectedSiteId=spot.id;
+  siteRoseVisibility={...siteRoseVisibility,[spot.id]:true};
+  if(typeof window!=='undefined'&&window.innerWidth<=600)sitePanelComponent?.collapsePanel();
+  const zoom=Math.max(14,map.getZoom());
+  let center=[spot.lat,spot.lon];
+  if(typeof window!=='undefined'&&window.innerWidth<=600&&map.getContainer){
+    const height=window.visualViewport?.height??window.innerHeight;
+    const rect=map.getContainer().getBoundingClientRect();
+    const point=map.project({lat:spot.lat,lng:spot.lon},zoom);
+    const shifted=map.unproject([point.x,point.y+rect.height/2-Math.max(140,height*.28)],zoom);
+    center=[shifted.lat,shifted.lng];
+  }
+  map.setView(center,zoom,{animate:true,duration:650,easeLinearity:0.25});
+  refreshSiteHighlights();scheduleRender(0);
+}
+function closeDirectionEditor(){if(!directionEditorSite)return;directionEditorSite=undefined;scheduleRender(0);}
+function draftDirectionRange(text:string){
+  if(!directionEditorSite)return;
+  directionState=directionReview.draft(directionState,directionEditorSite.id,text);persistDirectionState();
+  for(const marker of dialMarkers)if(marker.flySpot.id===directionEditorSite.id){
+    const R=marker.flyDiameter/2,arcR=R*0.985-GREEN_SW/2-2;
+    marker.getElement?.()?.querySelector('.use-arc')?.setAttribute('d',directionRangesFor(marker.flySpot).map(range=>arcPath(arcR,range.start,range.end)).join(' '));
+  }
+}
+function confirmDirectionRange(){
+  if(!directionEditorSite)return;
+  directionState=directionReview.confirm(directionState,directionEditorSite.id);persistDirectionState();
+  updateForecastUI();refreshSiteHighlights();scheduleRender(0);
+}
+function importDirectionReview(text:string){
+  directionState=directionReview.merge(directionState,text);persistDirectionState();updateForecastUI();refreshSiteHighlights();scheduleRender(0);
+}
+function nextDirectionSite(){
+  const next=directionReview.next(directionState,directionEditorSite?.id);
+  if(next)openDirectionEditor(next);
+  else closeDirectionEditor();
+}
 const windForecast = createWindForecast({
   store,
   getModelCalendar: model => {
@@ -872,7 +949,7 @@ function buildDialHTML(spot:Spot, D:number, animate:boolean){
   const tickOuter = R*0.97, tick10 = R*0.89, tick2 = R*0.94, tick30 = R*0.85;
   const labelR = R*0.74, cardR = R*0.58;
 
-  const okArc = windRanges(spot).map(range=>arcPath(arcR,range.start,range.end)).join(' ');
+  const okArc = directionRangesFor(spot).map(range=>arcPath(arcR,range.start,range.end)).join(' ');
   const restArc = arcPath(arcR,0,360); // red base; each allowed arc is painted above it
 
   const ticks2  = Array.from({length:180},(_,i)=>i*2);
@@ -1005,7 +1082,7 @@ function buildMenuHTML(spot:Spot, D:number){
   const videos = (spot.youtube ?? []).slice(0, 8);
   const ytButtons = videos.map((url, index) => {
     const number = videos.length > 1 ? `<span class="video-number" aria-hidden="true">${index + 1}</span>` : '';
-    const candidate = spot.videoCandidates?.find(video => video.url === url);
+    const candidate = spot.videoCandidates?.find(video => canonicalYouTubeUrl(video.url) === canonicalYouTubeUrl(url));
     if (candidate) return mapVideoButtonHTML({...spot, videoCandidates:[candidate]}).replace('</a>', `${number}</a>`);
     return `<a class="yt-btn yt-main" href="${url}" target="_blank" rel="noopener noreferrer"
         title="YouTube ${index + 1}: ${spot.name}" aria-label="YouTube ${index + 1}: ${spot.name}">
@@ -1133,11 +1210,14 @@ function triggerYoutubePop(spotId:string){
 
 /* ======= SPRZĄTANIE ======= */
 function clearDials(){ dialMarkers.forEach(m=>m.remove()); dialMarkers=[]; }
-function clearUi(){ uiMarkers.forEach(m=>m.remove()); uiMarkers=[]; }
+function clearUi(){ uiMarkers.forEach(m=>m.remove());uiMarkers=[];roseControlMarkers.forEach(m=>m.remove());roseControlMarkers=[]; }
 function clearMiniDials(){ miniDialMarkers.forEach(m=>m.remove()); miniDialMarkers=[]; }
 
 /* ======= PANE ======= */
 function ensurePanes(){
+  if(!map.getPane('flyIrelandRoseControls')){
+    const pane=map.createPane('flyIrelandRoseControls');pane.style.zIndex='1050';pane.style.pointerEvents='none';
+  }
   if (!map.getPane(paneDial)) {
     const p = map.createPane(paneDial);
     p.style.zIndex = '900';
@@ -1167,6 +1247,41 @@ function getPaddedLatLngBounds(padPx:number){
 }
 
 /* ======= DODAWANIE MARKERÓW ======= */
+function applyLargeRoseVisibility(marker: any){
+  marker.getElement?.()?.classList.toggle('fly-large-rose-hidden',!siteRoseVisible(marker.flySpot.id));
+}
+
+function siteRoseVisible(id: string){
+  return Object.hasOwn(siteRoseVisibility,id)?siteRoseVisibility[id]:largeRosesVisible;
+}
+
+function applyRoseControlState(marker: any){
+  const spot=marker.flyRoseControlSpot,visible=siteRoseVisible(spot.id),root=marker.getElement?.();
+  root?.classList.toggle('rose-is-hidden',!visible);
+  updateRoseControl(root?.querySelector('.rose-visibility-toggle'),spot.name,visible);
+}
+
+function setSiteRoseVisible(id: string,visible: boolean){
+  if(!mounted||!spots.some(spot=>spot.id===id))return;
+  siteRoseVisibility={...siteRoseVisibility,[id]:visible};saveSiteRoseVisibility(siteRoseVisibility);
+  for(const marker of [...dialMarkers,...uiMarkers])if(marker.flySpot.id===id)applyLargeRoseVisibility(marker);
+  for(const marker of roseControlMarkers)if(marker.flyRoseControlSpot.id===id)applyRoseControlState(marker);
+}
+
+function addRoseControl(spot: Spot,D: number){
+  const icon=L.divIcon({className:'fly-site-rose-control',iconSize:[44,44],iconAnchor:[22,22],html:roseControlHTML(spot.name,siteRoseVisible(spot.id))});
+  const marker=L.marker([spot.lat,spot.lon],{icon,pane:'flyIrelandRoseControls',interactive:true,keyboard:false,bubblingMouseEvents:false}).addTo(map);
+  marker.flyRoseControlSpot=spot;
+  const root=marker.getElement?.();
+  if(root){
+    root.style.setProperty('--rose-diameter',`${D}px`);
+    root.style.setProperty('--site-control-order',String(siteStackOrder.get(spot.id)??0));
+    for(const name of ['pointerdown','mousedown','touchstart','dblclick','keydown','keyup'])root.addEventListener(name,(event: Event)=>event.stopPropagation());
+    root.addEventListener('click',(event: Event)=>{event.stopPropagation();setSiteRoseVisible(spot.id,!siteRoseVisible(spot.id));});
+  }
+  applyRoseControlState(marker);roseControlMarkers.push(marker);
+}
+
 function addDial(s: Spot, D: number, animate:boolean){
   if (s.toVerify) { addReviewMarker(s); return; }
   const html = weatherMarkerHTML(s, D) + gustMarkerHTML(s, D) + buildDialHTML(s, D, animate);
@@ -1182,6 +1297,8 @@ function addDial(s: Spot, D: number, animate:boolean){
 
   const m = L.marker([s.lat, s.lon], { icon, interactive:false, pane:paneDial, title:windBadgeText(s).title }).addTo(map);
   m.flySpot = s;
+  m.flyDiameter = D;
+  applyLargeRoseVisibility(m);
   updateWeatherIndicator(m);
   updateWindIndicator(m);
   applySiteHighlight(m);
@@ -1203,9 +1320,11 @@ function addUiMenu(s: Spot, D: number){
   });
   const m = L.marker([s.lat, s.lon], { icon, interactive:true, pane:paneUi, title:windBadgeText(s).title }).addTo(map);
   m.flySpot = s;
+  applyLargeRoseVisibility(m);
   bindCardNavigation(m);
   applySiteHighlight(m);
   uiMarkers.push(m);
+  addRoseControl(s,D);
 }
 function windBadgeText(s: Spot){
   const reading = windForecast.get(s);
@@ -1223,7 +1342,8 @@ function windBadgeText(s: Spot){
     label = reading.windMode === 'altitude' ? 'No height estimate' : `No ${modelLabel} data`;
     speedText = '—';
   } else if (reading.status === 'pass' || reading.status === 'fail') {
-    label = reading.status === 'pass' ? 'Wind OK' : reading.reason === 'too-light' ? 'Too light'
+    label = reading.reason === 'unverified-direction' ? 'Wind range not verified'
+      : reading.status === 'pass' ? 'Wind OK' : reading.reason === 'too-light' ? 'Too light'
       : reading.reason === 'too-strong' ? 'Too strong' : 'Direction outside range';
     color = reading.status === 'pass' ? '#15803d' : reading.reason === 'too-light' ? '#2563eb'
       : reading.reason === 'too-strong' ? '#b91c1c' : '#c2410c';
@@ -1342,11 +1462,50 @@ function selectSite(id: string){
   refreshSiteHighlights();
 }
 
+async function openSiteGuide(spot: Spot){
+  if (!mounted || !spot || !guideKeyForSite(spot)) return;
+  if (mapGuide && mapGuide.key !== guideKeyForSite(spot)) hideGuidePoints();
+  const request = ++guideRequest;
+  selectSite(spot.id);
+  guideSite = spot; guideData = undefined; guideError = ''; guideLoading = true; guideOpen = true;
+  try {
+    const data = await guideLoader.load(spot);
+    if (!mounted || request !== guideRequest) return;
+    guideData = data;
+    if (!data) guideError = 'No site guide is available for this location yet.';
+  } catch {
+    if (mounted && request === guideRequest) guideError = 'Could not load the site guide. Check your connection and try again.';
+  } finally {
+    if (mounted && request === guideRequest) guideLoading = false;
+  }
+}
+function closeSiteGuide(){guideRequest++;guideOpen=false;guideLoading=false;}
+function hideGuidePoints(){guideMap?.clear();mapGuide=undefined;}
+function updateGuidePointsForRoses(){
+  const largeSites=dialMarkers.map(marker=>marker.flySpot);
+  const manualKey=mapGuide?.key;
+  // A selected point must not keep its guide pinned after its large rose disappears.
+  if(manualKey&&!largeSites.some(spot=>guideKeyForSite(spot)===manualKey))hideGuidePoints();
+  automaticGuidePoints?.update(largeSites);
+}
+function showGuideOnMap(point?: GuidePoint){
+  if (!guideData || !guideSite) return;
+  mapGuide = guideData;
+  closeSiteGuide();
+  if (typeof window !== 'undefined' && window.innerWidth <= 600) sitePanelComponent?.collapsePanel();
+  guideMap?.show(mapGuide,point);
+}
+
 function bindCardNavigation(marker: any){
   marker.getElement?.()?.addEventListener('click', (event: MouseEvent) => {
+    if(siteFilters.wind==='direction-review'&&marker.flySpot.country==='poland'&&marker.flySpot.directionUnverified){event.stopPropagation();openDirectionEditor(marker.flySpot);return;}
     const control = (event.target as Element)?.closest?.('a,button');
     if (control && !control.matches?.('.info-main')) {event.stopPropagation();return;}
     event.stopPropagation();
+    if (control?.matches?.('.info-main') && guideKeyForSite(marker.flySpot)) {
+      void openSiteGuide(marker.flySpot);
+      return;
+    }
     selectSite(marker.flySpot.id);
     sitePanelComponent?.revealSite(marker.flySpot.id);
     highlightSite(marker.flySpot.id);
@@ -1355,6 +1514,7 @@ function bindCardNavigation(marker: any){
 }
 
 function focusSite(spot: Spot){
+  if(siteFilters.wind==='direction-review'){openDirectionEditor(spot);return;}
   selectSite(spot.id);
   // A card may point outside the rendered viewport. Attach its rose before
   // moving the map, using the forecast that is already cached for every site.
@@ -1366,6 +1526,7 @@ function focusSite(spot: Spot){
       addUiMenu(spot, sizeForZoom(map.getZoom()));
     }
   }
+  updateGuidePointsForRoses();
   map.setView([spot.lat, spot.lon], Math.max(12, map.getZoom()), {
     animate:true, duration:650, easeLinearity:0.25,
   });
@@ -1377,6 +1538,9 @@ function applySiteHighlight(marker: any){
   root.style.setProperty('--site-stack-order', String(siteStackOrder.get(marker.flySpot?.id) ?? 0));
   root.classList.toggle('site-hovered', marker.flySpot?.id === hoveredSiteId);
   root.classList.toggle('site-selected', marker.flySpot?.id === selectedSiteId);
+  const directionUnknown=marker.flySpot?.country==='poland'&&marker.flySpot.directionUnverified;
+  root.classList.toggle('wind-direction-pending',!!directionUnknown&&!directionState[marker.flySpot.id]?.confirmedAt);
+  root.classList.toggle('wind-direction-recorded',!!directionUnknown&&!!directionState[marker.flySpot.id]?.confirmedAt);
 }
 
 function refreshSiteHighlights(){
@@ -1390,7 +1554,7 @@ function highlightSite(id: string){
 
 function onMapClick(event: any){
   if (event?.originalEvent?.target?.closest?.('.wind-rose-icon')) return;
-  sitePanelComponent?.collapseOnMapClick?.();
+  closeDirectionEditor();
   if (!selectedSiteId && !hoveredSiteId) return;
   selectedSiteId = '';
   highlightSite('');
@@ -1401,12 +1565,33 @@ function setSiteFilter(filter: SiteFilters['wind']){
 }
 
 function setSiteFilters(filters: SiteFilters){
-  siteFilters = normalizeSiteFilters(filters);
+  const previousCountry=siteFilters.country;
+  siteFilters = releaseSiteFilters(filters);
   saveSiteFilters(siteFilters);
-  filteredPanel = scopeSitePanel(sitePanel, siteFilters);
+  if(previousCountry!==siteFilters.country){
+    closeDirectionEditor();
+    selectedSiteId='';highlightSite('');closeSiteGuide();hideGuidePoints();
+    automaticGuidePoints?.update([]);
+    configureCountryForecast();
+    map.setView(siteFilters.country==='poland'?[52,19.2]:[53.45,-8],siteFilters.country==='poland'?6:7,{animate:true,duration:650,easeLinearity:0.25});
+  }
+  filteredPanel = scopeSitePanel(directionPanel(sitePanel), siteFilters);
   const shown = sitesForView(filteredPanel,siteFilters.wind);
   if (!shown.some(site => site.id === hoveredSiteId)) highlightSite('');
   scheduleRender(0);
+}
+
+function configureCountryForecast(){
+  const countrySites=spots.filter(spot=>(spot.country??'ireland')===siteFilters.country);
+  // Queue every site in the chosen country, independently of viewport, region
+  // and wind filters. Avoid requests outside regional model coverage abroad.
+  availablePointModels=[...new Set(countrySites.flatMap(spot=>getAllPointProducts({lat:spot.lat,lon:spot.lon})))];
+  forecastModels=forecastModelOptions(availablePointModels,windForecast.getModel());
+  windForecast.setSpots(countrySites.filter(spot=>!spot.toVerify));
+  if(availablePointModels.length&&!availablePointModels.includes(windForecast.getModel())){
+    const fallback=['ecmwf','gfs',...availablePointModels].find(model=>availablePointModels.includes(model)&&pointModelSupported(model));
+    if(fallback)void setForecastModel(fallback);
+  }
 }
 
 function refreshReviewedSites(){
@@ -1555,7 +1740,7 @@ function updateForecastUI(){
   forecastUtcOffset = windForecast.getTimelineSeries()?.header?.utcOffset;
   sitePanel = buildSitePanel(spots, spot => windForecast.get(spot), windForecast.getTimestamp(), windForecast.getModel(),windUnit,store.get('level'),forecastUtcOffset);
   forecastModels = forecastModelOptions(availablePointModels, sitePanel.model);
-  filteredPanel = scopeSitePanel(sitePanel, siteFilters);
+  filteredPanel = scopeSitePanel(directionPanel(sitePanel), siteFilters);
   // Only redraw the filtered map when membership changes, not on gust updates.
   if (siteFilters.wind === 'matched' && previousMatches !== filteredPanel.sites.map(spot => spot.id).join('|')) {
     scheduleRender(0);
@@ -1572,7 +1757,7 @@ function updateForecastUI(){
 
 function addReviewMarker(s: Spot){
   const accepted=s.reviewState==='accepted';
-  const source=s.sourceUrl?.includes('paraglidingmap.com')?'Paragliding Map':'Flybubble';
+  const source=s.sourceName??(s.sourceUrl?.includes('paraglidingmap.com')?'Paragliding Map':'Flybubble');
   const icon = L.divIcon({className:`wind-rose-icon review-site-icon${accepted?' review-accepted':''}`,
     html:`<span class="review-site-pin">${accepted?'✓':'?'}</span>${map.getZoom() >= minZoomToShow ? `<span class="review-site-name">${s.name}</span>` : ''}`,
     iconSize:[34,34],iconAnchor:[17,17]});
@@ -1641,20 +1826,25 @@ function renderAll(){
   const viewportSpots = spots.filter(s => s.id === selectedSiteId || padded.contains([s.lat, s.lon]));
   const selectedSites = sitesForView(filteredPanel,siteFilters.wind);
   const selectedIds = new Set(selectedSites.map(spot => spot.id));
-  const visibleSpots = viewportSpots.filter(spot => selectedIds.has(spot.id));
+  const editor=directionEditorSite?.country===siteFilters.country?directionEditorSite:undefined;
+  if(editor)selectedIds.add(editor.id);
+  let visibleSpots = viewportSpots.filter(spot => selectedIds.has(spot.id));
 
   const currentDialVisible = new Set<string>();
+  // Keep the edited rose large at every zoom and outside collision fallback.
+  // Other sites retain their normal sizes and forecast values.
+  clearDials();clearUi();clearMiniDials();
+  if(editor){const diameter=Math.max(250,D);addDial(editor,diameter,false);addUiMenu(editor,diameter);currentDialVisible.add(editor.id);visibleSpots=visibleSpots.filter(site=>site.id!==editor.id);}
 
   // miniaturowe rozety (daleki zoom)
   if (z < minZoomToShow) {
     lastDialVisible = new Set();
-    clearDials(); clearUi(); clearMiniDials();
     for (const s of visibleSpots) addMiniDial(s);
+    updateGuidePointsForRoses();
     return;
   }
 
   // rozety + kolizje, ale tylko dla widocznych spotów
-  clearMiniDials(); clearDials(); clearUi();
 
   const { comps } = buildCollisionComponentsAtZoom(visibleSpots, z, D, collisionPadPx);
   for (const comp of comps){
@@ -1671,6 +1861,7 @@ function renderAll(){
   }
 
   lastDialVisible = currentDialVisible;
+  updateGuidePointsForRoses();
 }
 
 /* ======= DEBOUNCE RENDER ======= */
@@ -1691,11 +1882,14 @@ function onMoveEnd(){ scheduleRender(80); }
 
 /* ======= START ======= */
 onMount(() => {
+  const restoredDirections=directionReview.read();directionState=restoredDirections.state;directionStorageError=restoredDirections.error??'';
+  largeRosesVisible=readLargeRosesVisible();
+  siteRoseVisibility=readSiteRoseVisibility();
   windUnit = readWindUnit();
-  siteFilters = readSiteFilters();
+  siteFilters = releaseSiteFilters(readSiteFilters());
   try { altitudeEnabled = localStorage.getItem(altitudePreferenceKey) === 'true'; } catch { altitudeEnabled = false; }
   setAltitudeEnabled(altitudeEnabled);
-  catalogueSpots = [...parseSpots(spotText), ...flybubbleSites,...approvedParaglidingMapSites];
+  catalogueSpots = [...parseSpots(spotText), ...flybubbleSites,...approvedParaglidingMapSites,...(POLAND_ENABLED ? polandSites : [])];
   reviewDecisions = readSiteReview();
   reviewSummary = siteReviewCounts(reviewDecisions);
   videoReview=createVideoReview(catalogueSpots);
@@ -1714,10 +1908,6 @@ onMount(() => {
   // the entire catalogue, independent of zoom, viewport, filters and readings.
   siteStackOrder = new Map([...catalogueSpots,...paraglidingMapReviewCandidates].sort((a,b) => b.lat-a.lat || a.lon-b.lon || a.id.localeCompare(b.id,'en'))
     .map((spot,index) => [spot.id,index+1]));
-  // Coverage checks use Windy's local model metadata, not forecast requests.
-  // Offer products for the whole catalog regardless of map position/filters.
-  availablePointModels = [...new Set(spots.flatMap(spot => getAllPointProducts({lat:spot.lat,lon:spot.lon})))];
-  forecastModels = forecastModelOptions(availablePointModels, store.get('product'));
   // Retire a persisted preview-only view once all candidates are activated.
   if(siteFilters.wind === 'review' && !spots.some(spot=>spot.toVerify&&!spot.reviewFinalized)){
     siteFilters = {...siteFilters,wind:'all'};
@@ -1729,6 +1919,11 @@ onMount(() => {
   }
   if (!spots.length) return;
   mounted = true;
+  guideMap = createSiteGuideMap({map,L,onSelect:(_point,guide)=>{
+    mapGuide=guide;
+    if(typeof window!=='undefined'&&window.innerWidth<=600)sitePanelComponent?.collapsePanel();
+  }});
+  automaticGuidePoints=createAutomaticGuidePoints({loader:guideLoader,points:guideMap,setTimer:setTimeout,clearTimer:clearTimeout});
   window.addEventListener('storage',onReviewStorage);
   updateForecastUI();
   detailModelSync = createDetailModelSync({store,broadcast,
@@ -1755,12 +1950,11 @@ onMount(() => {
   map.on('zoomend', onZoomEnd);
   map.on('moveend', onMoveEnd);
   map.on('click', onMapClick);
-  map.setView(firstReview?[53.45,-8]:[spots[0].lat, spots[0].lon],
-    firstReview?7:Math.max(map.getZoom()||0, initialZoom));
+  map.setView(siteFilters.country==='poland'?[52,19.2]:firstReview?[53.45,-8]:[spots[0].lat, spots[0].lon],
+    siteFilters.country==='poland'?6:firstReview?7:Math.max(map.getZoom()||0, initialZoom));
   // Also render when setView leaves the view unchanged and emits no event.
   scheduleRender(0);
-  // One forecast snapshot for all sites, independent of viewport and zoom.
-  windForecast.setSpots(spots.filter(spot=>!spot.toVerify));
+  configureCountryForecast();
   void windForecast.start();
   stopTimelinePreview = watchTimelinePreview({
     store,
@@ -1778,7 +1972,11 @@ onMount(() => {
 });
 
 onDestroy(() => {
+  directionEditorSite=undefined;
   mounted = false;
+  closeSiteGuide();automaticGuidePoints?.destroy();automaticGuidePoints=undefined;
+  guideLoader.destroy();guideMap?.destroy();guideMap=undefined;
+  mapGuide=undefined;
   window.removeEventListener('storage',onReviewStorage);
   cancelSiteForecastOpen?.();
   modelSelection++; modelPreparation++;
@@ -1797,6 +1995,9 @@ onDestroy(() => {
 </script>
 
 <SitePanel bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
+  directionReviewRemaining={directionReview.eligible.filter(site=>!directionState[site.id]?.confirmedAt).length}
+  directionReviewTotal={directionReview.eligible.length} onDirectionEdit={openDirectionEditor}
+  onGuide={openSiteGuide}
   modelOptions={forecastModels} onModelChange={setForecastModel} {modelSyncNote}
   {windUnit} onWindUnitChange={setWindUnit}
   filters={siteFilters} onFiltersChange={setSiteFilters} {altitudeEnabled} {altitudeAvailable} onAltitudeChange={setAltitudeEnabled}
@@ -1805,9 +2006,30 @@ onDestroy(() => {
   {videoSummary} {videoSaveError} onVideoDecision={decideVideo} onExportVideos={exportVideos}
   onRetry={() => windForecast.retry()} />
 
+<SiteGuide open={guideOpen} siteName={guideSite?.name ?? ''} guide={guideData} loading={guideLoading} error={guideError}
+  onClose={closeSiteGuide} onRetry={()=>guideSite&&openSiteGuide(guideSite)} onShowMap={showGuideOnMap} />
+
+<WindDirectionEditor {map} site={directionEditorSite} entry={directionEditorSite?directionState[directionEditorSite.id]:undefined}
+  report={()=>directionReview.report(directionState)} onImport={importDirectionReview} onDraft={draftDirectionRange}
+  onConfirm={confirmDirectionRange} onClose={closeDirectionEditor} onNext={nextDirectionSite} storageError={directionStorageError} />
+
 <style>
+/* The sidebar mounts directly under body. Hide its empty native host so
+   Windy's unused closing X cannot dismiss the map overlay. */
+:global(#plugin-windy-plugin-fly-ireland){display:none !important;}
+
 /* ——— Ogólne ——— */
 :global(.wind-rose-icon){ opacity: 1 !important; z-index:var(--site-stack-order,0) !important; }
+:global(.wind-direction-pending.mini-dial-icon .mini-wind-rose),:global(.wind-direction-pending.dial-icon .wr-dial){filter:drop-shadow(0 0 4px #7c3aed);}
+:global(.wind-direction-pending.mini-dial-icon::after),:global(.wind-direction-pending.dial-icon::after){content:'?';position:absolute;right:0;bottom:0;background:#7c3aed;color:white;border:2px solid white;border-radius:50%;width:20px;height:20px;text-align:center;font:600 14px/20px system-ui;pointer-events:none;}
+:global(.wind-rose-icon.fly-large-rose-hidden){display:none!important;pointer-events:none!important;}
+:global(.fly-site-rose-control){background:transparent!important;border:0!important;overflow:visible;pointer-events:none!important;z-index:var(--site-control-order,0)!important;}
+:global(.rose-visibility-toggle){display:flex;align-items:center;justify-content:center;gap:6px;width:44px;height:44px;box-sizing:border-box;padding:9px;border:1px solid #b9d1c5;border-radius:11px;background:#fffffff5;color:#255744;box-shadow:0 2px 7px #173c2a33;font:600 11px/1.3 system-ui,sans-serif;cursor:pointer;pointer-events:auto;text-transform:none;letter-spacing:normal;transform:translate(calc(var(--rose-diameter)/2 - 8px),calc(32px - var(--rose-diameter)/2));}
+:global(.rose-visibility-toggle svg){flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+:global(.rose-visibility-toggle .rose-toggle-label){display:none;}
+:global(.rose-visibility-toggle:hover){background:#eff8f2;}
+:global(.rose-visibility-toggle:focus-visible){outline:3px solid #2394cf;outline-offset:3px;}
+:global(.rose-is-hidden .rose-visibility-toggle){border-color:#16805d;background:#e7f5ed;color:#146146;}
 :global(.review-site-icon){background:transparent;border:0;cursor:pointer;}
 :global(.site-video-button){position:relative;display:grid;place-items:center;width:34px;height:34px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;box-shadow:0 1px 4px #0005;text-decoration:none;pointer-events:auto;z-index:4;}
 :global(.site-video-button:hover),:global(.site-video-button:focus-visible){outline:2px solid #38bdf8;outline-offset:2px;}

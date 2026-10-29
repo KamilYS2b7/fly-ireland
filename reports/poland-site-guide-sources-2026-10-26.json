@@ -1,0 +1,186 @@
+{
+  "checkedOn": "2026-10-26",
+  "country": "Poland",
+  "scope": "Confirmed minimum from official websites of paragliding associations, a club and a foundation. This is not an exhaustive national census or a claim that every listed site is currently available for flying.",
+  "countingUnit": "Distinct flying site or area. Different launch faces at the same site are grouped; Czech sites and repeated descriptions are excluded.",
+  "totals": {
+    "uniqueSites": 30,
+    "narrativeDescriptions": 22,
+    "briefInformationCards": 8
+  },
+  "sources": [
+    {
+      "organization": "Stowarzyszenie Paralotniarzy Beskidu Wyspowego",
+      "url": "https://spbw.pl/miejsca",
+      "type": "narrative",
+      "sites": [
+        {
+          "name": "Ciecień",
+          "url": "https://spbw.pl/node/38"
+        },
+        {
+          "name": "Szczebel",
+          "url": "https://spbw.pl/node/50"
+        },
+        {
+          "name": "Śnieżnica",
+          "url": "https://spbw.pl/node/39"
+        },
+        {
+          "name": "Podobin",
+          "url": "https://spbw.pl/node/40"
+        },
+        {
+          "name": "Ćwilin",
+          "url": "https://spbw.pl/node/47"
+        },
+        {
+          "name": "Skrzętla",
+          "url": "https://spbw.pl/node/41"
+        }
+      ],
+      "notes": "Detailed site articles include access, launch, landing, directions and hazards. Some values differ between summary fields and narrative; reconcile before importing."
+    },
+    {
+      "organization": "Karkonoski Klub Paralotniowy",
+      "url": "https://kkp.net.pl/startowiska/",
+      "type": "narrative",
+      "sites": [
+        {
+          "name": "Góra Szybowcowa – Jeżów Sudecki",
+          "url": "https://kkp.net.pl/szybowcowa/"
+        },
+        {
+          "name": "Jatki-Mieroszów",
+          "url": "https://kkp.net.pl/krowiara-mieroszow/"
+        },
+        {
+          "name": "Kopa",
+          "url": "https://kkp.net.pl/kopa/"
+        },
+        {
+          "name": "Róg – Chełmsko Śląskie",
+          "url": "https://kkp.net.pl/rog-chelmsko-slaskie/"
+        },
+        {
+          "name": "Rudnik",
+          "url": "https://kkp.net.pl/rudnik/"
+        },
+        {
+          "name": "Stóg Izerski",
+          "url": "https://kkp.net.pl/stogizerski/"
+        },
+        {
+          "name": "Wołowa Góra",
+          "url": "https://kkp.net.pl/wolowa-gora/"
+        }
+      ],
+      "notes": "The catalogue contains eight site entries; Černá Hora is in Czechia and is not counted. Location maps and a KMZ are offered. Kopa has specific access and flying conditions."
+    },
+    {
+      "organization": "Stowarzyszenie Paralotniowe Sudety",
+      "url": "https://www.paralotnie-sudety.pl/startowiska/",
+      "type": "narrative",
+      "sites": [
+        {
+          "name": "Dzikowiec",
+          "url": "https://www.paralotnie-sudety.pl/startowiska/opis/dzikowiec/"
+        },
+        {
+          "name": "Srebrna Góra",
+          "url": "https://www.paralotnie-sudety.pl/startowiska/opis/srebrna-gora/"
+        },
+        {
+          "name": "Andrzejówka (Klin)",
+          "url": "https://www.paralotnie-sudety.pl/startowiska/opis/andrzejowka-klin/"
+        },
+        {
+          "name": "Kudowa-Zdrój – Czermna",
+          "url": "https://www.paralotnie-sudety.pl/startowiska/opis/kudowa-zdroj-czermna/"
+        },
+        {
+          "name": "Chełmiec",
+          "url": "https://www.paralotnie-sudety.pl/startowiska/opis/chelmiec/"
+        },
+        {
+          "name": "Grzmiąca",
+          "url": "https://www.paralotnie-sudety.pl/startowiska/opis/grzmiaca/"
+        }
+      ],
+      "notes": "Six confirmed Polish entries with narrative text are counted here, not the whole mixed Polish/Czech catalogue. Detail depth varies and some notes date to 2015. Other catalogue entries may offer technical coordinates/directions but no useful narrative."
+    },
+    {
+      "organization": "Beskidzkie Stowarzyszenie Paralotniowe",
+      "url": "https://bsp.beskidy.pl/",
+      "type": "narrative",
+      "sites": [
+        {
+          "name": "Skrzyczne",
+          "url": "https://bsp.beskidy.pl/skrzyczne/"
+        },
+        {
+          "name": "Żar",
+          "url": "https://bsp.beskidy.pl/zar/"
+        }
+      ],
+      "notes": "Multiple launch faces per mountain are grouped as one site. Current Skrzyczne article states Kaimówka is no longer an official landing field and describes Lipowa alternatives. Prefer this caretaker information over old PSP descriptions."
+    },
+    {
+      "organization": "Polskie Stowarzyszenie Paralotniowe",
+      "url": "https://psp.org.pl/tematy/pogoda/",
+      "type": "narrative",
+      "sites": [
+        {
+          "name": "Działy – Korczyna koło Krosna",
+          "url": "https://psp.org.pl/dzialy-meteo/"
+        }
+      ],
+      "notes": "Detailed historical description appears under the Działy weather article. PSP also describes Żar, Skrzyczne and Dzikowiec; these duplicates are not counted again."
+    },
+    {
+      "organization": "Fundacja Prowing",
+      "url": "https://fundacja-prowing.pl/index.php/paragliding/miejsca",
+      "type": "brief",
+      "sites": [
+        {
+          "name": "Bezmiechowa"
+        },
+        {
+          "name": "Weremień"
+        },
+        {
+          "name": "Dźwiniacz"
+        },
+        {
+          "name": "Laworta"
+        },
+        {
+          "name": "Tokarnia"
+        },
+        {
+          "name": "Makówka"
+        },
+        {
+          "name": "Małe Jasło"
+        },
+        {
+          "name": "Dziurkowiec"
+        }
+      ],
+      "notes": "Eight short entries with maps and varying amounts of height, direction or access information. These are not eight complete site guides; missing parameters need verification."
+    }
+  ],
+  "implementationNotes": [
+    "Implemented in plugin 1.1.20: 30 areas, 22 narrative summaries and eight brief guides.",
+    "Fourteen documented wind sectors; 16 sites show forecasts with Wind range not verified and cannot match.",
+    "GPS references retain source provenance and uncertainty in src/polandSites.ts.",
+    "Original English summaries and links are included without third-party photographs.",
+    "Irish legacy settings remain Ireland by default; the country filter scopes both map and sidebar."
+  ],
+  "coordinateSources": {
+    "kkpKMZ": "https://kkp.net.pl/wp-content/uploads/2023/05/Startowiska.kmz",
+    "skrzyczneApproximateTrackArea": "https://noga.es/paragliding/map/en/takeoff_pg-takeoff-123.html",
+    "zarApproximateTrackArea": "https://noga.es/paragliding/map/en/takeoff_pg-takeoff-306.html",
+    "dzialyUnverifiedAPPI": "https://flyappi.org/flysite/8097/"
+  }
+}

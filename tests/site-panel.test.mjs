@@ -10,6 +10,15 @@ const sites = [
     { id: 'c', name: 'Cliff', lat: 52, lon: -8, sectorStart: 200, sectorEnd: 260 },
 ];
 const timestamp = Date.UTC(2026, 9, 22, 12);
+test('unverified Polish sectors retain forecast readings without suggesting a wind match',()=>{
+ const spot={id:'pl-test',name:'Polish test',lat:49.5,lon:22,sectorStart:0,sectorEnd:0,windRanges:[],directionUnverified:true};
+ const reading={...evaluateWind(spot,[0,-4]),timestamp};
+ assert.equal(reading.status,'fail');assert.equal(reading.reason,'unverified-direction');
+ const panel=buildSitePanel([spot],()=>reading,timestamp);
+ assert.equal(panel.sites.length,0);assert.equal(panel.unavailable,0);
+ assert.equal(panel.allSites[0].speed,'8.9 mph');
+ assert.equal(panel.allSites[0].label,'Wind range not verified');
+});
 
 test('height cards distinguish estimates, surface comparisons and unavailable profiles', () => {
     const base = { timestamp, windMode:'altitude', surfaceMph:6, surfaceDirection:240,
@@ -37,10 +46,10 @@ test('review candidates are shown without forecasts or inclusion in wind matches
 test('panel lists only matching forecasts alphabetically with both required and forecast ranges', () => {
     const readings = { b: { status: 'pass', mph: 8, direction: 355, timestamp },
         a: { status: 'pass', mph: 12.99, direction: 160, timestamp },
-        c: { status: 'fail', reason: 'too-strong', mph: 14, direction: 230, timestamp } };
+        c: { status: 'fail', reason: 'too-strong', mph: 16, direction: 230, timestamp } };
     const panel = buildSitePanel(sites, site => readings[site.id], timestamp);
     assert.deepEqual(panel.sites.map(site => site.name), ['Abbey', 'Bay']);
-    assert.equal(panel.sites[1].required, '5–13 mph · 340°–20°');
+    assert.equal(panel.sites[1].required, '5–15 mph · 340°–20°');
     assert.equal(panel.sites[1].forecast, '8.0 mph · 355°');
     assert.match(panel.time, /22 Oct.*13:00 UTC\+1/);
     assert.equal(panel.loading, 0);
@@ -121,9 +130,9 @@ test('Wind-matched includes light wind with a matching direction, retaining its 
     const cases=[
         {id:'light',name:'A',sectorStart:50,sectorEnd:120,mph:3,direction:90},
         {id:'wrong',name:'B',sectorStart:200,sectorEnd:250,mph:3,direction:90},
-        {id:'strong',name:'C',sectorStart:50,sectorEnd:120,mph:13.01,direction:90},
+        {id:'strong',name:'C',sectorStart:50,sectorEnd:120,mph:15.01,direction:90},
         {id:'calm',name:'D',sectorStart:0,sectorEnd:360,mph:0,direction:90},
-        {id:'limit',name:'E',sectorStart:50,sectorEnd:120,mph:13,direction:120},
+        {id:'limit',name:'E',sectorStart:50,sectorEnd:120,mph:15,direction:120},
         {id:'north',name:'F',sectorStart:285,sectorEnd:15,mph:1,direction:355},
         {id:'missing',name:'G',sectorStart:50,sectorEnd:120,mph:NaN,direction:90},
     ].map(site=>({...site,lat:54,lon:-6}));
@@ -181,10 +190,10 @@ test('cloud-base cards always identify the height datum and discard stale cloud 
 
 test('wind unit selection converts speed, gusts and limits without changing matching sites',()=>{
     for(const [unit,speed,gust,required] of [
-        ['mph','8.0 mph','15.0 mph','5–13 mph'],
-        ['km/h','12.9 km/h','24.1 km/h','8–20.9 km/h'],
-        ['m/s','3.6 m/s','6.7 m/s','2.2–5.8 m/s'],
-        ['kt','7.0 kt','13.0 kt','4.3–11.3 kt'],
+        ['mph','8.0 mph','15.0 mph','5–15 mph'],
+        ['km/h','12.9 km/h','24.1 km/h','8–24.1 km/h'],
+        ['m/s','3.6 m/s','6.7 m/s','2.2–6.7 m/s'],
+        ['kt','7.0 kt','13.0 kt','4.3–13 kt'],
     ]){
         const panel=buildSitePanel(sites,()=>({status:'pass',mph:8,gustStatus:'available',gustMph:15,direction:160,timestamp}),timestamp,'ukv',unit);
         assert.equal(panel.allSites[0].speed,speed);

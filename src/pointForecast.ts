@@ -272,7 +272,10 @@ export function createPointWindForecast(deps: Dependencies) {
             publish();
         },
         getTimelineSeries() {
-            for (const point of cache.values()) if (point?.status === 200 && point.data?.data?.ts?.length) return point.data;
+            for (const spot of allSpots) {
+                const point=cache.get(spot.id);
+                if (point?.status === 200 && point.data?.data?.ts?.length) return point.data;
+            }
             return undefined;
         },
         get(spot: ForecastSpot): WindReading {
@@ -315,6 +318,8 @@ export function createPointWindForecast(deps: Dependencies) {
             refresh();
         },
         setSpots(spots: ForecastSpot[]) {
+            const changed = spots.length !== allSpots.length || spots.some((spot,index)=>spot.id !== allSpots[index]?.id);
+            if (changed && active) cancel();
             allSpots = [...spots];
             lastSelection = '';
             refresh();

@@ -9,6 +9,7 @@ import rollupCleanup from 'rollup-plugin-cleanup';
 
 import { less } from 'svelte-preprocess-less';
 import sveltePreprocess from 'svelte-preprocess';
+import { copyGuideAssets } from './scripts/guide-assets.mjs';
 
 import { transformCodeToESMPlugin, keyPEM, certificatePEM } from '@windycom/plugin-devtools';
 
@@ -34,11 +35,17 @@ export default {
     },
     external: id => id.startsWith('@windy/'),
     watch: {
-        include: ['src/**'],
+        include: ['src/**', 'assets/assets/**'],
         exclude: 'node_modules/**',
         clearScreen: false,
     },
     plugins: [
+        {
+            name: 'site-guide-assets',
+            async buildStart() {
+                for (const file of await copyGuideAssets('assets/assets','dist/assets')) this.addWatchFile(file);
+            },
+        },
         rollupSvelte({
             emitCss: false,
             preprocess: {
