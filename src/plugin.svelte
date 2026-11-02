@@ -1321,7 +1321,7 @@ function addUiMenu(s: Spot, D: number){
   const m = L.marker([s.lat, s.lon], { icon, interactive:true, pane:paneUi, title:windBadgeText(s).title }).addTo(map);
   m.flySpot = s;
   applyLargeRoseVisibility(m);
-  bindCardNavigation(m);
+  bindCardNavigation(m, false);
   applySiteHighlight(m);
   uiMarkers.push(m);
   addRoseControl(s,D);
@@ -1496,7 +1496,7 @@ function showGuideOnMap(point?: GuidePoint){
   guideMap?.show(mapGuide,point);
 }
 
-function bindCardNavigation(marker: any){
+function bindCardNavigation(marker: any, revealOnMobile = true){
   marker.getElement?.()?.addEventListener('click', (event: MouseEvent) => {
     if(siteFilters.wind==='direction-review'&&marker.flySpot.country==='poland'&&marker.flySpot.directionUnverified){event.stopPropagation();openDirectionEditor(marker.flySpot);return;}
     const control = (event.target as Element)?.closest?.('a,button');
@@ -1507,7 +1507,7 @@ function bindCardNavigation(marker: any){
       return;
     }
     selectSite(marker.flySpot.id);
-    sitePanelComponent?.revealSite(marker.flySpot.id);
+    if (revealOnMobile || !(window.innerWidth <= 600)) sitePanelComponent?.revealSite(marker.flySpot.id);
     highlightSite(marker.flySpot.id);
     openSiteForecast(marker.flySpot);
   });

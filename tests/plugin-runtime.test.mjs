@@ -791,6 +791,24 @@ test('altitude slider updates rose winds, directions, panel labels and matches f
     assert.equal(app.reads,reads*2);app.destroy();
 });
 
+test('large rose taps keep the phone sidebar closed while desktop still reveals the site card',async()=>{
+    for(const width of [390,1280]){
+        const app=runtime({projectionScale:10000});app.setViewportWidth(width);
+        const revealed=[];app.connectPanel(id=>revealed.push(id));
+        app.mount();await app.flush();await app.flush();
+        app.setZoom(15);app.emit('zoomend');for(let i=0;i<4;i++)await app.flush();
+        const marker=[...app.layers].find(layer=>layer.options?.icon?.className?.split(' ').includes('ui-icon'));
+        assert.ok(marker,'Exercise the interactive overlay of a large rose');
+        const reads=app.reads;
+        marker.getElement().click();
+        assert.equal(revealed.length,width<=600?0:1);
+        assert.equal(app.selectedSiteId,marker.flySpot.id);
+        assert.equal(app.broadcasts.at(-1)[1],'detail','Native bottom forecast still opens');
+        assert.equal(app.reads,reads);
+        app.destroy();
+    }
+});
+
 test('rose clicks request native forecasts at the site coordinates with the current model, reveal cards and reuse the site cache',async()=>{
     const app=runtime();app.mount();await app.flush();await app.flush();
     const revealed=[];app.connectPanel(id=>revealed.push(id));
