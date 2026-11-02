@@ -147,6 +147,8 @@ export function watchPanelLayout(panel: HTMLElement) {
         if (relevant) schedule();
     });
     const transition = (event: Event) => {
+        // Moving below Windy's header changes the space above the timeline.
+        if (event.target === panel) { invalidate(); return; }
         if (event.target instanceof Node && !panel.contains(event.target)
             && [...targets].some(target => target.contains(event.target as Node) || (event.target as Node).contains(target))) invalidate();
     };

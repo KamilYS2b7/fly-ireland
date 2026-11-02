@@ -5,6 +5,7 @@
   import PanelSelect from './PanelSelect.svelte';
   import { watchPanelLayout } from './panelLayout';
   import {watchMobilePanelVisibility} from './mobilePanelVisibility';
+  import {watchMobilePanelTop} from './mobilePanelTop';
   import {revealPanelCard} from './panelScroll';
   import SiteFilterControls from './SiteFilterControls.svelte';
   import {defaultSiteFilters,sitesForView} from './siteFilters';
@@ -127,12 +128,14 @@
   function mountPanel(node: HTMLElement) {
     document.body.appendChild(node);
     const stopLayout = watchPanelLayout(node);
+    const stopTop = watchMobilePanelTop(node);
     const stopVisibility = watchMobilePanelVisibility(node, hidden => {hiddenByWindy = hidden;});
     const stop = (event: Event) => event.stopPropagation();
     const events = ['pointerdown', 'mousedown', 'touchstart', 'click', 'dblclick', 'wheel', 'keydown'];
     events.forEach(name => node.addEventListener(name, stop));
     return { destroy() {
       stopLayout();
+      stopTop();
       stopVisibility();
       events.forEach(name => node.removeEventListener(name, stop));
       node.remove();
@@ -456,6 +459,7 @@
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
   .site-panel[hidden]{display:none;}
   .collapsed{width:285px;}
-  @media(max-width:600px){.toggle{width:44px;height:44px;}.site-panel{left:8px;top:72px;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
-  @media(max-height:500px){.site-panel{top:55px;}}
+  @media(max-width:600px){.toggle{width:44px;height:44px;}.site-panel{left:8px;top:max(var(--mobile-panel-top,120px),calc(120px + env(safe-area-inset-top,0px)));transition:top 160ms ease-out;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
+  @media(max-height:500px) and (min-width:601px){.site-panel{top:55px;}}
+  @media(prefers-reduced-motion:reduce){.site-panel{transition:none;}}
 </style>
