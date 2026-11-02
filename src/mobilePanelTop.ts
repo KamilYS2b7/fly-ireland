@@ -1,7 +1,7 @@
 type Bounds = {left:number;right:number;top:number;bottom:number;width:number;height:number};
 
 export function mobilePanelTop(left:number,right:number,viewportTop:number,controls:Bounds[]) {
-    let top = viewportTop + 120;
+    let top = viewportTop + 16;
     for (const rect of controls) {
         // Exclude fullscreen roots, offscreen controls and the bottom timeline.
         if (rect.width <= 0 || rect.height <= 0 || rect.height > 180
