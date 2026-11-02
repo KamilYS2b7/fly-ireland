@@ -728,14 +728,14 @@
       {
         "label": "Main NNE launch by gully A",
         "code": "A",
-        "lat": 54.891819,
-        "lon": -5.916592
+        "lat": 54.893566,
+        "lon": -5.921618
       },
       {
         "label": "E-facing launch before gully B",
         "code": "B",
-        "lat": 54.889,
-        "lon": -5.916
+        "lat": 54.891940,
+        "lon": -5.917868
       }
     ],
     "launchMarkers": [],
