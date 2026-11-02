@@ -13,9 +13,12 @@ export function mobilePanelTop(left:number,right:number,viewportTop:number,contr
 }
 
 const HEADERS = '#search, #search-container, #mobile-top, #mobile-header, #top-bar, #plugin-mobile-ui, #mobile-ui, #plugin-mobile-ui header, #plugin-mobile-ui nav, #plugin-mobile-ui .top-bar, #plugin-mobile-ui .search';
+const MAP_CONTENT = '#map, #map-container, .leaflet-container, .leaflet-pane, .leaflet-map-pane, .maplibregl-map, .mapboxgl-map';
+const MAP_DRAWING = '.leaflet-pane, .leaflet-map-pane, .maplibregl-canvas-container, .mapboxgl-canvas-container';
 
 export function topControlBounds(panel:HTMLElement,left:number,right:number,viewportTop:number) {
-    const candidates=new Set(document.querySelectorAll<HTMLElement>(HEADERS));
+    const nativeHeaders=new Set(document.querySelectorAll<HTMLElement>(HEADERS));
+    const candidates=new Set(nativeHeaders);
     // Windy's mobile headers differ between versions. Inspect the painted
     // stack too, including controls behind our portalled panel.
     for(const x of [left+8,(left+right)/2,right-8]) {
@@ -27,7 +30,10 @@ export function topControlBounds(panel:HTMLElement,left:number,right:number,view
     }
     return [...candidates]
         .filter(node=>!panel.contains(node)&&!node.contains(panel)
-            &&!node.closest('.leaflet-marker-pane, .leaflet-tooltip-pane, .leaflet-overlay-pane')
+            &&!node.closest(MAP_DRAWING)
+            // Labels, tiles and geometry move with the map. Only native
+            // header roots and stationary Leaflet controls can affect our top.
+            &&(!node.closest(MAP_CONTENT)||nativeHeaders.has(node)||!!node.closest('.leaflet-control-container'))
             &&node.checkVisibility?.({checkOpacity:true,checkVisibilityCSS:true})!==false)
         .filter(node=>{const s=getComputedStyle(node);return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)!==0;})
         .map(node=>node.getBoundingClientRect());
@@ -52,6 +58,7 @@ export function watchMobilePanelTop(panel:HTMLElement) {
     function animate(event:Event) {
         const target=event.target;
         if (!(target instanceof Element) || panel.contains(target)) return;
+        if(target.closest(MAP_DRAWING))return;
         // Unknown native header roots must also be tracked during transforms.
         const bounds=target.getBoundingClientRect();
         if(bounds.top>180&&!target.contains(panel)
@@ -60,7 +67,8 @@ export function watchMobilePanelTop(panel:HTMLElement) {
         schedule();
     }
     const observer=new MutationObserver(records=>{
-        if(records.some(record=>!panel.contains(record.target)))schedule();
+        if(records.some(record=>!panel.contains(record.target)
+            &&!(record.target instanceof Element&&record.target.closest(MAP_DRAWING))))schedule();
     });
     observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','hidden']});
     observer.observe(document.documentElement,{attributes:true,attributeFilter:['class','style']});

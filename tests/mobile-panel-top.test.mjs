@@ -18,17 +18,20 @@ test('unrecognised mobile header is detected from the screen stack, excluding th
     const names=['document','HTMLElement','getComputedStyle'];
     const previous=Object.fromEntries(names.map(n=>[n,globalThis[n]]));
     class Element{
-        constructor(rect,marker=false){this.rect=rect;this.marker=marker;}
+        constructor(rect,marker=false,mapContent=false){this.rect=rect;this.marker=marker;this.mapContent=mapContent;}
         contains(n){return n===this;}
-        closest(){return this.marker?this:null;}
+        closest(selector){return (this.marker||this.mapContent&&selector.includes('#map'))?this:null;}
         checkVisibility(){return true;}
         getBoundingClientRect(){return this.rect;}
     }
     const panel=new Element(bar(16,96)),header=new Element(bar(0,110)),marker=new Element(bar(0,150),true);
+    const movingMapLabel=new Element(bar(80,160),false,true);
     let shown=true;
-    Object.assign(globalThis,{HTMLElement:Element,document:{querySelectorAll:()=>[],elementsFromPoint:()=>shown?[panel,header,marker]:[panel,marker]},getComputedStyle:()=>({display:'block',visibility:'visible',opacity:'1'})});
+    Object.assign(globalThis,{HTMLElement:Element,document:{querySelectorAll:()=>[],elementsFromPoint:()=>shown?[panel,header,marker,movingMapLabel]:[panel,marker,movingMapLabel]},getComputedStyle:()=>({display:'block',visibility:'visible',opacity:'1'})});
     try{
         assert.equal(mobilePanelTop(8,288,0,topControlBounds(panel,8,288,0)),122);
+        movingMapLabel.rect=bar(120,175);
+        assert.equal(mobilePanelTop(8,288,0,topControlBounds(panel,8,288,0)),122,'Moving map content must not change header clearance');
         shown=false;
         assert.equal(mobilePanelTop(8,288,0,topControlBounds(panel,8,288,0)),16);
     }finally{for(const n of names){if(previous[n]===undefined)delete globalThis[n];else globalThis[n]=previous[n];}}
