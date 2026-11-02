@@ -108,7 +108,7 @@
           <p class="source-note">Imported site guide · Last verified date not provided. Access, permissions and airspace details are source notes, not a live status.</p>
           {#if guide.source?.url}<p class="source-note"><a href={guide.source.url} target="_blank" rel="noopener noreferrer">Club site information ↗</a></p>{/if}
         </div>
-      {:else}<p class="message">No site guide is available for this location yet.</p>{/if}
+      {:else}<p class="message" role="status">A site guide is not available for this location.</p>{/if}
     </div>
     {#if guide&&!loading&&!error}<footer><span>{guide.points.length} map points</span><button class="primary" type="button" on:click={()=>onShowMap()}>Show on map</button></footer>{/if}
   </section>

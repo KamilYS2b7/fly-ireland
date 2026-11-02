@@ -653,6 +653,24 @@ test('local rose controls follow filtered large sites and restore saved state af
     app.destroy();assert.equal(app.allLayers.size,0);
 });
 
+test('site info without a guide opens an unavailable dialog instead of forecasts or the sidebar',async()=>{
+    for(const width of [390,1280]){
+        const app=runtime({projectionScale:10000});app.setViewportWidth(width);
+        const revealed=[];app.connectPanel(id=>revealed.push(id));
+        app.mount();await app.flush();await app.flush();
+        app.setZoom(15);app.emit('zoomend');for(let i=0;i<4;i++)await app.flush();
+        const marker=[...app.layers].find(layer=>layer.options?.icon?.className?.split(' ').includes('ui-icon')&&!guideKeyForSite(layer.flySpot));
+        assert.ok(marker,'Fixture includes a large rose without a guide');
+        const requests=app.broadcasts.length,guideReads=app.guideReads;
+        marker.getElement().click({closest:()=>({matches:selector=>selector==='.info-main'})});
+        assert.equal(app.guideState.open,true);
+        assert.equal(app.guideState.loading,false);assert.equal(app.guideState.key,undefined);
+        assert.equal(app.guideState.error,'');assert.equal(app.guideReads,guideReads);
+        assert.equal(app.broadcasts.length,requests);assert.equal(revealed.length,0);
+        app.closeGuide();assert.equal(app.guideState.open,false);app.destroy();
+    }
+});
+
 test('a delayed guide cannot reopen a closed dialog, overwrite a newer site or survive plugin destruction',async()=>{
     const app=runtime({deferredGuides:true});app.mount();await app.flush();await app.flush();
     const old=app.openGuide('Big Colin');app.closeGuide();app.resolveGuide();await old;
@@ -1614,7 +1632,9 @@ test('videos appear only on large roses, while decisions survive zoom and reopen
     assert.deepEqual(app.lastView,viewBefore);
     let revealed;app.connectPanel(id=>{revealed=id;});
     videoMenu.getElement().click({closest:()=>({matches:selector=>selector==='.info-main'})});
-    assert.equal(revealed,'pgmap-127756');assert.deepEqual(app.lastView,viewBefore,'Info reveals the card without moving the map');
+    assert.equal(revealed,undefined);assert.equal(app.guideState.open,true);
+    assert.equal(app.guideState.key,undefined,'Info shows guide unavailability instead of opening the sidebar');
+    assert.deepEqual(app.lastView,viewBefore,'Info must not move the map');
     app.reviewVideo('pgmap-127756',url,'rejected');await app.flush();
     assert.ok([...app.layers].filter(layer=>layer.flySpot.id==='pgmap-127756').every(layer=>!layer.options.icon.html.includes('site-video-button')));
     assert.equal(app.reads,reads);assert.equal(app.panel.allSites.length,207);

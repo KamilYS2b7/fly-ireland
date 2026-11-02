@@ -1463,11 +1463,12 @@ function selectSite(id: string){
 }
 
 async function openSiteGuide(spot: Spot){
-  if (!mounted || !spot || !guideKeyForSite(spot)) return;
+  if (!mounted || !spot) return;
   if (mapGuide && mapGuide.key !== guideKeyForSite(spot)) hideGuidePoints();
   const request = ++guideRequest;
   selectSite(spot.id);
-  guideSite = spot; guideData = undefined; guideError = ''; guideLoading = true; guideOpen = true;
+  guideSite = spot; guideData = undefined; guideError = ''; guideLoading = !!guideKeyForSite(spot); guideOpen = true;
+  if (!guideLoading) return;
   try {
     const data = await guideLoader.load(spot);
     if (!mounted || request !== guideRequest) return;
@@ -1502,7 +1503,7 @@ function bindCardNavigation(marker: any, revealOnMobile = true){
     const control = (event.target as Element)?.closest?.('a,button');
     if (control && !control.matches?.('.info-main')) {event.stopPropagation();return;}
     event.stopPropagation();
-    if (control?.matches?.('.info-main') && guideKeyForSite(marker.flySpot)) {
+    if (control?.matches?.('.info-main')) {
       void openSiteGuide(marker.flySpot);
       return;
     }
