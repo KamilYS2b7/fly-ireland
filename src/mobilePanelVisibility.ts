@@ -10,6 +10,7 @@ export function watchMobilePanelVisibility(panel: HTMLElement, onHidden: (hidden
     let previous: boolean | undefined;
     let opening:string|undefined;
     let openingTimer:ReturnType<typeof setTimeout>|undefined;
+    let revealTimer:ReturnType<typeof setTimeout>|undefined;
     function clearOpening(){opening=undefined;if(openingTimer!==undefined)clearTimeout(openingTimer);openingTimer=undefined;}
     function onOpen(name:string){
         if(!media.matches||!['menu','settings','overlays','layers','rhpane-top'].includes(name))return;
@@ -18,12 +19,12 @@ export function watchMobilePanelVisibility(panel: HTMLElement, onHidden: (hidden
         openingTimer=setTimeout(()=>{clearOpening();schedule();},1500);
         measure();
     }
-    function onOpened(name:string){if(name===opening){clearOpening();schedule();}}
+    function onOpened(_name:string){schedule();}
     function onClosed(name:string){if(name===opening)clearOpening();schedule();}
     function measure() {
         frame = null;
         if (disposed) return;
-        const hidden = media.matches && (!!opening || [...document.querySelectorAll<HTMLElement>(NATIVE_SIDEBARS)].some(node => {
+        const nativeVisible = [...document.querySelectorAll<HTMLElement>(NATIVE_SIDEBARS)].some(node => {
             if (panel.contains(node) || node.contains?.(panel)) return false;
             const style = getComputedStyle(node);
             if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0
@@ -31,8 +32,22 @@ export function watchMobilePanelVisibility(panel: HTMLElement, onHidden: (hidden
             const r = node.getBoundingClientRect();
             return r.width > 0 && r.height > 0 && r.left < window.innerWidth && r.right > 0
                 && r.top < window.innerHeight && r.bottom > 0;
-        }));
-        if (hidden !== previous) { previous = hidden; onHidden(hidden); }
+        });
+        // pluginOpened can fire before the first painted frame. Keep the opening
+        // latch until geometry confirms visibility, rather than flashing open.
+        if(nativeVisible&&opening)clearOpening();
+        const hidden=media.matches&&(!!opening||nativeVisible);
+        if(hidden||!media.matches){
+            if(revealTimer!==undefined)clearTimeout(revealTimer);
+            revealTimer=undefined;
+            if(hidden!==previous){previous=hidden;onHidden(hidden);}
+        }else if(previous===true){
+            // Brief offscreen/transparent animation frames are not a close.
+            if(revealTimer===undefined)revealTimer=setTimeout(()=>{
+                revealTimer=undefined;
+                if(!disposed){previous=false;onHidden(false);}
+            },180);
+        }else if(previous===undefined){previous=false;onHidden(false);}
     }
     function schedule() {
         if (!disposed && frame === null) frame = requestAnimationFrame(measure);
@@ -55,6 +70,7 @@ export function watchMobilePanelVisibility(panel: HTMLElement, onHidden: (hidden
         if (frame !== null) cancelAnimationFrame(frame);
         observer.disconnect();
         clearOpening();
+        if(revealTimer!==undefined)clearTimeout(revealTimer);
         events?.off('rqstOpen',onOpen);
         events?.off('pluginOpened',onOpened);
         events?.off('pluginClosed',onClosed);

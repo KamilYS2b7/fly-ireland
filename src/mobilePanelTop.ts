@@ -39,7 +39,7 @@ export function watchMobilePanelTop(panel:HTMLElement) {
     function measure() {
         frame = null;
         if (disposed) return;
-        if (media.matches) {
+        if (media.matches && panel.getAttribute('aria-hidden') !== 'true') {
             const rect = panel.getBoundingClientRect();
             const viewportTop=window.visualViewport?.offsetTop ?? 0;
             const controls=topControlBounds(panel,rect.left,rect.right,viewportTop);
