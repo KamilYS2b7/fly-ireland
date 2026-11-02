@@ -4,6 +4,7 @@
   import SiteRose from './SiteRose.svelte';
   import PanelSelect from './PanelSelect.svelte';
   import { watchPanelLayout } from './panelLayout';
+  import {watchMobilePanelVisibility} from './mobilePanelVisibility';
   import {revealPanelCard} from './panelScroll';
   import SiteFilterControls from './SiteFilterControls.svelte';
   import {defaultSiteFilters,sitesForView} from './siteFilters';
@@ -39,7 +40,14 @@
   let revealRequest = 0;
   onDestroy(() => { revealRequest++; stopReveal?.(); });
   let collapsed = false;
-  export function collapsePanel() {collapsed=true;}
+  let hiddenByWindy = false;
+  export function collapsePanel() {
+    revealRequest++;
+    stopReveal?.();
+    stopReveal = undefined;
+    hoverSite('');
+    collapsed = true;
+  }
   export let filters: SiteFilters = defaultSiteFilters();
   export let onFiltersChange: (filters: SiteFilters) => void = () => {};
   export let altitudeEnabled = false;
@@ -119,18 +127,20 @@
   function mountPanel(node: HTMLElement) {
     document.body.appendChild(node);
     const stopLayout = watchPanelLayout(node);
+    const stopVisibility = watchMobilePanelVisibility(node, hidden => {hiddenByWindy = hidden;});
     const stop = (event: Event) => event.stopPropagation();
     const events = ['pointerdown', 'mousedown', 'touchstart', 'click', 'dblclick', 'wheel', 'keydown'];
     events.forEach(name => node.addEventListener(name, stop));
     return { destroy() {
       stopLayout();
+      stopVisibility();
       events.forEach(name => node.removeEventListener(name, stop));
       node.remove();
     } };
   }
 </script>
 
-<aside class="site-panel" class:collapsed use:mountPanel aria-label="Flying sites">
+<aside class="site-panel" class:collapsed hidden={hiddenByWindy} use:mountPanel aria-label="Flying sites">
   <header>
     <div>
       <span class="eyebrow">FLY IRELAND</span>
@@ -444,7 +454,8 @@
   .rain-icon :global(svg){width:18px;height:12px;fill:#0284c7;}
   .empty{padding:17px 7px;color:#526b73;line-height:1.6;margin:0;}
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
+  .site-panel[hidden]{display:none;}
   .collapsed{width:285px;}
-  @media(max-width:600px){.site-panel{left:8px;top:72px;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
+  @media(max-width:600px){.toggle{width:44px;height:44px;}.site-panel{left:8px;top:72px;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
   @media(max-height:500px){.site-panel{top:55px;}}
 </style>

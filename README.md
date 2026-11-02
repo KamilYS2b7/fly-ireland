@@ -91,7 +91,7 @@ See [publishing instructions in Polish](docs/PUBLISHING.pl.md) for creating a ne
 
 ## Optional Windy publication
 
-Publishing this source on GitHub does not publish it to Windy's gallery. The Windy configuration remains `private: true`. The **Publish Fly Ireland to Windy** workflow runs only when manually triggered and requires the repository secret `WINDY_API_KEY`.
+Publishing this source on GitHub does not publish it to Windy's gallery. The Windy configuration uses `private: false` as requested for gallery review; inclusion still requires Windy approval. The **Publish Fly Ireland to Windy** workflow runs only when manually triggered and requires the repository secret `WINDY_API_KEY`.
 
 See the [Windy Plugins Guide](https://docs.windy-plugins.com/) for the separate Windy publication process. Never put a Windy account token or API key in source files or issue screenshots.
 

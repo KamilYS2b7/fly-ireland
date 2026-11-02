@@ -561,6 +561,21 @@ test('an automatic guide asset failure can retry without disrupting weather or r
     assert.equal(app.reads,reads);app.destroy();assert.equal(app.allLayers.size,0);
 });
 
+test('map background taps collapse the phone sidebar even when no site is selected',async()=>{
+    for(const width of [390,1280]){
+        const app=runtime();let collapsed=0;
+        app.setViewportWidth(width);app.connectPanel(()=>{},()=>collapsed++);
+        app.mount();await app.flush();await app.flush();
+        const layers=app.layers.size,reads=app.reads;
+        app.emit('click',{originalEvent:{target:{closest:()=>null}}});
+        assert.equal(collapsed,width<=600?1:0);
+        assert.equal(app.layers.size,layers);assert.equal(app.reads,reads);
+        app.emit('click',{originalEvent:{target:{closest:()=>({})}}});
+        assert.equal(collapsed,width<=600?1:0,'Rose taps must keep the card open');
+        app.destroy();
+    }
+});
+
 test('automatic point selection collapses the phone sidebar so it cannot cover the centered location',async()=>{
     for(const width of [390,1280]){
         const app=runtime({projectionScale:10000});let collapsed=0;

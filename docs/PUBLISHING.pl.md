@@ -44,7 +44,7 @@ GitHub udostępnia kod. Instalacja deweloperska odbywa się w [Windy Developer M
 
 Po zmianie nazwy z szablonu użyj ponownie **Install & open plugin**. Nowa ścieżka wtyczki to `/plugin/fly-ireland`.
 
-Workflow publikujący do Windy jest uruchamiany ręcznie i wymaga sekretu repozytorium `WINDY_API_KEY`. Nie uruchamia się przy zwykłym wysłaniu kodu na GitHub. Domyślna konfiguracja zachowuje prywatną widoczność w galerii Windy.
+Workflow publikujący do Windy jest uruchamiany ręcznie i wymaga sekretu repozytorium `WINDY_API_KEY`. Nie uruchamia się przy zwykłym wysłaniu kodu na GitHub. Konfiguracja ma `private: false`, zgodnie z wymaganiem przeglądu do galerii. Dodanie do oficjalnego katalogu wymaga akceptacji Windy.
 
 ## Poprawka 1.0.1 — wyświetlanie panelu
 
