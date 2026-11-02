@@ -14,6 +14,25 @@ export function mobilePanelTop(left:number,right:number,viewportTop:number,contr
 
 const HEADERS = '#search, #search-container, #mobile-top, #mobile-header, #top-bar, #plugin-mobile-ui, #mobile-ui, #plugin-mobile-ui header, #plugin-mobile-ui nav, #plugin-mobile-ui .top-bar, #plugin-mobile-ui .search';
 
+export function topControlBounds(panel:HTMLElement,left:number,right:number,viewportTop:number) {
+    const candidates=new Set(document.querySelectorAll<HTMLElement>(HEADERS));
+    // Windy's mobile headers differ between versions. Inspect the painted
+    // stack too, including controls behind our portalled panel.
+    for(const x of [left+8,(left+right)/2,right-8]) {
+        for(const y of [16,48,80,112,144]) {
+            for(const node of document.elementsFromPoint?.(x,viewportTop+y) ?? []) {
+                if(node instanceof HTMLElement)candidates.add(node);
+            }
+        }
+    }
+    return [...candidates]
+        .filter(node=>!panel.contains(node)&&!node.contains(panel)
+            &&!node.closest('.leaflet-marker-pane, .leaflet-tooltip-pane, .leaflet-overlay-pane')
+            &&node.checkVisibility?.({checkOpacity:true,checkVisibilityCSS:true})!==false)
+        .filter(node=>{const s=getComputedStyle(node);return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)!==0;})
+        .map(node=>node.getBoundingClientRect());
+}
+
 export function watchMobilePanelTop(panel:HTMLElement) {
     const media = window.matchMedia('(max-width: 600px)');
     let frame:number|null = null, until = 0, previous = -1, disposed = false;
@@ -22,11 +41,9 @@ export function watchMobilePanelTop(panel:HTMLElement) {
         if (disposed) return;
         if (media.matches) {
             const rect = panel.getBoundingClientRect();
-            const controls = [...document.querySelectorAll<HTMLElement>(HEADERS)]
-                .filter(node => !panel.contains(node) && node.checkVisibility?.({checkOpacity:true,checkVisibilityCSS:true}) !== false)
-                .filter(node => {const s=getComputedStyle(node);return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)!==0;})
-                .map(node => node.getBoundingClientRect());
-            const top = mobilePanelTop(rect.left,rect.right,window.visualViewport?.offsetTop ?? 0,controls);
+            const viewportTop=window.visualViewport?.offsetTop ?? 0;
+            const controls=topControlBounds(panel,rect.left,rect.right,viewportTop);
+            const top = mobilePanelTop(rect.left,rect.right,viewportTop,controls);
             if (top !== previous) { previous = top;panel.style.setProperty('--mobile-panel-top',`${top}px`); }
         }
         if (media.matches && performance.now() < until) schedule();
@@ -35,7 +52,10 @@ export function watchMobilePanelTop(panel:HTMLElement) {
     function animate(event:Event) {
         const target=event.target;
         if (!(target instanceof Element) || panel.contains(target)) return;
-        if (![...document.querySelectorAll(HEADERS)].some(node=>node.contains(target)||target.contains(node))) return;
+        // Unknown native header roots must also be tracked during transforms.
+        const bounds=target.getBoundingClientRect();
+        if(bounds.top>180&&!target.contains(panel)
+            &&![...document.querySelectorAll(HEADERS)].some(node=>node.contains(target)||target.contains(node)))return;
         until=performance.now()+1000;
         schedule();
     }

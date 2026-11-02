@@ -20,9 +20,13 @@ test('native side panels hide the phone panel, restore it after closing and do n
     const flush=()=>{const f=frame;frame=undefined;f?.();};
     let stop;
     try{
-        stop=watchMobilePanelVisibility(panel,v=>states.push(v));
+        const bus={on:(n,f)=>events.set('bus:'+n,f),off:n=>events.delete('bus:'+n)};
+        stop=watchMobilePanelVisibility(panel,v=>states.push(v),bus);
         assert.equal(states.at(-1),true);
         visible=false;changed([{target:{}}]);flush();assert.equal(states.at(-1),false);
+        events.get('bus:rqstOpen')('detail');assert.equal(states.at(-1),false,'Bottom forecasts must not hide the plugin');
+        events.get('bus:rqstOpen')('menu');assert.equal(states.at(-1),true,'Hide as soon as the menu is requested, before DOM visibility changes');
+        events.get('bus:pluginClosed')('menu');flush();assert.equal(states.at(-1),false);
         visible=true;changed([{target:{}}]);flush();assert.equal(states.at(-1),true);
         mobile=false;events.get('media')();flush();assert.equal(states.at(-1),false);
         mobile=true;left=400;events.get('media')();flush();assert.equal(states.at(-1),false,'Offscreen sliding panels must not hide the plugin');
