@@ -19,7 +19,7 @@ const intersects=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+
 const options={anchor:{x:240,y:240},size:{width:150,height:68},viewport:{width:500,height:500},diameter:250};
 test('visible rose switch sits fully above the rose with a gap',()=>{
  const p=controls.placeSiteDisplayControl({...options,points:false,obstacles:[]});
- assert.ok(p.y+68<=240-125-10);assert.equal(p.x,165);
+ assert.equal(p.y+68,240-125-22);assert.equal(p.x,165);
 });
 test('point-mode switch avoids point captions and stays inside the viewport',()=>{
  const obstacles=[{x:145,y:140,width:190,height:115}];

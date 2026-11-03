@@ -39,7 +39,7 @@ export function placeSiteDisplayControl({anchor,size,viewport,diameter,points,ob
     const centre=anchor.x-size.width/2;
     {
         const rose={x:anchor.x-diameter/2,y:anchor.y-diameter/2,width:diameter,height:diameter};
-        const outside=[candidate(centre,rose.y-size.height-12),candidate(rose.x+diameter+12,anchor.y-size.height/2),candidate(rose.x-size.width-12,anchor.y-size.height/2),candidate(centre,rose.y+diameter+12)];
+        const outside=[candidate(centre,rose.y-size.height-22),candidate(rose.x+diameter+12,anchor.y-size.height/2),candidate(rose.x-size.width-12,anchor.y-size.height/2),candidate(centre,rose.y+diameter+12)];
         const overlaps=(p:{x:number;y:number},r:ControlRect)=>p.x<r.x+r.width&&p.x+size.width>r.x&&p.y<r.y+r.height&&p.y+size.height>r.y;
         return outside.find(p=>![rose,...obstacles].some(r=>overlaps(p,r)))??outside.find(p=>!overlaps(p,rose))??outside[0];
     }
