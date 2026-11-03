@@ -1491,8 +1491,8 @@ function gustMarkerHTML(spot: Spot, diameter?: number){
   const warning = gustWarningDisplay(windForecast.get(spot),windUnit);
   const center = diameter ? diameter / 2 + diffPadForD(diameter) : 0;
   const size = diameter ? Math.max(24,Math.round(diameter * 0.1)) : 20;
-  const position = diameter ? `left:${center + diameter * 0.49 - size / 2}px;top:${center + diameter * 0.25 - size / 2}px;--gust-warning-size:${size}px;` : '';
-  return `<span class="map-gust-warning" data-severity="${warning.severity}" role="img" aria-label="${warning.description || 'Gusts'}" title="${warning.description}" style="${position}display:${warning.active ? 'flex' : 'none'}">${GUST_WARNING_SVG}</span>`;
+  const position = diameter ? `left:${center + diameter * 0.24 - 32}px;top:${center - diameter * 0.30 - size / 2}px;--gust-warning-size:${size}px;` : '';
+  return `<span class="map-gust-warning${diameter?' gust-inside-rose':''}" data-severity="${warning.severity}" role="img" aria-label="${warning.description || 'Gusts'}" title="${warning.description}" style="${position}display:${warning.active ? 'flex' : 'none'}">${GUST_WARNING_SVG}${diameter?`<strong class="map-gust-value">${Number.isFinite(windForecast.get(spot).gustMph)?formatWindSpeed(windForecast.get(spot).gustMph!,windUnit):''}</strong>`:''}</span>`;
 }
 
 function updateWindIndicator(marker: any){
@@ -1516,6 +1516,8 @@ function updateWindIndicator(marker: any){
     warning.setAttribute('aria-label',content.gust.description || 'Gusts');
     warning.setAttribute('data-severity',content.gust.severity);
   }
+  const gustValue=root.querySelector('.map-gust-value');
+  if(gustValue){const gust=windForecast.get(marker.flySpot).gustMph;gustValue.textContent=Number.isFinite(gust)?formatWindSpeed(gust!,windUnit):'';}
   root.title = content.title;
 }
 
@@ -2295,6 +2297,10 @@ onDestroy(() => {
 :global(.map-weather-icon){width:23px;height:23px;object-fit:contain;}
 :global(.map-gust-warning){position:absolute;left:calc(100% - 7px);top:calc(100% - 17px);align-items:center;width:var(--gust-warning-size,20px);height:var(--gust-warning-size,20px);z-index:4;pointer-events:auto;}
 :global(.map-gust-warning svg){display:block;width:100%;height:100%;filter:drop-shadow(0 1px 2px #0008);}
+:global(.gust-inside-rose){flex-direction:column;gap:2px;width:64px;height:auto;pointer-events:none;}
+:global(.gust-inside-rose svg){width:var(--gust-warning-size);height:var(--gust-warning-size);}
+:global(.map-gust-value){font:700 11px/1.2 system-ui,sans-serif;color:#774900;white-space:nowrap;text-shadow:0 1px 2px #fff,1px 0 2px #fff,-1px 0 2px #fff;}
+:global(.gust-inside-rose[data-severity="strong"] .map-gust-value){color:#b91c1c;}
 :global(.map-gust-warning[data-severity="strong"]){--gust-warning-color:#dc2626;}
 :global(.rose-summary .map-weather-indicators){position:static;transform:none;flex:0 0 28px;width:28px;height:28px;}
 :global(.rose-summary .map-weather-icon){width:100%;height:100%;}

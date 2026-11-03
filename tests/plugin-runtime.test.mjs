@@ -75,6 +75,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         rangeArc: {setAttribute(name,value){this[name]=value;}},
         sky: {style:{},attributes:{},getAttribute(name){return this.attributes[name];},setAttribute(name,value){this.attributes[name]=value;},removeAttribute(name){delete this.attributes[name];}},
         cloudLabel:{textContent:'',title:'',markup:'',get innerHTML(){return this.markup;},set innerHTML(value){this.markup=value;this.textContent=value.replace(/<[^>]+>/g,'');}},
+        gustValue:{textContent:''},
         gustWarning: {style:{display:'none'},attributes:{},setAttribute(name,value){this.attributes[name]=value;}},
         setLatLng() { return this; },
         setContent(content) { this.content = content; return this; },
@@ -94,6 +95,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
                 : selector === '.use-arc' ? this.rangeArc
                 : selector === '.map-weather-icon' ? this.sky
                 : selector === '.mini-cloud-base, .large-cloud-heights' && /mini-cloud-base|large-cloud-heights/.test(this.options?.icon?.html??'') ? this.cloudLabel
+                : selector === '.map-gust-value' && this.options?.icon?.html?.includes('map-gust-value') ? this.gustValue
                 : selector === '.map-gust-warning' && this.options?.icon?.html?.includes('map-gust-warning') ? this.gustWarning : null };
         },
     });
@@ -1344,6 +1346,7 @@ test('mini and large roses switch between no alert, yellow gusts and red strong 
         assert.notEqual(warning.style.display,'none');
         assert.equal(warning.attributes['data-severity'],'gusty');
         assert.match(warning.title,/Gusty.*17\.9 mph/);
+        if(zoom===15)assert.equal(marker.gustValue.textContent,'17.9 mph');
         assert.equal(app.panel.allSites.find(site=>site.id===marker.flySpot.id).gustWarning.label,'Gusty');
         app.setGustValues(11);app.previewTime(time+7200000);
         assert.notEqual(warning.style.display,'none');
@@ -1353,7 +1356,7 @@ test('mini and large roses switch between no alert, yellow gusts and red strong 
         assert.equal(app.panel.allSites.find(site=>site.id===marker.flySpot.id).gustWarning?.active,true);
         assert.equal(marker.center.fill,'#15803d','Gust warning is independent of wind matching');
         assert.deepEqual(app.panel.sites.map(site=>site.id),matched);
-        app.setUnit('kt');assert.match(warning.title,/21\.4 kt/);assert.notEqual(warning.style.display,'none');
+        app.setUnit('kt');assert.match(warning.title,/21\.4 kt/);if(zoom===15)assert.equal(marker.gustValue.textContent,'21.4 kt');assert.notEqual(warning.style.display,'none');
         app.setWindValues([0,12*.44704,0]);app.setGustValues(16*.44704);app.previewTime(time+3600000);
         assert.equal(warning.style.display,'none','12 mph mean and 16 mph gusts must not warn');
         app.setGustValues(6);app.previewTime(time+3600000);assert.equal(warning.style.display,'none');
@@ -1884,4 +1887,16 @@ test('mobile header switches all locations together, including mini roses, witho
  assert.ok([...app.layers].every(m=>!m.getElement().classList.contains('fly-large-rose-hidden')));
  assert.equal(app.reads,reads);assert.equal(JSON.stringify(app.lastView),view);
  app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+
+test('large gust indicator sits inside upper-right quadrant with the gust value below its icon',async()=>{
+ const app=runtime({projectionScale:10000});app.mount();await app.flush();app.setZoom(15);app.emit('zoomend');await app.flush();
+ const marker=[...app.layers].find(m=>m.flySpot.name==='Big Colin'&&m.options.icon.className.endsWith(' dial-icon'));
+ const html=marker.options.icon.html,span=html.match(/<span class="map-gust-warning[^>]+>/)[0];
+ assert.match(html,/map-gust-value/);assert.match(html,/gust-inside-rose/);
+ const D=250,center=marker.options.icon.iconAnchor[0];
+ const left=Number(span.match(/left:([\d.]+)px/)[1]),top=Number(span.match(/top:([\d.]+)px/)[1]);
+ assert.ok(left>center&&left+64<center+D/2);assert.ok(top<center&&top>center-D/2);
+ app.destroy();
 });
