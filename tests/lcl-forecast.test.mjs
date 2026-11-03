@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {boltonLcl,sampleLcl,lclDisplay} from '../src/lclForecast.ts';
+import {boltonLcl,sampleLcl,lclDisplay,lclInputDiagnostics} from '../src/lclForecast.ts';
 import {cloudBaseMarkerDisplay} from '../src/weatherForecast.ts';
 const time=Date.UTC(2026,10,3,12),hour=3600000;
 const payload=()=>({header:{modelElevation:400,elevation:700},data:{ts:[time,time+hour],temp:[293.15,295.15],dewPoint:[283.15,283.15],pressure:[100000,99000]}});
@@ -39,4 +39,15 @@ test('miniature labels distinguish native cloud base, estimated LCL and missing 
     assert.match(cloudBaseMarkerDisplay(r).text,/CB: 900 m AGL\nLCL: ~1,251 m AGL/);
     assert.match(cloudBaseMarkerDisplay(sampleLcl(payload(),time)).text,/^LCL:/);
     assert.equal(cloudBaseMarkerDisplay({}).text,'CB: No data');
+});
+
+test('unavailable LCL exposes actual forecast field names and numeric samples without raw response metadata',()=>{
+    const p=payload();delete p.data.temp;delete p.data.dewPoint;
+    p.data['temp-surface']=[290,291];p.data['dewpoint-surface']=[280,281];
+    p.headers={authorization:'do-not-display'};
+    const reading=sampleLcl(p,time);
+    assert.equal(reading.lclStatus,'unavailable','Unknown names must be diagnosed, not silently guessed');
+    assert.match(lclDisplay(reading).diagnostics,/temp-surface: 290 \/ 290/);
+    assert.match(lclInputDiagnostics(p,0,1),/dewpoint-surface: 280 \/ 281/);
+    assert.doesNotMatch(lclDisplay(reading).diagnostics,/authorization|do-not-display/);
 });

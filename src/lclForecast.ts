@@ -1,5 +1,21 @@
 import type {WindReading} from './windForecast';
 
+// Bounded weather names/numeric samples only; never headers or full responses.
+export function lclInputDiagnostics(payload:any,left:number,right:number) {
+    const lines=[`Model: ${String(payload?.header?.model??'unknown').slice(0,40)}`];
+    for(const group of ['data','meteogram','airgram']){
+        const values=payload?.[group];
+        if(!values||typeof values!=='object')continue;
+        const keys=Object.keys(values);
+        lines.push(`${group} fields: ${keys.slice(0,60).join(', ')}`);
+        for(const key of keys.filter(k=>/temp|dew|pressure|humid|^rh$|cbase/i.test(k)).slice(0,12)){
+            const sample=(i:number)=>Number.isFinite(values[key]?.[i])?String(values[key][i]):'missing/non-numeric';
+            lines.push(`${group}.${key}: ${sample(left)} / ${sample(right)}`);
+        }
+    }
+    return lines.join('\n');
+}
+
 // Bolton (1980), Eq. 22: lifting-condensation temperature in kelvin.
 // Pressure uses dry Poisson ascent; height is a dry-adiabatic estimate.
 // This near-surface parcel diagnostic is NOT a forecast of all cloud layers.
@@ -23,10 +39,10 @@ export function sampleLcl(payload:any,timestamp:number):Partial<WindReading> {
     const ratio=left===right?0:(timestamp-times[left])/(times[right]-times[left]);
     const inputs=[['temp','temperature'],['dewPoint','dew point'],['pressure','surface pressure']] as const;
     const absent=inputs.filter(([key])=>![data[key]?.[left],data[key]?.[right]].every(Number.isFinite));
-    if(absent.length)return {...missing,lclNote:`LCL unavailable: missing ${absent.map(([,name])=>name).join(', ')} for this forecast time.`};
+    if(absent.length)return {...missing,lclNote:`LCL unavailable: missing ${absent.map(([,name])=>name).join(', ')} for this forecast time.`,lclDiagnostics:lclInputDiagnostics(payload,left,right)};
     const a=boltonLcl(data.temp?.[left],data.dewPoint?.[left],data.pressure?.[left]);
     const b=boltonLcl(data.temp?.[right],data.dewPoint?.[right],data.pressure?.[right]);
-    if(!a||!b)return {...missing,lclNote:'LCL unavailable: forecast inputs or units are outside the supported range.'};
+    if(!a||!b)return {...missing,lclNote:'LCL unavailable: forecast inputs or units are outside the supported range.',lclDiagnostics:lclInputDiagnostics(payload,left,right)};
     const blend=(values:number[])=>values[left]+(values[right]-values[left])*ratio;
     const lcl=boltonLcl(blend(data.temp),blend(data.dewPoint),blend(data.pressure));
     if(!lcl)return missing;
@@ -38,9 +54,9 @@ export function sampleLcl(payload:any,timestamp:number):Partial<WindReading> {
 const heightFormat=new Intl.NumberFormat('en-GB',{maximumFractionDigits:0});
 export function lclDisplay(reading:Partial<WindReading>) {
     const label='Estimated cumulus base (LCL)';
-    if(reading.status==='loading'||reading.lclStatus==='loading')return {label,value:'Loading…',aslValue:'',description:'Near-surface parcel LCL is loading.'};
-    if(reading.lclStatus!=='available'||!Number.isFinite(reading.lclAglM))return {label,value:'No data',aslValue:'',description:reading.lclNote??'LCL requires valid near-surface temperature, dew point and surface pressure from the selected model.'};
+    if(reading.status==='loading'||reading.lclStatus==='loading')return {label,value:'Loading…',aslValue:'',diagnostics:'',description:'Near-surface parcel LCL is loading.'};
+    if(reading.lclStatus!=='available'||!Number.isFinite(reading.lclAglM))return {label,value:'No data',aslValue:'',diagnostics:reading.lclDiagnostics??'',description:reading.lclNote??'LCL requires valid near-surface temperature, dew point and surface pressure from the selected model.'};
     const value=`~${heightFormat.format(reading.lclAglM!)} m AGL`;
     const aslValue=Number.isFinite(reading.lclAslM)?`~${heightFormat.format(reading.lclAslM!)} m ASL`:'';
-    return {label,value,aslValue,description:`Bolton parcel LCL with a dry-adiabatic height estimate: ${value}${aslValue?` / ${aslValue}`:''}. AGL is above model ground, not the launch. This does not guarantee cloud formation or the actual cloud base.`};
+    return {label,value,aslValue,diagnostics:'',description:`Bolton parcel LCL with a dry-adiabatic height estimate: ${value}${aslValue?` / ${aslValue}`:''}. AGL is above model ground, not the launch. This does not guarantee cloud formation or the actual cloud base.`};
 }

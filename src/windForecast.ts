@@ -51,6 +51,7 @@ export type WindReading = {
     lclAslM?: number;
     lclPressurePa?: number;
     lclNote?: string;
+    lclDiagnostics?: string;
     reason?: 'too-light' | 'too-strong' | 'direction' | 'unverified-direction';
 };
 

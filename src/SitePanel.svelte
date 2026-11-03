@@ -276,6 +276,12 @@
             {/if}
             {/if}
           </button>
+          {#if spot.lcl?.diagnostics}
+            <details class="forecast-diagnostics">
+              <summary>Forecast data details</summary>
+              <pre>{spot.lcl.diagnostics}</pre>
+            </details>
+          {/if}
           {#if spot.youtube?.length || guideKeyForSite(spot) || (spot.country==='poland'&&spot.directionUnverified)}
           <div class="card-videos" role="group" aria-label={`Actions for ${spot.name}`}>
             {#if spot.country==='poland'&&spot.directionUnverified}<button class="card-guide direction-edit" type="button" on:click|stopPropagation={()=>onDirectionEdit(spot)}>{spot.windReviewConfirmed?'Edit saved wind range':'Set wind range'}</button>{/if}
@@ -462,6 +468,9 @@
   .rain-icon :global(svg){width:18px;height:12px;fill:#0284c7;}
   .empty{padding:17px 7px;color:#526b73;line-height:1.6;margin:0;}
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
+  .forecast-diagnostics{padding:6px 10px;font-size:11px;color:#526b73;}
+  .forecast-diagnostics summary{cursor:pointer;}
+  .forecast-diagnostics pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.4 monospace;}
   .site-panel.obscured{opacity:0;transform:translateX(-32px);visibility:hidden;pointer-events:none;transition-duration:160ms,180ms,180ms,0s;transition-delay:0s,0s,0s,180ms;}
   .collapsed{width:285px;}
   @media(max-width:600px){.toggle{width:44px;height:44px;}.site-panel{left:8px;top:max(var(--mobile-panel-top,16px),calc(16px + env(safe-area-inset-top,0px)));transition-property:top,opacity,transform,visibility;transition-duration:160ms,220ms,220ms,0s;transition-timing-function:ease-out,ease,ease,linear;transition-delay:0s;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
