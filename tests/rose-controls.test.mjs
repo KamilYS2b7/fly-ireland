@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {roseControlHTML,updateRoseControl} from '../src/roseControls.ts';
+import {roseControlHTML,updateRoseControl,guideControlHTML,updateGuideControl} from '../src/roseControls.ts';
 
 test('each hide/restore control identifies its own site and escapes names in both HTML and accessible attributes',()=>{
  const name='Hill <A> "North" & South';
@@ -14,4 +14,14 @@ test('each hide/restore control identifies its own site and escapes names in bot
  assert.equal(attrs['aria-pressed'],'false');assert.equal(attrs['aria-label'],button.title);
  assert.ok(button.innerHTML.includes('Show Hill &lt;A&gt;'));
  updateRoseControl(button,name,true);assert.equal(attrs['aria-pressed'],'true');assert.ok(!button.innerHTML.includes('Show Hill'));
+});
+
+test('site point control names its site, escapes markup and updates its pressed state',()=>{
+ const html=guideControlHTML('Hill <A>',false);
+ assert.match(html,/Show site points: Hill &lt;A&gt;/);
+ assert.match(html,/aria-pressed="false"/);
+ const attributes={},button={setAttribute:(key,value)=>attributes[key]=value};
+ updateGuideControl(button,'Hill <A>',true);
+ assert.equal(button.title,'Hide site points: Hill <A>');
+ assert.equal(attributes['aria-pressed'],'true');
 });

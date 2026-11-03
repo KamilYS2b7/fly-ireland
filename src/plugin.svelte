@@ -23,7 +23,7 @@ import type {SiteGuideData,GuidePoint} from './siteGuides';
 import {createSiteGuideMap} from './siteGuideMap';
 import {createAutomaticGuidePoints} from './automaticGuidePoints';
 import {readLargeRosesVisible,readSiteRoseVisibility,saveSiteRoseVisibility} from './mapDisplay';
-import {roseControlHTML,updateRoseControl} from './roseControls';
+import {roseControlHTML,updateRoseControl,guideControlHTML,updateGuideControl} from './roseControls';
 import { getSiteMetadata } from './siteCatalog';
 import { defaultSiteFilters, POLAND_ENABLED, releaseSiteFilters, scopeSitePanel, sitesForView, readSiteFilters, saveSiteFilters } from './siteFilters';
 import type { SiteFilters } from './siteFilters';
@@ -709,6 +709,7 @@ let hoveredSiteId = '';
 let windUnit: WindUnit = 'mph';
 let largeRosesVisible = true;
 let siteRoseVisibility: Record<string,boolean> = {};
+const visibleGuideKeys = new Set<string>();
 let forecastUtcOffset: number | undefined;
 let siteFilters = defaultSiteFilters();
 let altitudeEnabled = false;
@@ -1264,17 +1265,43 @@ function applyRoseControlState(marker: any){
   const spot=marker.flyRoseControlSpot,visible=siteRoseVisible(spot.id),root=marker.getElement?.();
   root?.classList.toggle('rose-is-hidden',!visible);
   updateRoseControl(root?.querySelector('.rose-visibility-toggle'),spot.name,visible);
+  const key=guideKeyForSite(spot);
+  updateGuideControl(root?.querySelector('.guide-visibility-toggle'),spot.name,!!key&&visibleGuideKeys.has(key));
 }
 
 function setSiteRoseVisible(id: string,visible: boolean){
   if(!mounted||!spots.some(spot=>spot.id===id))return;
-  siteRoseVisibility={...siteRoseVisibility,[id]:visible};saveSiteRoseVisibility(siteRoseVisibility);
-  for(const marker of [...dialMarkers,...uiMarkers])if(marker.flySpot.id===id)applyLargeRoseVisibility(marker);
-  for(const marker of roseControlMarkers)if(marker.flyRoseControlSpot.id===id)applyRoseControlState(marker);
+  const key=guideKeyForSite(spots.find(spot=>spot.id===id)!);
+  if(visible&&key){
+    visibleGuideKeys.delete(key);
+    if(mapGuide?.key===key)hideGuidePoints();
+    for(const spot of spots)if(guideKeyForSite(spot)===key)siteRoseVisibility[spot.id]=true;
+  }
+  siteRoseVisibility={...siteRoseVisibility,[id]:visible};
+  const savedVisibility={...siteRoseVisibility};
+  for(const spot of spots)if(spot.id!==id&&visibleGuideKeys.has(guideKeyForSite(spot)??''))delete savedVisibility[spot.id];
+  saveSiteRoseVisibility(savedVisibility);
+  for(const marker of [...dialMarkers,...uiMarkers])applyLargeRoseVisibility(marker);
+  for(const marker of roseControlMarkers)applyRoseControlState(marker);
+  updateGuidePointsForRoses();
+}
+
+function setSiteGuidePointsVisible(id:string,visible:boolean){
+  if(!mounted)return;
+  const spot=spots.find(spot=>spot.id===id),key=spot&&guideKeyForSite(spot);
+  if(!key)return;
+  if(visible)visibleGuideKeys.add(key);else visibleGuideKeys.delete(key);
+  if(!visible&&mapGuide?.key===key)hideGuidePoints();
+  // Shared guides (e.g. two slopes of one hill) must not overlay any matching rose.
+  // This transient mode is intentionally not saved as a hidden-rose preference.
+  for(const site of spots)if(guideKeyForSite(site)===key)siteRoseVisibility[site.id]=!visible;
+  for(const marker of [...dialMarkers,...uiMarkers])applyLargeRoseVisibility(marker);
+  for(const marker of roseControlMarkers)applyRoseControlState(marker);
+  updateGuidePointsForRoses();
 }
 
 function addRoseControl(spot: Spot,D: number){
-  const icon=L.divIcon({className:'fly-site-rose-control',iconSize:[44,44],iconAnchor:[22,22],html:roseControlHTML(spot.name,siteRoseVisible(spot.id))});
+  const icon=L.divIcon({className:'fly-site-rose-control',iconSize:[44,44],iconAnchor:[22,22],html:`<span class="site-layer-controls">${roseControlHTML(spot.name,siteRoseVisible(spot.id))}${guideKeyForSite(spot)?guideControlHTML(spot.name,visibleGuideKeys.has(guideKeyForSite(spot)!)):""}</span>`});
   const marker=L.marker([spot.lat,spot.lon],{icon,pane:'flyIrelandRoseControls',interactive:true,keyboard:false,bubblingMouseEvents:false}).addTo(map);
   marker.flyRoseControlSpot=spot;
   const root=marker.getElement?.();
@@ -1282,7 +1309,12 @@ function addRoseControl(spot: Spot,D: number){
     root.style.setProperty('--rose-diameter',`${D}px`);
     root.style.setProperty('--site-control-order',String(siteStackOrder.get(spot.id)??0));
     for(const name of ['pointerdown','mousedown','touchstart','dblclick','keydown','keyup'])root.addEventListener(name,(event: Event)=>event.stopPropagation());
-    root.addEventListener('click',(event: Event)=>{event.stopPropagation();setSiteRoseVisible(spot.id,!siteRoseVisible(spot.id));});
+    root.addEventListener('click',(event: Event)=>{
+      event.stopPropagation();
+      if((event.target as Element)?.closest?.('.guide-visibility-toggle')){
+        const key=guideKeyForSite(spot);setSiteGuidePointsVisible(spot.id,!!key&&!visibleGuideKeys.has(key));
+      }else setSiteRoseVisible(spot.id,!siteRoseVisible(spot.id));
+    });
   }
   applyRoseControlState(marker);roseControlMarkers.push(marker);
 }
@@ -1512,10 +1544,11 @@ function updateGuidePointsForRoses(){
   const manualKey=mapGuide?.key;
   // A selected point must not keep its guide pinned after its large rose disappears.
   if(manualKey&&!largeSites.some(spot=>guideKeyForSite(spot)===manualKey))hideGuidePoints();
-  automaticGuidePoints?.update(largeSites);
+  automaticGuidePoints?.update(largeSites.filter(spot=>visibleGuideKeys.has(guideKeyForSite(spot)??"")));
 }
 function showGuideOnMap(point?: GuidePoint){
   if (!guideData || !guideSite) return;
+  setSiteGuidePointsVisible(guideSite.id,true);
   mapGuide = guideData;
   closeSiteGuide();
   if (typeof window !== 'undefined' && window.innerWidth <= 600) sitePanelComponent?.collapsePanel();
@@ -2052,7 +2085,10 @@ onDestroy(() => {
 :global(.wind-direction-pending.mini-dial-icon::after),:global(.wind-direction-pending.dial-icon::after){content:'?';position:absolute;right:0;bottom:0;background:#7c3aed;color:white;border:2px solid white;border-radius:50%;width:20px;height:20px;text-align:center;font:600 14px/20px system-ui;pointer-events:none;}
 :global(.wind-rose-icon.fly-large-rose-hidden){display:none!important;pointer-events:none!important;}
 :global(.fly-site-rose-control){background:transparent!important;border:0!important;overflow:visible;pointer-events:none!important;z-index:var(--site-control-order,0)!important;}
-:global(.rose-visibility-toggle){display:flex;align-items:center;justify-content:center;gap:6px;width:44px;height:44px;box-sizing:border-box;padding:9px;border:1px solid #b9d1c5;border-radius:11px;background:#fffffff5;color:#255744;box-shadow:0 2px 7px #173c2a33;font:600 11px/1.3 system-ui,sans-serif;cursor:pointer;pointer-events:auto;text-transform:none;letter-spacing:normal;transform:translate(calc(var(--rose-diameter)/2 - 8px),calc(32px - var(--rose-diameter)/2));}
+:global(.rose-visibility-toggle),:global(.guide-visibility-toggle){display:flex;align-items:center;justify-content:center;gap:6px;width:44px;height:44px;box-sizing:border-box;padding:9px;border:1px solid #b9d1c5;border-radius:11px;background:#fffffff5;color:#255744;box-shadow:0 2px 7px #173c2a33;font:600 11px/1.3 system-ui,sans-serif;cursor:pointer;pointer-events:auto;text-transform:none;letter-spacing:normal;}
+:global(.site-layer-controls){display:flex;gap:4px;transform:translate(calc(var(--rose-diameter)/2 - 8px),calc(32px - var(--rose-diameter)/2));pointer-events:none;}
+:global(.guide-visibility-toggle svg){fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+:global(.guide-visibility-toggle[aria-pressed="true"]){border-color:#16805d;background:#e7f5ed;color:#146146;}
 :global(.rose-visibility-toggle svg){flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 :global(.rose-visibility-toggle .rose-toggle-label){display:none;}
 :global(.rose-visibility-toggle:hover){background:#eff8f2;}

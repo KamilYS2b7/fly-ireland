@@ -11,3 +11,13 @@ export function updateRoseControl(button: HTMLButtonElement | null | undefined,n
     button.title=title(name,visible);button.setAttribute('aria-label',title(name,visible));button.setAttribute('aria-pressed',String(visible));
     button.innerHTML=contents(name,visible);
 }
+
+export function guideControlHTML(name:string,visible:boolean) {
+    const label=`${visible?'Hide':'Show'} site points: ${name}`;
+    return `<button class="guide-visibility-toggle" type="button" aria-label="${escape(label)}" title="${escape(label)}" aria-pressed="${visible}"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></button>`;
+}
+export function updateGuideControl(button:HTMLButtonElement|null|undefined,name:string,visible:boolean) {
+    if(!button)return;
+    const label=`${visible?'Hide':'Show'} site points: ${name}`;
+    button.title=label;button.setAttribute('aria-label',label);button.setAttribute('aria-pressed',String(visible));
+}
