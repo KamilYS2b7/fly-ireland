@@ -32,10 +32,12 @@ jobs:
                   echo "Creating plugin archive..."
                   echo "{\"repositoryName\": \"${{ github.repository }}\", \"commitSha\": \"${{ github.sha }}\", \"repositoryOwner\": \"${{ github.repository_owner }}\"}" > /tmp/plugin-info.json
                   mv plugin.json /tmp
-                  # Screenshots are optional metadata, not runtime site photos.
+                  # Keep the library screenshot and its plugin.json metadata in the upload.
                   # Photos load from a pinned GitHub revision; descriptions stay in the upload.
-                  jq -s '.[0] * .[1] | del(.screenshot)' /tmp/plugin.json /tmp/plugin-info.json > plugin.json
-                  tar --exclude='./*.map' --exclude='./screenshot.*' --exclude='./assets/sites' -cf ../plugin.tar .
+                  jq -s '.[0] * .[1]' /tmp/plugin.json /tmp/plugin-info.json > plugin.json
+                  test -s screenshot.png
+                  jq -e '.screenshot == "screenshot.png"' plugin.json > /dev/null
+                  tar --exclude='./*.map' --exclude='./assets/sites' -cf ../plugin.tar .
                   echo "Upload archive size: $(wc -c < ../plugin.tar) bytes"
                   echo "Publishing plugin..."
                   curl -s --fail-with-body -XPOST 'https://node.windy.com/plugins/v1.0/upload' -H "x-windy-api-key: ${WINDY_API_KEY}" -F "plugin_archive=@../plugin.tar"
