@@ -71,7 +71,7 @@ export function lclDisplay(reading:Partial<WindReading>) {
     const value=`~${heightFormat.format(reading.lclAglM!)} m AGL`;
     const aslValue=Number.isFinite(reading.lclAslM)?`~${heightFormat.format(reading.lclAslM!)} m ASL`:'';
     const siteValue=Number.isFinite(reading.lclAboveSiteM)
-        ?`~${heightFormat.format(Math.abs(reading.lclAboveSiteM!))} m ${reading.lclAboveSiteM!<0?'below':'above'} site`
+        ?`~${heightFormat.format(Math.abs(reading.lclAboveSiteM!))} m ${reading.lclAboveSiteM!<0?'below':'above'} takeoff`
         :'Site elevation unavailable';
     const siteTone=!Number.isFinite(reading.lclAboveSiteM)?'unknown':reading.lclAboveSiteM!<0?'below':reading.lclAboveSiteM!>0?'above':'level';
     return {label,value,aslValue,siteValue,siteTone,diagnostics:'',description:`Bolton parcel LCL with a dry-adiabatic height estimate: ${aslValue||'ASL elevation unavailable'}. ${siteValue}. Site clearance uses Windy's terrain elevation at the site coordinates, not a surveyed take-off height. This does not guarantee cloud formation or the actual cloud base.`};

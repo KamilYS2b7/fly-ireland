@@ -299,6 +299,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         setViewportWidth(value){context.window.innerWidth=value;},
         get mobileControl(){return vm.runInContext('mobileSiteControl',context);},
         selectNamedSite(name){vm.runInContext(`selectSite(spots.find(s=>s.name===${JSON.stringify(name)}).id)`,context);},
+        toggleAllMobile(){vm.runInContext('toggleAllSiteDisplay()',context);},
         toggleMobile(){vm.runInContext('toggleSiteDisplay(mobileSiteControl.id)',context);},
         clickGuideControl(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker);marker.getElement().click({closest:selector=>selector==='.site-display-toggle'?{}:null});},
         setRosePreference(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker,`Missing rose control for ${name}`);vm.runInContext(`setSiteRoseVisible(${JSON.stringify(marker.flyRoseControlSpot.id)},!siteRoseVisible(${JSON.stringify(marker.flyRoseControlSpot.id)}))`,context);},
@@ -1870,4 +1871,17 @@ test('phone point mode works with mini roses and survives zooming out without ex
  app.toggleMobile();await app.flush();assert.equal(app.guideLayers.size,0);
  assert.ok(own().every(m=>!m.getElement().classList.contains('fly-point-mode-hidden')));
  app.destroy();
+});
+
+test('mobile header switches all locations together, including mini roses, without moving the map or fetching weather',async()=>{
+ const app=runtime({projectionScale:10000});app.setViewportWidth(390);app.mount();await app.flush();await app.flush();
+ const reads=app.reads,view=JSON.stringify(app.lastView);
+ app.toggleAllMobile();for(let i=0;i<6;i++)await app.flush();
+ assert.ok(app.guideLayers.size>6);assert.ok([...app.layers].every(m=>m.getElement().classList.contains('fly-point-mode-hidden')));
+ app.setZoom(15);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
+ assert.ok([...app.layers].every(m=>m.getElement().classList.contains('fly-large-rose-hidden')));
+ app.toggleAllMobile();await app.flush();assert.equal(app.guideLayers.size,0);
+ assert.ok([...app.layers].every(m=>!m.getElement().classList.contains('fly-large-rose-hidden')));
+ assert.equal(app.reads,reads);assert.equal(JSON.stringify(app.lastView),view);
+ app.destroy();assert.equal(app.allLayers.size,0);
 });

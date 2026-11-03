@@ -13,17 +13,18 @@ export function updateRoseControl(button: HTMLButtonElement | null | undefined,n
 }
 
 const displayTitle=(name:string,points:boolean)=>`${points?'Show wind rose':'Show site points'}: ${name}`;
-function displayContents(points:boolean){
-    return `<span class="display-mode ${points?'':'active'}">Rose</span><span class="display-mode ${points?'active':''}">Site points</span>`;
+export function siteDisplayButtonContents(points:boolean){
+    const symbol=points?'<circle cx="12" cy="12" r="9"/><path d="m16 8-3 5-5 3 3-5Z"/>':'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/>';
+    return `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">${symbol}</svg><span>${points?'Show wind rose':'Show site points'}</span>`;
 }
 export function siteDisplayControlHTML(name:string,points:boolean){
     const label=escape(displayTitle(name,points));
-    return `<button type="button" class="site-display-toggle" title="${label}" aria-label="${label}" aria-pressed="${points}">${displayContents(points)}</button>`;
+    return `<button type="button" class="site-display-toggle" title="${label}" aria-label="${label}" aria-pressed="${points}">${siteDisplayButtonContents(points)}</button>`;
 }
 export function updateSiteDisplayControl(button:HTMLButtonElement|null|undefined,name:string,points:boolean){
     if(!button)return;
     button.title=displayTitle(name,points);button.setAttribute('aria-label',button.title);
-    button.setAttribute('aria-pressed',String(points));button.innerHTML=displayContents(points);
+    button.setAttribute('aria-pressed',String(points));button.innerHTML=siteDisplayButtonContents(points);
 }
 export function siteDisplayControlGroupHTML(name:string,points:boolean){
     return `<span class="site-layer-controls">${siteDisplayControlHTML(name,points)}</span>`;

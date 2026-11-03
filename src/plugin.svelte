@@ -710,6 +710,21 @@ let windUnit: WindUnit = 'mph';
 let largeRosesVisible = true;
 let siteRoseVisibility: Record<string,boolean> = {};
 const visibleGuideKeys = new Set<string>();
+let mobilePointsVisible=false;
+function toggleAllSiteDisplay(){
+  if(!mounted)return;
+  mobilePointsVisible=!mobilePointsVisible;
+  hideGuidePoints();visibleGuideKeys.clear();
+  largeRosesVisible=!mobilePointsVisible;
+  siteRoseVisibility={};
+  for(const spot of spots){
+    if(mobilePointsVisible){const key=guideKeyForSite(spot);if(key)visibleGuideKeys.add(key);}
+  }
+  for(const marker of [...dialMarkers,...uiMarkers])applyLargeRoseVisibility(marker);
+  syncMiniGuideControls();
+  for(const marker of roseControlMarkers)applyRoseControlState(marker);
+  refreshMobileSiteControl();updateGuidePointsForRoses();
+}
 let controlSiteId='';
 let mobileSiteControl:{id:string;name:string;points:boolean;hasGuide:boolean;roseVisible:boolean}|undefined;
 function refreshMobileSiteControl(){
@@ -1351,7 +1366,7 @@ function miniPointMode(spot:Spot){const key=guideKeyForSite(spot);return !!key&&
 function syncMiniGuideControls(){
   for(const marker of miniDialMarkers){
     const active=miniPointMode(marker.flySpot);
-    marker.getElement?.()?.classList.toggle('fly-point-mode-hidden',active);
+    marker.getElement?.()?.classList.toggle('fly-point-mode-hidden',mobilePointsVisible||active);
     const control=roseControlMarkers.find(item=>item.flyRoseControlSpot.id===marker.flySpot.id);
     if(active&&!control)addRoseControl(marker.flySpot,0);
     else if(!active&&control?.flyRoseDiameter===0){control.remove();roseControlMarkers=roseControlMarkers.filter(item=>item!==control);}
@@ -1934,7 +1949,8 @@ function addMiniDial(s: Spot){
   updateWeatherIndicator(m);
   applySiteHighlight(m);
   miniDialMarkers.push(m);
-  if(miniPointMode(s)){m.getElement?.()?.classList.add('fly-point-mode-hidden');addRoseControl(s,0);}
+  if(mobilePointsVisible||miniPointMode(s))m.getElement?.()?.classList.add('fly-point-mode-hidden');
+  if(miniPointMode(s))addRoseControl(s,0);
 }
 
 /* ======= RENDER GŁÓWNY (widoczne + kolizje) ======= */
@@ -2123,7 +2139,7 @@ onDestroy(() => {
 });
 </script>
 
-<SitePanel bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
+<SitePanel {mobilePointsVisible} onDisplayToggle={toggleAllSiteDisplay} bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
   directionReviewRemaining={directionReview.eligible.filter(site=>!directionState[site.id]?.confirmedAt).length}
   directionReviewTotal={directionReview.eligible.length} onDirectionEdit={openDirectionEditor}
   onGuide={openSiteGuide}
@@ -2157,9 +2173,9 @@ onDestroy(() => {
 :global(.site-layer-controls){position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;width:max-content;transform:translate(var(--control-x,calc(22px - 50%)),var(--control-y,calc(10px - var(--rose-diameter)/2 - 44px)));pointer-events:none;}
 :global(.site-control-name){display:none;max-width:190px;padding:4px 8px;border-radius:5px;background:#fffffff5;box-shadow:0 1px 4px #153d3a20;color:#244b3a;font:600 11px/1.3 system-ui;overflow-wrap:anywhere;}
 :global(.rose-is-hidden .site-control-name){display:block;}
-:global(.site-display-toggle){display:flex;align-items:center;gap:2px;min-height:44px;box-sizing:border-box;padding:3px;border:1px solid #b5ccc1;border-radius:10px;background:#fffffff7;color:#496d5c;box-shadow:0 2px 6px #193b3c25;cursor:pointer;font:600 12px/1.3 system-ui;pointer-events:auto;text-transform:none;letter-spacing:normal;touch-action:manipulation;}
-:global(.site-display-toggle .display-mode){padding:9px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;}
-:global(.site-display-toggle .display-mode.active){background:#1c795d;color:white;}
+:global(.site-display-toggle){display:flex;align-items:center;justify-content:center;gap:7px;width:174px;min-height:44px;box-sizing:border-box;padding:8px 10px;border:1px solid #abc8ba;border-radius:10px;background:#fffffff7;color:#245e47;box-shadow:0 2px 6px #193b3c25;cursor:pointer;font:600 12px/1.3 system-ui;pointer-events:auto;text-transform:none;letter-spacing:normal;touch-action:manipulation;white-space:nowrap;}
+:global(.site-display-toggle svg){flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+@media(max-width:600px){:global(.fly-site-rose-control){display:none!important;}}
 :global(.site-display-toggle:focus-visible){outline:3px solid #289dc4;outline-offset:3px;}
 
 :global(.guide-visibility-toggle svg){fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}

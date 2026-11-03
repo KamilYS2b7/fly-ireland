@@ -52,7 +52,7 @@ test('miniature labels distinguish native cloud base, estimated LCL and missing 
     const r={status:'pass',cloudBaseStatus:'available',cloudBaseM:900,cloudBaseAslM:1300,cloudBaseAboveSiteM:600,cloudBaseReference:'AGL',...sampleLcl(payload(),time)};
     assert.match(cloudBaseMarkerDisplay(r).text,/CB · sea level: 1,300 m ASL/);
     assert.match(cloudBaseMarkerDisplay(r).text,/LCL · sea level: ~1,651 m ASL/);
-    assert.match(cloudBaseMarkerDisplay(r).text,/LCL · above site: ~951 m/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/LCL · above takeoff: ~951 m/);
     assert.doesNotMatch(cloudBaseMarkerDisplay(r).html,/AGL|model ground/);
     assert.equal(cloudBaseMarkerDisplay({}).text,'Cloud heights: No data');
 });
@@ -62,7 +62,7 @@ test('height colours follow site clearance, with unknown and zero values neutral
     assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="above"/);
     r.lclAboveSiteM=-80;
     assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="below"/);
-    assert.match(cloudBaseMarkerDisplay(r).text,/below site: ~80 m/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/below takeoff: ~80 m/);
     r.lclAboveSiteM=0;
     assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="level"/);
     delete r.lclAboveSiteM;
@@ -71,9 +71,9 @@ test('height colours follow site clearance, with unknown and zero values neutral
 
 test('site clearance preserves negative values instead of inventing a positive cloud base above launch',()=>{
     const r={lclStatus:'available',lclAglM:100,lclAslM:300,lclAboveSiteM:20};
-    assert.equal(lclDisplay(r).siteValue,'~20 m above site');
+    assert.equal(lclDisplay(r).siteValue,'~20 m above takeoff');
     r.lclAboveSiteM=-80;
-    assert.equal(lclDisplay(r).siteValue,'~80 m below site');
+    assert.equal(lclDisplay(r).siteValue,'~80 m below takeoff');
     delete r.lclAboveSiteM;
     assert.equal(lclDisplay(r).siteValue,'Site elevation unavailable');
 });
@@ -89,12 +89,12 @@ test('unavailable LCL exposes actual forecast field names and numeric samples wi
     assert.doesNotMatch(lclDisplay(reading).diagnostics,/authorization|do-not-display/);
 });
 
-test('compact rose heights retain ASL and signed site clearance without wide labels',()=>{
+test('compact rose heights retain ASL and takeoff clearance with direction in labels',()=>{
  const r={lclStatus:'available',lclAglM:100,lclAslM:1300,lclAboveSiteM:-80};
  const d=cloudBaseMarkerDisplay(r,true);
  assert.match(d.html,/LCL ASL/);assert.match(d.html,/~1,300 m</);
- assert.match(d.html,/LCL site/);assert.match(d.html,/~−80 m</);
- assert.match(d.description,/below site/);
+ assert.match(d.html,/LCL · below takeoff/);assert.match(d.html,/~80 m</);assert.doesNotMatch(d.html,/[−-]80/);
+ assert.match(d.description,/below takeoff/);
  assert.doesNotMatch(d.html,/sea level|above site|below site/);
 });
 

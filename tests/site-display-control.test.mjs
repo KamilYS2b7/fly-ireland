@@ -5,12 +5,12 @@ import * as controls from '../src/roseControls.ts';
 test('one accessible display button includes both modes and escapes the site name',()=>{
  const html=controls.siteDisplayControlHTML('Hill <A>',true);
  assert.equal((html.match(/<button\b/g)||[]).length,1);
- assert.match(html,/Rose/);assert.match(html,/Site points/);
+ assert.match(html,/Show wind rose/);assert.doesNotMatch(html,/display-mode|Show site points/);
  assert.match(html,/Hill &lt;A&gt;/);assert.doesNotMatch(html,/<A>/);
  const attrs={},button={setAttribute:(key,value)=>attrs[key]=value};
  controls.updateSiteDisplayControl(button,'Hill A',false);
  assert.match(attrs['aria-label'],/Show site points/);
- assert.equal(attrs['aria-pressed'],'false');
+ assert.equal(attrs['aria-pressed'],'false');assert.match(button.innerHTML,/Show site points/);assert.doesNotMatch(button.innerHTML,/Show wind rose/);
  controls.updateSiteDisplayControl(button,'Hill A',true);
  assert.match(attrs['aria-label'],/Show wind rose/);
  assert.equal(attrs['aria-pressed'],'true');

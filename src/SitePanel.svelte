@@ -1,5 +1,6 @@
 <script lang="ts">
   import {tick,onDestroy} from 'svelte';
+  import {siteDisplayButtonContents} from './roseControls';
   import broadcast from '@windy/broadcast';
   import type { buildSitePanel, NamedSpot } from './sitePanel';
   import SiteRose from './SiteRose.svelte';
@@ -31,6 +32,8 @@
   export let onHover: (id: string) => void = () => {};
   let hoveredId = '';
   export let selectedId = '';
+  export let mobilePointsVisible=false;
+  export let onDisplayToggle:()=>void=()=>{};
   export let weatherIconsDir = '';
   export let modelOptions: ForecastModelOption[] = [];
   export let onModelChange: (model: string) => void = () => {};
@@ -150,6 +153,12 @@
       <span class="eyebrow">FLY IRELAND</span>
       <h2>Flying sites <span class="count">{shownSites.length}</span></h2>
     </div>
+    <button class="site-display-toggle mobile-display-toggle" type="button"
+      title={mobilePointsVisible?'Show all wind roses':'Show all site points'}
+      aria-label={mobilePointsVisible?'Show all wind roses':'Show all site points'}
+      aria-pressed={mobilePointsVisible} on:click={onDisplayToggle}>
+      {@html siteDisplayButtonContents(mobilePointsVisible)}
+    </button>
     <button class="toggle" type="button" on:click={() => collapsed = !collapsed}
       aria-expanded={!collapsed} aria-controls="fly-ireland-site-list"
       aria-label={collapsed ? 'Expand site panel' : 'Collapse site panel'}>{collapsed ? '+' : '−'}</button>
@@ -474,6 +483,8 @@
   .forecast-diagnostics summary{cursor:pointer;}
   .forecast-diagnostics pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.4 monospace;}
   .site-panel.obscured{opacity:0;transform:translateX(-32px);visibility:hidden;pointer-events:none;transition-duration:160ms,180ms,180ms,0s;transition-delay:0s,0s,0s,180ms;}
+  .mobile-display-toggle{display:none;}
+  @media(max-width:600px){.mobile-display-toggle{display:flex;width:126px;flex-shrink:0;min-height:44px;font-size:10px;padding:7px;gap:5px;}header>div{min-width:0;flex:1;}header h2{font-size:12px;}header .count{display:none;}header .eyebrow{font-size:8px;letter-spacing:1px;}}
   .collapsed{width:285px;}
   @media(max-width:600px){.toggle{width:44px;height:44px;}.site-panel{left:8px;top:max(var(--mobile-panel-top,16px),calc(16px + env(safe-area-inset-top,0px)));transition-property:top,opacity,transform,visibility;transition-duration:160ms,220ms,220ms,0s;transition-timing-function:ease-out,ease,ease,linear;transition-delay:0s;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
   @media(max-height:500px) and (min-width:601px){.site-panel{top:55px;}}
