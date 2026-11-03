@@ -271,11 +271,11 @@
             </span>
             {#if spot.layerHeight}<span class="height-detail">Layer height: {spot.layerHeight}{snapshot.level === '100m' ? ' · 100 m above model ground' : ''}</span>{/if}
             <span class="cloud-base" data-clearance={spot.cloudBase?.siteTone} title={spot.cloudBase?.description}>
-              <span class="reading-row"><span>{spot.cloudBase?.label ?? 'Cloud base'}</span><b>{spot.cloudBase?.aslValue || (spot.cloudBase?.value === 'Loading…' ? 'Loading…' : 'No data')}</b></span>
+              <span class="reading-row"><span>{spot.cloudBase?.label ?? 'Cloud base'}</span><b class:asl-available={!!spot.cloudBase?.aslValue}>{spot.cloudBase?.aslValue || (spot.cloudBase?.value === 'Loading…' ? 'Loading…' : 'No data')}</b></span>
               <span class="cloud-reference">{spot.cloudBase?.siteValue ?? ''}</span>
             </span>
             <span class="cloud-base" data-clearance={spot.lcl?.siteTone} title={spot.lcl?.description}>
-              <span class="reading-row"><span>Est. cumulus base (LCL)</span><b>{spot.lcl?.aslValue || (spot.lcl?.value === 'Loading…' ? 'Loading…' : 'No data')}</b></span>
+              <span class="reading-row"><span>Est. cumulus base (LCL)</span><b class:asl-available={!!spot.lcl?.aslValue}>{spot.lcl?.aslValue || (spot.lcl?.value === 'Loading…' ? 'Loading…' : 'No data')}</b></span>
               <span class="cloud-reference">{spot.lcl?.value === 'No data' ? spot.lcl.description : spot.lcl?.siteValue ?? ''}</span>
             </span>
             {#if altitudeEnabled}
@@ -477,6 +477,7 @@
   .rain-icon :global(svg){width:18px;height:12px;fill:#0284c7;}
   .empty{padding:17px 7px;color:#526b73;line-height:1.6;margin:0;}
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
+  .cloud-base .reading-row b.asl-available{color:#15803d;}
   .cloud-base[data-clearance="above"] b{color:#15803d;}
   .cloud-base[data-clearance="below"] b{color:#b91c1c;}
   .forecast-diagnostics{padding:6px 10px;font-size:11px;color:#526b73;}

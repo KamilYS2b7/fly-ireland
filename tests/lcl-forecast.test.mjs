@@ -103,3 +103,13 @@ test('compact missing elevations fit the small rose panel',()=>{
  assert.doesNotMatch(d.html,/unavailable|No ASL data|No elevation data/);
  assert.match(d.html,/—/);
 });
+
+test('ASL values stay green below takeoff while clearance alone turns red',()=>{
+ const r={lclStatus:'available',lclAglM:100,lclAslM:300,lclAboveSiteM:-80,cloudBaseStatus:'available',cloudBaseM:120,cloudBaseReference:'AGL',cloudBaseAslM:320,cloudBaseAboveSiteM:-60};
+ const html=cloudBaseMarkerDisplay(r,true).html;
+ for(const label of ['LCL ASL','CB ASL'])assert.match(html,new RegExp('data-clearance="above"><span class="cloud-height-label">'+label));
+ assert.match(html,/data-clearance="below"><span class="cloud-height-label">LCL · below takeoff/);
+ assert.match(html,/data-clearance="below"><span class="cloud-height-label">CB · below takeoff/);
+ delete r.lclAslM;
+ assert.match(cloudBaseMarkerDisplay(r,true).html,/data-clearance="unknown"><span class="cloud-height-label">LCL ASL/);
+});

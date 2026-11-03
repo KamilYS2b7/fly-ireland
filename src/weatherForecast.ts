@@ -55,11 +55,11 @@ export function cloudBaseMarkerDisplay(reading:Partial<WindReading>,compact=fals
     const cloud=cloudBaseDisplay(reading),lcl=lclDisplay(reading);
     const rows:{label:string;value:string;tone:string}[]=[];
     if(reading.cloudBaseStatus==='available'){
-        rows.push({label:'CB · sea level',value:cloud.aslValue||'No ASL data',tone:cloud.siteTone??'unknown'});
+        rows.push({label:'CB · sea level',value:cloud.aslValue||'No ASL data',tone:cloud.aslValue?'above':'unknown'});
         rows.push({label:(reading.cloudBaseAboveSiteM??0)<0?'CB · below takeoff':'CB · above takeoff',value:cloud.siteValue?.replace(/ (above|below) takeoff$/,'')||'No elevation data',tone:cloud.siteTone??'unknown'});
     }
     if(reading.lclStatus==='available'){
-        rows.push({label:'LCL · sea level',value:lcl.aslValue||'No ASL data',tone:lcl.siteTone??'unknown'});
+        rows.push({label:'LCL · sea level',value:lcl.aslValue||'No ASL data',tone:lcl.aslValue?'above':'unknown'});
         rows.push({label:(reading.lclAboveSiteM??0)<0?'LCL · below takeoff':'LCL · above takeoff',value:lcl.siteValue?.replace(/ (above|below) takeoff$/,'')||'No elevation data',tone:lcl.siteTone??'unknown'});
     }
     if(!rows.length)rows.push({label:'Cloud heights',value:reading.status==='loading'?'Loading…':'No data',tone:'unknown'});
