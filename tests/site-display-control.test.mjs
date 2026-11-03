@@ -47,3 +47,11 @@ test('a rose near the top edge places its switch outside the dial rather than cl
  const rose={x:115,y:-35,width:250,height:250};
  assert.ok(!intersects({...p,...args.size},rose));
 });
+
+test('changing display mode does not change the switch anchor or dimensions',()=>{
+ const rose=controls.placeSiteDisplayControl({...options,points:false,obstacles:[]});
+ const points=controls.placeSiteDisplayControl({...options,points:true,obstacles:[]});
+ assert.deepEqual(points,rose);
+ const a=controls.siteDisplayControlGroupHTML('Hill',false),b=controls.siteDisplayControlGroupHTML('Hill',true);
+ assert.equal(a.includes('site-control-name'),false);assert.equal(b.includes('site-control-name'),false);
+});

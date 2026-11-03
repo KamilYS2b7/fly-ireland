@@ -31,8 +31,6 @@
   export let onHover: (id: string) => void = () => {};
   let hoveredId = '';
   export let selectedId = '';
-  export let mobileSiteControl:{id:string;name:string;points:boolean;hasGuide:boolean;roseVisible:boolean}|undefined=undefined;
-  export let onDisplayToggle:(id:string)=>void=()=>{};
   export let weatherIconsDir = '';
   export let modelOptions: ForecastModelOption[] = [];
   export let onModelChange: (model: string) => void = () => {};
@@ -156,21 +154,6 @@
       aria-expanded={!collapsed} aria-controls="fly-ireland-site-list"
       aria-label={collapsed ? 'Expand site panel' : 'Collapse site panel'}>{collapsed ? '+' : '−'}</button>
   </header>
-  {#if mobileSiteControl}
-    <div class="mobile-site-display">
-      <strong>{mobileSiteControl.name}</strong>
-      {#if mobileSiteControl.hasGuide}
-        <button type="button" class="site-display-toggle" aria-pressed={mobileSiteControl.points}
-          aria-label={`${mobileSiteControl.points?'Show wind rose':'Show site points'}: ${mobileSiteControl.name}`}
-          on:click={()=>mobileSiteControl&&onDisplayToggle(mobileSiteControl.id)}>
-          <span class="display-mode" class:active={!mobileSiteControl.points}>Rose</span><span class="display-mode" class:active={mobileSiteControl.points}>Site points</span>
-        </button>
-      {:else}
-        <button type="button" class="mobile-rose-toggle" aria-pressed={mobileSiteControl.roseVisible}
-          on:click={()=>mobileSiteControl&&onDisplayToggle(mobileSiteControl.id)}>{mobileSiteControl.roseVisible?'Hide rose':'Show rose'}</button>
-      {/if}
-    </div>
-  {/if}
   <div id="fly-ireland-site-list" hidden={collapsed}>
     <div class="forecast-meta">
       {#if filters.wind === 'review'}<span>Location review</span><strong>{pendingReviewSites.length} pending · {reviewSites.filter(site=>site.reviewState==='accepted').length} accepted</strong>
@@ -491,12 +474,6 @@
   .forecast-diagnostics summary{cursor:pointer;}
   .forecast-diagnostics pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.4 monospace;}
   .site-panel.obscured{opacity:0;transform:translateX(-32px);visibility:hidden;pointer-events:none;transition-duration:160ms,180ms,180ms,0s;transition-delay:0s,0s,0s,180ms;}
-  .mobile-site-display{display:none;}
-  .mobile-site-display strong{min-width:0;overflow-wrap:anywhere;font-size:11px;line-height:1.3;}
-  .mobile-rose-toggle{flex-shrink:0;min-height:44px;padding:6px 9px;border:1px solid #b5ccc1;border-radius:8px;background:white;color:#245e47;font-size:11px;}
-  .mobile-site-display :global(.site-display-toggle){flex-shrink:0;font-size:10px;}
-  .mobile-site-display :global(.display-mode){padding:9px 6px;}
-  @media(max-width:600px){.mobile-site-display{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 12px 10px;background:#fff;flex-shrink:0;}}
   .collapsed{width:285px;}
   @media(max-width:600px){.toggle{width:44px;height:44px;}.site-panel{left:8px;top:max(var(--mobile-panel-top,16px),calc(16px + env(safe-area-inset-top,0px)));transition-property:top,opacity,transform,visibility;transition-duration:160ms,220ms,220ms,0s;transition-timing-function:ease-out,ease,ease,linear;transition-delay:0s;width:280px;max-width:calc(100vw - 16px);}header{padding:11px 12px;}.reading-row{flex-wrap:wrap;gap:2px 8px;}}
   @media(max-height:500px) and (min-width:601px){.site-panel{top:55px;}}

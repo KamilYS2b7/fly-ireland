@@ -26,7 +26,7 @@ export function updateSiteDisplayControl(button:HTMLButtonElement|null|undefined
     button.setAttribute('aria-pressed',String(points));button.innerHTML=displayContents(points);
 }
 export function siteDisplayControlGroupHTML(name:string,points:boolean){
-    return `<span class="site-layer-controls"><span class="site-control-name">${escape(name)}</span>${siteDisplayControlHTML(name,points)}</span>`;
+    return `<span class="site-layer-controls">${siteDisplayControlHTML(name,points)}</span>`;
 }
 export type ControlRect={x:number;y:number;width:number;height:number};
 export function placeSiteDisplayControl({anchor,size,viewport,diameter,points,obstacles}:{
@@ -36,26 +36,14 @@ export function placeSiteDisplayControl({anchor,size,viewport,diameter,points,ob
     const clamp=(value:number,max:number)=>Math.max(8,Math.min(Math.max(8,max-8),value));
     const candidate=(x:number,y:number)=>({x:clamp(x,viewport.width-size.width),y:clamp(y,viewport.height-size.height)});
     const centre=anchor.x-size.width/2;
-    if(!points){
+    {
         const rose={x:anchor.x-diameter/2,y:anchor.y-diameter/2,width:diameter,height:diameter};
         const outside=[candidate(centre,rose.y-size.height-12),candidate(rose.x+diameter+12,anchor.y-size.height/2),candidate(rose.x-size.width-12,anchor.y-size.height/2),candidate(centre,rose.y+diameter+12)];
         const overlaps=(p:{x:number;y:number},r:ControlRect)=>p.x<r.x+r.width&&p.x+size.width>r.x&&p.y<r.y+r.height&&p.y+size.height>r.y;
         return outside.find(p=>![rose,...obstacles].some(r=>overlaps(p,r)))??outside.find(p=>!overlaps(p,rose))??outside[0];
     }
-    const candidates=[candidate(centre,anchor.y-size.height-22),candidate(centre,anchor.y+24)];
-    for(const distance of [80,140,210])for(const [dx,dy]of [[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1],[0,-1],[0,1]]){
-        candidates.push(candidate(centre+dx*distance,anchor.y-size.height/2+dy*distance));
-    }
-    // In dense guides, search remaining viewport space rather than moving points.
-    for(let y=8;y+size.height<=viewport.height-8;y+=32)for(let x=8;x+size.width<=viewport.width-8;x+=32)candidates.push({x,y});
-    let best=candidates[0],bestScore=Infinity;
-    for(const point of candidates){
-        const area=obstacles.reduce((sum,rect)=>sum+Math.max(0,Math.min(point.x+size.width,rect.x+rect.width+8)-Math.max(point.x,rect.x-8))*Math.max(0,Math.min(point.y+size.height,rect.y+rect.height+8)-Math.max(point.y,rect.y-8)),0);
-        if(area<bestScore){best=point;bestScore=area;}
-        if(area===0)break;
-    }
-    return best;
 }
+
 export function controlAnchorInViewport(anchor:{x:number;y:number},viewport:{width:number;height:number}){
     return anchor.x>=0&&anchor.y>=0&&anchor.x<=viewport.width&&anchor.y<=viewport.height;
 }

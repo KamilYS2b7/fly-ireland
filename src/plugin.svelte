@@ -726,13 +726,13 @@ function toggleSiteDisplay(id:string){
   else setSiteGuidePointsVisible(id,true);
 }
 let controlLayoutTimer:any=null;
+const controlPositions=new Map<string,{signature:string;position:{x:number;y:number}}>();
 function scheduleControlLayout(){
   if(!mounted)return;
   if(controlLayoutTimer!==null)clearTimeout(controlLayoutTimer);
   controlLayoutTimer=setTimeout(()=>{controlLayoutTimer=null;if(mounted)layoutSiteControls();},0);
 }
 function layoutSiteControls(){
-  if(window.innerWidth<=600)return;
   const container=map.getContainer?.(),bounds=container?.getBoundingClientRect?.();
   if(!bounds?.width||!bounds.height)return;
   const obstacles=(guideMap?.getObstacleRects()??[]).map(rect=>({x:rect.x-bounds.left,y:rect.y-bounds.top,width:rect.width,height:rect.height}));
@@ -743,7 +743,11 @@ function layoutSiteControls(){
     const visible=controlAnchorInViewport(anchor,{width:bounds.width,height:bounds.height});
     root.style.visibility=visible?'':'hidden';if(!visible)continue;
     const spot=marker.flyRoseControlSpot,key=guideKeyForSite(spot),points=!!key&&visibleGuideKeys.has(key);
-    const position=placeSiteDisplayControl({anchor:{x:rect.left-bounds.left+22,y:rect.top-bounds.top+22},size:{width:group.offsetWidth,height:group.offsetHeight},viewport:{width:bounds.width,height:bounds.height},diameter:marker.flyRoseDiameter,points:points||!siteRoseVisible(spot.id),obstacles});
+    const diameter=marker.flyRoseDiameter||54;
+    const signature=JSON.stringify([Math.round(anchor.x),Math.round(anchor.y),bounds.width,bounds.height,diameter,map.getZoom(),group.offsetWidth,group.offsetHeight]);
+    const cached=controlPositions.get(spot.id);
+    const position=cached?.signature===signature?cached.position:placeSiteDisplayControl({anchor,size:{width:group.offsetWidth,height:group.offsetHeight},viewport:{width:bounds.width,height:bounds.height},diameter,points:false,obstacles});
+    controlPositions.set(spot.id,{signature,position});
     root.style.setProperty('--control-x',`${position.x+bounds.left-rect.left}px`);
     root.style.setProperty('--control-y',`${position.y+bounds.top-rect.top}px`);
     obstacles.push({...position,width:group.offsetWidth,height:group.offsetHeight});
@@ -2096,6 +2100,7 @@ onMount(() => {
 onDestroy(() => {
   directionEditorSite=undefined;
   mounted = false;
+  controlPositions.clear();
   closeSiteGuide();automaticGuidePoints?.destroy();automaticGuidePoints=undefined;
   guideLoader.destroy();guideMap?.destroy();guideMap=undefined;
   mapGuide=undefined;
@@ -2118,7 +2123,7 @@ onDestroy(() => {
 });
 </script>
 
-<SitePanel {mobileSiteControl} onDisplayToggle={toggleSiteDisplay} bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
+<SitePanel bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
   directionReviewRemaining={directionReview.eligible.filter(site=>!directionState[site.id]?.confirmedAt).length}
   directionReviewTotal={directionReview.eligible.length} onDirectionEdit={openDirectionEditor}
   onGuide={openSiteGuide}
@@ -2156,7 +2161,7 @@ onDestroy(() => {
 :global(.site-display-toggle .display-mode){padding:9px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;}
 :global(.site-display-toggle .display-mode.active){background:#1c795d;color:white;}
 :global(.site-display-toggle:focus-visible){outline:3px solid #289dc4;outline-offset:3px;}
-@media(max-width:600px){:global(.fly-site-rose-control){display:none!important;}}
+
 :global(.guide-visibility-toggle svg){fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 :global(.guide-visibility-toggle[aria-pressed="true"]){border-color:#16805d;background:#e7f5ed;color:#146146;}
 :global(.rose-visibility-toggle svg){flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
