@@ -51,7 +51,7 @@ export function sampleWeather(payload: any, timestamp: number, index: number): P
         cloudBaseReference:series.reference, cloudBaseEstimated:series.estimated};
 }
 
-export function cloudBaseMarkerDisplay(reading:Partial<WindReading>) {
+export function cloudBaseMarkerDisplay(reading:Partial<WindReading>,compact=false) {
     const cloud=cloudBaseDisplay(reading),lcl=lclDisplay(reading);
     const rows:{label:string;value:string;tone:string}[]=[];
     if(reading.cloudBaseStatus==='available'){
@@ -63,6 +63,14 @@ export function cloudBaseMarkerDisplay(reading:Partial<WindReading>) {
         rows.push({label:(reading.lclAboveSiteM??0)<0?'LCL · below site':'LCL · above site',value:lcl.siteValue?.replace(/ (above|below) site$/,'')||'No elevation data',tone:lcl.siteTone??'unknown'});
     }
     if(!rows.length)rows.push({label:'Cloud heights',value:reading.status==='loading'?'Loading…':'No data',tone:'unknown'});
+    if(compact)for(const row of rows){
+        const site=row.label.includes('site');
+        row.label=row.label.replace(' · sea level',' ASL').replace(/ · (above|below) site/,' site');
+        row.value=row.value.replace(' m ASL',' m');
+        if(row.value==='No ASL data'||row.value==='No elevation data'||row.value==='Site elevation unavailable')row.value='—';
+        if(row.label==='Cloud heights')row.label='CB / LCL';
+        if(site&&row.tone!=='unknown')row.value=row.value.replace(/^(~?)/,`$1${row.tone==='below'?'−':row.tone==='above'?'+':''}`);
+    }
     const escape=(text:string)=>text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
     const html=rows.map(row=>`<span class="cloud-height-row" data-clearance="${row.tone}"><span class="cloud-height-label">${escape(row.label)}</span><strong class="cloud-height-value">${escape(row.value)}</strong></span>`).join('');
     return {text:rows.map(row=>`${row.label}: ${row.value}`).join('\n'),html,

@@ -1779,7 +1779,10 @@ test('large cloud heights use a Leaflet pane above every dial and stay in the up
     const style=label.options.icon.html.match(/class="large-cloud-heights"[^>]*style="([^"]+)"/)[1];
     const top=Number(style.match(/top:([\d.]+)px/)[1]);
     const center=label.options.icon.iconAnchor[1];
-    assert.ok(top<center/2,'Cloud heights must occupy the upper quarter, above the central wind speed');
+    assert.ok(top<center*.4,'Cloud heights stay above the central wind speed');
+    const left=Number(style.match(/left:([\d.]+)px/)[1]);
+    const width=Number(style.match(/width:([\d.]+)px/)[1]);
+    assert.ok(left<center*.4 && left+width<center,'Readings fit inside the upper-left quadrant');
     assert.match(label.cloudLabel.textContent,/LCL/,'Initial forecast reaches the raised label');
     const reads=app.reads;
     app.store.set('timestamp',1792674000000);await app.flush();

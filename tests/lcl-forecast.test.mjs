@@ -88,3 +88,18 @@ test('unavailable LCL exposes actual forecast field names and numeric samples wi
     assert.match(lclInputDiagnostics(p,0,1),/dewpoint-surface: 280 \/ 281/);
     assert.doesNotMatch(lclDisplay(reading).diagnostics,/authorization|do-not-display/);
 });
+
+test('compact rose heights retain ASL and signed site clearance without wide labels',()=>{
+ const r={lclStatus:'available',lclAglM:100,lclAslM:1300,lclAboveSiteM:-80};
+ const d=cloudBaseMarkerDisplay(r,true);
+ assert.match(d.html,/LCL ASL/);assert.match(d.html,/~1,300 m</);
+ assert.match(d.html,/LCL site/);assert.match(d.html,/~−80 m</);
+ assert.match(d.description,/below site/);
+ assert.doesNotMatch(d.html,/sea level|above site|below site/);
+});
+
+test('compact missing elevations fit the small rose panel',()=>{
+ const d=cloudBaseMarkerDisplay({lclStatus:'available',lclAglM:100},true);
+ assert.doesNotMatch(d.html,/unavailable|No ASL data|No elevation data/);
+ assert.match(d.html,/—/);
+});
