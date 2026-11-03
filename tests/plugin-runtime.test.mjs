@@ -27,7 +27,7 @@ import {guideKeyForSite,createSiteGuideLoader} from '../src/siteGuides.ts';
 import {createSiteGuideMap} from '../src/siteGuideMap.ts';
 import {createAutomaticGuidePoints} from '../src/automaticGuidePoints.ts';
 import {readLargeRosesVisible,readSiteRoseVisibility,saveSiteRoseVisibility,LARGE_ROSES_STORAGE_KEY} from '../src/mapDisplay.ts';
-import {roseControlHTML,updateRoseControl,guideControlHTML,updateGuideControl} from '../src/roseControls.ts';
+import {roseControlHTML,updateRoseControl,siteDisplayControlGroupHTML,updateSiteDisplayControl,placeSiteDisplayControl,controlAnchorInViewport} from '../src/roseControls.ts';
 import {createWindDirectionReview,parseDirectionRanges} from '../src/windDirectionReview.ts';
 const guideSource=JSON.parse(readFileSync(new URL('../assets/assets/site_descriptions.json',import.meta.url),'utf8'));
 
@@ -184,7 +184,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         iconsDir:'https://www.windy.com/test-icons',weatherDisplay,weatherIconUrl,cloudBaseDisplay,cloudBaseMarkerDisplay,
         normalizeWindUnit,convertWindSpeed,formatWindSpeed,windSpeedRange,windLevelLabel,formatForecastTime,
         readWindUnit:()=>readWindUnit(filterStorage),saveWindUnit:value=>saveWindUnit(value,filterStorage),
-        readLargeRosesVisible:()=>readLargeRosesVisible(filterStorage),readSiteRoseVisibility:()=>readSiteRoseVisibility(filterStorage),saveSiteRoseVisibility:value=>saveSiteRoseVisibility(value,filterStorage),roseControlHTML,updateRoseControl,guideControlHTML,updateGuideControl,
+        readLargeRosesVisible:()=>readLargeRosesVisible(filterStorage),readSiteRoseVisibility:()=>readSiteRoseVisibility(filterStorage),saveSiteRoseVisibility:value=>saveSiteRoseVisibility(value,filterStorage),roseControlHTML,updateRoseControl,siteDisplayControlGroupHTML,updateSiteDisplayControl,placeSiteDisplayControl,controlAnchorInViewport,
         readSiteFilters:()=>readSiteFilters(filterStorage), saveSiteFilters:value=>saveSiteFilters(value,filterStorage),
         pointModelSupported, forecastModelOptions:modelHelpers.forecastModelOptions,
         products:productMetadata,createDetailModelSync:deps=>{detailSyncDependencies=deps;return {select:model=>detailSyncSelections.push(model),getNativeModel:()=>nativeDetailModel,destroy:()=>{detailSyncDestroyed=true;}};},
@@ -238,9 +238,9 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
     });
     vm.runInContext(code, context);
     return {
-        // Opted-in loader fixtures select guide keys directly; UI-mode tests
-        // below exercise the actual mutually exclusive toggle handlers.
-        mount: () => {mount();if(guidePoints)vm.runInContext('for(const spot of spots){const key=guideKeyForSite(spot);if(key)visibleGuideKeys.add(key);}',context);},
+        // Opted-in loader fixtures select keys when entering large-rose zoom.
+        // UI-mode tests use the real single-toggle handlers; preference tests call their setter explicitly.
+        mount: () => mount(),
         openGuide(name) {context.guideTestName=name;return vm.runInContext('openSiteGuide(spots.find(spot=>spot.name===guideTestName))',context);},
         closeGuide() {vm.runInContext('closeSiteGuide()',context);},
         get guideState() {return JSON.parse(vm.runInContext('JSON.stringify({open:guideOpen,key:guideData?.key,loading:guideLoading,error:guideError})',context));},
@@ -297,13 +297,16 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         selectFirstSite() { vm.runInContext('focusSite(sitePanel.sites[0])', context); },
         connectPanel(onReveal,onCollapse=()=>{}) {context.onRevealTest=onReveal;context.onCollapseTest=onCollapse;vm.runInContext('sitePanelComponent={revealSite:onRevealTest,collapsePanel:onCollapseTest}',context);},
         setViewportWidth(value){context.window.innerWidth=value;},
-        clickGuideControl(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker);marker.getElement().click({closest:selector=>selector==='.guide-visibility-toggle'?{}:null});},
-        clickRoseControl(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker,`Missing rose control for ${name}`);marker.getElement().click();},
+        get mobileControl(){return vm.runInContext('mobileSiteControl',context);},
+        selectNamedSite(name){vm.runInContext(`selectSite(spots.find(s=>s.name===${JSON.stringify(name)}).id)`,context);},
+        toggleMobile(){vm.runInContext('toggleSiteDisplay(mobileSiteControl.id)',context);},
+        clickGuideControl(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker);marker.getElement().click({closest:selector=>selector==='.site-display-toggle'?{}:null});},
+        setRosePreference(name){const marker=[...layers].find(layer=>layer.flyRoseControlSpot?.name===name);assert.ok(marker,`Missing rose control for ${name}`);vm.runInContext(`setSiteRoseVisible(${JSON.stringify(marker.flyRoseControlSpot.id)},!siteRoseVisible(${JSON.stringify(marker.flyRoseControlSpot.id)}))`,context);},
         get selectedSiteId() {return vm.runInContext('selectedSiteId',context);},
         hoverSite(id) { context.hoverTestId=id; vm.runInContext('highlightSite(hoverTestId)', context); },
         get lastView() { return lastView; },
         get selectedAtNavigation() {return selectedAtNavigation;},
-        setZoom: value => { zoom = value; },
+        setZoom: value => { zoom = value;if(guidePoints&&value>=14)vm.runInContext('for(const spot of spots){const key=guideKeyForSite(spot);if(key)visibleGuideKeys.add(key);}',context); },
         setWest: value => { west = value; },
         get reads() { return reads; },
         requestedModels,
@@ -489,11 +492,11 @@ test('site points default to hidden and toggle exclusively with the rose without
     assert.equal(app.guideLayers.size,6);
     assert.ok(own().every(m=>m.getElement().classList.contains('fly-large-rose-hidden')));
     assert.ok([...app.guideLayers].every(m=>m.flyGuideKey==='Big Colin'));
-    app.clickRoseControl('Shanes Hill');
+    app.setRosePreference('Shanes Hill');
     const preferences=JSON.parse(savedFilters.get('fly-ireland.site-rose-visibility.v1'));
     assert.notEqual(preferences[own()[0].flySpot.id],false,'Another eye click must not persist temporary point-mode hiding');
     const guideReads=app.guideReads;
-    app.clickRoseControl('Big Colin');await app.flush();
+    app.setRosePreference('Big Colin');await app.flush();
     assert.equal(app.guideLayers.size,0);
     assert.ok(own().every(m=>!m.getElement().classList.contains('fly-large-rose-hidden')));
     app.clickGuideControl('Big Colin');for(let i=0;i<3;i++)await app.flush();
@@ -512,13 +515,13 @@ test('a late guide response cannot restore points after returning to the rose',a
     const app=runtime({projectionScale:10000,deferredGuides:true});app.mount();await app.flush();await app.flush();
     app.setZoom(15);app.emit('zoomend');await app.flush();
     app.clickGuideControl('Big Colin');assert.equal(app.guideReads,1);
-    app.clickRoseControl('Big Colin');app.resolveGuide();for(let i=0;i<6;i++)await app.flush();
+    app.clickGuideControl('Big Colin');app.resolveGuide();for(let i=0;i<6;i++)await app.flush();
     assert.equal(app.guideLayers.size,0);
     assert.ok([...app.layers].filter(m=>m.flySpot.name==='Big Colin').every(m=>!m.getElement().classList.contains('fly-large-rose-hidden')));
     app.destroy();
 });
 
-test('opted-in guide points follow actual large roses without navigation, duplicate markers or extra weather requests',async()=>{
+test('opted-in guide points follow visible sites across rose sizes without navigation or extra weather requests',async()=>{
     const app=runtime({guidePoints:true,includeApprovedSites:true,projectionScale:10000});app.mount();await app.flush();await app.flush();
     const reads=app.reads,view=JSON.stringify(app.lastView),broadcasts=app.broadcasts.length;
     assert.equal(app.guideReads,0);assert.equal(app.guideLayers.size,0);
@@ -536,14 +539,14 @@ test('opted-in guide points follow actual large roses without navigation, duplic
     app.hideGuidePoints();assert.deepEqual(app.guideLayers,stable);
     app.setFilters({...defaultSiteFilters(),regions:['north-east']});await app.flush();
     assert.ok(app.guideLayers.size>0);assert.ok(![...app.guideLayers].some(layer=>layer.flyGuideKey==='Achill Island'));
-    app.setZoom(13);app.emit('zoomend');await app.flush();assert.equal(app.guideLayers.size,0);
+    app.setZoom(13);app.emit('zoomend');await app.flush();assert.ok(app.guideLayers.size>0);
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
     assert.ok(app.guideLayers.size>0);assert.equal(app.guideReads,1);assert.equal(app.reads,reads);
     app.emit('click',{});app.setWest(2000);app.emit('moveend');await app.flush();assert.equal(app.guideLayers.size,0);
     app.destroy();assert.equal(app.allLayers.size,0);
 });
 
-test('zooming out to miniature roses clears manually selected guide points and restores them from cache when zooming in',async()=>{
+test('explicit point mode stays visible across miniature and large rose zooms',async()=>{
     for(const selection of ['guide','map-point']){
         const app=runtime({guidePoints:true,projectionScale:10000});app.mount();await app.flush();await app.flush();
         app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
@@ -555,9 +558,9 @@ test('zooming out to miniature roses clears manually selected guide points and r
         assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),'Keep icons while its large rose remains visible');
         app.setZoom(13);app.emit('zoomend');await app.flush();
         assert.ok([...app.layers].some(layer=>layer.options.icon.className.includes('mini-dial-icon')));
-        assert.equal(app.guideLayers.size,0,`${selection}: manually pinned icons must disappear with the large roses`);
+        assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),`${selection}: point mode remains active at miniature zoom`);
         app.previewTime(1792672200000);app.emit('moveend');for(let i=0;i<3;i++)await app.flush();
-        assert.equal(app.guideLayers.size,0,'Timeline and pan updates cannot revive hidden points');
+        assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),'Timeline and pan updates preserve explicitly enabled points');
         app.setZoom(14);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
         assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),'Icons return automatically with large roses');
         assert.equal(app.reads,reads);assert.equal(app.guideReads,guideReads);
@@ -565,7 +568,7 @@ test('zooming out to miniature roses clears manually selected guide points and r
     }
 });
 
-test('manual guide points also disappear when zooming makes their large roses fall back to crowded miniatures',async()=>{
+test('explicit guide points remain when collision fallback uses miniature roses',async()=>{
     const app=runtime({guidePoints:true,projectionScale:10000});app.mount();await app.flush();await app.flush();
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
     const gate=[...app.guideLayers].find(layer=>layer.flyGuideKey==='Big Colin'&&layer.flyGuidePoint.code==='F');
@@ -573,19 +576,19 @@ test('manual guide points also disappear when zooming makes their large roses fa
     // Closer screen projections reproduce adjacent sites colliding during zoom.
     app.setProjectionScale(1);app.setZoom(14);app.emit('zoomend');await app.flush();
     assert.ok([...app.layers].every(layer=>!layer.options.icon.className.endsWith(' dial-icon')));
-    assert.equal(app.guideLayers.size,0,'A manual pin cannot leave icons above crowded miniature roses');
+    assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'),'Point mode remains available when a large rose would collide');
     app.setProjectionScale(10000);app.setZoom(15);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();
     assert.ok([...app.guideLayers].some(layer=>layer.flyGuideKey==='Big Colin'));
     assert.equal(app.reads,reads);assert.equal(app.guideReads,guideReads);
     app.destroy();assert.equal(app.allLayers.size,0);
 });
 
-test('late automatic guide responses cannot revive points after zooming out or closing the plugin',async()=>{
+test('late guide responses honor opt-in mode at miniature zoom but cannot revive a closed plugin',async()=>{
     const app=runtime({guidePoints:true,projectionScale:10000,deferredGuides:true});app.mount();await app.flush();await app.flush();
     app.setZoom(15);app.emit('zoomend');await app.flush();
     assert.equal(app.guideReads,1);assert.equal(app.guideLayers.size,0);
     app.setZoom(13);app.emit('zoomend');await app.flush();app.resolveGuide();for(let i=0;i<6;i++)await app.flush();
-    assert.equal(app.guideLayers.size,0);
+    assert.ok(app.guideLayers.size>0);
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<4;i++)await app.flush();assert.ok(app.guideLayers.size>0);
     app.destroy();assert.equal(app.allLayers.size,0);
     const closing=runtime({guidePoints:true,projectionScale:10000,deferredGuides:true});closing.mount();await closing.flush();
@@ -638,23 +641,23 @@ test('automatic point selection collapses the phone sidebar so it cannot cover t
     }
 });
 
-test('a nearby eye hides and restores only its own large rose without changing guide points or rebuilding layers',async()=>{
+test('a saved rose visibility preference affects only its site without changing guide points or rebuilding layers',async()=>{
     const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
     const large=name=>[...app.layers].filter(layer=>layer.flySpot.name===name&&/ (dial-icon|ui-icon)$/.test(layer.options.icon.className));
     assert.equal(large('Big Colin').length,2);assert.equal(app.guideLayers.size,0);assert.ok(app.roseControls.size);
     const guides=new Set(app.guideLayers),layers=new Set(app.allLayers),reads=app.reads,guideReads=app.guideReads,additions=app.additions;
     const view=JSON.stringify(app.lastView),broadcasts=app.broadcasts.length;
-    app.clickRoseControl('Big Colin');assert.ok(large('Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.setRosePreference('Big Colin');assert.ok(large('Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
     assert.ok(large('Dungiven').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')),'A neighbouring rose must remain visible');
     const control=[...app.roseControls].find(layer=>layer.flyRoseControlSpot.name==='Big Colin');
     assert.ok(control.getElement().classList.contains('rose-is-hidden'),'A restore control must remain beside the hidden site');
     assert.deepEqual(app.guideLayers,guides);assert.deepEqual(app.allLayers,layers);assert.equal(app.additions,additions);
     app.previewTime(1792672200000);await app.flush();assert.deepEqual(app.guideLayers,guides);
-    app.clickRoseControl('Big Colin');assert.ok(large('Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
+    app.setRosePreference('Big Colin');assert.ok(large('Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
     assert.deepEqual(app.allLayers,layers);assert.equal(app.reads,reads);assert.equal(app.guideReads,guideReads);
     assert.equal(JSON.stringify(app.lastView),view);assert.equal(app.broadcasts.length,broadcasts);
-    app.clickRoseControl('Big Colin');app.setZoom(16);app.emit('zoomend');await app.flush();
+    app.setRosePreference('Big Colin');app.setZoom(16);app.emit('zoomend');await app.flush();
     assert.ok(large('Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));assert.equal(app.guideLayers.size,0);
     app.setZoom(13);app.emit('zoomend');await app.flush();
     assert.ok([...app.layers].every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')),'Miniature roses remain visible');
@@ -665,14 +668,14 @@ test('a nearby eye hides and restores only its own large rose without changing g
 test('per-site rose choices survive late guide data and reopening without hiding other locations',async()=>{
     const savedFilters=new Map();let app=runtime({guidePoints:true,projectionScale:10000,savedFilters,deferredGuides:true});
     app.mount();await app.flush();await app.flush();app.setZoom(15);app.emit('zoomend');await app.flush();
-    app.clickRoseControl('Big Colin');app.resolveGuide();for(let i=0;i<6;i++)await app.flush();assert.ok(app.guideLayers.size);
+    app.setRosePreference('Big Colin');app.resolveGuide();for(let i=0;i<6;i++)await app.flush();assert.ok(app.guideLayers.size);
     assert.ok([...app.layers].filter(layer=>layer.flySpot.name==='Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
     app.destroy();app=runtime({guidePoints:true,projectionScale:10000,savedFilters});app.mount();await app.flush();await app.flush();
     assert.ok([...app.layers].every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
     assert.ok(app.guideLayers.size);assert.ok([...app.layers].filter(layer=>layer.flySpot.name==='Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
     assert.ok([...app.layers].filter(layer=>layer.flySpot.name!=='Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
-    app.clickRoseControl('Big Colin');app.destroy();app=runtime({guidePoints:true,projectionScale:10000,savedFilters});app.mount();await app.flush();
+    app.setRosePreference('Big Colin');app.destroy();app=runtime({guidePoints:true,projectionScale:10000,savedFilters});app.mount();await app.flush();
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
     assert.ok([...app.layers].every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
     app.destroy();assert.equal(app.allLayers.size,0);
@@ -683,7 +686,7 @@ test('a legacy globally hidden preference permits restoring a single site while 
     const app=runtime({projectionScale:10000,savedFilters});app.mount();await app.flush();await app.flush();
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
     assert.ok([...app.layers].every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
-    assert.ok(app.roseControls.size);app.clickRoseControl('Big Colin');
+    assert.ok(app.roseControls.size);app.setRosePreference('Big Colin');
     assert.ok([...app.layers].filter(layer=>layer.flySpot.name==='Big Colin').every(layer=>!layer.getElement().classList.contains('fly-large-rose-hidden')));
     assert.ok([...app.layers].filter(layer=>layer.flySpot.name!=='Big Colin').every(layer=>layer.getElement().classList.contains('fly-large-rose-hidden')));
     app.destroy();assert.equal(app.allLayers.size,0);
@@ -691,7 +694,7 @@ test('a legacy globally hidden preference permits restoring a single site while 
 
 test('local rose controls follow filtered large sites and restore saved state after the site reappears',async()=>{
     const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
-    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();app.clickRoseControl('Big Colin');
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();app.setRosePreference('Big Colin');
     app.setFilters({...defaultSiteFilters(),regions:['south-west']});await app.flush();
     assert.ok(![...app.roseControls].some(layer=>layer.flyRoseControlSpot.name==='Big Colin'));
     app.setFilters(defaultSiteFilters());await app.flush();
@@ -1630,7 +1633,7 @@ test('review changes from another tab refresh markers without reloading forecast
     app.emitStorage(SITE_REVIEW_STORAGE_KEY);await app.flush();
     assert.equal(app.panel.allSites.find(spot=>spot.id===site.id).reviewState,'accepted');
     assert.match([...app.layers].find(layer=>layer.flySpot.id===site.id).options.icon.className,/review-accepted/);
-    assert.equal(app.reads,reads);assert.equal(app.browserListenerCount,1);
+    assert.equal(app.reads,reads);assert.equal(app.browserListenerCount,2);
     app.destroy();assert.equal(app.browserListenerCount,0);
     app.emitStorage(SITE_REVIEW_STORAGE_KEY);await app.flush();assert.equal(app.layers.size,0);
 });
@@ -1834,4 +1837,37 @@ test('weather, heights and site name share a bubble below the dial and above its
     assert.doesNotMatch(label.cloudLabel.textContent,/LCL · sea level~1,401 m ASL/);
     assert.equal(app.reads,reads);
     app.destroy();assert.equal(app.layers.size,0);
+});
+
+
+test('single desktop toggle replaces two buttons and switches both ways',async()=>{
+ const app=runtime({projectionScale:10000});app.mount();await app.flush();app.setZoom(15);app.emit('zoomend');await app.flush();
+ const control=[...app.roseControls].find(m=>m.flyRoseControlSpot.name==='Big Colin');
+ assert.equal((control.options.icon.html.match(/<button\b/g)||[]).length,1);
+ assert.match(control.options.icon.html,/site-display-toggle/);
+ assert.doesNotMatch(control.options.icon.html,/guide-visibility-toggle|rose-visibility-toggle/);
+ app.clickGuideControl('Big Colin');for(let i=0;i<6;i++)await app.flush();assert.equal(app.guideLayers.size,6);
+ app.clickGuideControl('Big Colin');await app.flush();assert.equal(app.guideLayers.size,0);
+ app.destroy();
+});
+test('mobile switch remembers chosen site after map taps and stays synchronized with desktop state',async()=>{
+ const app=runtime({projectionScale:10000});app.setViewportWidth(390);app.mount();await app.flush();app.setZoom(15);app.emit('zoomend');await app.flush();
+ app.selectNamedSite('Big Colin');assert.equal(app.mobileControl.name,'Big Colin');assert.equal(app.mobileControl.points,false);
+ app.emit('click',{});assert.equal(app.mobileControl.name,'Big Colin');
+ app.toggleMobile();for(let i=0;i<6;i++)await app.flush();assert.equal(app.guideLayers.size,6);assert.equal(app.mobileControl.points,true);
+ app.clickGuideControl('Big Colin');await app.flush();assert.equal(app.mobileControl.points,false);assert.equal(app.guideLayers.size,0);
+ app.setFilters({...defaultSiteFilters(),regions:['south-west']});await app.flush();assert.equal(app.mobileControl,undefined);
+ app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('phone point mode works with mini roses and survives zooming out without exposing its rose',async()=>{
+ const app=runtime({projectionScale:10000});app.setViewportWidth(390);app.mount();await app.flush();
+ app.setZoom(12);app.emit('zoomend');await app.flush();app.selectNamedSite('Big Colin');app.toggleMobile();
+ for(let i=0;i<6;i++)await app.flush();assert.equal(app.guideLayers.size,6);
+ const own=()=>[...app.layers].filter(m=>m.flySpot.name==='Big Colin');
+ assert.ok(own().every(m=>m.getElement().classList.contains('fly-point-mode-hidden')));
+ app.setZoom(10);app.emit('zoomend');for(let i=0;i<3;i++)await app.flush();assert.equal(app.guideLayers.size,6);
+ app.toggleMobile();await app.flush();assert.equal(app.guideLayers.size,0);
+ assert.ok(own().every(m=>!m.getElement().classList.contains('fly-point-mode-hidden')));
+ app.destroy();
 });

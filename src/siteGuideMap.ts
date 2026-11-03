@@ -27,7 +27,7 @@ function pointSymbol(kind: GuidePoint['kind'],color: string,unverified: boolean)
     return `<svg class="guide-point-symbol" viewBox="0 0 36 36" width="36" height="36" aria-hidden="true" style="display:block;overflow:visible;filter:drop-shadow(0 1px 2px #0006)">${symbols[kind]}${warning}</svg>`;
 }
 
-export function createSiteGuideMap({map,L,onSelect=()=>{}}: {map: any;L: any;onSelect?: (point: GuidePoint,guide: SiteGuideData)=>void}) {
+export function createSiteGuideMap({map,L,onSelect=()=>{},onChange=()=>{}}: {map: any;L: any;onSelect?: (point: GuidePoint,guide: SiteGuideData)=>void;onChange?:()=>void}) {
     const markers = new Map<string,{point: GuidePoint;guide: SiteGuideData;marker: any;signature: string}>();
     let automatic = new Map<string,SiteGuideData>();
     let manual: SiteGuideData | undefined;
@@ -48,7 +48,7 @@ export function createSiteGuideMap({map,L,onSelect=()=>{}}: {map: any;L: any;onS
         for(const [id,entry] of markers){
             if(desired.get(id)?.signature!==entry.signature){entry.marker.remove();markers.delete(id);}
         }
-        if(!desired.size)return;
+        if(!desired.size){onChange();return;}
         const element = map.getPane(pane) || map.createPane(pane);
         element.style.zIndex='1000';
         for (const [id,{point,guide,signature}] of desired) {
@@ -67,6 +67,7 @@ export function createSiteGuideMap({map,L,onSelect=()=>{}}: {map: any;L: any;onS
             marker.getElement?.()?.addEventListener('click',(event: Event)=>{event.stopPropagation();focus(point);});
             markers.set(id,{point,guide,marker,signature});
         }
+        onChange();
     }
     function setAutomatic(guides: SiteGuideData[]) {
         if(closed)return;
@@ -83,7 +84,16 @@ export function createSiteGuideMap({map,L,onSelect=()=>{}}: {map: any;L: any;onS
             map.fitBounds(points.map(point=>[point.lat,point.lon]),{paddingTopLeft:[phone?35:340,phone?210:100],paddingBottomRight:[35,160],maxZoom:15,animate:true,duration:650});
         }
     }
-    return {show,focus,clear,setAutomatic,destroy(){
+    function getObstacleRects(){
+        return [...markers.values()].flatMap(({marker})=>{
+            const root=marker.getElement?.();
+            return [root,root?.querySelector?.('.guide-point-caption')].flatMap(node=>{
+                const rect=node?.getBoundingClientRect?.();
+                return rect?.width&&rect?.height?[{x:rect.left,y:rect.top,width:rect.width,height:rect.height}]:[];
+            });
+        });
+    }
+    return {show,focus,clear,setAutomatic,getObstacleRects,destroy(){
         closed=true;for(const {marker} of markers.values())marker.remove();
         markers.clear();automatic.clear();manual=undefined;
     }};

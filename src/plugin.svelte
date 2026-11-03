@@ -23,7 +23,7 @@ import type {SiteGuideData,GuidePoint} from './siteGuides';
 import {createSiteGuideMap} from './siteGuideMap';
 import {createAutomaticGuidePoints} from './automaticGuidePoints';
 import {readLargeRosesVisible,readSiteRoseVisibility,saveSiteRoseVisibility} from './mapDisplay';
-import {roseControlHTML,updateRoseControl,guideControlHTML,updateGuideControl} from './roseControls';
+import {roseControlHTML,updateRoseControl,siteDisplayControlGroupHTML,updateSiteDisplayControl,placeSiteDisplayControl,controlAnchorInViewport} from './roseControls';
 import { getSiteMetadata } from './siteCatalog';
 import { defaultSiteFilters, POLAND_ENABLED, releaseSiteFilters, scopeSitePanel, sitesForView, readSiteFilters, saveSiteFilters } from './siteFilters';
 import type { SiteFilters } from './siteFilters';
@@ -710,6 +710,45 @@ let windUnit: WindUnit = 'mph';
 let largeRosesVisible = true;
 let siteRoseVisibility: Record<string,boolean> = {};
 const visibleGuideKeys = new Set<string>();
+let controlSiteId='';
+let mobileSiteControl:{id:string;name:string;points:boolean;hasGuide:boolean;roseVisible:boolean}|undefined;
+function refreshMobileSiteControl(){
+  const spot=sitesForView(filteredPanel,siteFilters.wind).find(site=>site.id===controlSiteId);
+  const key=spot&&guideKeyForSite(spot);
+  mobileSiteControl=spot?{id:spot.id,name:spot.name,points:!!key&&visibleGuideKeys.has(key),hasGuide:!!key,roseVisible:siteRoseVisible(spot.id)}:undefined;
+}
+function toggleSiteDisplay(id:string){
+  const spot=spots.find(site=>site.id===id);if(!spot)return;
+  selectSite(id);
+  const key=guideKeyForSite(spot);
+  if(!key){setSiteRoseVisible(id,!siteRoseVisible(id));return;}
+  if(visibleGuideKeys.has(key)||!siteRoseVisible(id))setSiteRoseVisible(id,true);
+  else setSiteGuidePointsVisible(id,true);
+}
+let controlLayoutTimer:any=null;
+function scheduleControlLayout(){
+  if(!mounted)return;
+  if(controlLayoutTimer!==null)clearTimeout(controlLayoutTimer);
+  controlLayoutTimer=setTimeout(()=>{controlLayoutTimer=null;if(mounted)layoutSiteControls();},0);
+}
+function layoutSiteControls(){
+  if(window.innerWidth<=600)return;
+  const container=map.getContainer?.(),bounds=container?.getBoundingClientRect?.();
+  if(!bounds?.width||!bounds.height)return;
+  const obstacles=(guideMap?.getObstacleRects()??[]).map(rect=>({x:rect.x-bounds.left,y:rect.y-bounds.top,width:rect.width,height:rect.height}));
+  for(const marker of roseControlMarkers){
+    const root=marker.getElement?.(),group=root?.querySelector('.site-layer-controls'),rect=root?.getBoundingClientRect?.();
+    if(!group||!rect)continue;
+    const anchor={x:rect.left-bounds.left+22,y:rect.top-bounds.top+22};
+    const visible=controlAnchorInViewport(anchor,{width:bounds.width,height:bounds.height});
+    root.style.visibility=visible?'':'hidden';if(!visible)continue;
+    const spot=marker.flyRoseControlSpot,key=guideKeyForSite(spot),points=!!key&&visibleGuideKeys.has(key);
+    const position=placeSiteDisplayControl({anchor:{x:rect.left-bounds.left+22,y:rect.top-bounds.top+22},size:{width:group.offsetWidth,height:group.offsetHeight},viewport:{width:bounds.width,height:bounds.height},diameter:marker.flyRoseDiameter,points:points||!siteRoseVisible(spot.id),obstacles});
+    root.style.setProperty('--control-x',`${position.x+bounds.left-rect.left}px`);
+    root.style.setProperty('--control-y',`${position.y+bounds.top-rect.top}px`);
+    obstacles.push({...position,width:group.offsetWidth,height:group.offsetHeight});
+  }
+}
 let forecastUtcOffset: number | undefined;
 let siteFilters = defaultSiteFilters();
 let altitudeEnabled = false;
@@ -1266,7 +1305,7 @@ function applyRoseControlState(marker: any){
   root?.classList.toggle('rose-is-hidden',!visible);
   updateRoseControl(root?.querySelector('.rose-visibility-toggle'),spot.name,visible);
   const key=guideKeyForSite(spot);
-  updateGuideControl(root?.querySelector('.guide-visibility-toggle'),spot.name,!!key&&visibleGuideKeys.has(key));
+  updateSiteDisplayControl(root?.querySelector('.site-display-toggle'),spot.name,!!key&&visibleGuideKeys.has(key));
 }
 
 function setSiteRoseVisible(id: string,visible: boolean){
@@ -1282,7 +1321,9 @@ function setSiteRoseVisible(id: string,visible: boolean){
   for(const spot of spots)if(spot.id!==id&&visibleGuideKeys.has(guideKeyForSite(spot)??''))delete savedVisibility[spot.id];
   saveSiteRoseVisibility(savedVisibility);
   for(const marker of [...dialMarkers,...uiMarkers])applyLargeRoseVisibility(marker);
+  syncMiniGuideControls();
   for(const marker of roseControlMarkers)applyRoseControlState(marker);
+  refreshMobileSiteControl();
   updateGuidePointsForRoses();
 }
 
@@ -1296,14 +1337,29 @@ function setSiteGuidePointsVisible(id:string,visible:boolean){
   // This transient mode is intentionally not saved as a hidden-rose preference.
   for(const site of spots)if(guideKeyForSite(site)===key)siteRoseVisibility[site.id]=!visible;
   for(const marker of [...dialMarkers,...uiMarkers])applyLargeRoseVisibility(marker);
+  syncMiniGuideControls();
   for(const marker of roseControlMarkers)applyRoseControlState(marker);
+  refreshMobileSiteControl();
   updateGuidePointsForRoses();
 }
 
+function miniPointMode(spot:Spot){const key=guideKeyForSite(spot);return !!key&&visibleGuideKeys.has(key);}
+function syncMiniGuideControls(){
+  for(const marker of miniDialMarkers){
+    const active=miniPointMode(marker.flySpot);
+    marker.getElement?.()?.classList.toggle('fly-point-mode-hidden',active);
+    const control=roseControlMarkers.find(item=>item.flyRoseControlSpot.id===marker.flySpot.id);
+    if(active&&!control)addRoseControl(marker.flySpot,0);
+    else if(!active&&control?.flyRoseDiameter===0){control.remove();roseControlMarkers=roseControlMarkers.filter(item=>item!==control);}
+  }
+}
+
 function addRoseControl(spot: Spot,D: number){
-  const icon=L.divIcon({className:'fly-site-rose-control',iconSize:[44,44],iconAnchor:[22,22],html:`<span class="site-layer-controls">${roseControlHTML(spot.name,siteRoseVisible(spot.id))}${guideKeyForSite(spot)?guideControlHTML(spot.name,visibleGuideKeys.has(guideKeyForSite(spot)!)):""}</span>`});
+  const key=guideKeyForSite(spot);
+  const html=key?siteDisplayControlGroupHTML(spot.name,visibleGuideKeys.has(key)):`<span class="site-layer-controls">${roseControlHTML(spot.name,siteRoseVisible(spot.id))}</span>`;
+  const icon=L.divIcon({className:'fly-site-rose-control',iconSize:[44,44],iconAnchor:[22,22],html});
   const marker=L.marker([spot.lat,spot.lon],{icon,pane:'flyIrelandRoseControls',interactive:true,keyboard:false,bubblingMouseEvents:false}).addTo(map);
-  marker.flyRoseControlSpot=spot;
+  marker.flyRoseControlSpot=spot;marker.flyRoseDiameter=D;
   const root=marker.getElement?.();
   if(root){
     root.style.setProperty('--rose-diameter',`${D}px`);
@@ -1311,9 +1367,7 @@ function addRoseControl(spot: Spot,D: number){
     for(const name of ['pointerdown','mousedown','touchstart','dblclick','keydown','keyup'])root.addEventListener(name,(event: Event)=>event.stopPropagation());
     root.addEventListener('click',(event: Event)=>{
       event.stopPropagation();
-      if((event.target as Element)?.closest?.('.guide-visibility-toggle')){
-        const key=guideKeyForSite(spot);setSiteGuidePointsVisible(spot.id,!!key&&!visibleGuideKeys.has(key));
-      }else setSiteRoseVisible(spot.id,!siteRoseVisible(spot.id));
+      toggleSiteDisplay(spot.id);
     });
   }
   applyRoseControlState(marker);roseControlMarkers.push(marker);
@@ -1516,6 +1570,7 @@ function openSiteForecast(spot: Spot){
 
 function selectSite(id: string){
   selectedSiteId = id;
+  controlSiteId=id;refreshMobileSiteControl();
   refreshSiteHighlights();
 }
 
@@ -1540,11 +1595,12 @@ async function openSiteGuide(spot: Spot){
 function closeSiteGuide(){guideRequest++;guideOpen=false;guideLoading=false;}
 function hideGuidePoints(){guideMap?.clear();mapGuide=undefined;}
 function updateGuidePointsForRoses(){
-  const largeSites=dialMarkers.map(marker=>marker.flySpot);
+  const renderedSites=[...dialMarkers,...miniDialMarkers].map(marker=>marker.flySpot);
   const manualKey=mapGuide?.key;
-  // A selected point must not keep its guide pinned after its large rose disappears.
-  if(manualKey&&!largeSites.some(spot=>guideKeyForSite(spot)===manualKey))hideGuidePoints();
-  automaticGuidePoints?.update(largeSites.filter(spot=>visibleGuideKeys.has(guideKeyForSite(spot)??"")));
+  // Point mode also works for miniatures, including collision fallback and mobile selection.
+  if(manualKey&&!renderedSites.some(spot=>guideKeyForSite(spot)===manualKey))hideGuidePoints();
+  automaticGuidePoints?.update(renderedSites.filter(spot=>visibleGuideKeys.has(guideKeyForSite(spot)??"")));
+  scheduleControlLayout();
 }
 function showGuideOnMap(point?: GuidePoint){
   if (!guideData || !guideSite) return;
@@ -1629,6 +1685,7 @@ function setSiteFilters(filters: SiteFilters){
   siteFilters = releaseSiteFilters(filters);
   saveSiteFilters(siteFilters);
   if(previousCountry!==siteFilters.country){
+    controlSiteId='';mobileSiteControl=undefined;
     closeDirectionEditor();
     selectedSiteId='';highlightSite('');closeSiteGuide();hideGuidePoints();
     automaticGuidePoints?.update([]);
@@ -1873,10 +1930,12 @@ function addMiniDial(s: Spot){
   updateWeatherIndicator(m);
   applySiteHighlight(m);
   miniDialMarkers.push(m);
+  if(miniPointMode(s)){m.getElement?.()?.classList.add('fly-point-mode-hidden');addRoseControl(s,0);}
 }
 
 /* ======= RENDER GŁÓWNY (widoczne + kolizje) ======= */
 function renderAll(){
+  refreshMobileSiteControl();
   const z = map.getZoom();
   const D = sizeForZoom(z);
   ensurePanes();
@@ -1938,6 +1997,7 @@ function scheduleRender(delay=80){
 }
 
 /* ======= SUBSKRYPCJE ======= */
+function onControlResize(){scheduleControlLayout();}
 function onZoomEnd(){ scheduleRender(60); }
 function onMoveEnd(){ scheduleRender(80); }
 
@@ -1980,12 +2040,13 @@ onMount(() => {
   }
   if (!spots.length) return;
   mounted = true;
-  guideMap = createSiteGuideMap({map,L,onSelect:(_point,guide)=>{
+  guideMap = createSiteGuideMap({map,L,onChange:scheduleControlLayout,onSelect:(_point,guide)=>{
     mapGuide=guide;
     if(typeof window!=='undefined'&&window.innerWidth<=600)sitePanelComponent?.collapsePanel();
   }});
   automaticGuidePoints=createAutomaticGuidePoints({loader:guideLoader,points:guideMap,setTimer:setTimeout,clearTimer:clearTimeout});
   window.addEventListener('storage',onReviewStorage);
+  window.addEventListener('resize',onControlResize);
   updateForecastUI();
   detailModelSync = createDetailModelSync({store,broadcast,
     modelName: model => products[model]?.modelName,
@@ -2039,6 +2100,8 @@ onDestroy(() => {
   guideLoader.destroy();guideMap?.destroy();guideMap=undefined;
   mapGuide=undefined;
   window.removeEventListener('storage',onReviewStorage);
+  window.removeEventListener('resize',onControlResize);
+  if(controlLayoutTimer!==null)clearTimeout(controlLayoutTimer);controlLayoutTimer=null;
   cancelSiteForecastOpen?.();
   modelSelection++; modelPreparation++;
   stopModelRunRefresh?.(); stopModelRunRefresh = undefined;
@@ -2055,7 +2118,7 @@ onDestroy(() => {
 });
 </script>
 
-<SitePanel bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
+<SitePanel {mobileSiteControl} onDisplayToggle={toggleSiteDisplay} bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
   directionReviewRemaining={directionReview.eligible.filter(site=>!directionState[site.id]?.confirmedAt).length}
   directionReviewTotal={directionReview.eligible.length} onDirectionEdit={openDirectionEditor}
   onGuide={openSiteGuide}
@@ -2083,10 +2146,17 @@ onDestroy(() => {
 :global(.wind-rose-icon){ opacity: 1 !important; z-index:var(--site-stack-order,0) !important; }
 :global(.wind-direction-pending.mini-dial-icon .mini-wind-rose),:global(.wind-direction-pending.dial-icon .wr-dial){filter:drop-shadow(0 0 4px #7c3aed);}
 :global(.wind-direction-pending.mini-dial-icon::after),:global(.wind-direction-pending.dial-icon::after){content:'?';position:absolute;right:0;bottom:0;background:#7c3aed;color:white;border:2px solid white;border-radius:50%;width:20px;height:20px;text-align:center;font:600 14px/20px system-ui;pointer-events:none;}
-:global(.wind-rose-icon.fly-large-rose-hidden){display:none!important;pointer-events:none!important;}
+:global(.wind-rose-icon.fly-point-mode-hidden),:global(.wind-rose-icon.fly-large-rose-hidden){display:none!important;pointer-events:none!important;}
 :global(.fly-site-rose-control){background:transparent!important;border:0!important;overflow:visible;pointer-events:none!important;z-index:var(--site-control-order,0)!important;}
 :global(.rose-visibility-toggle),:global(.guide-visibility-toggle){display:flex;align-items:center;justify-content:center;gap:6px;width:44px;height:44px;box-sizing:border-box;padding:9px;border:1px solid #b9d1c5;border-radius:11px;background:#fffffff5;color:#255744;box-shadow:0 2px 7px #173c2a33;font:600 11px/1.3 system-ui,sans-serif;cursor:pointer;pointer-events:auto;text-transform:none;letter-spacing:normal;}
-:global(.site-layer-controls){display:flex;gap:4px;transform:translate(calc(var(--rose-diameter)/2 - 8px),calc(32px - var(--rose-diameter)/2));pointer-events:none;}
+:global(.site-layer-controls){position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;width:max-content;transform:translate(var(--control-x,calc(22px - 50%)),var(--control-y,calc(10px - var(--rose-diameter)/2 - 44px)));pointer-events:none;}
+:global(.site-control-name){display:none;max-width:190px;padding:4px 8px;border-radius:5px;background:#fffffff5;box-shadow:0 1px 4px #153d3a20;color:#244b3a;font:600 11px/1.3 system-ui;overflow-wrap:anywhere;}
+:global(.rose-is-hidden .site-control-name){display:block;}
+:global(.site-display-toggle){display:flex;align-items:center;gap:2px;min-height:44px;box-sizing:border-box;padding:3px;border:1px solid #b5ccc1;border-radius:10px;background:#fffffff7;color:#496d5c;box-shadow:0 2px 6px #193b3c25;cursor:pointer;font:600 12px/1.3 system-ui;pointer-events:auto;text-transform:none;letter-spacing:normal;touch-action:manipulation;}
+:global(.site-display-toggle .display-mode){padding:9px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;}
+:global(.site-display-toggle .display-mode.active){background:#1c795d;color:white;}
+:global(.site-display-toggle:focus-visible){outline:3px solid #289dc4;outline-offset:3px;}
+@media(max-width:600px){:global(.fly-site-rose-control){display:none!important;}}
 :global(.guide-visibility-toggle svg){fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 :global(.guide-visibility-toggle[aria-pressed="true"]){border-color:#16805d;background:#e7f5ed;color:#146146;}
 :global(.rose-visibility-toggle svg){flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}

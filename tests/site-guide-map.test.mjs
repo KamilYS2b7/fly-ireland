@@ -57,3 +57,14 @@ test('clicking an automatic point selects its owning guide and pins only that gu
  controller.setAutomatic([]);assert.equal(b.layers.size,2);assert.ok(b.layers.has(marker));
  controller.clear();assert.deepEqual([...b.layers],['existing rose']);
 });
+
+test('desktop layout receives point symbols and captions after asynchronous guide rendering',()=>{
+ const b=boundary();let changes=0;
+ const controller=createSiteGuideMap({...b,onChange:()=>changes++});
+ controller.setAutomatic([first]);assert.equal(changes,1);
+ const markers=[...b.layers].filter(x=>x!=='existing rose');
+ markers[0].getElement=()=>({getBoundingClientRect:()=>({left:100,top:120,width:40,height:40}),querySelector:()=>({getBoundingClientRect:()=>({left:85,top:165,width:70,height:24})})});
+ assert.deepEqual(controller.getObstacleRects(),[{x:100,y:120,width:40,height:40},{x:85,y:165,width:70,height:24}]);
+ controller.setAutomatic([]);assert.equal(changes,2);assert.deepEqual(controller.getObstacleRects(),[]);
+ controller.destroy();controller.setAutomatic([first]);assert.equal(changes,2);
+});
