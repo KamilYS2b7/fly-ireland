@@ -2153,9 +2153,9 @@ onDestroy(() => {
 :global(.cloud-height-value){color:#193540;font-weight:700;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;}
 :global(.cloud-height-row[data-clearance="above"] .cloud-height-value){color:#15803d;}
 :global(.cloud-height-row[data-clearance="below"] .cloud-height-value){color:#b91c1c;}
-:global(.large-cloud-heights){position:absolute;z-index:2;box-sizing:border-box;padding:3px;background:#fff;border:1px solid #cbd5e1;border-radius:5px;display:grid;gap:1px;line-height:1.1;pointer-events:none;font-family:system-ui,sans-serif;box-shadow:0 1px 4px #0003;}
+:global(.large-cloud-heights){position:absolute;z-index:2;box-sizing:border-box;padding:3px;display:grid;gap:1px;line-height:1.1;pointer-events:none;font-family:system-ui,sans-serif;text-shadow:-1px -1px 1px #fff,1px -1px 1px #fff,-1px 1px 1px #fff,1px 1px 1px #fff;}
 :global(.large-cloud-heights .cloud-height-row){column-gap:4px;}
-:global(.large-cloud-heights .cloud-height-label){font-size:.9em;}
+:global(.large-cloud-heights .cloud-height-label){font-size:.9em;font-weight:600;color:#243746;}
 :global(.mini-dial-icon){ background:transparent; border:0; cursor:pointer; }
 :global(.map-weather-indicators){position:absolute;left:50%;top:-21px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:1px;height:23px;pointer-events:none;z-index:0;}
 :global(.mini-dial-icon .map-weather-indicators){top:-17px;}
