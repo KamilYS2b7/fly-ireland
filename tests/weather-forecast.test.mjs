@@ -32,6 +32,17 @@ test('documented Windy point data uses cbase on the surface timestamp grid, with
     assert.equal(samplePointForecast(spot,missing,time).cloudBaseStatus,'unavailable');
 });
 
+test('missing cloud and LCL inputs cannot remove valid wind speed and direction',()=>{
+    const p=payload();delete p.data.meteogram;delete p.data.data.icon;
+    p.data.data.cbase=[null,null,null];
+    const reading=samplePointForecast(spot,p,time);
+    assert.equal(reading.status,'pass');
+    assert.ok(Math.abs(reading.mph-4/0.44704)<1e-9);
+    assert.equal(reading.direction,180);
+    assert.equal(reading.cloudBaseStatus,'unavailable');
+    assert.equal(reading.lclStatus,'unavailable');
+});
+
 test('weather identifies the actual source hour and resolution rather than claiming hourly data from a coarse response',()=>{
     const coarse=samplePointForecast(spot,payload(),time+hour);
     assert.equal(coarse.weatherTimestamp,time);
