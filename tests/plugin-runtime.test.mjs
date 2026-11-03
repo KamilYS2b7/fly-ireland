@@ -1767,7 +1767,7 @@ test('owner-approved videos ship independently of browser choices, retire comple
 });
 
 
-test('large cloud heights use a Leaflet pane above every dial and stay in the upper quarter',async()=>{
+test('weather, heights and site name share a bubble below the dial and above its actions',async()=>{
     const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
     app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
     const layers=[...app.layers];
@@ -1776,13 +1776,15 @@ test('large cloud heights use a Leaflet pane above every dial and stay in the up
     const label=layers.find(m=>m.flySpot.id===dial.flySpot.id&&m.options.icon.html.includes('large-cloud-heights'));
     assert.ok(label);
     assert.ok(Number(app.panes.get(label.options.pane).style.zIndex)>Number(app.panes.get(dial.options.pane).style.zIndex),'Cloud heights must be above all dial markers, independently of marker latitude/z-index');
-    const style=label.options.icon.html.match(/class="large-cloud-heights"[^>]*style="([^"]+)"/)[1];
+    const html=label.options.icon.html;
+    assert.match(html,/class="rose-summary-name"/);
+    assert.match(html,/class="rose-summary-body">[\s\S]*map-weather-indicators[\s\S]*large-cloud-heights/);
+    assert.doesNotMatch(dial.options.icon.html,/class="title"|map-weather-indicators|large-cloud-heights/);
+    const style=html.match(/class="rose-summary"[^>]*style="([^"]+)"/)[1];
     const top=Number(style.match(/top:([\d.]+)px/)[1]);
-    const center=label.options.icon.iconAnchor[1];
-    assert.ok(top<center*.4,'Cloud heights stay above the central wind speed');
-    const left=Number(style.match(/left:([\d.]+)px/)[1]);
-    const width=Number(style.match(/width:([\d.]+)px/)[1]);
-    assert.ok(left<center*.4 && left+width<center,'Readings fit inside the upper-left quadrant');
+    const actionsTop=Number(html.match(/class="rose-actions" style="top:([\d.]+)px/)[1]);
+    assert.ok(top>label.options.icon.iconAnchor[1]*2,'Summary clears the complete dial');
+    assert.ok(actionsTop>=top+118,'Actions clear the summary bubble');
     assert.match(label.cloudLabel.textContent,/LCL/,'Initial forecast reaches the raised label');
     const reads=app.reads;
     app.store.set('timestamp',1792674000000);await app.flush();

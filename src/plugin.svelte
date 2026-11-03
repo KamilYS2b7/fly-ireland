@@ -1068,7 +1068,6 @@ const diffRects = Array.from({ length: MAX_DIFF }, (_, i) => {
         </g>
       </g>
     </svg>
-    <div class="title">${spot.name}</div>
   </div>`;
 
 }
@@ -1077,8 +1076,9 @@ const diffRects = Array.from({ length: MAX_DIFF }, (_, i) => {
 /* ======= MENU YT + MAPS + (NOWE) INFO ======= */
 function buildMenuHTML(spot:Spot, D:number){
   const BTN_SIZE = 34;
-  // Leave space for the dial padding and site name above the action bar.
-  const actionsTop = D + diffPadForD(D) + 28;
+  // Keep the summary below the outer direction arrow and the actions below it.
+  const summaryTop = D + diffPadForD(D) + 12;
+  const actionsTop = summaryTop + 118;
   const videos = (spot.youtube ?? []).slice(0, 8);
   const ytButtons = videos.map((url, index) => {
     const number = videos.length > 1 ? `<span class="video-number" aria-hidden="true">${index + 1}</span>` : '';
@@ -1121,6 +1121,10 @@ function buildMenuHTML(spot:Spot, D:number){
 
   return `
     <div class="wr wr-ui" style="width:${D}px; height:${actionsTop + 46}px" data-spot-id="${spot.id}">
+      <div class="rose-summary" style="top:${summaryTop}px;width:${Math.max(250,D)}px">
+        <div class="rose-summary-name">${spot.name.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!))}</div>
+        <div class="rose-summary-body">${weatherMarkerHTML(spot)}${cloudBaseMarkerHTML(spot,D)}</div>
+      </div>
       <div class="rose-actions" style="top:${actionsTop}px" role="group" aria-label="Site actions">
         ${ytMenu}
         ${mapsMenu}
@@ -1312,11 +1316,11 @@ function addDial(s: Spot, D: number, animate:boolean){
 function addUiMenu(s: Spot, D: number){
   if (s.toVerify) return;
   // Weather and heights must escape each dial marker's stacking context.
-  const html = weatherMarkerHTML(s, D) + cloudBaseMarkerHTML(s, D) + buildMenuHTML(s, D);
+  const html = buildMenuHTML(s, D);
   const icon = L.divIcon({
     className: 'wind-rose-icon ui-icon',
     html,
-    iconSize: [D, D + diffPadForD(D) + 74],
+    iconSize: [D, D + diffPadForD(D) + 176],
     iconAnchor: [D/2, D/2],
   });
   const m = L.marker([s.lat, s.lon], { icon, interactive:true, pane:paneUi, title:windBadgeText(s).title }).addTo(map);
@@ -1371,12 +1375,10 @@ function windBadgeText(s: Spot){
   };
 }
 
-function weatherMarkerHTML(spot: Spot, diameter?: number){
+function weatherMarkerHTML(spot: Spot){
   const weather = weatherDisplay(windForecast.get(spot));
   const sky = weatherIconUrl(weather,iconsDir);
-  const center = diameter ? diameter / 2 : 0;
-  const position = diameter ? ` style="left:${center + diameter * 0.32}px;top:${center - diameter * 0.30}px;--weather-size:${Math.round(diameter * 0.19)}px"` : '';
-  return `<span class="map-weather-indicators"${position}><img class="map-weather-icon" style="display:${sky ? 'block' : 'none'}" ${sky ? `src="${sky}"` : ''} alt="Forecast weather" title="${weather.description}"/></span>`;
+  return `<span class="map-weather-indicators"><img class="map-weather-icon" style="display:${sky ? 'block' : 'none'}" ${sky ? `src="${sky}"` : ''} alt="Forecast weather" title="${weather.description}"/></span>`;
 }
 
 function gustMarkerHTML(spot: Spot, diameter?: number){
@@ -1415,8 +1417,7 @@ function cloudBaseMarkerHTML(spot: Spot, diameter?: number){
   if (!diameter && (map.getZoom() < 12 || map.getZoom() >= minZoomToShow)) return '';
   const base = cloudBaseMarkerDisplay(windForecast.get(spot),!!diameter);
   if (diameter) {
-    const center = diameter / 2;
-    return `<span class="large-cloud-heights" title="${base.description}" style="left:${center - diameter * 0.385}px;top:${center - diameter * 0.35}px;width:${diameter * 0.37}px;font-size:${Math.max(9, Math.round(diameter * 0.036))}px">${base.html}</span>`;
+    return `<span class="large-cloud-heights" title="${base.description}">${base.html}</span>`;
   }
   return `<span class="mini-cloud-base" title="${base.description}">${base.html}</span>`;
 }
@@ -2153,9 +2154,12 @@ onDestroy(() => {
 :global(.cloud-height-value){color:#193540;font-weight:700;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;}
 :global(.cloud-height-row[data-clearance="above"] .cloud-height-value){color:#15803d;}
 :global(.cloud-height-row[data-clearance="below"] .cloud-height-value){color:#b91c1c;}
-:global(.large-cloud-heights){position:absolute;z-index:2;box-sizing:border-box;padding:3px;display:grid;gap:1px;line-height:1.1;pointer-events:none;font-family:system-ui,sans-serif;text-shadow:-1px -1px 1px #fff,1px -1px 1px #fff,-1px 1px 1px #fff,1px 1px 1px #fff;}
-:global(.large-cloud-heights .cloud-height-row){column-gap:4px;}
-:global(.large-cloud-heights .cloud-height-label){font-size:.9em;font-weight:600;color:#243746;}
+:global(.rose-summary){position:absolute;left:50%;transform:translateX(-50%);height:110px;box-sizing:border-box;padding:8px 10px;background:#fff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 2px 6px #0003;color:#243746;pointer-events:none;font-family:system-ui,sans-serif;}
+:global(.rose-summary-name){font-size:12px;font-weight:700;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;margin-bottom:6px;}
+:global(.rose-summary-body){display:flex;align-items:center;gap:10px;}
+:global(.large-cloud-heights){display:grid;flex:1;min-width:0;gap:2px;font-size:11px;line-height:1.2;}
+:global(.large-cloud-heights .cloud-height-row){column-gap:6px;}
+:global(.large-cloud-heights .cloud-height-label){font-size:10px;font-weight:500;color:#243746;}
 :global(.mini-dial-icon){ background:transparent; border:0; cursor:pointer; }
 :global(.map-weather-indicators){position:absolute;left:50%;top:-21px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:1px;height:23px;pointer-events:none;z-index:0;}
 :global(.mini-dial-icon .map-weather-indicators){top:-17px;}
@@ -2163,8 +2167,8 @@ onDestroy(() => {
 :global(.map-gust-warning){position:absolute;left:calc(100% - 7px);top:calc(100% - 17px);align-items:center;width:var(--gust-warning-size,20px);height:var(--gust-warning-size,20px);z-index:4;pointer-events:auto;}
 :global(.map-gust-warning svg){display:block;width:100%;height:100%;filter:drop-shadow(0 1px 2px #0008);}
 :global(.map-gust-warning[data-severity="strong"]){--gust-warning-color:#dc2626;}
-:global(.ui-icon .map-weather-indicators){transform:translate(-50%,-50%);width:var(--weather-size);height:var(--weather-size);z-index:2;}
-:global(.ui-icon .map-weather-icon){width:100%;height:100%;}
+:global(.rose-summary .map-weather-indicators){position:static;transform:none;flex:0 0 36px;width:36px;height:36px;}
+:global(.rose-summary .map-weather-icon){width:100%;height:100%;}
 :global(.mini-wind-rose){ position:relative; z-index:1; display:block; overflow:visible; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
 :global(.mini-wind-rose .mini-wind-range){ fill:none; stroke:#168a45; stroke-width:3; }
 :global(.mini-wind-reading){font:400 8.5px system-ui,sans-serif;fill:#fff;stroke:none;pointer-events:none;}
