@@ -468,8 +468,8 @@
   .rain-icon :global(svg){width:18px;height:12px;fill:#0284c7;}
   .empty{padding:17px 7px;color:#526b73;line-height:1.6;margin:0;}
   .status{margin:3px 2px 10px;font-size:11px;color:#526b73;}
-  .cloud-base[data-clearance="above"] b,.cloud-base[data-clearance="above"] .cloud-reference{color:#15803d;}
-  .cloud-base[data-clearance="below"] b,.cloud-base[data-clearance="below"] .cloud-reference{color:#b91c1c;}
+  .cloud-base[data-clearance="above"] b{color:#15803d;}
+  .cloud-base[data-clearance="below"] b{color:#b91c1c;}
   .forecast-diagnostics{padding:6px 10px;font-size:11px;color:#526b73;}
   .forecast-diagnostics summary{cursor:pointer;}
   .forecast-diagnostics pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.4 monospace;}
