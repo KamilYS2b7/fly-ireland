@@ -34,3 +34,10 @@ of advected/stratiform clouds. CB and LCL may legitimately differ.
 
 Mini rose labels use **CB** for the model parameter and **LCL** (with `~`) for
 the parcel estimate. The side panel shows them separately with AGL/ASL labels.
+
+Site clearance is `LCL ASL - header.elevation`, using the terrain estimate at
+the site's catalogue coordinates, not a surveyed take-off A/B altitude. It is
+shown as above/below site without clamping negative values. Unknown model or
+site terrain never becomes zero elevation. Mini rose labels include model AGL,
+site clearance and ASL separately. This coordinate conversion does not recalculate
+the parcel using temperature at the actual hillside.

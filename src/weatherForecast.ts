@@ -54,7 +54,11 @@ export function cloudBaseMarkerDisplay(reading:Partial<WindReading>) {
     const cloud=cloudBaseDisplay(reading),lcl=lclDisplay(reading);
     const parts=[];
     if(reading.cloudBaseStatus==='available')parts.push(`CB: ${cloud.value}`);
-    if(reading.lclStatus==='available')parts.push(`LCL: ${lcl.value}`);
+    if(reading.lclStatus==='available'){
+        parts.push(`LCL model: ${lcl.value}`);
+        parts.push(lcl.siteValue??'Site elevation unavailable');
+        if(lcl.aslValue)parts.push(`LCL: ${lcl.aslValue}`);
+    }
     return {text:parts.join('\n')||(reading.status==='loading'?'CB: Loading…':'CB: No data'),
         description:`${cloud.description} ${lcl.description}`};
 }

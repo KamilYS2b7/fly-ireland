@@ -56,8 +56,11 @@ export function sampleLcl(payload:any,timestamp:number):Partial<WindReading> {
     const lcl=boltonLcl(temperature!,dewPoint!,pressure!);
     if(!lcl)return {...missing,lclNote:'LCL unavailable: forecast inputs or units are outside the supported range.',lclDiagnostics:lclInputDiagnostics(payload,left,right)};
     const terrain=payload.header?.modelElevation;
+    const site=payload.header?.elevation;
+    const asl=Number.isFinite(terrain)&&terrain>=-500&&terrain<9000?terrain+lcl.heightM:undefined;
     return {lclStatus:'available',lclAglM:lcl.heightM,lclPressurePa:lcl.pressurePa,
-        ...(Number.isFinite(terrain)&&terrain>=-500&&terrain<9000?{lclAslM:terrain+lcl.heightM}:{})};
+        ...(asl!==undefined?{lclAslM:asl}:{}),
+        ...(asl!==undefined&&Number.isFinite(site)&&site>=-500&&site<9000?{lclAboveSiteM:asl-site}:{})};
 }
 
 const heightFormat=new Intl.NumberFormat('en-GB',{maximumFractionDigits:0});
@@ -67,5 +70,8 @@ export function lclDisplay(reading:Partial<WindReading>) {
     if(reading.lclStatus!=='available'||!Number.isFinite(reading.lclAglM))return {label,value:'No data',aslValue:'',diagnostics:reading.lclDiagnostics??'',description:reading.lclNote??'LCL requires valid near-surface temperature, dew point and surface pressure from the selected model.'};
     const value=`~${heightFormat.format(reading.lclAglM!)} m AGL`;
     const aslValue=Number.isFinite(reading.lclAslM)?`~${heightFormat.format(reading.lclAslM!)} m ASL`:'';
-    return {label,value,aslValue,diagnostics:'',description:`Bolton parcel LCL with a dry-adiabatic height estimate: ${value}${aslValue?` / ${aslValue}`:''}. AGL is above model ground, not the launch. This does not guarantee cloud formation or the actual cloud base.`};
+    const siteValue=Number.isFinite(reading.lclAboveSiteM)
+        ?`~${heightFormat.format(Math.abs(reading.lclAboveSiteM!))} m ${reading.lclAboveSiteM!<0?'below':'above'} site`
+        :'Site elevation unavailable';
+    return {label,value,aslValue,siteValue,diagnostics:'',description:`Bolton parcel LCL with a dry-adiabatic height estimate: ${value}${aslValue?` / ${aslValue}`:''}. ${siteValue}. Site clearance uses Windy's terrain elevation at the site coordinates, not a surveyed take-off height. This does not guarantee cloud formation or the actual cloud base.`};
 }

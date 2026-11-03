@@ -662,12 +662,12 @@ test('mini roses show separate model cloud base and LCL and update from cached t
     const marker=[...app.layers].find(layer=>layer.options?.icon?.className?.includes('mini-dial-icon'));
     assert.match(marker.options.icon.html,/mini-cloud-base/);
     assert.match(marker.cloudLabel.textContent,/CB: 300 m AGL/);
-    assert.match(marker.cloudLabel.textContent,/LCL: ~1,251 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/LCL model: ~1,251 m AGL/);
     assert.match(marker.cloudLabel.title,/does not guarantee cloud formation/);
     const reads=app.reads;
     app.store.set('timestamp',1792674000000);await app.flush();
     assert.match(marker.cloudLabel.textContent,/CB: 600 m AGL/);
-    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL: ~1,251 m AGL/);
+    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL model: ~1,251 m AGL/);
     assert.equal(app.reads,reads);app.destroy();
 });
 

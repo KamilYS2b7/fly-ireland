@@ -40,17 +40,29 @@ test('inputs interpolate at the requested time and ASL uses only model terrain, 
     assert.equal(reading.lclStatus,'available');
     assert.equal(reading.lclAglM,boltonLcl(294.15,283.15,99500).heightM);
     assert.equal(reading.lclAslM,reading.lclAglM+400);
+    assert.equal(reading.lclAboveSiteM,reading.lclAslM-700);
     delete p.header.modelElevation;
     assert.equal(sampleLcl(p,time).lclAslM,undefined);
+    assert.equal(sampleLcl(p,time).lclAboveSiteM,undefined);
     assert.equal(lclDisplay(reading).label,'Estimated cumulus base (LCL)');
     assert.match(lclDisplay(reading).value,/m AGL/);
     assert.match(lclDisplay(reading).aslValue,/m ASL/);
 });
 test('miniature labels distinguish native cloud base, estimated LCL and missing data',()=>{
     const r={status:'pass',cloudBaseStatus:'available',cloudBaseM:900,cloudBaseReference:'AGL',...sampleLcl(payload(),time)};
-    assert.match(cloudBaseMarkerDisplay(r).text,/CB: 900 m AGL\nLCL: ~1,251 m AGL/);
-    assert.match(cloudBaseMarkerDisplay(sampleLcl(payload(),time)).text,/^LCL:/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/CB: 900 m AGL\nLCL model: ~1,251 m AGL/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/above site\nLCL: ~1,651 m ASL/);
+    assert.match(cloudBaseMarkerDisplay(sampleLcl(payload(),time)).text,/^LCL model:/);
     assert.equal(cloudBaseMarkerDisplay({}).text,'CB: No data');
+});
+
+test('site clearance preserves negative values instead of inventing a positive cloud base above launch',()=>{
+    const r={lclStatus:'available',lclAglM:100,lclAslM:300,lclAboveSiteM:20};
+    assert.equal(lclDisplay(r).siteValue,'~20 m above site');
+    r.lclAboveSiteM=-80;
+    assert.equal(lclDisplay(r).siteValue,'~80 m below site');
+    delete r.lclAboveSiteM;
+    assert.equal(lclDisplay(r).siteValue,'Site elevation unavailable');
 });
 
 test('unavailable LCL exposes actual forecast field names and numeric samples without raw response metadata',()=>{

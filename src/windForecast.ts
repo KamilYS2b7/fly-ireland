@@ -49,6 +49,7 @@ export type WindReading = {
     lclStatus?: 'loading' | 'available' | 'unavailable';
     lclAglM?: number;
     lclAslM?: number;
+    lclAboveSiteM?: number;
     lclPressurePa?: number;
     lclNote?: string;
     lclDiagnostics?: string;

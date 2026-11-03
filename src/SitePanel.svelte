@@ -268,6 +268,7 @@
             <span class="cloud-base" title={spot.lcl?.description}>
               <span class="reading-row"><span>Est. cumulus base (LCL)</span><b>{spot.lcl?.value ?? 'No data'}</b></span>
               <span class="cloud-reference">{spot.lcl?.value === 'No data' ? spot.lcl.description : `Above model ground${spot.lcl?.aslValue ? ` · ${spot.lcl.aslValue}` : ''}`}</span>
+              {#if spot.lcl?.siteValue}<span class="cloud-reference">{spot.lcl.siteValue} · Site-coordinate terrain</span>{/if}
             </span>
             {#if altitudeEnabled}
               <span class="height-comparison">Surface: {spot.surfaceForecast ?? 'No data'}</span>
