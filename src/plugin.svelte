@@ -1068,7 +1068,6 @@ const diffRects = Array.from({ length: MAX_DIFF }, (_, i) => {
         </g>
       </g>
     </svg>
-    ${cloudBaseMarkerHTML(spot, D)}
     <div class="title">${spot.name}</div>
   </div>`;
 
@@ -1285,7 +1284,7 @@ function addRoseControl(spot: Spot,D: number){
 
 function addDial(s: Spot, D: number, animate:boolean){
   if (s.toVerify) { addReviewMarker(s); return; }
-  const html = weatherMarkerHTML(s, D) + gustMarkerHTML(s, D) + buildDialHTML(s, D, animate);
+  const html = gustMarkerHTML(s, D) + buildDialHTML(s, D, animate);
   const pad = diffPadForD(D);
   const svgW = D + 2*pad;
 
@@ -1312,7 +1311,8 @@ function addDial(s: Spot, D: number, animate:boolean){
 
 function addUiMenu(s: Spot, D: number){
   if (s.toVerify) return;
-  const html = buildMenuHTML(s, D);
+  // Weather and heights must escape each dial marker's stacking context.
+  const html = weatherMarkerHTML(s, D) + cloudBaseMarkerHTML(s, D) + buildMenuHTML(s, D);
   const icon = L.divIcon({
     className: 'wind-rose-icon ui-icon',
     html,
@@ -1321,6 +1321,7 @@ function addUiMenu(s: Spot, D: number){
   });
   const m = L.marker([s.lat, s.lon], { icon, interactive:true, pane:paneUi, title:windBadgeText(s).title }).addTo(map);
   m.flySpot = s;
+  updateWeatherIndicator(m);
   applyLargeRoseVisibility(m);
   bindCardNavigation(m, false);
   applySiteHighlight(m);
@@ -1373,8 +1374,8 @@ function windBadgeText(s: Spot){
 function weatherMarkerHTML(spot: Spot, diameter?: number){
   const weather = weatherDisplay(windForecast.get(spot));
   const sky = weatherIconUrl(weather,iconsDir);
-  const center = diameter ? diameter / 2 + diffPadForD(diameter) : 0;
-  const position = diameter ? ` style="left:${center + diameter * 0.18}px;top:${center - diameter * 0.18}px;--weather-size:${Math.round(diameter * 0.19)}px"` : '';
+  const center = diameter ? diameter / 2 : 0;
+  const position = diameter ? ` style="left:${center + diameter * 0.32}px;top:${center - diameter * 0.30}px;--weather-size:${Math.round(diameter * 0.19)}px"` : '';
   return `<span class="map-weather-indicators"${position}><img class="map-weather-icon" style="display:${sky ? 'block' : 'none'}" ${sky ? `src="${sky}"` : ''} alt="Forecast weather" title="${weather.description}"/></span>`;
 }
 
@@ -1414,8 +1415,8 @@ function cloudBaseMarkerHTML(spot: Spot, diameter?: number){
   if (!diameter && (map.getZoom() < 12 || map.getZoom() >= minZoomToShow)) return '';
   const base = cloudBaseMarkerDisplay(windForecast.get(spot));
   if (diameter) {
-    const center = diameter / 2 + diffPadForD(diameter);
-    return `<span class="large-cloud-heights" title="${base.description}" style="left:${center}px;top:${center + diameter * 0.16}px;width:${diameter * 0.62}px;font-size:${Math.max(9, Math.round(diameter * 0.038))}px">${base.html}</span>`;
+    const center = diameter / 2;
+    return `<span class="large-cloud-heights" title="${base.description}" style="left:${center - diameter * 0.12}px;top:${center - diameter * 0.43}px;width:${diameter * 0.62}px;font-size:${Math.max(9, Math.round(diameter * 0.038))}px">${base.html}</span>`;
   }
   return `<span class="mini-cloud-base" title="${base.description}">${base.html}</span>`;
 }
@@ -1774,6 +1775,7 @@ function updateForecastUI(){
     updateWindIndicator(marker);
   }
   for (const marker of uiMarkers) {
+    updateWeatherIndicator(marker);
     const root = marker.getElement?.();
     if (root) root.title = windBadgeText(marker.flySpot).title;
   }
@@ -2161,8 +2163,8 @@ onDestroy(() => {
 :global(.map-gust-warning){position:absolute;left:calc(100% - 7px);top:calc(100% - 17px);align-items:center;width:var(--gust-warning-size,20px);height:var(--gust-warning-size,20px);z-index:4;pointer-events:auto;}
 :global(.map-gust-warning svg){display:block;width:100%;height:100%;filter:drop-shadow(0 1px 2px #0008);}
 :global(.map-gust-warning[data-severity="strong"]){--gust-warning-color:#dc2626;}
-:global(.dial-icon .map-weather-indicators){transform:translate(-50%,-50%);width:var(--weather-size);height:var(--weather-size);z-index:2;}
-:global(.dial-icon .map-weather-icon){width:100%;height:100%;}
+:global(.ui-icon .map-weather-indicators){transform:translate(-50%,-50%);width:var(--weather-size);height:var(--weather-size);z-index:2;}
+:global(.ui-icon .map-weather-icon){width:100%;height:100%;}
 :global(.mini-wind-rose){ position:relative; z-index:1; display:block; overflow:visible; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
 :global(.mini-wind-rose .mini-wind-range){ fill:none; stroke:#168a45; stroke-width:3; }
 :global(.mini-wind-reading){font:400 8.5px system-ui,sans-serif;fill:#fff;stroke:none;pointer-events:none;}

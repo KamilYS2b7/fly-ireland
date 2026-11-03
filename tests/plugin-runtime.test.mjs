@@ -248,6 +248,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         resolveGuide(){resolveGuide?.();},
         destroy: () => destroy(),
         // Weather roses and auxiliary guide points have independent membership.
+        get panes(){return panes;},
         get layers(){return new Set([...layers].filter(layer=>layer.flySpot));},
         get guideLayers(){return new Set([...layers].filter(layer=>layer.flyGuideKey));},
         get roseControls(){return new Set([...layers].filter(layer=>layer.flyRoseControlSpot));},
@@ -1763,4 +1764,26 @@ test('owner-approved videos ship independently of browser choices, retire comple
         assert.equal(app.panel.allSites.flatMap(site=>site.videoCandidates??[]).length,31);
         app.destroy();
     }
+});
+
+
+test('large cloud heights use a Leaflet pane above every dial and stay in the upper quarter',async()=>{
+    const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<6;i++)await app.flush();
+    const layers=[...app.layers];
+    const dial=layers.find(m=>m.options.icon.html.includes('wr-dial'));
+    assert.ok(dial);
+    const label=layers.find(m=>m.flySpot.id===dial.flySpot.id&&m.options.icon.html.includes('large-cloud-heights'));
+    assert.ok(label);
+    assert.ok(Number(app.panes.get(label.options.pane).style.zIndex)>Number(app.panes.get(dial.options.pane).style.zIndex),'Cloud heights must be above all dial markers, independently of marker latitude/z-index');
+    const style=label.options.icon.html.match(/class="large-cloud-heights"[^>]*style="([^"]+)"/)[1];
+    const top=Number(style.match(/top:([\d.]+)px/)[1]);
+    const center=label.options.icon.iconAnchor[1];
+    assert.ok(top<center/2,'Cloud heights must occupy the upper quarter, above the central wind speed');
+    assert.match(label.cloudLabel.textContent,/LCL/,'Initial forecast reaches the raised label');
+    const reads=app.reads;
+    app.store.set('timestamp',1792674000000);await app.flush();
+    assert.doesNotMatch(label.cloudLabel.textContent,/LCL · sea level~1,401 m ASL/);
+    assert.equal(app.reads,reads);
+    app.destroy();assert.equal(app.layers.size,0);
 });
