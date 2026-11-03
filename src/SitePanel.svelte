@@ -263,7 +263,11 @@
             {#if spot.layerHeight}<span class="height-detail">Layer height: {spot.layerHeight}{snapshot.level === '100m' ? ' · 100 m above model ground' : ''}</span>{/if}
             <span class="cloud-base" title={spot.cloudBase?.description}>
               <span class="reading-row"><span>{spot.cloudBase?.label ?? 'Cloud base'}</span><b>{spot.cloudBase?.value ?? 'No data'}</b></span>
-              <span class="cloud-reference">{spot.cloudBase?.reference ?? ''}</span>
+              <span class="cloud-reference">{spot.cloudBase?.reference ?? ''}{spot.cloudBase?.aslValue ? ` · ${spot.cloudBase.aslValue}` : ''}</span>
+            </span>
+            <span class="cloud-base" title={spot.lcl?.description}>
+              <span class="reading-row"><span>Est. cumulus base (LCL)</span><b>{spot.lcl?.value ?? 'No data'}</b></span>
+              <span class="cloud-reference">Above model ground{spot.lcl?.aslValue ? ` · ${spot.lcl.aslValue}` : ''}</span>
             </span>
             {#if altitudeEnabled}
               <span class="height-comparison">Surface: {spot.surfaceForecast ?? 'No data'}</span>

@@ -3,6 +3,7 @@ import type { SiteMetadata } from './siteCatalog';
 import {rainDisplay} from './rainForecast.ts';
 import {gustWarningDisplay} from './gustWarning.ts';
 import {weatherDisplay,cloudBaseDisplay} from './weatherForecast.ts';
+import {lclDisplay} from './lclForecast.ts';
 import {formatWindRanges,windRanges,directionMatches} from './windRanges.ts';
 import {forecastModelLabel} from './forecastModels.ts';
 import {formatWindSpeed,windSpeedRange} from './windUnits.ts';
@@ -19,6 +20,7 @@ export type PanelSite = NamedSpot & {
     rain: ReturnType<typeof rainDisplay>;
     weather: ReturnType<typeof weatherDisplay>;
     cloudBase: ReturnType<typeof cloudBaseDisplay>;
+    lcl?:ReturnType<typeof lclDisplay>;
     levelEstimated?: boolean; layerHeight?: string;
     surfaceForecast?: string; heightInfo?: string; targetHeightM?: number; altitudeNote?: string;
 };
@@ -60,7 +62,7 @@ export function buildSitePanel(spots: NamedSpot[], getReading: (spot: NamedSpot)
             : reading.status === 'settings' ? 'Select a weather model / Wind' : reading.status === 'unavailable' ? (heightMode ? 'No height estimate' : level !== 'surface' ? 'No data for this layer' : 'No wind data')
             : reading.reason === 'unverified-direction' ? 'Wind range not verified'
             : reading.reason === 'too-light' ? 'Too light' : reading.reason === 'too-strong' ? 'Too strong' : 'Direction outside range';
-        allSites.push({ ...spot, status: reading.status, windMatched, label, direction, speed, gustWarning:gustWarningDisplay(reading,unit),rain:rainDisplay(reading),weather:weatherDisplay(reading),cloudBase:cloudBaseDisplay(reading),
+        allSites.push({ ...spot, status: reading.status, windMatched, label, direction, speed, gustWarning:gustWarningDisplay(reading,unit),rain:rainDisplay(reading),weather:weatherDisplay(reading),cloudBase:cloudBaseDisplay(reading),lcl:lclDisplay(reading),
             levelEstimated:!!reading.levelEstimated,
             layerHeight:level!=='surface'&&Number.isFinite(reading.levelHeightM)?`${Math.round(reading.levelHeightM!)} m ASL`:undefined,
             surfaceForecast: heightMode ? (Number.isFinite(reading.surfaceMph)

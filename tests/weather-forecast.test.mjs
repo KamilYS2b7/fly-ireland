@@ -35,7 +35,7 @@ test('weather identifies the actual source hour and resolution rather than claim
     assert.equal(last.weatherStepHours,1);
 });
 
-test('a missing UKV cloud base can be estimated from cloud layers in metres above sea level',()=>{
+test('cloud-layer coverage is never substituted for a native cloud-base forecast',()=>{
     const p=payload();delete p.data.meteogram.cloudBase;
     Object.assign(p.data.meteogram,{
         'gh-1000h':[100,100,100],'cloud-1000h':[100,100,100],
@@ -44,9 +44,9 @@ test('a missing UKV cloud base can be estimated from cloud layers in metres abov
         'gh-850h':[1500,1500,1500],'cloud-850h':[100,100,100],
     });
     const reading=samplePointForecast(spot,p,time);
-    assert.equal(reading.cloudBaseM,750);
-    assert.equal(reading.cloudBaseReference,'ASL');
-    assert.equal(reading.cloudBaseEstimated,true);
+    assert.equal(reading.cloudBaseStatus,'unavailable');
+    assert.equal(reading.cloudBaseM,undefined);
+    assert.equal(reading.cloudBaseEstimated,undefined);
     assert.equal(reading.status,'pass','Clouds do not change the wind-only filter');
 });
 
@@ -67,7 +67,7 @@ test('missing, invalid and out-of-range cloud data never become a zero base or s
     assert.equal(samplePointForecast(spot,wrong,time).cloudBaseM,undefined);
 });
 
-test('cloud estimates require terrain, cloud coverage and a valid layer height',()=>{
+test('absent native cloud base stays unavailable regardless of layer inputs',()=>{
     for(const type of ['terrain','height','cloud','clear']){
         const p=payload();delete p.data.meteogram.cloudBase;
         Object.assign(p.data.meteogram,{'gh-950h':[500,500,500],'cloud-950h':[0,0,0],'gh-900h':[1000,1000,1000],'cloud-900h':[90,90,90]});
@@ -79,7 +79,7 @@ test('cloud estimates require terrain, cloud coverage and a valid layer height',
     }
 });
 
-test('cloud estimation never invents a clear layer at a launch surrounded by model cloud',()=>{
+test('cloudy profiles cannot invent a native cloud base',()=>{
     for(const low of [100,null]){
         const p=payload();delete p.data.meteogram.cloudBase;
         Object.assign(p.data.meteogram,{

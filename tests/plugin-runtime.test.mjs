@@ -10,7 +10,7 @@ import { defaultSiteFilters, normalizeSiteFilters, scopeSitePanel, sitesForView,
 import * as filterRelease from '../src/siteFilters.ts';
 import { rainDisplay } from '../src/rainForecast.ts';
 import {gustWarningDisplay,GUST_WARNING_SVG} from '../src/gustWarning.ts';
-import {weatherDisplay,weatherIconUrl,cloudBaseDisplay} from '../src/weatherForecast.ts';
+import {weatherDisplay,weatherIconUrl,cloudBaseDisplay,cloudBaseMarkerDisplay} from '../src/weatherForecast.ts';
 import {flybubbleSites} from '../src/flybubbleSites.ts';
 import {polandSites} from '../src/polandSites.ts';
 import {paraglidingMapSites,approvedParaglidingMapSites,paraglidingMapReviewCandidates} from '../src/paraglidingMapSites.ts';
@@ -74,6 +74,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         arrow: { setAttribute(name, value) { this[name] = value; } },
         rangeArc: {setAttribute(name,value){this[name]=value;}},
         sky: {style:{},attributes:{},getAttribute(name){return this.attributes[name];},setAttribute(name,value){this.attributes[name]=value;},removeAttribute(name){delete this.attributes[name];}},
+        cloudLabel:{textContent:'',title:''},
         gustWarning: {style:{display:'none'},attributes:{},setAttribute(name,value){this.attributes[name]=value;}},
         setLatLng() { return this; },
         setContent(content) { this.content = content; return this; },
@@ -92,6 +93,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
                 : ['.mini-wind-direction','.forecast-wind-direction'].includes(selector) ? this.arrow
                 : selector === '.use-arc' ? this.rangeArc
                 : selector === '.map-weather-icon' ? this.sky
+                : selector === '.mini-cloud-base' && this.options?.icon?.html?.includes('mini-cloud-base') ? this.cloudLabel
                 : selector === '.map-gust-warning' && this.options?.icon?.html?.includes('map-gust-warning') ? this.gustWarning : null };
         },
     });
@@ -179,7 +181,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         readSiteReview:(_storage,fallback)=>reviewWorkflow.readSiteReview(filterStorage,fallback),saveSiteReview:value=>reviewWorkflow.saveSiteReview(value,filterStorage),
         applyVideoDecisions,mapVideoButtonHTML,canonicalYouTubeUrl,VIDEO_REVIEW_STORAGE_KEY,
         createVideoReview:sites=>{const w=createVideoReview(sites);return {...w,read:(_storage,fallback)=>w.read(filterStorage,fallback),save:decisions=>w.save(decisions,filterStorage)};},
-        iconsDir:'https://www.windy.com/test-icons',weatherDisplay,weatherIconUrl,cloudBaseDisplay,
+        iconsDir:'https://www.windy.com/test-icons',weatherDisplay,weatherIconUrl,cloudBaseDisplay,cloudBaseMarkerDisplay,
         normalizeWindUnit,convertWindSpeed,formatWindSpeed,windSpeedRange,windLevelLabel,formatForecastTime,
         readWindUnit:()=>readWindUnit(filterStorage),saveWindUnit:value=>saveWindUnit(value,filterStorage),
         readLargeRosesVisible:()=>readLargeRosesVisible(filterStorage),readSiteRoseVisibility:()=>readSiteRoseVisibility(filterStorage),saveSiteRoseVisibility:value=>saveSiteRoseVisibility(value,filterStorage),roseControlHTML,updateRoseControl,
@@ -207,6 +209,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
                 wind:Array(4).fill(speed),windDir:Array(4).fill(direction),windGust:Array(4).fill(6),
                 precipAmount:[0.5,0,0.8,null],precipSnowAmount:[0,0,0,0],
                 icon:[1,3,4,null],isDay:[1,1,0,0],moonPhase:[7,7,7,7],
+                temp:[293.15,295.15,297.15,299.15],dewPoint:[283.15,283.15,283.15,283.15],pressure:[100000,100000,100000,100000],
             },meteogram:{ts:Array.from({length:4},(_,i)=>1792670400000+i*3600000),cloudBase:[300,600,900,null]}}};
             if(include.airgram)response.data.airgram={ts:[1792670400000,1792674000000,1792677600000,1792681200000],
                 'wind-950h':[8,4,6,8],'windDir-950h':[0,90,180,270],
@@ -651,6 +654,20 @@ test('local rose controls follow filtered large sites and restore saved state af
     assert.ok(control.getElement().classList.contains('rose-is-hidden'));
     app.emit('click',{});app.setWest(2000);app.emit('moveend');await app.flush();assert.equal(app.roseControls.size,0);
     app.destroy();assert.equal(app.allLayers.size,0);
+});
+
+test('mini roses show separate model cloud base and LCL and update from cached timeline data',async()=>{
+    const app=runtime();app.mount();await app.flush();await app.flush();
+    const marker=[...app.layers].find(layer=>layer.options?.icon?.className?.includes('mini-dial-icon'));
+    assert.match(marker.options.icon.html,/mini-cloud-base/);
+    assert.match(marker.cloudLabel.textContent,/CB: 300 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/LCL: ~1,251 m AGL/);
+    assert.match(marker.cloudLabel.title,/does not guarantee cloud formation/);
+    const reads=app.reads;
+    app.store.set('timestamp',1792674000000);await app.flush();
+    assert.match(marker.cloudLabel.textContent,/CB: 600 m AGL/);
+    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL: ~1,251 m AGL/);
+    assert.equal(app.reads,reads);app.destroy();
 });
 
 test('site info without a guide opens an unavailable dialog instead of forecasts or the sidebar',async()=>{

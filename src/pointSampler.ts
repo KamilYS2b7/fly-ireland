@@ -1,6 +1,7 @@
 import { evaluateWind } from './windForecast.ts';
 import { sampleRain } from './rainForecast.ts';
 import { sampleWeather } from './weatherForecast.ts';
+import {sampleLcl} from './lclForecast.ts';
 import { responseMatchesModel } from './forecastModels.ts';
 import { sampleWindLayer } from './windLayers.ts';
 import type { ForecastSpot, WindReading } from './windForecast';
@@ -58,6 +59,7 @@ export function samplePointForecast(
         ...reading,
         ...sampleRain(data,left),
         ...sampleWeather(payload,timestamp,left),
+        ...sampleLcl(payload,timestamp),
         ...(level==='surface'?{}:sampleWindLayer(spot,payload,timestamp,level)),
         timestamp,
         model,

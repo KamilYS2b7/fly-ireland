@@ -43,8 +43,13 @@ export type WindReading = {
     weatherStepHours?: number;
     cloudBaseStatus?: 'loading' | 'available' | 'unavailable';
     cloudBaseM?: number;
+    cloudBaseAslM?: number;
     cloudBaseReference?: 'AGL' | 'ASL';
     cloudBaseEstimated?: boolean;
+    lclStatus?: 'loading' | 'available' | 'unavailable';
+    lclAglM?: number;
+    lclAslM?: number;
+    lclPressurePa?: number;
     reason?: 'too-light' | 'too-strong' | 'direction' | 'unverified-direction';
 };
 

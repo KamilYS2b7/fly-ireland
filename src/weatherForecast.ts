@@ -1,4 +1,5 @@
 import type {WindReading} from './windForecast';
+import {lclDisplay} from './lclForecast.ts';
 
 type CloudSeries = {times: number[]; bases: (number | undefined)[]; reference: 'AGL' | 'ASL'; estimated: boolean};
 const cloudSeries = new WeakMap<object, CloudSeries | null>();
@@ -14,31 +15,6 @@ function prepareClouds(payload: any): CloudSeries | undefined {
         if (Array.isArray(profile.cloudBase)) {
             // Windy's native cloudBase is metres AGL, relative to model terrain.
             result = {times, bases: times.map((_t, i) => validBase(profile.cloudBase[i]) ? profile.cloudBase[i] : undefined), reference:'AGL', estimated:false};
-        } else if (Number.isFinite(payload.header?.elevation)) {
-            const terrain = payload.header.elevation;
-            const levels = Object.keys(profile).filter(key => /^cloud-\d+h$/.test(key))
-                .map(key => key.slice(6)).sort((a,b) => Number.parseInt(b)-Number.parseInt(a));
-            // UKV has cloud profiles rather than a native cloud-base field.
-            // Estimate the first 50% cloud-cover crossing above local terrain.
-            // Geopotential heights are ASL; keep that datum explicit rather than
-            // treating model terrain and the launch elevation as interchangeable.
-            const bases = times.map((_t, i) => {
-                let lowHeight: number | undefined, lowCloud: number | undefined;
-                for (const level of levels) {
-                    const height = profile[`gh-${level}`]?.[i], cloud = profile[`cloud-${level}`]?.[i];
-                    if (!Number.isFinite(height) || !Number.isFinite(cloud) || cloud < 0 || cloud > 100) {lowHeight=undefined;lowCloud=undefined;continue;}
-                    if (height < terrain) continue;
-                    if (cloud >= 50) {
-                        // Do not assume clear air at the launch or bridge a
-                        // missing layer. An already-cloudy lowest level cannot
-                        // establish the cloud base above this site.
-                        if (lowHeight === undefined || lowCloud === undefined || height <= lowHeight) return;
-                        return Math.round(lowHeight + (height-lowHeight)*(50-lowCloud)/(cloud-lowCloud));
-                    }
-                    lowHeight = height; lowCloud = cloud;
-                }
-            });
-            result = {times, bases, reference:'ASL', estimated:true};
         }
     }
     cloudSeries.set(payload, result ?? null);
@@ -66,7 +42,17 @@ export function sampleWeather(payload: any, timestamp: number, index: number): P
     if (!validBase(a) || !validBase(b)) return reading;
     const ratio = left === right ? 0 : (timestamp-series.times[left])/(series.times[right]-series.times[left]);
     return {...reading, cloudBaseStatus:'available', cloudBaseM:a+(b-a)*ratio,
+        ...(Number.isFinite(payload.header?.modelElevation)?{cloudBaseAslM:payload.header.modelElevation+a+(b-a)*ratio}:{}),
         cloudBaseReference:series.reference, cloudBaseEstimated:series.estimated};
+}
+
+export function cloudBaseMarkerDisplay(reading:Partial<WindReading>) {
+    const cloud=cloudBaseDisplay(reading),lcl=lclDisplay(reading);
+    const parts=[];
+    if(reading.cloudBaseStatus==='available')parts.push(`CB: ${cloud.value}`);
+    if(reading.lclStatus==='available')parts.push(`LCL: ${lcl.value}`);
+    return {text:parts.join('\n')||(reading.status==='loading'?'CB: Loading…':'CB: No data'),
+        description:`${cloud.description} ${lcl.description}`};
 }
 
 export function weatherDisplay(reading: Partial<WindReading>) {
@@ -84,15 +70,15 @@ export function weatherIconUrl(weather: ReturnType<typeof weatherDisplay> | unde
 }
 
 export function cloudBaseDisplay(reading: Partial<WindReading>) {
-    const label = reading.cloudBaseEstimated ? 'Est. cloud base' : 'Cloud base';
-    if (reading.status === 'loading' || reading.cloudBaseStatus === 'loading') return {label, value:'Loading…', reference:'', description:'Cloud-base forecast is loading.'};
+    const label = 'Cloud base';
+    if (reading.status === 'loading' || reading.cloudBaseStatus === 'loading') return {label, value:'Loading…', aslValue:'', reference:'', description:'Cloud-base forecast is loading.'};
     const datum = reading.cloudBaseReference;
     if (reading.cloudBaseStatus !== 'available' || !validBase(reading.cloudBaseM) || (datum !== 'AGL' && datum !== 'ASL')) {
-        return {label, value:'No data', reference:'', description:'Cloud-base forecast unavailable for this model and time.'};
+        return {label, value:'No data', aslValue:'', reference:'', description:'Cloud-base forecast unavailable for this model and time.'};
     }
     const reference = datum === 'AGL' ? 'Above model ground' : 'Above mean sea level';
     const value = `${heightFormat.format(reading.cloudBaseM!)} m ${datum}`;
-    return {label, value, reference, description:reading.cloudBaseEstimated
-        ? `Estimated cloud base: ${value}. ${reference}. First 50% cloud-cover crossing in the forecast profile above local terrain.`
-        : `Cloud base: ${value}. ${reference}; model terrain can differ from the actual launch elevation.`};
+    const aslValue=datum==='AGL'&&Number.isFinite(reading.cloudBaseAslM)?`${heightFormat.format(reading.cloudBaseAslM!)} m ASL`:'';
+    return {label, value, aslValue, reference,
+        description:`Model cloud base: ${value}. ${reference}; model terrain can differ from the actual launch elevation.`};
 }

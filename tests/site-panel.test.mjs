@@ -180,7 +180,7 @@ test('cloud-base cards always identify the height datum and discard stale cloud 
         ...(site.id==='c'?{timestamp:timestamp-3600000}:{})}),timestamp);
     assert.equal(panel.allSites[0].cloudBase?.value,'750 m ASL');
     assert.equal(panel.allSites[0].cloudBase?.reference,'Above mean sea level');
-    assert.equal(panel.allSites[0].cloudBase?.label,'Est. cloud base');
+    assert.equal(panel.allSites[0].cloudBase?.label,'Cloud base');
     assert.equal(panel.allSites[1].cloudBase?.value,'750 m AGL');
     assert.equal(panel.allSites[1].cloudBase?.reference,'Above model ground');
     assert.equal(panel.allSites[1].weather?.icon,3);

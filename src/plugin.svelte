@@ -29,7 +29,7 @@ import { defaultSiteFilters, POLAND_ENABLED, releaseSiteFilters, scopeSitePanel,
 import type { SiteFilters } from './siteFilters';
 import {rainDisplay} from './rainForecast';
 import {gustWarningDisplay,GUST_WARNING_SVG} from './gustWarning';
-import {weatherDisplay,weatherIconUrl,cloudBaseDisplay} from './weatherForecast';
+import {weatherDisplay,weatherIconUrl,cloudBaseDisplay,cloudBaseMarkerDisplay} from './weatherForecast';
 import {flybubbleSites} from './flybubbleSites';
 import {polandSites} from './polandSites';
 import {approvedParaglidingMapSites,paraglidingMapReviewCandidates} from './paraglidingMapSites';
@@ -1365,7 +1365,7 @@ function windBadgeText(s: Spot){
     : '';
   return {
     color, speedText, directionFrom, gust,
-    title: `${s.name}: ${formatWindRanges(s)}\n${label}${detail ? ` · ${detail}` : ''}${gust.active ? `\n${gust.description}` : ''}\n${date}\n${weatherDisplay(reading).description}\n${rainDisplay(reading).description}\n${cloudBaseDisplay(reading).description}\nWind criteria: ${windSpeedRange(windUnit)} and direction within the site range. Gusts and rain do not change the wind filter.`,
+    title: `${s.name}: ${formatWindRanges(s)}\n${label}${detail ? ` · ${detail}` : ''}${gust.active ? `\n${gust.description}` : ''}\n${date}\n${weatherDisplay(reading).description}\n${rainDisplay(reading).description}\n${cloudBaseMarkerDisplay(reading).description}\nWind criteria: ${windSpeedRange(windUnit)} and direction within the site range. Gusts and rain do not change the wind filter.`,
   };
 }
 
@@ -1409,9 +1409,19 @@ function updateWindIndicator(marker: any){
   root.title = content.title;
 }
 
+function cloudBaseMarkerHTML(spot: Spot){
+  const base = cloudBaseMarkerDisplay(windForecast.get(spot));
+  return `<span class="mini-cloud-base" title="${base.description}">${base.text}</span>`;
+}
+
 function updateWeatherIndicator(marker: any){
   if (marker.flySpot?.toVerify) return;
   const root = marker.getElement?.();
+  const base = root?.querySelector('.mini-cloud-base');
+  if (base) {
+    const display = cloudBaseMarkerDisplay(windForecast.get(marker.flySpot));
+    base.textContent = display.text; base.title = display.description;
+  }
   const icon = root?.querySelector('.map-weather-icon');
   if (icon) {
     const weather = weatherDisplay(windForecast.get(marker.flySpot));
@@ -1781,7 +1791,7 @@ function addMiniDial(s: Spot){
   const range = windRanges(s).map(({start,end})=>sweepDeg(start,end).sw === 360
     ? '<circle r="13" class="mini-wind-range"/>'
     : `<path d="${arcPath(13,start,end)}" class="mini-wind-range"/>`).join('');
-  const html = `${weatherMarkerHTML(s)}${gustMarkerHTML(s)}
+  const html = `${weatherMarkerHTML(s)}${gustMarkerHTML(s)}${cloudBaseMarkerHTML(s)}
     <svg class="mini-wind-rose" viewBox="0 0 36 36" width="54" height="54" aria-hidden="true">
       <circle cx="18" cy="18" r="15.5" fill="rgba(255,255,255,.92)" stroke="#334155" stroke-width="1"/>
       <g transform="translate(18,18)">
@@ -2122,6 +2132,7 @@ onDestroy(() => {
 :global(.video-number){position:absolute;right:-2px;bottom:-2px;display:grid;place-items:center;min-width:12px;height:12px;box-sizing:border-box;padding:0 2px;border:1px solid #fff;border-radius:4px;background:#e2e8f0;color:#334155;font:500 9px/1 system-ui;pointer-events:none;}
 
 /* — daleki zoom — */
+:global(.mini-cloud-base){position:absolute;left:58px;top:12px;white-space:pre;pointer-events:none;border-radius:5px;background:#ffffffed;color:#243746;padding:3px 5px;font:600 10px/1.4 system-ui,sans-serif;box-shadow:0 1px 4px #0002;}
 :global(.mini-dial-icon){ background:transparent; border:0; cursor:pointer; }
 :global(.map-weather-indicators){position:absolute;left:50%;top:-21px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:1px;height:23px;pointer-events:none;z-index:0;}
 :global(.mini-dial-icon .map-weather-indicators){top:-17px;}
