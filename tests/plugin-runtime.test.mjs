@@ -74,7 +74,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
         arrow: { setAttribute(name, value) { this[name] = value; } },
         rangeArc: {setAttribute(name,value){this[name]=value;}},
         sky: {style:{},attributes:{},getAttribute(name){return this.attributes[name];},setAttribute(name,value){this.attributes[name]=value;},removeAttribute(name){delete this.attributes[name];}},
-        cloudLabel:{textContent:'',title:''},
+        cloudLabel:{textContent:'',title:'',markup:'',get innerHTML(){return this.markup;},set innerHTML(value){this.markup=value;this.textContent=value.replace(/<[^>]+>/g,'');}},
         gustWarning: {style:{display:'none'},attributes:{},setAttribute(name,value){this.attributes[name]=value;}},
         setLatLng() { return this; },
         setContent(content) { this.content = content; return this; },
@@ -661,13 +661,13 @@ test('mini roses show separate model cloud base and LCL and update from cached t
     const app=runtime();app.mount();await app.flush();await app.flush();
     const marker=[...app.layers].find(layer=>layer.options?.icon?.className?.includes('mini-dial-icon'));
     assert.match(marker.options.icon.html,/mini-cloud-base/);
-    assert.match(marker.cloudLabel.textContent,/CB: 300 m AGL/);
-    assert.match(marker.cloudLabel.textContent,/LCL model: ~1,251 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/CB · model300 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/LCL · model~1,251 m AGL/);
     assert.match(marker.cloudLabel.title,/does not guarantee cloud formation/);
     const reads=app.reads;
     app.store.set('timestamp',1792674000000);await app.flush();
-    assert.match(marker.cloudLabel.textContent,/CB: 600 m AGL/);
-    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL model: ~1,251 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/CB · model600 m AGL/);
+    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL · model~1,251 m AGL/);
     assert.equal(app.reads,reads);app.destroy();
 });
 

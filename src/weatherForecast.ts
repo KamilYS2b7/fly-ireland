@@ -53,13 +53,25 @@ export function sampleWeather(payload: any, timestamp: number, index: number): P
 export function cloudBaseMarkerDisplay(reading:Partial<WindReading>) {
     const cloud=cloudBaseDisplay(reading),lcl=lclDisplay(reading);
     const parts=[];
-    if(reading.cloudBaseStatus==='available')parts.push(`CB: ${cloud.value}`);
+    const rows:{label:string;value:string}[]=[];
+    if(reading.cloudBaseStatus==='available'){
+        parts.push(`CB: ${cloud.value}`);
+        rows.push({label:'CB · model',value:cloud.value});
+    }
     if(reading.lclStatus==='available'){
         parts.push(`LCL model: ${lcl.value}`);
         parts.push(lcl.siteValue??'Site elevation unavailable');
         if(lcl.aslValue)parts.push(`LCL: ${lcl.aslValue}`);
+        rows.push({label:'LCL · model',value:lcl.value});
+        const below=(reading.lclAboveSiteM??0)<0;
+        rows.push({label:below?'Below site':'Above site',value:lcl.siteValue?.replace(/ (above|below) site$/,'')??'No data'});
+        if(lcl.aslValue)rows.push({label:'LCL · sea',value:lcl.aslValue});
     }
+    if(!rows.length)rows.push({label:'Cloud heights',value:reading.status==='loading'?'Loading…':'No data'});
+    const escape=(text:string)=>text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+    const html=rows.map(row=>`<span class="cloud-height-row"><span class="cloud-height-label">${escape(row.label)}</span><strong class="cloud-height-value">${escape(row.value)}</strong></span>`).join('');
     return {text:parts.join('\n')||(reading.status==='loading'?'CB: Loading…':'CB: No data'),
+        html,
         description:`${cloud.description} ${lcl.description}`};
 }
 

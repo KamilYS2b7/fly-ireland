@@ -1411,7 +1411,7 @@ function updateWindIndicator(marker: any){
 
 function cloudBaseMarkerHTML(spot: Spot){
   const base = cloudBaseMarkerDisplay(windForecast.get(spot));
-  return `<span class="mini-cloud-base" title="${base.description}">${base.text}</span>`;
+  return `<span class="mini-cloud-base" title="${base.description}">${base.html}</span>`;
 }
 
 function updateWeatherIndicator(marker: any){
@@ -1420,7 +1420,13 @@ function updateWeatherIndicator(marker: any){
   const base = root?.querySelector('.mini-cloud-base');
   if (base) {
     const display = cloudBaseMarkerDisplay(windForecast.get(marker.flySpot));
-    base.textContent = display.text; base.title = display.description;
+    if (base.innerHTML !== display.html) base.innerHTML = display.html;
+    base.title = display.description;
+    const rect = root.getBoundingClientRect?.();
+    if (rect) {
+      const width = base.getBoundingClientRect?.().width || 190;
+      root.classList.toggle('cloud-label-left', window.innerWidth - rect.right < width + 30 && rect.left > window.innerWidth - rect.right);
+    }
   }
   const icon = root?.querySelector('.map-weather-icon');
   if (icon) {
@@ -2132,7 +2138,11 @@ onDestroy(() => {
 :global(.video-number){position:absolute;right:-2px;bottom:-2px;display:grid;place-items:center;min-width:12px;height:12px;box-sizing:border-box;padding:0 2px;border:1px solid #fff;border-radius:4px;background:#e2e8f0;color:#334155;font:500 9px/1 system-ui;pointer-events:none;}
 
 /* — daleki zoom — */
-:global(.mini-cloud-base){position:absolute;left:58px;top:12px;white-space:pre;pointer-events:none;border-radius:5px;background:#ffffffed;color:#243746;padding:3px 5px;font:600 10px/1.4 system-ui,sans-serif;box-shadow:0 1px 4px #0002;}
+:global(.mini-cloud-base){position:absolute;left:84px;top:50%;transform:translateY(-50%);display:grid;gap:2px;min-width:150px;max-width:220px;box-sizing:border-box;pointer-events:none;border:1px solid #d5e1e5;border-radius:8px;background:#fffffff7;color:#243746;padding:6px 8px;font:500 10px/1.4 system-ui,sans-serif;box-shadow:0 2px 7px #152a3524;}
+:global(.mini-dial-icon.cloud-label-left .mini-cloud-base){left:auto;right:84px;}
+:global(.cloud-height-row){display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;column-gap:10px;}
+:global(.cloud-height-label){color:#586b77;white-space:nowrap;}
+:global(.cloud-height-value){color:#193540;font-weight:700;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;}
 :global(.mini-dial-icon){ background:transparent; border:0; cursor:pointer; }
 :global(.map-weather-indicators){position:absolute;left:50%;top:-21px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:1px;height:23px;pointer-events:none;z-index:0;}
 :global(.mini-dial-icon .map-weather-indicators){top:-17px;}
