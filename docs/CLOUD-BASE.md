@@ -32,12 +32,17 @@ fraction is no longer presented as a calculated cloud base. LCL does not predict
 whether a parcel will reach saturation, whether cumulus will form, or the base
 of advected/stratiform clouds. CB and LCL may legitimately differ.
 
-Mini rose labels use **CB** for the model parameter and **LCL** (with `~`) for
-the parcel estimate. The side panel shows them separately with AGL/ASL labels.
+Visible labels use **CB** for the model parameter and **LCL** (with `~`) for
+the parcel estimate. Both show ASL and site clearance; model AGL is internal only.
 
 Site clearance is `LCL ASL - header.elevation`, using the terrain estimate at
 the site's catalogue coordinates, not a surveyed take-off A/B altitude. It is
 shown as above/below site without clamping negative values. Unknown model or
-site terrain never becomes zero elevation. Mini rose labels include model AGL,
-site clearance and ASL separately. This coordinate conversion does not recalculate
+site terrain never becomes zero elevation. Map labels show site clearance and ASL separately. This coordinate conversion does not recalculate
 the parcel using temperature at the actual hillside.
+
+From 1.1.45, floating mini-rose labels appear only at zoom 12–13. At zoom 14+
+actual large roses embed the same readings in the dial; crowded fallback minis
+have no labels at those zooms. At zoom below 12 all floating height labels are
+omitted. Negative site clearance is red, positive clearance green, and unknown
+or zero clearance neutral. These colours describe elevation, not flight safety.

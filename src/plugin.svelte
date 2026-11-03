@@ -1068,6 +1068,7 @@ const diffRects = Array.from({ length: MAX_DIFF }, (_, i) => {
         </g>
       </g>
     </svg>
+    ${cloudBaseMarkerHTML(spot, D)}
     <div class="title">${spot.name}</div>
   </div>`;
 
@@ -1409,21 +1410,26 @@ function updateWindIndicator(marker: any){
   root.title = content.title;
 }
 
-function cloudBaseMarkerHTML(spot: Spot){
+function cloudBaseMarkerHTML(spot: Spot, diameter?: number){
+  if (!diameter && (map.getZoom() < 12 || map.getZoom() >= minZoomToShow)) return '';
   const base = cloudBaseMarkerDisplay(windForecast.get(spot));
+  if (diameter) {
+    const center = diameter / 2 + diffPadForD(diameter);
+    return `<span class="large-cloud-heights" title="${base.description}" style="left:${center}px;top:${center + diameter * 0.16}px;width:${diameter * 0.62}px;font-size:${Math.max(9, Math.round(diameter * 0.038))}px">${base.html}</span>`;
+  }
   return `<span class="mini-cloud-base" title="${base.description}">${base.html}</span>`;
 }
 
 function updateWeatherIndicator(marker: any){
   if (marker.flySpot?.toVerify) return;
   const root = marker.getElement?.();
-  const base = root?.querySelector('.mini-cloud-base');
+  const base = root?.querySelector('.mini-cloud-base, .large-cloud-heights');
   if (base) {
     const display = cloudBaseMarkerDisplay(windForecast.get(marker.flySpot));
     if (base.innerHTML !== display.html) base.innerHTML = display.html;
     base.title = display.description;
     const rect = root.getBoundingClientRect?.();
-    if (rect) {
+    if (rect && marker.options?.icon?.className?.split(' ').includes('mini-dial-icon')) {
       const width = base.getBoundingClientRect?.().width || 190;
       root.classList.toggle('cloud-label-left', window.innerWidth - rect.right < width + 30 && rect.left > window.innerWidth - rect.right);
     }
@@ -2143,6 +2149,11 @@ onDestroy(() => {
 :global(.cloud-height-row){display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;column-gap:10px;}
 :global(.cloud-height-label){color:#586b77;white-space:nowrap;}
 :global(.cloud-height-value){color:#193540;font-weight:700;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;}
+:global(.cloud-height-row[data-clearance="above"] .cloud-height-value),:global(.cloud-height-row[data-clearance="above"] .cloud-height-label){color:#15803d;}
+:global(.cloud-height-row[data-clearance="below"] .cloud-height-value),:global(.cloud-height-row[data-clearance="below"] .cloud-height-label){color:#b91c1c;}
+:global(.large-cloud-heights){position:absolute;transform:translateX(-50%);display:grid;gap:1px;line-height:1.2;pointer-events:none;font-family:system-ui,sans-serif;text-shadow:0 1px 2px #fff,0 -1px 2px #fff;}
+:global(.large-cloud-heights .cloud-height-row){column-gap:4px;}
+:global(.large-cloud-heights .cloud-height-label){font-size:.9em;}
 :global(.mini-dial-icon){ background:transparent; border:0; cursor:pointer; }
 :global(.map-weather-indicators){position:absolute;left:50%;top:-21px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:1px;height:23px;pointer-events:none;z-index:0;}
 :global(.mini-dial-icon .map-weather-indicators){top:-17px;}

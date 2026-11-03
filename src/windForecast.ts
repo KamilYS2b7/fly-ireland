@@ -44,6 +44,7 @@ export type WindReading = {
     cloudBaseStatus?: 'loading' | 'available' | 'unavailable';
     cloudBaseM?: number;
     cloudBaseAslM?: number;
+    cloudBaseAboveSiteM?: number;
     cloudBaseReference?: 'AGL' | 'ASL';
     cloudBaseEstimated?: boolean;
     lclStatus?: 'loading' | 'available' | 'unavailable';

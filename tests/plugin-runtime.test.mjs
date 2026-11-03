@@ -93,7 +93,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
                 : ['.mini-wind-direction','.forecast-wind-direction'].includes(selector) ? this.arrow
                 : selector === '.use-arc' ? this.rangeArc
                 : selector === '.map-weather-icon' ? this.sky
-                : selector === '.mini-cloud-base' && this.options?.icon?.html?.includes('mini-cloud-base') ? this.cloudLabel
+                : selector === '.mini-cloud-base, .large-cloud-heights' && /mini-cloud-base|large-cloud-heights/.test(this.options?.icon?.html??'') ? this.cloudLabel
                 : selector === '.map-gust-warning' && this.options?.icon?.html?.includes('map-gust-warning') ? this.gustWarning : null };
         },
     });
@@ -657,17 +657,33 @@ test('local rose controls follow filtered large sites and restore saved state af
     app.destroy();assert.equal(app.allLayers.size,0);
 });
 
+test('cloud bubbles only appear at intermediate zoom and become embedded in large roses',async()=>{
+    const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();
+    const html=()=>[...app.layers].map(layer=>layer.options?.icon?.html??'').join('');
+    assert.doesNotMatch(html(),/mini-cloud-base|large-cloud-heights/);
+    app.setZoom(12);app.emit('zoomend');await app.flush();
+    assert.match(html(),/mini-cloud-base/);
+    app.setZoom(15);app.emit('zoomend');for(let i=0;i<4;i++)await app.flush();
+    assert.match(html(),/large-cloud-heights/);
+    assert.doesNotMatch(html(),/mini-cloud-base/);
+    assert.doesNotMatch(html(),/m AGL/);
+    app.setZoom(10);app.emit('zoomend');await app.flush();
+    assert.doesNotMatch(html(),/mini-cloud-base|large-cloud-heights/);
+    app.destroy();
+});
+
 test('mini roses show separate model cloud base and LCL and update from cached timeline data',async()=>{
     const app=runtime();app.mount();await app.flush();await app.flush();
+    app.setZoom(12);app.emit('zoomend');await app.flush();
     const marker=[...app.layers].find(layer=>layer.options?.icon?.className?.includes('mini-dial-icon'));
     assert.match(marker.options.icon.html,/mini-cloud-base/);
-    assert.match(marker.cloudLabel.textContent,/CB · model300 m AGL/);
-    assert.match(marker.cloudLabel.textContent,/LCL · model~1,251 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/CB · sea level450 m ASL/);
+    assert.match(marker.cloudLabel.textContent,/LCL · sea level~1,401 m ASL/);
     assert.match(marker.cloudLabel.title,/does not guarantee cloud formation/);
     const reads=app.reads;
     app.store.set('timestamp',1792674000000);await app.flush();
-    assert.match(marker.cloudLabel.textContent,/CB · model600 m AGL/);
-    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL · model~1,251 m AGL/);
+    assert.match(marker.cloudLabel.textContent,/CB · sea level750 m ASL/);
+    assert.doesNotMatch(marker.cloudLabel.textContent,/LCL · sea level~1,401 m ASL/);
     assert.equal(app.reads,reads);app.destroy();
 });
 

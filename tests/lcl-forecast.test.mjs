@@ -49,11 +49,24 @@ test('inputs interpolate at the requested time and ASL uses only model terrain, 
     assert.match(lclDisplay(reading).aslValue,/m ASL/);
 });
 test('miniature labels distinguish native cloud base, estimated LCL and missing data',()=>{
-    const r={status:'pass',cloudBaseStatus:'available',cloudBaseM:900,cloudBaseReference:'AGL',...sampleLcl(payload(),time)};
-    assert.match(cloudBaseMarkerDisplay(r).text,/CB: 900 m AGL\nLCL model: ~1,251 m AGL/);
-    assert.match(cloudBaseMarkerDisplay(r).text,/above site\nLCL: ~1,651 m ASL/);
-    assert.match(cloudBaseMarkerDisplay(sampleLcl(payload(),time)).text,/^LCL model:/);
-    assert.equal(cloudBaseMarkerDisplay({}).text,'CB: No data');
+    const r={status:'pass',cloudBaseStatus:'available',cloudBaseM:900,cloudBaseAslM:1300,cloudBaseAboveSiteM:600,cloudBaseReference:'AGL',...sampleLcl(payload(),time)};
+    assert.match(cloudBaseMarkerDisplay(r).text,/CB · sea level: 1,300 m ASL/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/LCL · sea level: ~1,651 m ASL/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/LCL · above site: ~951 m/);
+    assert.doesNotMatch(cloudBaseMarkerDisplay(r).html,/AGL|model ground/);
+    assert.equal(cloudBaseMarkerDisplay({}).text,'Cloud heights: No data');
+});
+
+test('height colours follow site clearance, with unknown and zero values neutral',()=>{
+    const r={lclStatus:'available',lclAglM:100,lclAslM:300,lclAboveSiteM:20};
+    assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="above"/);
+    r.lclAboveSiteM=-80;
+    assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="below"/);
+    assert.match(cloudBaseMarkerDisplay(r).text,/below site: ~80 m/);
+    r.lclAboveSiteM=0;
+    assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="level"/);
+    delete r.lclAboveSiteM;
+    assert.match(cloudBaseMarkerDisplay(r).html,/data-clearance="unknown"/);
 });
 
 test('site clearance preserves negative values instead of inventing a positive cloud base above launch',()=>{

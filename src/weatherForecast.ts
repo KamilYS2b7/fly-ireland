@@ -46,32 +46,26 @@ export function sampleWeather(payload: any, timestamp: number, index: number): P
     if (!validBase(a) || !validBase(b)) return reading;
     const ratio = left === right ? 0 : (timestamp-series.times[left])/(series.times[right]-series.times[left]);
     return {...reading, cloudBaseStatus:'available', cloudBaseM:a+(b-a)*ratio,
-        ...(Number.isFinite(payload.header?.modelElevation)?{cloudBaseAslM:payload.header.modelElevation+a+(b-a)*ratio}:{}),
+        ...(Number.isFinite(payload.header?.modelElevation)?{cloudBaseAslM:payload.header.modelElevation+a+(b-a)*ratio,
+            ...(Number.isFinite(payload.header?.elevation)?{cloudBaseAboveSiteM:payload.header.modelElevation+a+(b-a)*ratio-payload.header.elevation}:{})}:{}),
         cloudBaseReference:series.reference, cloudBaseEstimated:series.estimated};
 }
 
 export function cloudBaseMarkerDisplay(reading:Partial<WindReading>) {
     const cloud=cloudBaseDisplay(reading),lcl=lclDisplay(reading);
-    const parts=[];
-    const rows:{label:string;value:string}[]=[];
+    const rows:{label:string;value:string;tone:string}[]=[];
     if(reading.cloudBaseStatus==='available'){
-        parts.push(`CB: ${cloud.value}`);
-        rows.push({label:'CB · model',value:cloud.value});
+        rows.push({label:'CB · sea level',value:cloud.aslValue||'No ASL data',tone:cloud.siteTone??'unknown'});
+        rows.push({label:(reading.cloudBaseAboveSiteM??0)<0?'CB · below site':'CB · above site',value:cloud.siteValue?.replace(/ (above|below) site$/,'')||'No elevation data',tone:cloud.siteTone??'unknown'});
     }
     if(reading.lclStatus==='available'){
-        parts.push(`LCL model: ${lcl.value}`);
-        parts.push(lcl.siteValue??'Site elevation unavailable');
-        if(lcl.aslValue)parts.push(`LCL: ${lcl.aslValue}`);
-        rows.push({label:'LCL · model',value:lcl.value});
-        const below=(reading.lclAboveSiteM??0)<0;
-        rows.push({label:below?'Below site':'Above site',value:lcl.siteValue?.replace(/ (above|below) site$/,'')??'No data'});
-        if(lcl.aslValue)rows.push({label:'LCL · sea',value:lcl.aslValue});
+        rows.push({label:'LCL · sea level',value:lcl.aslValue||'No ASL data',tone:lcl.siteTone??'unknown'});
+        rows.push({label:(reading.lclAboveSiteM??0)<0?'LCL · below site':'LCL · above site',value:lcl.siteValue?.replace(/ (above|below) site$/,'')||'No elevation data',tone:lcl.siteTone??'unknown'});
     }
-    if(!rows.length)rows.push({label:'Cloud heights',value:reading.status==='loading'?'Loading…':'No data'});
+    if(!rows.length)rows.push({label:'Cloud heights',value:reading.status==='loading'?'Loading…':'No data',tone:'unknown'});
     const escape=(text:string)=>text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
-    const html=rows.map(row=>`<span class="cloud-height-row"><span class="cloud-height-label">${escape(row.label)}</span><strong class="cloud-height-value">${escape(row.value)}</strong></span>`).join('');
-    return {text:parts.join('\n')||(reading.status==='loading'?'CB: Loading…':'CB: No data'),
-        html,
+    const html=rows.map(row=>`<span class="cloud-height-row" data-clearance="${row.tone}"><span class="cloud-height-label">${escape(row.label)}</span><strong class="cloud-height-value">${escape(row.value)}</strong></span>`).join('');
+    return {text:rows.map(row=>`${row.label}: ${row.value}`).join('\n'),html,
         description:`${cloud.description} ${lcl.description}`};
 }
 
@@ -98,7 +92,10 @@ export function cloudBaseDisplay(reading: Partial<WindReading>) {
     }
     const reference = datum === 'AGL' ? 'Above model ground' : 'Above mean sea level';
     const value = `${heightFormat.format(reading.cloudBaseM!)} m ${datum}`;
-    const aslValue=datum==='AGL'&&Number.isFinite(reading.cloudBaseAslM)?`${heightFormat.format(reading.cloudBaseAslM!)} m ASL`:'';
-    return {label, value, aslValue, reference,
-        description:`Model cloud base: ${value}. ${reference}; model terrain can differ from the actual launch elevation.`};
+    const aslValue=datum==='ASL'?value:Number.isFinite(reading.cloudBaseAslM)?`${heightFormat.format(reading.cloudBaseAslM!)} m ASL`:'';
+    const clearance=reading.cloudBaseAboveSiteM;
+    const siteTone=!Number.isFinite(clearance)?'unknown':clearance!<0?'below':clearance!>0?'above':'level';
+    const siteValue=Number.isFinite(clearance)?`${heightFormat.format(Math.abs(clearance!))} m ${clearance!<0?'below':'above'} site`:'Site elevation unavailable';
+    return {label, value, aslValue, reference, siteValue, siteTone,
+        description:`Model cloud base: ${aslValue||"ASL elevation unavailable"}. ${siteValue}. Site clearance uses terrain at the site coordinates, not a surveyed take-off height.`};
 }
