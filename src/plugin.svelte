@@ -1491,7 +1491,7 @@ function gustMarkerHTML(spot: Spot, diameter?: number){
   const warning = gustWarningDisplay(windForecast.get(spot),windUnit);
   const center = diameter ? diameter / 2 + diffPadForD(diameter) : 0;
   const size = diameter ? Math.max(24,Math.round(diameter * 0.1)) : 20;
-  const position = diameter ? `left:${center + diameter * 0.24 - 32}px;top:${center - diameter * 0.30 - size / 2}px;--gust-warning-size:${size}px;` : '';
+  const position = diameter ? `left:${center + diameter * 0.18 - 32}px;top:${center - diameter * 0.26 - size / 2}px;--gust-warning-size:${size}px;` : '';
   return `<span class="map-gust-warning${diameter?' gust-inside-rose':''}" data-severity="${warning.severity}" role="img" aria-label="${warning.description || 'Gusts'}" title="${warning.description}" style="${position}display:${warning.active ? 'flex' : 'none'}">${GUST_WARNING_SVG}${diameter?`<strong class="map-gust-value">${Number.isFinite(windForecast.get(spot).gustMph)?formatWindSpeed(windForecast.get(spot).gustMph!,windUnit):''}</strong>`:''}</span>`;
 }
 

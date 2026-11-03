@@ -1897,6 +1897,6 @@ test('large gust indicator sits inside upper-right quadrant with the gust value 
  assert.match(html,/map-gust-value/);assert.match(html,/gust-inside-rose/);
  const D=250,center=marker.options.icon.iconAnchor[0];
  const left=Number(span.match(/left:([\d.]+)px/)[1]),top=Number(span.match(/top:([\d.]+)px/)[1]);
- assert.ok(left>center&&left+64<center+D/2);assert.ok(top<center&&top>center-D/2);
+ assert.ok(left>center&&left+64<=center+D*0.32);assert.ok(top<center&&top>center-D/2);
  app.destroy();
 });
