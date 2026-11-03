@@ -1780,11 +1780,11 @@ test('weather, heights and site name share a bubble below the dial and above its
     assert.match(html,/class="rose-summary-name"/);
     assert.match(html,/class="rose-summary-body">[\s\S]*map-weather-indicators[\s\S]*large-cloud-heights/);
     assert.doesNotMatch(dial.options.icon.html,/class="title"|map-weather-indicators|large-cloud-heights/);
-    const style=html.match(/class="rose-summary"[^>]*style="([^"]+)"/)[1];
+    const style=html.match(/class="rose-details"[^>]*style="([^"]+)"/)[1];
     const top=Number(style.match(/top:([\d.]+)px/)[1]);
-    const actionsTop=Number(html.match(/class="rose-actions" style="top:([\d.]+)px/)[1]);
     assert.ok(top>label.options.icon.iconAnchor[1]*2,'Summary clears the complete dial');
-    assert.ok(actionsTop>=top+118,'Actions clear the summary bubble');
+    assert.match(html,/class="rose-details"[\s\S]*class="rose-summary"[\s\S]*class="rose-actions" role="group"/);
+    assert.doesNotMatch(html,/class="rose-actions" style="top:/,'Actions flow after the actual card height');
     assert.match(label.cloudLabel.textContent,/LCL/,'Initial forecast reaches the raised label');
     const reads=app.reads;
     app.store.set('timestamp',1792674000000);await app.flush();

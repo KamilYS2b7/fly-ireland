@@ -57,10 +57,10 @@ export function createSiteGuideMap({map,L,onSelect=()=>{}}: {map: any;L: any;onS
             const color = point.needsVerification ? '#7c3aed' : {launch:'#15803d',landing:'#1768c5',parking:'#ad6500',access:'#0f766e',reference:'#596675'}[point.kind];
             const caption = `${pointKindLabel(point.kind)} ${point.code}`;
             const title = `${guide.title} · ${pointKindLabel(point.kind)} ${point.code}: ${point.label}${point.needsVerification ? ' · Needs verification' : ''}`;
-            const icon=L.divIcon({className:'fly-guide-point-icon',iconSize:[36,36],iconAnchor:[18,18],
-                html:`<button type="button" title="${escape(title)}" aria-label="${escape(title)}" style="position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;box-sizing:border-box;overflow:visible;border:0;border-radius:0;background:transparent;color:${color};box-shadow:none;cursor:pointer;font:600 15px system-ui;text-transform:none;letter-spacing:normal">
+            const icon=L.divIcon({className:'fly-guide-point-icon',iconSize:[40,40],iconAnchor:[20,20],
+                html:`<button type="button" title="${escape(title)}" aria-label="${escape(title)}" style="position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;box-sizing:border-box;overflow:visible;border:2px solid ${color};border-radius:50%;background:#fff;color:${color};box-shadow:0 2px 7px #0f172a40;cursor:pointer;font:600 15px system-ui;text-transform:none;letter-spacing:normal">
                   ${pointSymbol(point.kind,color,point.needsVerification)}
-                  <span class="guide-point-caption" aria-hidden="true" style="position:absolute;top:calc(100% + 5px);left:50%;transform:translateX(-50%);display:block;width:max-content;padding:3px 7px;border:1px solid ${color};border-radius:6px;background:#fffffff5;color:#243b36;box-shadow:0 1px 4px #0003;white-space:nowrap;font:500 12px/16px system-ui,sans-serif;text-transform:none;letter-spacing:normal">${escape(caption)}</span>
+                  <span class="guide-point-caption" aria-hidden="true" style="position:absolute;top:calc(100% + 5px);left:50%;transform:translateX(-50%);display:block;width:max-content;padding:3px 7px;border:1px solid ${color};border-radius:6px;background:#fffffff5;color:#243b36;box-shadow:0 1px 4px #0003;white-space:nowrap;font:600 12px/16px system-ui,sans-serif;text-transform:none;letter-spacing:normal">${escape(caption)}</span>
                 </button>`});
             const marker=L.marker([point.lat,point.lon],{icon,pane,interactive:true,keyboard:false,bubblingMouseEvents:false,title}).addTo(map);
             marker.flyGuideKey=guide.key;marker.flyGuidePoint=point;
