@@ -793,7 +793,7 @@ const windForecast = createWindForecast({
   // Keep the finest available series even when the detail table is collapsed
   // or grouped. The returned timestamp grid determines its actual resolution.
   getPointForecast: (spot, abort, model, withLayers = false) => getPointForecastData(model,
-    {lat:spot.lat, lon:spot.lon, step:1, extended:true}, {header:true,meteogram:true,airgram:withLayers},
+    {lat:spot.lat, lon:spot.lon, step:1}, {header:true,extended:true,meteogram:true,airgram:withLayers},
     {abortSignal:abort.signal, timeout:15000}),
   getProfileForecast: (spot, abort) => getMeteogramForecastData('ukv',
     {lat:spot.lat, lon:spot.lon}, {days:'7'},

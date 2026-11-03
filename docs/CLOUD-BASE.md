@@ -2,7 +2,7 @@
 
 These are separate diagnostics, both in metres. Neither changes wind matching.
 
-* **Cloud base** reads Windy's `meteogram.cloudBase` time series using the
+* **Cloud base** reads Windy's documented `data.cbase` time series (or legacy `meteogram.cloudBase`) using the
   existing AGL convention (above model ground), with time interpolation.
   Missing values remain missing. ASL conversion is shown only when the response
   explicitly supplies `header.modelElevation`; actual site elevation is never

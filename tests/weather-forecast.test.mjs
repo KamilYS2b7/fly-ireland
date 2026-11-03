@@ -22,6 +22,16 @@ test('weather symbols hold their forecast interval and cloud base interpolates w
     assert.equal(samplePointForecast(spot,payload(),time+4*hour).cloudBaseStatus,'unavailable','Do not interpolate through a missing cloud base');
 });
 
+test('documented Windy point data uses cbase on the surface timestamp grid, without a meteogram',()=>{
+    const p=payload();delete p.data.meteogram;
+    p.data.data.cbase=[400,1000,null];
+    assert.equal(samplePointForecast(spot,p,time+hour).cloudBaseM,600);
+    assert.equal(samplePointForecast(spot,p,time+hour).cloudBaseAslM,750);
+    assert.equal(samplePointForecast(spot,p,time+4*hour).cloudBaseStatus,'unavailable');
+    const missing=payload();delete missing.data.meteogram;missing.data.data.cbase=[null,1000,null];
+    assert.equal(samplePointForecast(spot,missing,time).cloudBaseStatus,'unavailable');
+});
+
 test('weather identifies the actual source hour and resolution rather than claiming hourly data from a coarse response',()=>{
     const coarse=samplePointForecast(spot,payload(),time+hour);
     assert.equal(coarse.weatherTimestamp,time);

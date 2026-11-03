@@ -199,6 +199,7 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
             clearTimer: id => timers.delete(id),
         }),
         getPointForecastData: async (model,options,include) => {
+            if(include.meteogram)assert.equal(include.extended,true,'Extended data must be requested via forecast options');
             reads++;
             requestedModels.push(model);
             requestedIncludes.push(include);

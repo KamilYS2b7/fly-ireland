@@ -9,12 +9,16 @@ const validBase = (value: unknown): value is number => Number.isFinite(value) &&
 
 function prepareClouds(payload: any): CloudSeries | undefined {
     if (cloudSeries.has(payload)) return cloudSeries.get(payload) ?? undefined;
-    const profile = payload.meteogram, times = profile?.ts;
+    // The documented point-forecast DTO stores cloud base in data.cbase.
+    // Retain support for older meteogram.cloudBase responses.
+    const native = Array.isArray(payload.data?.cbase);
+    const profile = native ? payload.data : payload.meteogram, times = profile?.ts;
+    const bases = native ? profile?.cbase : profile?.cloudBase;
     let result: CloudSeries | undefined;
     if (Array.isArray(times) && times.length && times.every((t, i) => Number.isFinite(t) && (!i || t > times[i-1]))) {
-        if (Array.isArray(profile.cloudBase)) {
+        if (Array.isArray(bases)) {
             // Windy's native cloudBase is metres AGL, relative to model terrain.
-            result = {times, bases: times.map((_t, i) => validBase(profile.cloudBase[i]) ? profile.cloudBase[i] : undefined), reference:'AGL', estimated:false};
+            result = {times, bases: times.map((_t, i) => validBase(bases[i]) ? bases[i] : undefined), reference:'AGL', estimated:false};
         }
     }
     cloudSeries.set(payload, result ?? null);

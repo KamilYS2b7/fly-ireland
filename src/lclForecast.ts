@@ -21,9 +21,12 @@ export function sampleLcl(payload:any,timestamp:number):Partial<WindReading> {
         ||!Number.isFinite(timestamp)||timestamp<times[0]||timestamp>times.at(-1))return missing;
     const right=times.findIndex(t=>t>=timestamp),left=times[right]===timestamp?right:right-1;
     const ratio=left===right?0:(timestamp-times[left])/(times[right]-times[left]);
+    const inputs=[['temp','temperature'],['dewPoint','dew point'],['pressure','surface pressure']] as const;
+    const absent=inputs.filter(([key])=>![data[key]?.[left],data[key]?.[right]].every(Number.isFinite));
+    if(absent.length)return {...missing,lclNote:`LCL unavailable: missing ${absent.map(([,name])=>name).join(', ')} for this forecast time.`};
     const a=boltonLcl(data.temp?.[left],data.dewPoint?.[left],data.pressure?.[left]);
     const b=boltonLcl(data.temp?.[right],data.dewPoint?.[right],data.pressure?.[right]);
-    if(!a||!b)return missing;
+    if(!a||!b)return {...missing,lclNote:'LCL unavailable: forecast inputs or units are outside the supported range.'};
     const blend=(values:number[])=>values[left]+(values[right]-values[left])*ratio;
     const lcl=boltonLcl(blend(data.temp),blend(data.dewPoint),blend(data.pressure));
     if(!lcl)return missing;
@@ -36,7 +39,7 @@ const heightFormat=new Intl.NumberFormat('en-GB',{maximumFractionDigits:0});
 export function lclDisplay(reading:Partial<WindReading>) {
     const label='Estimated cumulus base (LCL)';
     if(reading.status==='loading'||reading.lclStatus==='loading')return {label,value:'Loading…',aslValue:'',description:'Near-surface parcel LCL is loading.'};
-    if(reading.lclStatus!=='available'||!Number.isFinite(reading.lclAglM))return {label,value:'No data',aslValue:'',description:'LCL requires valid near-surface temperature, dew point and surface pressure from the selected model.'};
+    if(reading.lclStatus!=='available'||!Number.isFinite(reading.lclAglM))return {label,value:'No data',aslValue:'',description:reading.lclNote??'LCL requires valid near-surface temperature, dew point and surface pressure from the selected model.'};
     const value=`~${heightFormat.format(reading.lclAglM!)} m AGL`;
     const aslValue=Number.isFinite(reading.lclAslM)?`~${heightFormat.format(reading.lclAslM!)} m ASL`:'';
     return {label,value,aslValue,description:`Bolton parcel LCL with a dry-adiabatic height estimate: ${value}${aslValue?` / ${aslValue}`:''}. AGL is above model ground, not the launch. This does not guarantee cloud formation or the actual cloud base.`};

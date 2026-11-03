@@ -19,6 +19,7 @@ test('invalid, missing or ambiguous units never become a parcel estimate',()=>{
     for(const key of ['temp','dewPoint','pressure']){
         const p=payload();p.data[key][1]=null;
         assert.equal(sampleLcl(p,time+hour/2).lclStatus,'unavailable');
+        assert.match(sampleLcl(p,time+hour/2).lclNote,/missing/);
     }
     assert.equal(sampleLcl(payload(),time-1).lclStatus,'unavailable');
 });
