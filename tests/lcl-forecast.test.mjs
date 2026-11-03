@@ -4,6 +4,18 @@ import {boltonLcl,sampleLcl,lclDisplay,lclInputDiagnostics} from '../src/lclFore
 import {cloudBaseMarkerDisplay} from '../src/weatherForecast.ts';
 const time=Date.UTC(2026,10,3,12),hour=3600000;
 const payload=()=>({header:{modelElevation:400,elevation:700},data:{ts:[time,time+hour],temp:[293.15,295.15],dewPoint:[283.15,283.15],pressure:[100000,99000]}});
+
+test('observed ICON-EU format reads data.temperature and meteogram.dewPoint on separate time grids',()=>{
+    const p={header:{model:'ICON-EU',modelElevation:222},data:{ts:[time,time+hour],temperature:[278.71,278.71],pressure:[104032.83,104032.83]},meteogram:{ts:[time,time+3*hour],dewPoint:[277.87,277.87]}};
+    const r=sampleLcl(p,time);
+    assert.equal(r.lclStatus,'available');
+    assert.ok(r.lclAglM>80&&r.lclAglM<130);
+    assert.equal(r.lclAslM,r.lclAglM+222);
+    p.data.temperature=[293.15,295.15];p.meteogram.dewPoint=[283.15,286.15];
+    assert.equal(sampleLcl(p,time+hour/2).lclAglM,boltonLcl(294.15,283.65,104032.83).heightM);
+    p.meteogram.ts=[time+hour,time+3*hour];
+    assert.equal(sampleLcl(p,time+hour/2).lclStatus,'unavailable','Never use a dew point outside its own forecast range');
+});
 test('Bolton reference parcel gives about 1.25 km LCL; saturated parcels give zero',()=>{
     const result=boltonLcl(293.15,283.15,100000);
     assert.ok(Math.abs(result.temperatureK-280.93)<0.01);

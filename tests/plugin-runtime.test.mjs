@@ -210,8 +210,8 @@ function runtime({ legacyPoint = false, windValues = [0, 5, 0], savedFilters = n
                 wind:Array(4).fill(speed),windDir:Array(4).fill(direction),windGust:Array(4).fill(6),
                 precipAmount:[0.5,0,0.8,null],precipSnowAmount:[0,0,0,0],
                 icon:[1,3,4,null],isDay:[1,1,0,0],moonPhase:[7,7,7,7],
-                temp:[293.15,295.15,297.15,299.15],dewPoint:[283.15,283.15,283.15,283.15],pressure:[100000,100000,100000,100000],
-            },meteogram:{ts:Array.from({length:4},(_,i)=>1792670400000+i*3600000),cloudBase:[300,600,900,null]}}};
+                temperature:[293.15,295.15,297.15,299.15],pressure:[100000,100000,100000,100000],
+            },meteogram:{dewPoint:[283.15,283.15,283.15,283.15],ts:Array.from({length:4},(_,i)=>1792670400000+i*3600000),cloudBase:[300,600,900,null]}}};
             if(include.airgram)response.data.airgram={ts:[1792670400000,1792674000000,1792677600000,1792681200000],
                 'wind-950h':[8,4,6,8],'windDir-950h':[0,90,180,270],
                 'wind-1000h':[4,4,4,4],'windDir-1000h':[0,0,0,0]};

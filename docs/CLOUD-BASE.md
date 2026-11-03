@@ -8,9 +8,9 @@ These are separate diagnostics, both in metres. Neither changes wind matching.
   explicitly supplies `header.modelElevation`; actual site elevation is never
   substituted for model terrain. Field interpretation still needs checking
   against live provider metadata for each supported model.
-* **Estimated cumulus base (LCL)** uses near-surface `data.temp` and
-  `data.dewPoint` in kelvin and `data.pressure` as surface pressure in pascals.
-  Inputs at the selected time are linearly interpolated, then LCL temperature
+* **Estimated cumulus base (LCL)** uses near-surface `data.temperature` (legacy `data.temp`) and
+  `meteogram.dewPoint` (or `data.dewPoint`) in kelvin and `data.pressure` as surface pressure in pascals.
+  Each input is interpolated on its own timestamp grid without extrapolation, then LCL temperature
   is calculated using Bolton (1980), *The Computation of Equivalent Potential
   Temperature*, equation 22. Dry Poisson ascent gives LCL pressure; a dry
   adiabatic temperature lapse gives the approximate height above model ground.
