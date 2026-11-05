@@ -4,12 +4,13 @@ import type {ThermalEstimate} from './thermalUpdraft';
 import {soundingAtHeight} from './soundingInsights.ts';
 import {convertWindSpeed} from './windUnits.ts';
 import type {WindUnit} from './windUnits';
-export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=640,options:{zoom?:boolean;height?:number;thermal?:ThermalEstimate}={}){
+export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=640,options:{depthM?:number;zoom?:boolean;height?:number;thermal?:ThermalEstimate}={}){
     const height=Math.max(320,Math.min(720,options.height??440)),left=52,top=30,bottom=height-44,windWidth=width>=600?Math.min(240,Math.max(150,width*.24)):72,windRight=width-32,windLeft=windRight-windWidth,tempRight=windLeft-(width>=600?32:24);
     const ground=profile.terrainM??profile.levels[0].heightM;
     const minHeight=Math.floor(Math.min(ground,profile.levels[0].heightM)/250)*250;
     const fullHeight=Math.max(minHeight+500,Math.min(7000,Math.max(minHeight+1000,Math.ceil(profile.levels.at(-1)!.heightM/500)*500)));
-    const maxHeight=options.zoom?Math.min(fullHeight,Math.max(minHeight+500,ground+3000)):fullHeight;
+    const depth=Number.isFinite(options.depthM)?Math.max(500,Math.min(7000,options.depthM!)):options.zoom?3000:undefined;
+    const maxHeight=depth===undefined?fullHeight:Math.min(fullHeight,Math.max(minHeight+500,ground+depth));
     const levels=profile.levels;
     const edge=soundingAtHeight(profile,maxHeight);
     const visible=[...levels.filter(l=>l.heightM<=maxHeight),...(edge?[{...edge,heightM:maxHeight}]:[])];
@@ -47,7 +48,8 @@ export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=6
         const envelope=heights.flatMap(z=>{const p=thermalAtHeight(thermal,z);return p?.lowMps===undefined||p.highMps===undefined?[]:[{heightM:z,low:p.lowMps,high:p.highMps}];});
         if(envelope.length>1)updraftBand=trace([...envelope.map(p=>({x:xUpdraft(p.low),y:y(p.heightM)})),...envelope.slice().reverse().map(p=>({x:xUpdraft(p.high),y:y(p.heightM)}))])+'Z';
     }
-    const ticks:number[]=[];for(let h=Math.ceil(minHeight/1000)*1000;h<=maxHeight;h+=1000)ticks.push(h);
+    const tickStep=maxHeight-minHeight<=1500?250:maxHeight-minHeight<=3500?500:1000;
+    const ticks:number[]=[];for(let h=Math.ceil(minHeight/tickStep)*tickStep;h<=maxHeight;h+=tickStep)ticks.push(h);
     const tempTicks=Array.from({length:5},(_,i)=>minTemp+(maxTemp-minTemp)*i/4);
     let previousY=-Infinity;
     const arrows=[...levels].reverse().filter(l=>{const pos=y(l.heightM);if(l.heightM>maxHeight||l.heightM<minHeight||l.windDirection===undefined||l.windMps===undefined||pos-previousY<25)return false;previousY=pos;return true;});

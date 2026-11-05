@@ -54,3 +54,13 @@ test('desktop layout reserves a wide wind panel and intermediate ticks while kee
  assert.equal(phone.windRight-phone.windLeft,72);
  assert.equal(desktop.profileTicks.length,5);assert.equal(phone.profileTicks.length,2);
 });
+
+test('user height range scales the profile above model ground and adds useful low-level ticks',()=>{
+ const high={...profile,terrainM:1500,levels:[{pressureHpa:850,heightM:1500,temperatureC:15,windMps:3},{pressureHpa:700,heightM:3000,temperatureC:5,windMps:10},{pressureHpa:400,heightM:7000,temperatureC:-20,windMps:40}]};
+ const low=buildSoundingChart(high,'m/s',640,{depthM:1000});
+ assert.equal(low.maxHeight,2500);assert.ok(low.ticks.includes(1750));
+ assert.ok(Math.abs(low.heightAtY(low.y(2000))-2000)<1e-6);
+ assert.equal(buildSoundingChart(high,'m/s',640,{depthM:9000}).maxHeight,7000);
+ assert.equal(buildSoundingChart(high,'m/s',640,{depthM:-10}).maxHeight,2000);
+ assert.doesNotMatch(low.temperature,/NaN|Infinity/);
+});

@@ -15,12 +15,12 @@
   let showClouds=true;
   $: cloudsAvailable=state.profile?.clouds?.some(level=>level.coverPct!==undefined)??false;
   $: cloudBands=state.profile?soundingCloudBands(state.profile):[];
-  let width=600,chartHeight=440,zoom=false,updraftMode=false,cursorHeight:number|undefined,viewSite='';
+  let width=600,chartHeight=440,depthM=3000,updraftMode=false,cursorHeight:number|undefined,viewSite='';
   let pointerType='mouse',touchStart:{x:number;y:number}|undefined,wheelTotal=0,lastWheel=0;
   let resizeStart:{y:number;height:number}|undefined;
-  $: if(state.site?.id!==viewSite){viewSite=state.site?.id??'';cursorHeight=undefined;zoom=false;}
+  $: if(state.site?.id!==viewSite){viewSite=state.site?.id??'';cursorHeight=undefined;}
   $: thermal=state.open&&state.profile&&updraftMode?estimateThermalUpdraft(state.profile):undefined;
-  $: chart=state.profile?buildSoundingChart(state.profile,windUnit,width,{zoom,height:chartHeight,thermal}):undefined;
+  $: chart=state.profile?buildSoundingChart(state.profile,windUnit,width,{depthM:Number(depthM),height:chartHeight,thermal}):undefined;
   $: insights=state.profile?soundingInsights(state.profile):undefined;
   $: minCursor=state.profile&&chart?Math.max(chart.minHeight,state.profile.levels[0].heightM):0;
   $: maxCursor=state.profile&&chart?Math.min(chart.maxHeight,state.profile.levels.at(-1)!.heightM):0;
@@ -116,7 +116,7 @@
    {#if state.status==='loading'}<p class="message" role="status">Loading atmospheric profile…</p>
    {:else if state.status==='error'}<div class="message" role="alert"><p>{state.error??'Could not load the sounding.'}</p><button type="button" on:click={onRetry}>Try again</button></div>
    {:else if chart&&state.profile}
-    <div class="chart-tools"><button type="button" class="zoom-button" aria-pressed={zoom} on:click={()=>zoom=!zoom}>{zoom?'Show full profile':'Zoom: lower 3 km'}</button><button type="button" class="updraft-button" aria-pressed={updraftMode} on:click={()=>updraftMode=!updraftMode}>{updraftMode?'Show wind profile':'Show updraft estimate'}</button><span>Tap or hover for readings</span></div>
+    <div class="chart-tools"><label class="height-range">Height range <input aria-label="Height range above model ground" type="range" min="500" max="7000" step="250" bind:value={depthM}/><span>{heightText(chart.maxHeight)} ASL · up to {heightText(Math.max(0,chart.maxHeight-chart.ground))} above model ground</span></label><button type="button" class="updraft-button" aria-pressed={updraftMode} on:click={()=>updraftMode=!updraftMode}>{updraftMode?'Show wind profile':'Show updraft estimate'}</button><span>Tap or hover for readings</span></div>
     <div class="cursor-readout" aria-live="off">
       {#if cursorHeight!==undefined}
        <span>Height<strong>{heightText(cursorHeight)} ASL</strong><small class:below={cursor?.aboveTakeoffM!==undefined&&cursor.aboveTakeoffM<0} class:above={cursor?.aboveTakeoffM!==undefined&&cursor.aboveTakeoffM>0}>{clearance(cursorHeight,state.profile?.takeoffM)}</small></span>
@@ -226,6 +226,7 @@
  .chart-tools{flex-wrap:wrap;}.updraft-button{width:166px;min-height:34px;font-size:11px;}.updraft-button[aria-pressed="true"]{background:#fff1d9;border-color:#c39455;color:#8b5c20;}.updraft-key,.updraft-reading strong{color:#a5661d;}.sounding-chart .profile.updraft,.sounding-chart .cursor-dot.updraft{stroke:#bb7624;}.updraft-band{fill:#dfb273;opacity:.30;stroke:none;}.updraft-note{font-size:11px;line-height:1.5;color:#815f37;border-top:1px solid #e9dcc7;padding-top:8px;margin:8px 0;}.updraft-assumptions{font-size:10px;line-height:1.55;color:#677d84;margin:6px 0 10px;}.updraft-assumptions summary{cursor:pointer;color:#946a36;}.updraft-assumptions p{margin:5px 0;}.sounding-chart .updraft-unavailable{font-size:8px;fill:#947b5d;}
  @media(max-width:600px){.chart-tools span{display:none;}.updraft-button{width:160px;}}
  @media(min-width:601px){.sounding-chart text{font-size:12px;}.sounding-chart .plot-label{font-size:11px;}.sounding-chart .plot-label .secondary{font-size:10px;}.sounding-chart .plot-label.wind-change{font-size:10.5px;}}
+ .height-range{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:11px;color:#42616b;max-width:490px;}.height-range input{width:170px;min-height:32px;accent-color:#347e67;cursor:ew-resize;}.height-range span{width:100%;font-size:10px;}.chart-tools .height-range span{display:block;max-width:none;text-align:left;}
  .cloud-toggle{font-size:11px;min-height:28px;padding:3px 8px;color:#506e7c;}.cloud-toggle[aria-pressed="true"]{background:#e5eff4;border-color:#94b2c2;}.cloud-toggle:disabled{opacity:.65;cursor:default;}.legend{align-items:center;}.cloud-drift{animation:cloud-drift 38s linear infinite;pointer-events:none;}.cloud-note{font-size:10px;color:#667e89;margin:7px 0;}
  @keyframes cloud-drift{from{transform:translateX(0)}to{transform:translateX(180px)}}
  @media(prefers-reduced-motion:reduce){.cloud-drift{animation:none;}}
