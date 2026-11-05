@@ -35,6 +35,11 @@
     const right=width>=900&&wind!==undefined&&chart.xWind(wind)<(chart.windLeft+chart.windRight)/2;
     return{...annotation,labelX:right?chart.windRight-4:chart.windLeft+4,anchor:right?'end':'start'};
   }):[];
+  $: cursorY=chart&&cursorHeight!==undefined?chart.y(cursorHeight):0;
+  $: cursorLabelY=chart?Math.max(chart.top+20,Math.min(chart.bottom-74,cursorY-16)):0;
+  $: temperatureLabelX=chart&&cursor?Math.max(chart.left+4,Math.min(chart.tempRight-58,chart.xTemp(cursor.temperatureC)+8)):0;
+  $: dewLabelX=chart&&cursor?.dewPointC!==undefined?Math.max(chart.left+4,Math.min(chart.tempRight-58,chart.xTemp(cursor.dewPointC)+8)):0;
+  $: windLabelX=chart?Math.max(chart.windLeft+4,Math.min(chart.windRight-64,updraftMode&&updraftCursor?chart.xUpdraft(updraftCursor.speedMps)+8:cursor?.windMps!==undefined?chart.xWind(cursor.windMps)+8:chart.windLeft+4)):0;
   const endReason={condensation:'condensation',stalled:'ascent reaches zero',missing:'missing profile data','profile-end':'end of profile / 7 km limit'};
   $: timeText=new Date(state.timestamp||0).toLocaleString('en-GB',{timeZone:'UTC',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' UTC';
   const heightText=(value:number)=>Math.round(value).toLocaleString('en-GB')+' m';
@@ -117,17 +122,9 @@
    {:else if state.status==='error'}<div class="message" role="alert"><p>{state.error??'Could not load the sounding.'}</p><button type="button" on:click={onRetry}>Try again</button></div>
    {:else if chart&&state.profile}
     <div class="chart-tools"><label class="height-range">Height range <input aria-label="Height range above model ground" type="range" min="500" max="7000" step="250" bind:value={depthM}/><span>{heightText(chart.maxHeight)} ASL · up to {heightText(Math.max(0,chart.maxHeight-chart.ground))} above model ground</span></label><button type="button" class="updraft-button" aria-pressed={updraftMode} on:click={()=>updraftMode=!updraftMode}>{updraftMode?'Show wind profile':'Show updraft estimate'}</button><span>Tap or hover for readings</span></div>
-    <div class="cursor-readout" aria-live="off">
-      {#if cursorHeight!==undefined}
-       <span>Height<strong>{heightText(cursorHeight)} ASL</strong><small class:below={cursor?.aboveTakeoffM!==undefined&&cursor.aboveTakeoffM<0} class:above={cursor?.aboveTakeoffM!==undefined&&cursor.aboveTakeoffM>0}>{clearance(cursorHeight,state.profile?.takeoffM)}</small></span>
-       <span>Temperature<strong class="temperature">{cursor?cursor.temperatureC.toFixed(1)+'°C':'—'}</strong><small class="dewpoint">Dew point: {cursor?.dewPointC===undefined?'—':cursor.dewPointC.toFixed(1)+'°C'}</small></span>
-       <span>Wind<strong>{speed(cursor?.windMps,windUnit)}</strong><small>{cursor?.windDirection===undefined?'Direction: —':'From '+Math.round(cursor.windDirection)+'°'}</small></span>
-       {#if updraftMode}<span class="updraft-reading">Experimental air updraft<strong>{updraftCursor?'~'+updraftCursor.speedMps.toFixed(1)+' m/s':'—'}</strong><small>{updraftCursor?.lowMps!==undefined&&updraftCursor.highMps!==undefined?`Scenarios ${updraftCursor.lowMps.toFixed(1)}–${updraftCursor.highMps.toFixed(1)} m/s`:'No scenario range here'}</small></span>
-       {:else}<span class="wind-change">Vector wind change<strong>{cursorWindChange?speed(cursorWindChange.vectorMpsPer100m,windUnit)+' / 100 m':'—'}</strong><small>Between model levels</small></span>{/if}
-      {:else}<span class="cursor-hint">Move the pointer or tap the chart to read a height. Arrow keys also move the cursor.</span>{/if}
-    </div>
+    <p class="cursor-help">Move the pointer or tap the chart for readings. Arrow keys move the height cursor.</p>
     <div class="legend"><button class="cloud-toggle" type="button" disabled={!cloudsAvailable} aria-pressed={showClouds&&cloudsAvailable} on:click={()=>showClouds=!showClouds}>{cloudsAvailable?(showClouds?'☁ Clouds on':'☁ Clouds off'):'☁ Cloud data unavailable'}</button><span class="temperature">● Temperature</span><span class="dewpoint">● Dew point</span><span class="parcel">● Parcel (+3°C)</span>{#if updraftMode}<span class="updraft-key">● Experimental dry updraft</span>{:else}<span class="wind">● Wind</span>{/if}</div>
-    <svg class="sounding-chart" viewBox={`0 0 ${chart.width} ${chart.height}`} role="slider" tabindex="0" aria-label="Sounding height cursor" aria-orientation="vertical" aria-valuemin={Math.round(minCursor)} aria-valuemax={Math.round(maxCursor)} aria-valuenow={Math.round(cursorHeight??minCursor)} aria-valuetext={cursorHeight===undefined?'Select a height':`${heightText(cursorHeight)} ASL. ${clearance(cursorHeight,state.profile?.takeoffM)}. Temperature ${cursor?.temperatureC.toFixed(1)??'unavailable'} degrees Celsius. Wind ${speed(cursor?.windMps,windUnit)}.${updraftMode?' Experimental air updraft '+(updraftCursor?.speedMps.toFixed(1)??'unavailable')+' metres per second.':''}`}
+    <svg class="sounding-chart" viewBox={`0 0 ${chart.width} ${chart.height}`} role="slider" tabindex="0" aria-label="Sounding height cursor" aria-orientation="vertical" aria-valuemin={Math.round(minCursor)} aria-valuemax={Math.round(maxCursor)} aria-valuenow={Math.round(cursorHeight??minCursor)} aria-valuetext={cursorHeight===undefined?'Select a height':`${heightText(cursorHeight)} ASL. ${clearance(cursorHeight,state.profile?.takeoffM)}. Temperature ${cursor?.temperatureC.toFixed(1)??'unavailable'} degrees Celsius. Dew point ${cursor?.dewPointC?.toFixed(1)??'unavailable'} degrees Celsius. Wind ${speed(cursor?.windMps,windUnit)} from ${cursor?.windDirection===undefined?'unavailable':Math.round(cursor.windDirection)+' degrees'}. Vector wind change ${cursorWindChange?speed(cursorWindChange.vectorMpsPer100m,windUnit)+' per 100 metres':'unavailable'}.${updraftMode?' Experimental air updraft '+(updraftCursor?.speedMps.toFixed(1)??'unavailable')+' metres per second.':''}`}
       on:pointermove={moveCursor} on:pointerdown={pointerDown} on:pointerup={pointerUp} on:pointercancel={()=>touchStart=undefined}
       on:pointerleave={()=>{if(pointerType==='mouse'&&document.activeElement?.classList?.contains('sounding-chart')!==true)cursorHeight=undefined;}}
       on:keydown={cursorKey} on:focus={()=>{if(cursorHeight===undefined)setCursor(minCursor);}} on:wheel|nonpassive={wheel}>
@@ -194,6 +191,24 @@
       <line class="cursor-line" x1={chart.left} x2={chart.windRight} y1={chart.y(cursorHeight)} y2={chart.y(cursorHeight)}/>
       {#if cursor}<circle class="cursor-dot temperature" cx={chart.xTemp(cursor.temperatureC)} cy={chart.y(cursorHeight)} r="4"/>{#if cursor.dewPointC!==undefined}<circle class="cursor-dot dewpoint" cx={chart.xTemp(cursor.dewPointC)} cy={chart.y(cursorHeight)} r="4"/>{/if}{#if !updraftMode&&cursor.windMps!==undefined}<circle class="cursor-dot wind" cx={chart.xWind(cursor.windMps)} cy={chart.y(cursorHeight)} r="4"/>{/if}{/if}
       {#if updraftMode&&updraftCursor}<circle class="cursor-dot updraft" cx={chart.xUpdraft(updraftCursor.speedMps)} cy={chart.y(cursorHeight)} r="4"/>{/if}
+      <g class="cursor-values" aria-hidden="true">
+       <text class="cursor-height" x={chart.left+4} y={cursorLabelY+56}>{heightText(cursorHeight)} ASL<tspan x={chart.left+4} dy="13" class:below={cursor?.aboveTakeoffM!==undefined&&cursor.aboveTakeoffM<0} class:above={cursor?.aboveTakeoffM!==undefined&&cursor.aboveTakeoffM>0}>{clearance(cursorHeight,state.profile.takeoffM)}</tspan></text>
+       {#if cursor}
+        <line class="reading-leader temperature" x1={chart.xTemp(cursor.temperatureC)} y1={cursorY} x2={temperatureLabelX} y2={cursorLabelY-3}/>
+        <text class="point-reading temperature" x={temperatureLabelX} y={cursorLabelY}>T {cursor.temperatureC.toFixed(1)}°C</text>
+        {#if cursor.dewPointC!==undefined}
+         <line class="reading-leader dewpoint" x1={chart.xTemp(cursor.dewPointC)} y1={cursorY} x2={dewLabelX} y2={cursorLabelY+17}/>
+         <text class="point-reading dewpoint" x={dewLabelX} y={cursorLabelY+20}>Td {cursor.dewPointC.toFixed(1)}°C</text>
+        {/if}
+       {/if}
+       {#if updraftMode&&updraftCursor}
+        <line class="reading-leader" x1={chart.xUpdraft(updraftCursor.speedMps)} y1={cursorY} x2={windLabelX} y2={cursorLabelY-3}/>
+        <text class="point-reading updraft" x={windLabelX} y={cursorLabelY}>~{updraftCursor.speedMps.toFixed(1)} m/s<tspan x={windLabelX} dy="13">Air updraft</tspan>{#if updraftCursor.lowMps!==undefined&&updraftCursor.highMps!==undefined}<tspan x={windLabelX} dy="13">{updraftCursor.lowMps.toFixed(1)}–{updraftCursor.highMps.toFixed(1)} m/s</tspan>{/if}</text>
+       {:else if !updraftMode&&cursor?.windMps!==undefined}
+        <line class="reading-leader wind" x1={chart.xWind(cursor.windMps)} y1={cursorY} x2={windLabelX} y2={cursorLabelY-3}/>
+        <text class="point-reading wind" x={windLabelX} y={cursorLabelY}>{speed(cursor.windMps,windUnit)}<tspan x={windLabelX} dy="13">{cursor.windDirection===undefined?'From —':'From '+Math.round(cursor.windDirection)+'°'}</tspan>{#if cursorWindChange}<tspan x={windLabelX} dy="13">Δ {speed(cursorWindChange.vectorMpsPer100m,windUnit)}<tspan x={windLabelX} dy="12">per 100 m</tspan></tspan>{/if}</text>
+       {/if}
+      </g>
      {/if}
     </svg>
     <div class="resize-handle" role="slider" tabindex="0" aria-label="Chart height" aria-valuemin="320" aria-valuemax="720" aria-valuenow={Math.round(chartHeight)} aria-valuetext={`${Math.round(chartHeight)} pixels`} on:pointerdown={startResize} on:pointermove={resize} on:pointerup={endResize} on:pointercancel={endResize} on:lostpointercapture={endResize} on:keydown={event=>{if(event.key==='ArrowUp'||event.key==='ArrowDown'){event.preventDefault();chartHeight=Math.max(320,Math.min(720,chartHeight+(event.key==='ArrowUp'?-20:20)));}}}><span></span>Drag to resize chart</div>
@@ -226,6 +241,7 @@
  .chart-tools{flex-wrap:wrap;}.updraft-button{width:166px;min-height:34px;font-size:11px;}.updraft-button[aria-pressed="true"]{background:#fff1d9;border-color:#c39455;color:#8b5c20;}.updraft-key,.updraft-reading strong{color:#a5661d;}.sounding-chart .profile.updraft,.sounding-chart .cursor-dot.updraft{stroke:#bb7624;}.updraft-band{fill:#dfb273;opacity:.30;stroke:none;}.updraft-note{font-size:11px;line-height:1.5;color:#815f37;border-top:1px solid #e9dcc7;padding-top:8px;margin:8px 0;}.updraft-assumptions{font-size:10px;line-height:1.55;color:#677d84;margin:6px 0 10px;}.updraft-assumptions summary{cursor:pointer;color:#946a36;}.updraft-assumptions p{margin:5px 0;}.sounding-chart .updraft-unavailable{font-size:8px;fill:#947b5d;}
  @media(max-width:600px){.chart-tools span{display:none;}.updraft-button{width:160px;}}
  @media(min-width:601px){.sounding-chart text{font-size:12px;}.sounding-chart .plot-label{font-size:11px;}.sounding-chart .plot-label .secondary{font-size:10px;}.sounding-chart .plot-label.wind-change{font-size:10.5px;}}
+ .cursor-help{font-size:10px;color:#677f88;margin:5px 0 10px;}.cursor-values{pointer-events:none;}.sounding-chart .cursor-values text{font-size:11px;font-weight:650;paint-order:stroke;stroke:white;stroke-width:4px;stroke-linejoin:round;}.sounding-chart .point-reading.temperature{fill:#c44432;}.sounding-chart .point-reading.dewpoint{fill:#227aaa;}.sounding-chart .point-reading.wind{fill:#71509f;}.sounding-chart .point-reading.updraft{fill:#9b601a;}.reading-leader{stroke:#9aaeb5;stroke-width:1;opacity:.7;}.sounding-chart .cursor-height{font-size:10px;}
  .height-range{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:11px;color:#42616b;max-width:490px;}.height-range input{width:170px;min-height:32px;accent-color:#347e67;cursor:ew-resize;}.height-range span{width:100%;font-size:10px;}.chart-tools .height-range span{display:block;max-width:none;text-align:left;}
  .cloud-toggle{font-size:11px;min-height:28px;padding:3px 8px;color:#506e7c;}.cloud-toggle[aria-pressed="true"]{background:#e5eff4;border-color:#94b2c2;}.cloud-toggle:disabled{opacity:.65;cursor:default;}.legend{align-items:center;}.cloud-drift{animation:cloud-drift 38s linear infinite;pointer-events:none;}.cloud-note{font-size:10px;color:#667e89;margin:7px 0;}
  @keyframes cloud-drift{from{transform:translateX(0)}to{transform:translateX(180px)}}
