@@ -5,12 +5,16 @@
   import {soundingInsights,soundingAtHeight,WIND_CHANGE_THRESHOLD} from './soundingInsights';
   import {buildSoundingChart,placeSoundingLabels} from './soundingChart';
   import {formatWindSpeed} from './windUnits';
+  import {soundingCloudBands} from './soundingClouds';
   import {forecastModelLabel} from './forecastModels';
   export let state:SoundingState={open:false,model:'',timestamp:0,status:'loading'};
   export let windUnit:WindUnit='mph';
   export let onClose:()=>void=()=>{};
   export let onRetry:()=>void=()=>{};
   export let onTime:(delta:number)=>void=()=>{};
+  let showClouds=true;
+  $: cloudsAvailable=state.profile?.clouds?.some(level=>level.coverPct!==undefined)??false;
+  $: cloudBands=state.profile?soundingCloudBands(state.profile):[];
   let width=600,chartHeight=440,zoom=false,updraftMode=false,cursorHeight:number|undefined,viewSite='';
   let pointerType='mouse',touchStart:{x:number;y:number}|undefined,wheelTotal=0,lastWheel=0;
   let resizeStart:{y:number;height:number}|undefined;
@@ -122,15 +126,28 @@
        {:else}<span class="wind-change">Vector wind change<strong>{cursorWindChange?speed(cursorWindChange.vectorMpsPer100m,windUnit)+' / 100 m':'—'}</strong><small>Between model levels</small></span>{/if}
       {:else}<span class="cursor-hint">Move the pointer or tap the chart to read a height. Arrow keys also move the cursor.</span>{/if}
     </div>
-    <div class="legend"><span class="temperature">● Temperature</span><span class="dewpoint">● Dew point</span><span class="parcel">● Parcel (+3°C)</span>{#if updraftMode}<span class="updraft-key">● Experimental dry updraft</span>{:else}<span class="wind">● Wind</span>{/if}</div>
+    <div class="legend"><button class="cloud-toggle" type="button" disabled={!cloudsAvailable} aria-pressed={showClouds&&cloudsAvailable} on:click={()=>showClouds=!showClouds}>{cloudsAvailable?(showClouds?'☁ Clouds on':'☁ Clouds off'):'☁ Cloud data unavailable'}</button><span class="temperature">● Temperature</span><span class="dewpoint">● Dew point</span><span class="parcel">● Parcel (+3°C)</span>{#if updraftMode}<span class="updraft-key">● Experimental dry updraft</span>{:else}<span class="wind">● Wind</span>{/if}</div>
     <svg class="sounding-chart" viewBox={`0 0 ${chart.width} ${chart.height}`} role="slider" tabindex="0" aria-label="Sounding height cursor" aria-orientation="vertical" aria-valuemin={Math.round(minCursor)} aria-valuemax={Math.round(maxCursor)} aria-valuenow={Math.round(cursorHeight??minCursor)} aria-valuetext={cursorHeight===undefined?'Select a height':`${heightText(cursorHeight)} ASL. ${clearance(cursorHeight,state.profile?.takeoffM)}. Temperature ${cursor?.temperatureC.toFixed(1)??'unavailable'} degrees Celsius. Wind ${speed(cursor?.windMps,windUnit)}.${updraftMode?' Experimental air updraft '+(updraftCursor?.speedMps.toFixed(1)??'unavailable')+' metres per second.':''}`}
       on:pointermove={moveCursor} on:pointerdown={pointerDown} on:pointerup={pointerUp} on:pointercancel={()=>touchStart=undefined}
       on:pointerleave={()=>{if(pointerType==='mouse'&&document.activeElement?.classList?.contains('sounding-chart')!==true)cursorHeight=undefined;}}
       on:keydown={cursorKey} on:focus={()=>{if(cursorHeight===undefined)setCursor(minCursor);}} on:wheel|nonpassive={wheel}>
      <title id="fly-sounding-desc">Temperature, dew point, wind and estimated parcel trajectory by height above sea level at {state.site?.name}. {updraftMode?'Experimental calculated air updraft in metres per second.':`Wind in ${windUnit}.`}</title>
-     <defs><clipPath id="fly-sounding-wind-clip"><rect x={chart.windLeft} y={chart.top} width={chart.windRight-chart.windLeft} height={chart.bottom-chart.top}/></clipPath><clipPath id="fly-sounding-temperature-clip"><rect x={chart.left} y={chart.top} width={chart.tempRight-chart.left} height={chart.bottom-chart.top}/></clipPath></defs>
+     <defs><pattern id="fly-sounding-cloud-pattern" width="180" height="42" patternUnits="userSpaceOnUse"><path d="M12 29 C3 29 3 16 13 15 C12 3 30 0 36 11 C47 4 59 13 56 20 C70 20 70 32 58 32 L16 32Z M103 37 C93 37 92 25 102 24 C102 13 119 11 124 21 C135 17 146 26 140 34 C139 39 110 39 103 37Z" fill="#a8c2d0" stroke="#809fad" stroke-width=".8"/></pattern><clipPath id="fly-sounding-wind-clip"><rect x={chart.windLeft} y={chart.top} width={chart.windRight-chart.windLeft} height={chart.bottom-chart.top}/></clipPath><clipPath id="fly-sounding-temperature-clip"><rect x={chart.left} y={chart.top} width={chart.tempRight-chart.left} height={chart.bottom-chart.top}/></clipPath></defs>
      <rect x={chart.left} y={chart.top} width={chart.tempRight-chart.left} height={chart.bottom-chart.top} fill="#f8fafb"/>
      <rect x={chart.windLeft} y={chart.top} width={chart.windRight-chart.windLeft} height={chart.bottom-chart.top} fill={updraftMode?'#fff6e9':'#eef6f1'}/>
+     {#if showClouds&&cloudsAvailable}
+      <g class="cloud-layers" clip-path="url(#fly-sounding-temperature-clip)" aria-label="Model cloud cover">
+       {#each cloudBands as band,index}
+        {#if band.topM>=chart.minHeight&&band.bottomM<=chart.maxHeight}
+         <svg x={chart.left} y={band.pointOnly?chart.y(band.heightM)-14:chart.y(Math.min(band.topM,chart.maxHeight))} width={chart.tempRight-chart.left} height={band.pointOnly?28:Math.max(1,chart.y(Math.max(band.bottomM,chart.minHeight))-chart.y(Math.min(band.topM,chart.maxHeight)))} overflow="hidden" class="cloud-layer" opacity={.15+.5*band.coverPct/100}>
+          <title>Model cloud cover: {Math.round(band.coverPct)}% at {heightText(band.heightM)} ASL. {band.pointOnly?'Single level; cloud thickness unknown.':'Layer edges interpolated between sampled levels.'} Motion is decorative.</title>
+          <rect width="100%" height="100%" fill="#e2edf2"/>
+          <rect class="cloud-drift" x="-180" width={chart.tempRight-chart.left+360} height="100%" fill="url(#fly-sounding-cloud-pattern)" style={`animation-delay: -${index*7}s`}/>
+         </svg>
+        {/if}
+       {/each}
+      </g>
+     {/if}
      {#each insights?.inversions??[] as band}
       {#if band.topM>chart.minHeight&&band.bottomM<chart.maxHeight}<rect class="inversion-band" x={chart.left} y={chart.y(Math.min(band.topM,chart.maxHeight))} width={chart.tempRight-chart.left} height={chart.y(Math.max(band.bottomM,chart.minHeight))-chart.y(Math.min(band.topM,chart.maxHeight))}><title>Inversion: {heightText(band.bottomM)}–{heightText(band.topM)} ASL; temperature rises {band.temperatureRiseC.toFixed(1)}°C</title></rect>{/if}
      {/each}
@@ -186,6 +203,7 @@
      <details class="updraft-assumptions"><summary>Updraft model assumptions</summary><p>Entraining dry parcel with virtual-temperature buoyancy. Entrainment coefficient α=0.1 (fractional rate 2α/R), drag coefficient 0.5, added-mass factor 0.5, 10 m integration steps. Stops at condensation, stalled ascent, missing moisture/height data or the profile limit. It does not simulate wet/cloud updrafts, terrain lift or real thermal geometry. Scenario bounds appear only where all three scenarios are defined. This simplified model is uncalibrated.</p></details>
     {/if}
     <div class="summary"><span class="inversion-key">Amber: inversion</span>{#if !updraftMode}<span class="shear-key">Orange: wind change ≥{speed(WIND_CHANGE_THRESHOLD,windUnit)}/100 m</span>{/if}<span>Model ground: {state.profile.terrainM===undefined?'No data':`${Math.round(state.profile.terrainM)} m ASL`}</span>{#if insights?.lcl}<span>LCL source: {insights.lcl.source}</span>{/if}</div>
+    {#if cloudsAvailable&&showClouds}<p class="cloud-note">Cloud cover comes from model levels; layer edges are interpolated, not exact cloud bases or tops. Drift is decorative.</p>{/if}
     <p class="note">Green curve and dry top assume +3°C. LCL uses unheated surface or lowest-level air. Dry top assumes no condensation; clouds may form earlier at LCL. LCL is estimated condensation, not a guarantee of clouds. Wind-change bands show model-level gradients, not confirmed turbulence. Takeoff clearance uses Windy’s site elevation, not a surveyed launch. Missing values stay blank.</p>
    {/if}
    <footer>Atmospheric calculations adapted from <a href="https://github.com/vicb/flyxc" target="_blank" rel="noopener noreferrer">flyXC · Victor Berchet</a> (MIT).</footer>
@@ -208,4 +226,7 @@
  .chart-tools{flex-wrap:wrap;}.updraft-button{width:166px;min-height:34px;font-size:11px;}.updraft-button[aria-pressed="true"]{background:#fff1d9;border-color:#c39455;color:#8b5c20;}.updraft-key,.updraft-reading strong{color:#a5661d;}.sounding-chart .profile.updraft,.sounding-chart .cursor-dot.updraft{stroke:#bb7624;}.updraft-band{fill:#dfb273;opacity:.30;stroke:none;}.updraft-note{font-size:11px;line-height:1.5;color:#815f37;border-top:1px solid #e9dcc7;padding-top:8px;margin:8px 0;}.updraft-assumptions{font-size:10px;line-height:1.55;color:#677d84;margin:6px 0 10px;}.updraft-assumptions summary{cursor:pointer;color:#946a36;}.updraft-assumptions p{margin:5px 0;}.sounding-chart .updraft-unavailable{font-size:8px;fill:#947b5d;}
  @media(max-width:600px){.chart-tools span{display:none;}.updraft-button{width:160px;}}
  @media(min-width:601px){.sounding-chart text{font-size:12px;}.sounding-chart .plot-label{font-size:11px;}.sounding-chart .plot-label .secondary{font-size:10px;}.sounding-chart .plot-label.wind-change{font-size:10.5px;}}
+ .cloud-toggle{font-size:11px;min-height:28px;padding:3px 8px;color:#506e7c;}.cloud-toggle[aria-pressed="true"]{background:#e5eff4;border-color:#94b2c2;}.cloud-toggle:disabled{opacity:.65;cursor:default;}.legend{align-items:center;}.cloud-drift{animation:cloud-drift 38s linear infinite;pointer-events:none;}.cloud-note{font-size:10px;color:#667e89;margin:7px 0;}
+ @keyframes cloud-drift{from{transform:translateX(0)}to{transform:translateX(180px)}}
+ @media(prefers-reduced-motion:reduce){.cloud-drift{animation:none;}}
 </style>

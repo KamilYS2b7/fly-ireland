@@ -3,7 +3,8 @@ import {sampleLcl} from './lclForecast.ts';
 import type {ParcelData} from './vendor/flyxc/atmosphere';
 export type SoundingSite={id:string;name:string;lat:number;lon:number};
 export type SoundingLevel={pressureHpa:number;heightM:number;temperatureC:number;dewPointC?:number;windMps?:number;windDirection?:number;gapBefore?:boolean};
-export type SoundingProfile={levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number};
+export type SoundingCloudLevel={pressureHpa:number;heightM:number;coverPct?:number};
+export type SoundingProfile={levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number;clouds?:SoundingCloudLevel[]};
 export type SoundingState={open:boolean;site?:SoundingSite;model:string;timestamp:number;status:'loading'|'ready'|'error';profile?:SoundingProfile;error?:string};
 const finite=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value);
 export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
@@ -51,8 +52,23 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
             if(candidate.dry.length>1&&finite(candidate.thermalTopElev)&&candidate.thermalTopElev>usable[0].heightM)parcel=candidate;
         }catch{/* Incomplete thermodynamics must not prevent the observed model profile. */}
     }
+    const cloudKeys=Object.keys(sounding).filter(key=>/^cloud-\d+h$/.test(key));
+    const clouds:SoundingCloudLevel[]=[];
+    for(const key of cloudKeys){
+        const pressureHpa=Number(key.slice(6,-1));if(pressureHpa<100||pressureHpa>1100)continue;
+        let heightM=sample(`gh-${pressureHpa}h`,n=>n>=-500&&n<=25000);
+        if(heightM===undefined){
+            const index=usable.findIndex(l=>l.pressureHpa<=pressureHpa);
+            if(index<0||pressureHpa>usable[0].pressureHpa)continue;
+            const b=usable[index],a=index?usable[index-1]:b;
+            heightM=a===b?b.heightM:a.heightM+(b.heightM-a.heightM)*Math.log(pressureHpa/a.pressureHpa)/Math.log(b.pressureHpa/a.pressureHpa);
+        }
+        if(heightM<(terrainM??-500)-1)continue;
+        clouds.push({pressureHpa,heightM,coverPct:sample(key,n=>n>=0&&n<=100)});
+    }
+    clouds.sort((a,b)=>a.heightM-b.heightM);
     const surfaceLclM=sampleLcl(data,timestamp).lclAslM;
-    return{surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
+    return{clouds:cloudKeys.length?clouds.filter((l,i)=>!i||l.heightM>clouds[i-1].heightM):undefined,surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
 }
 export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(site:SoundingSite,model:string)=>Promise<any>;onChange:(state:SoundingState)=>void;now?:()=>number}){
     let state:SoundingState={open:false,model:'',timestamp:0,status:'loading'},sequence=0,destroyed=false,wanted='';

@@ -57,3 +57,13 @@ test('an open sounding refreshes an expired cache even when forecast time has no
  await c.open(site,'ukv',time);await c.sync('ukv',time);assert.equal(calls,1);
  clock=600001;await c.sync('ukv',time);assert.equal(calls,2);c.destroy();
 });
+
+test('cloud cover uses its own pressure levels and actual time grid, including clear and missing values',()=>{
+ const p=payload();p.data.sounding['cloud-1000h']=[0,0];p.data.sounding['cloud-950h']=[40,80];p.data.sounding['cloud-900h']=[null,null];p.data.sounding['cloud-800h']=[100,100];
+ const r=sampleSounding(p,time+hour/2);assert.equal(r.clouds.length,4);
+ assert.equal(r.clouds.find(l=>l.pressureHpa===1000).coverPct,0);
+ const extra=r.clouds.find(l=>l.pressureHpa===950);assert.equal(extra.coverPct,60);assert.ok(extra.heightM>100&&extra.heightM<1000);
+ assert.equal(r.clouds.find(l=>l.pressureHpa===900).coverPct,undefined);
+ p.data.sounding['cloud-800h']=[120,120];assert.equal(sampleSounding(p,time).clouds.find(l=>l.pressureHpa===800).coverPct,undefined);
+ assert.equal(sampleSounding(payload(),time).clouds,undefined);
+});
