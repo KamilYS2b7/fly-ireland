@@ -113,3 +113,17 @@ temperature excess at the lowest available model level. It is an estimate, not a
 measured thermal or climb rate, and does not replace existing cloud-base/LCL values.
 The source and MIT license are recorded in THIRD_PARTY_NOTICES.md and included in
 the upload. No flyXC backend or tracking service is required.
+
+Sounding interaction: hover/tap to read temperature, dew point, vector wind and height
+ASL/above or below takeoff; arrow keys also move the cursor. Toggle lower-3-km zoom,
+use the mouse wheel (Shift = 24 hours) or a horizontal touch swipe to change forecast
+time, and drag the chart-height handle on phones. Ctrl-wheel retains browser zoom.
+
+Dashed lines identify parcel LCL (surface inputs when available, otherwise explicitly
+labelled lowest-level inputs), the hypothetical dry-parcel equilibrium with +3°C
+initial excess, and all 0°C crossings in the available profile. Clouds may form at
+LCL before the hypothetical dry top is reached. Warm shading marks inversions;
+wind-panel shading marks vector gradients of at least 1 m/s per 100 m between model
+levels. These gradients are not a direct turbulence forecast. Missing data gaps are
+never bridged for cursor readings or diagnostics. Takeoff clearance uses the site
+elevation supplied by Windy, not a surveyed launch.

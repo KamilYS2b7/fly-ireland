@@ -1,8 +1,9 @@
 import {parcelTrajectory,dewpoint,saturationVaporPressure} from './vendor/flyxc/atmosphere.ts';
+import {sampleLcl} from './lclForecast.ts';
 import type {ParcelData} from './vendor/flyxc/atmosphere';
 export type SoundingSite={id:string;name:string;lat:number;lon:number};
 export type SoundingLevel={pressureHpa:number;heightM:number;temperatureC:number;dewPointC?:number;windMps?:number;windDirection?:number;gapBefore?:boolean};
-export type SoundingProfile={levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData};
+export type SoundingProfile={levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number};
 export type SoundingState={open:boolean;site?:SoundingSite;model:string;timestamp:number;status:'loading'|'ready'|'error';profile?:SoundingProfile;error?:string};
 const finite=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value);
 export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
@@ -50,7 +51,8 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
             if(candidate.dry.length>1&&finite(candidate.thermalTopElev)&&candidate.thermalTopElev>usable[0].heightM)parcel=candidate;
         }catch{/* Incomplete thermodynamics must not prevent the observed model profile. */}
     }
-    return{levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
+    const surfaceLclM=sampleLcl(data,timestamp).lclAslM;
+    return{surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
 }
 export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(site:SoundingSite,model:string)=>Promise<any>;onChange:(state:SoundingState)=>void;now?:()=>number}){
     let state:SoundingState={open:false,model:'',timestamp:0,status:'loading'},sequence=0,destroyed=false,wanted='';
