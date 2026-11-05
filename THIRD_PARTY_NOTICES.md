@@ -15,3 +15,30 @@ The Polish catalogue uses factual coordinates and direction information publishe
 Dependency licenses are provided by the respective packages installed through npm. Fly Ireland is an independent community project and does not claim endorsement by the above services.
 
 The additional Polish map references and linked films were compared with the public [Miejsca do latania Polska Google Maps list](https://maps.app.goo.gl/2HK9AYoaNehaKZ6p8). The import contains factual site coordinates, source links and original verification notes; Google account and list-author identifiers are not distributed. Supplemental video searches and title/channel checks use public YouTube pages and oEmbed metadata. Videos remain links to their creators' pages, with chapter offsets where supplied, and the owner approved all current Polish site/video associations on 26 October 2026. Exact take-off positions and wind ranges are not established by a film or map pin. The comparison, including duplicate decisions and unconfirmed links, is retained in `reports/poland-google-map-comparison-2026-10-26.json` and its readable Markdown counterpart. No endorsement by Google, the list author or the video creators is implied.
+
+## flyXC sounding mathematics
+
+Source: https://github.com/vicb/flyxc/tree/7925ba9/libs/windy-sounding/src/util
+Files: src/vendor/flyxc/atmosphere.ts and math.ts (import path adapted).
+
+MIT License
+
+Copyright (c) 2019 Victor Berchet
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -13,6 +13,7 @@ try {
     await copyFile('package.json','dist/package.json');
     // Keep Windy's library preview in every build, including custom entry points.
     await copyFile('src/screenshot.png','dist/screenshot.png');
+    await copyFile('THIRD_PARTY_NOTICES.md','dist/THIRD_PARTY_NOTICES.md');
     console.log('Built Fly Ireland: dist/plugin.js, dist/plugin.min.js dist/plugin.json and dist/screenshot.png');
 } finally {
     await bundle.close();

@@ -28,6 +28,7 @@ import {createSiteGuideMap} from '../src/siteGuideMap.ts';
 import {createAutomaticGuidePoints} from '../src/automaticGuidePoints.ts';
 import {readLargeRosesVisible,readSiteRoseVisibility,saveSiteRoseVisibility,LARGE_ROSES_STORAGE_KEY} from '../src/mapDisplay.ts';
 import {roseControlHTML,updateRoseControl,siteDisplayControlGroupHTML,updateSiteDisplayControl,placeSiteDisplayControl,controlAnchorInViewport} from '../src/roseControls.ts';
+import {createSoundingController} from '../src/sounding.ts';
 import {createWindDirectionReview,parseDirectionRanges} from '../src/windDirectionReview.ts';
 const guideSource=JSON.parse(readFileSync(new URL('../assets/assets/site_descriptions.json',import.meta.url),'utf8'));
 
@@ -57,6 +58,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
     let zoom = 10;
     let additions = 0;
     let reads = 0;
+    let soundingReads=0;
     let guideReads=0,resolveGuide;
     let profileReads = 0;
     let pointProductQueries = 0;
@@ -196,11 +198,17 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
             return ['ukv','ecmwf','gfs','mblue',...(lat>54?['iconEu']:['aromeFrance'])];
         },
         watchTimelinePreview:()=>()=>{},watchModelRunRefresh:refresh=>{refreshModelMetadata=refresh;return()=>{refreshModelMetadata=undefined;};},
+        createSoundingController,
         createWindForecast: deps => createWindForecast({ ...deps,
             setTimer: callback => { const id = ++nextTimer; timers.set(id, callback); return id; },
             clearTimer: id => timers.delete(id),
         }),
         getPointForecastData: async (model,options,include) => {
+            if(include.sounding){
+                soundingReads++;const sounding={ts:[storeValues.timestamp-86400000,storeValues.timestamp+86400000]};
+                for(const [p,z,t,d,w]of [[1000,100,293.15,285.15,3],[900,1000,284.15,278.15,5],[800,2000,278.15,270.15,8]])for(const [key,value]of Object.entries({gh:z,temp:t,dewPoint:d,wind:w,windDir:350}))sounding[`${key}-${p}h`]=[value,value];
+                return{status:200,data:{header:{modelElevation:100},sounding}};
+            }
             assert.equal(include.extended,undefined,'Wind requests must retain the previously working options; do not add unverified extended query parameters');
             reads++;
             requestedModels.push(model);
@@ -245,6 +253,9 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         mount: () => mount(),
         openGuide(name) {context.guideTestName=name;return vm.runInContext('openSiteGuide(spots.find(spot=>spot.name===guideTestName))',context);},
         closeGuide() {vm.runInContext('closeSiteGuide()',context);},
+        get soundingReads(){return soundingReads;},
+        get soundingState(){return vm.runInContext('soundingState',context);},
+        closeSounding(){vm.runInContext('soundingController.close()',context);},
         get guideState() {return JSON.parse(vm.runInContext('JSON.stringify({open:guideOpen,key:guideData?.key,loading:guideLoading,error:guideError})',context));},
         showGuidePoint(code) {context.guidePointCode=code;vm.runInContext('showGuideOnMap(guideData.points.find(point=>point.code===guidePointCode))',context);},
         hideGuidePoints() {vm.runInContext('hideGuidePoints()',context);},
@@ -1899,4 +1910,19 @@ test('large gust indicator sits inside upper-right quadrant with the gust value 
  const left=Number(span.match(/left:([\d.]+)px/)[1]),top=Number(span.match(/top:([\d.]+)px/)[1]);
  assert.ok(left>center&&left+64<=center+D*0.34);assert.ok(top<center&&top>center-D/2);
  app.destroy();
+});
+
+
+test('sounding button fetches only the selected site on demand and synchronizes timeline without extra wind reads',async()=>{
+ const app=runtime({projectionScale:10000});app.mount();await app.flush();await app.flush();app.setZoom(15);app.emit('zoomend');await app.flush();
+ assert.equal(app.soundingReads,0);const reads=app.reads,view=JSON.stringify(app.lastView),events=app.broadcasts.length;
+ const marker=[...app.layers].find(m=>m.flySpot.name==='Big Colin'&&m.options.icon.className.endsWith(' ui-icon'));
+ assert.match(marker.options.icon.html,/sounding-main/);
+ marker.getElement().click({closest:()=>({matches:selector=>selector==='.sounding-main'})});
+ for(let i=0;i<8;i++)await app.flush();
+ assert.equal(app.soundingReads,1);assert.equal(app.soundingState.status,'ready');assert.equal(app.soundingState.site.name,'Big Colin');
+ assert.equal(app.reads,reads);assert.equal(JSON.stringify(app.lastView),view);assert.equal(app.broadcasts.length,events);
+ const next=app.store.get('timestamp')+3600000;app.previewTime(next);await app.flush();assert.equal(app.soundingState.timestamp,next);assert.equal(app.soundingReads,1);
+ app.closeSounding();app.previewTime(next+3600000);await app.flush();assert.equal(app.soundingState.open,false);assert.equal(app.soundingReads,1);
+ app.destroy();assert.equal(app.allLayers.size,0);
 });

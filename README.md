@@ -98,3 +98,18 @@ See the [Windy Plugins Guide](https://docs.windy-plugins.com/) for the separate 
 ## License and credits
 
 The code uses the [ISC license](LICENSE). See [third-party notices](THIRD_PARTY_NOTICES.md) for the original Windy template, forecast providers, site data and video attribution.
+
+## Atmospheric sounding
+
+Use the small chart icon beside site information under a large rose, or **Sounding**
+on a site card. The dialog loads a vertical profile for that site only when opened,
+then follows the selected forecast model, Windy timeline and plugin wind units.
+Temperature and dew point are in °C; heights are metres ASL. Wind speed and direction
+are plotted by model level. Missing values remain gaps; unsupported models/times show
+a message with retry. Previous/next-hour buttons update the Windy timeline.
+
+The green parcel curve uses flyXC's thermodynamic calculations with an initial +3°C
+temperature excess at the lowest available model level. It is an estimate, not a
+measured thermal or climb rate, and does not replace existing cloud-base/LCL values.
+The source and MIT license are recorded in THIRD_PARTY_NOTICES.md and included in
+the upload. No flyXC backend or tracking service is required.

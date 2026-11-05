@@ -16,6 +16,9 @@ import { watchTimelinePreview } from './timelinePreview';
 import { buildSitePanel } from './sitePanel';
 import SitePanel from './SitePanel.svelte';
 import SiteGuide from './SiteGuide.svelte';
+import SoundingDialog from './SoundingDialog.svelte';
+import {createSoundingController} from './sounding';
+import type {SoundingState} from './sounding';
 import WindDirectionEditor from './WindDirectionEditor.svelte';
 import {createWindDirectionReview,parseDirectionRanges} from './windDirectionReview';
 import {guideKeyForSite,createSiteGuideLoader} from './siteGuides';
@@ -776,6 +779,24 @@ const altitudeAvailable = false;
 const altitudePreferenceKey = 'fly-ireland.launch-altitude.v1';
 let filteredPanel = scopeSitePanel(sitePanel, siteFilters);
 let sitePanelComponent: SitePanel | undefined;
+let soundingState:SoundingState={open:false,model:'',timestamp:0,status:'loading'};
+const soundingController=createSoundingController({
+  fetch:(site,model)=>getPointForecastData(model,{lat:site.lat,lon:site.lon,days:15,step:1},{header:true,celestial:true,sounding:true},{timeout:15000}),
+  onChange:state=>{soundingState=state;},
+});
+function openSounding(spot:Spot){
+  if(!mounted||!spot||spot.toVerify)return;
+  closeSiteGuide();selectSite(spot.id);
+  if(window.innerWidth<=600)sitePanelComponent?.collapsePanel();
+  return soundingController.open(spot,windForecast.getModel(),windForecast.getTimestamp());
+}
+function shiftSoundingTime(hours:number){
+  const next=windForecast.getTimestamp()+hours*3600000;
+  const calendar=store.get('calendar');
+  if(Number.isFinite(calendar?.start)&&next<calendar.start)return;
+  if(Number.isFinite(calendar?.end)&&next>calendar.end)return;
+  store.set('timestamp',next);
+}
 let guideOpen = false;
 let guideSite: Spot | undefined;
 let guideData: SiteGuideData | undefined;
@@ -1188,6 +1209,9 @@ function buildMenuHTML(spot:Spot, D:number){
         ${ytMenu}
         ${mapsMenu}
         ${infoMenu}
+        <button class="sounding-btn sounding-main" type="button" title="Show sounding" aria-label="Show atmospheric sounding">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v17h17M7 16l4-7 3 3 6-8M8 19l4-5 4 2 4-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
       </div>
     </div>
@@ -1636,6 +1660,7 @@ function bindCardNavigation(marker: any, revealOnMobile = true){
   marker.getElement?.()?.addEventListener('click', (event: MouseEvent) => {
     if(siteFilters.wind==='direction-review'&&marker.flySpot.country==='poland'&&marker.flySpot.directionUnverified){event.stopPropagation();openDirectionEditor(marker.flySpot);return;}
     const control = (event.target as Element)?.closest?.('a,button');
+    if(control?.matches?.('.sounding-main')){event.stopPropagation();void openSounding(marker.flySpot);return;}
     if (control && !control.matches?.('.info-main')) {event.stopPropagation();return;}
     event.stopPropagation();
     if (control?.matches?.('.info-main')) {
@@ -1707,7 +1732,7 @@ function setSiteFilters(filters: SiteFilters){
   saveSiteFilters(siteFilters);
   if(previousCountry!==siteFilters.country){
     controlSiteId='';mobileSiteControl=undefined;
-    closeDirectionEditor();
+    closeDirectionEditor();soundingController.close();
     selectedSiteId='';highlightSite('');closeSiteGuide();hideGuidePoints();
     automaticGuidePoints?.update([]);
     configureCountryForecast();
@@ -1874,6 +1899,7 @@ function onMapModelChange(){
 }
 
 function updateForecastUI(){
+  void soundingController.sync(windForecast.getModel(),windForecast.getTimestamp());
   const previousMatches = filteredPanel.sites.map(spot => spot.id).join('|');
   forecastUtcOffset = windForecast.getTimelineSeries()?.header?.utcOffset;
   sitePanel = buildSitePanel(spots, spot => windForecast.get(spot), windForecast.getTimestamp(), windForecast.getModel(),windUnit,store.get('level'),forecastUtcOffset);
@@ -2118,6 +2144,7 @@ onMount(() => {
 onDestroy(() => {
   directionEditorSite=undefined;
   mounted = false;
+  soundingController.destroy();
   controlPositions.clear();
   closeSiteGuide();automaticGuidePoints?.destroy();automaticGuidePoints=undefined;
   guideLoader.destroy();guideMap?.destroy();guideMap=undefined;
@@ -2144,7 +2171,7 @@ onDestroy(() => {
 <SitePanel {mobilePointsVisible} onDisplayToggle={toggleAllSiteDisplay} bind:this={sitePanelComponent} snapshot={filteredPanel} onSelect={focusSite} onHover={highlightSite} selectedId={selectedSiteId} weatherIconsDir={iconsDir}
   directionReviewRemaining={directionReview.eligible.filter(site=>!directionState[site.id]?.confirmedAt).length}
   directionReviewTotal={directionReview.eligible.length} onDirectionEdit={openDirectionEditor}
-  onGuide={openSiteGuide}
+  onGuide={openSiteGuide} onSounding={openSounding}
   modelOptions={forecastModels} onModelChange={setForecastModel} {modelSyncNote}
   {windUnit} onWindUnitChange={setWindUnit}
   filters={siteFilters} onFiltersChange={setSiteFilters} {altitudeEnabled} {altitudeAvailable} onAltitudeChange={setAltitudeEnabled}
@@ -2155,6 +2182,8 @@ onDestroy(() => {
 
 <SiteGuide open={guideOpen} siteName={guideSite?.name ?? ''} guide={guideData} loading={guideLoading} error={guideError}
   onClose={closeSiteGuide} onRetry={()=>guideSite&&openSiteGuide(guideSite)} onShowMap={showGuideOnMap} />
+
+<SoundingDialog state={soundingState} {windUnit} onClose={()=>soundingController.close()} onRetry={()=>soundingController.retry()} onTime={shiftSoundingTime} />
 
 <WindDirectionEditor {map} site={directionEditorSite} entry={directionEditorSite?directionState[directionEditorSite.id]:undefined}
   report={()=>directionReview.report(directionState)} onImport={importDirectionReview} onDraft={draftDirectionRange}
@@ -2355,10 +2384,11 @@ onDestroy(() => {
 :global(.info-btn svg circle){ fill:#1e88e5; }
 :global(.info-btn svg rect){ fill:#ffffff; }
 
+:global(.sounding-btn){color:#267c64;padding:4px;}
 /* One aligned action bar, below the dial and its site name. */
 :global(.rose-actions){position:relative;pointer-events:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;width:max-content;max-width:calc(100% - 26px);gap:6px;padding:5px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafcf5;box-shadow:0 2px 8px #0f172a26;--yt-size:34px;}
 :global(.rose-actions .gmaps-menu),:global(.rose-actions .info-menu){position:relative;flex:0 0 34px;width:34px;height:34px;--gm-size:34px;--info-size:34px;}
-:global(.rose-actions .yt-btn),:global(.rose-actions .gmaps-btn),:global(.rose-actions .info-btn),:global(.rose-actions .site-video-button){display:grid;place-items:center;box-sizing:border-box;flex:0 0 34px;width:34px;height:34px;border:1px solid #d6e0e4;border-radius:8px;background:#fff;box-shadow:0 1px 2px #0f172a14;text-decoration:none;cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;}
+:global(.rose-actions .sounding-btn),:global(.rose-actions .yt-btn),:global(.rose-actions .gmaps-btn),:global(.rose-actions .info-btn),:global(.rose-actions .site-video-button){display:grid;place-items:center;box-sizing:border-box;flex:0 0 34px;width:34px;height:34px;border:1px solid #d6e0e4;border-radius:8px;background:#fff;box-shadow:0 1px 2px #0f172a14;text-decoration:none;cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;}
 :global(.rose-actions a:hover),:global(.rose-actions button:hover){border-color:#65a99a;transform:translateY(-1px);box-shadow:0 2px 5px #0f172a26;}
 :global(.rose-actions a:focus-visible),:global(.rose-actions button:focus-visible){outline:2px solid #0284c7;outline-offset:2px;}
 :global(.rose-actions svg){width:22px;height:22px;}
