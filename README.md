@@ -127,3 +127,27 @@ wind-panel shading marks vector gradients of at least 1 m/s per 100 m between mo
 levels. These gradients are not a direct turbulence forecast. Missing data gaps are
 never bridged for cursor readings or diagnostics. Takeoff clearance uses the site
 elevation supplied by Windy, not a surveyed launch.
+
+### Experimental air updraft
+
+**Show updraft estimate** replaces the wind panel with a separate m/s axis, an
+entraining dry-parcel speed curve and a scenario envelope. Wind remains available
+in the cursor readout; switching back restores the ordinary wind profile. This is
+a conditional calculation from the sounding, not an official Windy updraft field
+or a forecast of paraglider vario. The supported point/sounding interface audit is
+recorded in reports/windy-updraft-api-audit-2026-11-05.md; no undocumented field names
+or layer-colour sampling are used. No additional forecast requests are made.
+
+Assumptions: initial excess +3 K, starts at rest at the lowest available model
+level, central parcel radius 100 m (50/200 m scenarios), entrainment coefficient
+alpha=0.1, drag coefficient 0.5, added mass 0.5, integration step 10 m. Scalar
+potential temperature and water-vapour mixing ratio entrain environmental air;
+virtual-temperature buoyancy drives vertical kinetic energy with entrainment and
+drag losses. The calculation stops at first condensation, stalled ascent, a data
+gap or the profile/7 km limit. It does not simulate in-cloud motion, terrain lift,
+thermal initiation, actual thermal radius or wing sink. The envelope compares
+assumptions, not statistical confidence; it is shown only where all scenarios have
+values. The model is uncalibrated and does not replace existing wind/LCL criteria.
+
+Release builds serve the same minified module at plugin.js and plugin.min.js to
+reduce upload size; development mode retains the readable Rollup output.

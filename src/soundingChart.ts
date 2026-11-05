@@ -1,8 +1,10 @@
 import type {SoundingProfile} from './sounding';
+import {thermalAtHeight} from './thermalUpdraft.ts';
+import type {ThermalEstimate} from './thermalUpdraft';
 import {soundingAtHeight} from './soundingInsights.ts';
 import {convertWindSpeed} from './windUnits.ts';
 import type {WindUnit} from './windUnits';
-export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=640,options:{zoom?:boolean;height?:number}={}){
+export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=640,options:{zoom?:boolean;height?:number;thermal?:ThermalEstimate}={}){
     const height=Math.max(320,Math.min(720,options.height??440)),left=52,top=30,bottom=height-44,windLeft=width-104,windRight=width-32,tempRight=windLeft-24;
     const ground=profile.terrainM??profile.levels[0].heightM;
     const minHeight=Math.floor(Math.min(ground,profile.levels[0].heightM)/250)*250;
@@ -34,11 +36,22 @@ export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=6
         if(!previous||level.gapBefore){windSamples.push(undefined,windPoint(level.heightM));continue;}
         for(let step=1;step<=16;step++)windSamples.push(windPoint(previous.heightM+(level.heightM-previous.heightM)*step/16));
     }
+    const thermal=options.thermal;
+    const updraftMax=Math.max(2,Math.ceil(Math.max(0,...(thermal?[thermal.central,thermal.low,thermal.high].flatMap(s=>s.points.map(p=>p.speedMps)):[]))/2)*2);
+    const xUpdraft=(mps:number)=>windLeft+mps/updraftMax*(windRight-windLeft);
+    const updraft=thermal?.status==='available'?trace(thermal.central.points.map(p=>({x:xUpdraft(p.speedMps),y:y(p.heightM)}))):'';
+    let updraftBand='';
+    if(thermal?.status==='available'&&thermal.low.points.length>1&&thermal.high.points.length>1){
+        const end=Math.min(thermal.central.points.at(-1)!.heightM,thermal.low.points.at(-1)!.heightM,thermal.high.points.at(-1)!.heightM);
+        const heights=[...thermal.central.points.filter(p=>p.heightM<end).map(p=>p.heightM),end];
+        const envelope=heights.flatMap(z=>{const p=thermalAtHeight(thermal,z);return p?.lowMps===undefined||p.highMps===undefined?[]:[{heightM:z,low:p.lowMps,high:p.highMps}];});
+        if(envelope.length>1)updraftBand=trace([...envelope.map(p=>({x:xUpdraft(p.low),y:y(p.heightM)})),...envelope.slice().reverse().map(p=>({x:xUpdraft(p.high),y:y(p.heightM)}))])+'Z';
+    }
     const ticks:number[]=[];for(let h=Math.ceil(minHeight/1000)*1000;h<=maxHeight;h+=1000)ticks.push(h);
     const tempTicks=Array.from({length:5},(_,i)=>minTemp+(maxTemp-minTemp)*i/4);
     let previousY=-Infinity;
     const arrows=[...levels].reverse().filter(l=>{const pos=y(l.heightM);if(l.heightM>maxHeight||l.heightM<minHeight||l.windDirection===undefined||l.windMps===undefined||pos-previousY<25)return false;previousY=pos;return true;});
-    return{width,height,left,top,bottom,windLeft,windRight,tempRight,minHeight,maxHeight,ground,y,heightAtY,xTemp,xWind,ticks,tempTicks,windMax,arrows,
+    return{width,height,left,top,bottom,windLeft,windRight,tempRight,minHeight,maxHeight,ground,y,heightAtY,xTemp,xWind,ticks,tempTicks,windMax,arrows,updraftMax,xUpdraft,updraft,updraftBand,
         temperature:trace(levels.flatMap(l=>[...(l.gapBefore?[undefined]:[]),{x:xTemp(l.temperatureC),y:y(l.heightM)}])),
         dewPoint:trace(levels.flatMap(l=>[...(l.gapBefore?[undefined]:[]),l.dewPointC===undefined?undefined:{x:xTemp(l.dewPointC),y:y(l.heightM)}])),
         wind:trace(windSamples),

@@ -37,3 +37,12 @@ test('direct plot labels keep close height markers readable inside chart bounds'
  assert.ok(labels[0].labelY>=chart.top+10);assert.ok(labels.at(-1).labelY<=chart.bottom-16);
  for(let i=1;i<labels.length;i++)assert.ok(labels[i].labelY-labels[i-1].labelY>=27.9);
 });
+
+test('experimental updraft has a distinct m/s scale and scenario envelope without changing temperature geometry',()=>{
+ const scenario=(scale,radiusM)=>({radiusM,excessK:3,endReason:'profile-end',points:[{heightM:100,speedMps:0},{heightM:1000,speedMps:scale},{heightM:2000,speedMps:scale/2}]});
+ const estimate={status:'available',initialExcessK:3,radiusM:100,central:scenario(3,100),low:scenario(2,50),high:scenario(4,200)};
+ const normal=buildSoundingChart(profile,'kt'),chart=buildSoundingChart(profile,'kt',640,{thermal:estimate});
+ assert.equal(chart.temperature,normal.temperature);assert.equal(chart.updraftMax,4);assert.ok(chart.updraft);assert.ok(chart.updraftBand.endsWith('Z'));
+ assert.equal(chart.xUpdraft(0),chart.windLeft);assert.equal(chart.xUpdraft(4),chart.windRight);
+ assert.doesNotMatch(chart.updraftBand,/NaN|Infinity/);
+});
