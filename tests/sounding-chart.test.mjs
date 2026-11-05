@@ -46,3 +46,11 @@ test('experimental updraft has a distinct m/s scale and scenario envelope withou
  assert.equal(chart.xUpdraft(0),chart.windLeft);assert.equal(chart.xUpdraft(4),chart.windRight);
  assert.doesNotMatch(chart.updraftBand,/NaN|Infinity/);
 });
+
+test('desktop layout reserves a wide wind panel and intermediate ticks while keeping phone geometry compact',()=>{
+ const desktop=buildSoundingChart(profile,'kt',1060),phone=buildSoundingChart(profile,'kt',340);
+ assert.ok(desktop.windRight-desktop.windLeft>=220);
+ assert.ok(desktop.tempRight-desktop.left>500);
+ assert.equal(phone.windRight-phone.windLeft,72);
+ assert.equal(desktop.profileTicks.length,5);assert.equal(phone.profileTicks.length,2);
+});

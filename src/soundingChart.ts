@@ -5,7 +5,7 @@ import {soundingAtHeight} from './soundingInsights.ts';
 import {convertWindSpeed} from './windUnits.ts';
 import type {WindUnit} from './windUnits';
 export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=640,options:{zoom?:boolean;height?:number;thermal?:ThermalEstimate}={}){
-    const height=Math.max(320,Math.min(720,options.height??440)),left=52,top=30,bottom=height-44,windLeft=width-104,windRight=width-32,tempRight=windLeft-24;
+    const height=Math.max(320,Math.min(720,options.height??440)),left=52,top=30,bottom=height-44,windWidth=width>=600?Math.min(240,Math.max(150,width*.24)):72,windRight=width-32,windLeft=windRight-windWidth,tempRight=windLeft-(width>=600?32:24);
     const ground=profile.terrainM??profile.levels[0].heightM;
     const minHeight=Math.floor(Math.min(ground,profile.levels[0].heightM)/250)*250;
     const fullHeight=Math.max(minHeight+500,Math.min(7000,Math.max(minHeight+1000,Math.ceil(profile.levels.at(-1)!.heightM/500)*500)));
@@ -51,7 +51,8 @@ export function buildSoundingChart(profile:SoundingProfile,unit:WindUnit,width=6
     const tempTicks=Array.from({length:5},(_,i)=>minTemp+(maxTemp-minTemp)*i/4);
     let previousY=-Infinity;
     const arrows=[...levels].reverse().filter(l=>{const pos=y(l.heightM);if(l.heightM>maxHeight||l.heightM<minHeight||l.windDirection===undefined||l.windMps===undefined||pos-previousY<25)return false;previousY=pos;return true;});
-    return{width,height,left,top,bottom,windLeft,windRight,tempRight,minHeight,maxHeight,ground,y,heightAtY,xTemp,xWind,ticks,tempTicks,windMax,arrows,updraftMax,xUpdraft,updraft,updraftBand,
+    const profileTicks=width>=600?[0,.25,.5,.75,1]:[0,1];
+    return{profileTicks,width,height,left,top,bottom,windLeft,windRight,tempRight,minHeight,maxHeight,ground,y,heightAtY,xTemp,xWind,ticks,tempTicks,windMax,arrows,updraftMax,xUpdraft,updraft,updraftBand,
         temperature:trace(levels.flatMap(l=>[...(l.gapBefore?[undefined]:[]),{x:xTemp(l.temperatureC),y:y(l.heightM)}])),
         dewPoint:trace(levels.flatMap(l=>[...(l.gapBefore?[undefined]:[]),l.dewPointC===undefined?undefined:{x:xTemp(l.dewPointC),y:y(l.heightM)}])),
         wind:trace(windSamples),

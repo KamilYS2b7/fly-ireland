@@ -26,7 +26,11 @@
   $: cursorWindChange=insights?.windChanges.find(b=>cursorHeight!==undefined&&cursorHeight>=b.bottomM&&cursorHeight<=b.topM);
   $: markers=insights?[...(insights.lcl?[{kind:'lcl',label:'LCL',heightM:insights.lcl.heightM}]:[]),...(insights.dryTopM===undefined?[]:[{kind:'drytop',label:'Dry top +3°C',heightM:insights.dryTopM}]),...insights.freezingLevels.map(heightM=>({kind:'freezing',label:'0°C',heightM}))]:[];
   $: plotLabels=chart&&insights?placeSoundingLabels([...markers,...insights.inversions.filter(b=>b.bottomM<chart.maxHeight&&b.topM>chart.minHeight).map(b=>({...b,kind:'inversion',label:'Inversion',heightM:(Math.max(b.bottomM,chart.minHeight)+Math.min(b.topM,chart.maxHeight))/2}))],chart):[];
-  $: windLabels=chart&&insights?placeSoundingLabels(insights.windChanges.filter(b=>b.bottomM<chart.maxHeight&&b.topM>chart.minHeight).map(b=>({...b,heightM:(Math.max(b.bottomM,chart.minHeight)+Math.min(b.topM,chart.maxHeight))/2})),chart):[];
+  $: windLabels=chart&&insights&&state.profile?placeSoundingLabels(insights.windChanges.filter(b=>b.bottomM<chart.maxHeight&&b.topM>chart.minHeight).map(b=>({...b,heightM:(Math.max(b.bottomM,chart.minHeight)+Math.min(b.topM,chart.maxHeight))/2})),chart).map(annotation=>{
+    const wind=soundingAtHeight(state.profile!,chart.heightAtY(annotation.labelY))?.windMps;
+    const right=width>=900&&wind!==undefined&&chart.xWind(wind)<(chart.windLeft+chart.windRight)/2;
+    return{...annotation,labelX:right?chart.windRight-4:chart.windLeft+4,anchor:right?'end':'start'};
+  }):[];
   const endReason={condensation:'condensation',stalled:'ascent reaches zero',missing:'missing profile data','profile-end':'end of profile / 7 km limit'};
   $: timeText=new Date(state.timestamp||0).toLocaleString('en-GB',{timeZone:'UTC',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' UTC';
   const heightText=(value:number)=>Math.round(value).toLocaleString('en-GB')+' m';
@@ -87,7 +91,12 @@
     const events=['pointerdown','mousedown','touchstart','click','dblclick','wheel'];events.forEach(name=>node.addEventListener(name,stop));
     const keepFocus=(event:FocusEvent)=>{if(event.target instanceof Node&&!box.contains(event.target))controls()[0]?.focus();};
     document.addEventListener('focusin',keepFocus);window.addEventListener('keydown',key,true);
-    const size=()=>width=Math.max(340,Math.min(660,box.clientWidth-32));size();
+    let previousMobile:boolean|undefined;
+    const size=()=>{
+      const mobile=window.innerWidth<=600;
+      if(previousMobile!==mobile){chartHeight=mobile?440:Math.max(440,Math.min(600,window.innerHeight*.55));previousMobile=mobile;}
+      width=Math.max(340,Math.min(1068,box.clientWidth-32));
+    };size();
     const observer=new ResizeObserver(size);observer.observe(box);
     const frame=requestAnimationFrame(()=>controls()[0]?.focus());
     return{destroy(){cancelAnimationFrame(frame);observer.disconnect();document.removeEventListener('focusin',keepFocus);window.removeEventListener('keydown',key,true);events.forEach(name=>node.removeEventListener(name,stop));node.remove();if(previous?.isConnected)previous.focus({preventScroll:true});}};
@@ -132,13 +141,16 @@
       <line x1={chart.left} x2={chart.windRight} y1={chart.y(height)} y2={chart.y(height)} class="grid"/>
       <text x={chart.left-7} y={chart.y(height)+4} text-anchor="end">{height.toLocaleString('en-GB')}</text>
      {/each}
+     {#each chart.profileTicks as fraction}
+      <line class="grid" x1={chart.windLeft+(chart.windRight-chart.windLeft)*fraction} x2={chart.windLeft+(chart.windRight-chart.windLeft)*fraction} y1={chart.top} y2={chart.bottom}/>
+      <text x={chart.windLeft+(chart.windRight-chart.windLeft)*fraction} y={chart.bottom+19} text-anchor="middle">{Number(((updraftMode?chart.updraftMax:chart.windMax)*fraction).toFixed(1))}</text>
+     {/each}
      {#each chart.tempTicks as temp}
       <line x1={chart.xTemp(temp)} x2={chart.xTemp(temp)} y1={chart.top} y2={chart.bottom} class="grid"/>
       <text x={chart.xTemp(temp)} y={chart.bottom+19} text-anchor="middle">{Math.round(temp)}</text>
      {/each}
      <text x={chart.left} y="16">m ASL</text><text x={(chart.left+chart.tempRight)/2} y={chart.height-6} text-anchor="middle">Temperature (°C)</text>
      <text x={(chart.windLeft+chart.windRight)/2} y="16" text-anchor="middle">{updraftMode?'Updraft (m/s)':`Wind (${windUnit})`}</text>
-     <text x={chart.windLeft} y={chart.bottom+19} text-anchor="middle">0</text><text x={chart.windRight} y={chart.bottom+19} text-anchor="middle">{updraftMode?chart.updraftMax:chart.windMax}</text>
      <g clip-path="url(#fly-sounding-temperature-clip)"><path d={chart.temperature} class="profile temperature"/><path d={chart.dewPoint} class="profile dewpoint"/><path d={chart.parcel} class="profile parcel"/></g>
      {#if updraftMode}
       <g clip-path="url(#fly-sounding-wind-clip)"><path d={chart.updraftBand} class="updraft-band"/><path d={chart.updraft} class="profile updraft"/></g>
@@ -159,7 +171,7 @@
       </text>
      {/each}
      {#each updraftMode?[]:windLabels as annotation}
-      <text class="plot-label wind-change" x={chart.windLeft+4} y={annotation.labelY}><title>Wind change between {heightText(annotation.bottomM)} and {heightText(annotation.topM)} ASL</title><tspan>Wind change</tspan><tspan x={chart.windLeft+4} dy="12">{speed(annotation.vectorMpsPer100m,windUnit).replace(' ','')}/100m</tspan></text>
+      <text class="plot-label wind-change" x={annotation.labelX} text-anchor={annotation.anchor} y={annotation.labelY}><title>Wind change between {heightText(annotation.bottomM)} and {heightText(annotation.topM)} ASL</title><tspan>Wind change</tspan><tspan x={annotation.labelX} dy="12">{width>=900?speed(annotation.vectorMpsPer100m,windUnit)+' / 100 m':speed(annotation.vectorMpsPer100m,windUnit).replace(' ','')+'/100m'}</tspan></text>
      {/each}
      {#if cursorHeight!==undefined}
       <line class="cursor-line" x1={chart.left} x2={chart.windRight} y1={chart.y(cursorHeight)} y2={chart.y(cursorHeight)}/>
@@ -183,7 +195,7 @@
 {/if}
 <style>
  .sounding-overlay{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:16px;background:#102c3d77;font:13px/1.45 system-ui,sans-serif;color:#203b44;}
- .sounding-dialog{width:700px;max-width:100%;max-height:calc(100dvh - 32px);display:flex;flex-direction:column;border-radius:16px;background:white;box-shadow:0 14px 60px #0004;overflow:hidden;}
+ .sounding-dialog{width:1100px;max-width:100%;max-height:calc(100dvh - 32px);display:flex;flex-direction:column;border-radius:16px;background:white;box-shadow:0 14px 60px #0004;overflow:hidden;}
  header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:16px 18px 12px;border-bottom:1px solid #e2e9ea;}h2{font-size:21px;line-height:1.25;margin:4px 0;}header p{margin:3px 0;color:#60767d;font-size:12px;}.eyebrow{font-size:10px;font-weight:750;letter-spacing:1.5px;color:#48816f;}
  button{font:600 12px system-ui;text-transform:none;letter-spacing:normal;min-height:40px;border:1px solid #cbded5;border-radius:8px;background:#f4f9f6;color:#245c47;padding:8px 12px;cursor:pointer;}.close{font-size:25px;line-height:1;width:40px;height:40px;padding:0;flex-shrink:0;}button:focus-visible,a:focus-visible{outline:3px solid #319dcc;outline-offset:2px;}
  nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 16px;background:#f6f9f9;}nav span{font-size:11px;color:#60767d;}.content{padding:12px 16px;overflow-y:auto;overscroll-behavior:contain;}.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11px;font-weight:650;margin-bottom:6px;}.temperature{color:#d5533e;stroke:#d5533e;}.dewpoint{color:#2885ba;stroke:#2885ba;}.parcel{color:#27925b;stroke:#27925b;}.wind{color:#7656a8;stroke:#7656a8;}.sounding-chart{display:block;width:100%;height:auto;overflow:visible;}.sounding-chart text{font:11px system-ui;fill:#526b74;}.grid{stroke:#dce5e8;stroke-width:1;}.profile{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}.profile.parcel{stroke-dasharray:5 3;}.summary{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:11px;color:#3d6860;}.note{font-size:11px;line-height:1.55;color:#677d84;margin:9px 0;}footer{font-size:10px;color:#71858d;border-top:1px solid #e5ecee;padding-top:9px;}footer a{color:#347b65;}.message{padding:35px 8px;text-align:center;color:#60767d;}
@@ -195,4 +207,5 @@
  @media(max-width:600px){.sounding-chart .plot-label{font-size:9px;}.sounding-chart .plot-label .secondary{font-size:8.5px;}.sounding-chart .plot-label.wind-change{font-size:8px;}}
  .chart-tools{flex-wrap:wrap;}.updraft-button{width:166px;min-height:34px;font-size:11px;}.updraft-button[aria-pressed="true"]{background:#fff1d9;border-color:#c39455;color:#8b5c20;}.updraft-key,.updraft-reading strong{color:#a5661d;}.sounding-chart .profile.updraft,.sounding-chart .cursor-dot.updraft{stroke:#bb7624;}.updraft-band{fill:#dfb273;opacity:.30;stroke:none;}.updraft-note{font-size:11px;line-height:1.5;color:#815f37;border-top:1px solid #e9dcc7;padding-top:8px;margin:8px 0;}.updraft-assumptions{font-size:10px;line-height:1.55;color:#677d84;margin:6px 0 10px;}.updraft-assumptions summary{cursor:pointer;color:#946a36;}.updraft-assumptions p{margin:5px 0;}.sounding-chart .updraft-unavailable{font-size:8px;fill:#947b5d;}
  @media(max-width:600px){.chart-tools span{display:none;}.updraft-button{width:160px;}}
+ @media(min-width:601px){.sounding-chart text{font-size:12px;}.sounding-chart .plot-label{font-size:11px;}.sounding-chart .plot-label .secondary{font-size:10px;}.sounding-chart .plot-label.wind-change{font-size:10.5px;}}
 </style>
