@@ -5,7 +5,7 @@ export type SoundingSite={id:string;name:string;lat:number;lon:number};
 export type SoundingLevel={pressureHpa:number;heightM:number;temperatureC:number;dewPointC?:number;windMps?:number;windDirection?:number;gapBefore?:boolean};
 export type SoundingCloudLevel={pressureHpa:number;heightM:number;coverPct?:number};
 export type SoundingProfile={levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number;clouds?:SoundingCloudLevel[]};
-export type SoundingState={open:boolean;site?:SoundingSite;model:string;timestamp:number;status:'loading'|'ready'|'error';profile?:SoundingProfile;error?:string};
+export type SoundingState={open:boolean;site?:SoundingSite;model:string;timestamp:number;status:'loading'|'ready'|'error';profile?:SoundingProfile;day?:SoundingProfile[];error?:string};
 const finite=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value);
 export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
     if(payload?.status!==undefined&&payload.status!==200)throw Error('Sounding forecast request failed.');
@@ -70,6 +70,13 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
     const surfaceLclM=sampleLcl(data,timestamp).lclAslM;
     return{clouds:cloudKeys.length?clouds.filter((l,i)=>!i||l.heightM>clouds[i-1].heightM):undefined,surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
 }
+export function sampleSoundingDay(payload:any,timestamp:number):SoundingProfile[]{
+    const start=Math.floor(timestamp/86400000)*86400000,profiles:SoundingProfile[]=[];
+    for(let hour=0;hour<24;hour++){
+        try{profiles.push(sampleSounding(payload,start+hour*3600000));}catch{/* Unavailable hours remain empty. */}
+    }
+    return profiles;
+}
 export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(site:SoundingSite,model:string)=>Promise<any>;onChange:(state:SoundingState)=>void;now?:()=>number}){
     let state:SoundingState={open:false,model:'',timestamp:0,status:'loading'},sequence=0,destroyed=false,wanted='';
     const cache=new Map<string,{payload:any;time:number}>(),pending=new Map<string,Promise<any>>();
@@ -91,7 +98,7 @@ export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(s
                 if(!destroyed){cache.delete(key);cache.set(key,{payload,time:now()});if(cache.size>4)cache.delete(cache.keys().next().value!);}
             }
             const profile=sampleSounding(payload,timestamp);
-            if(!destroyed&&ticket===sequence)publish({open:true,site,model,timestamp,status:'ready',profile});
+            if(!destroyed&&ticket===sequence)publish({open:true,site,model,timestamp,status:'ready',profile,day:sampleSoundingDay(payload,timestamp)});
         }catch(error){if(!destroyed&&ticket===sequence)publish({open:true,site,model,timestamp,status:'error',error:error instanceof Error?error.message:'Could not load the sounding. Try again.'});}
     }
     return{
