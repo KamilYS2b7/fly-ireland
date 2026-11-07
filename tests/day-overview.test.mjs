@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {dayValue,dayColor,smoothGrid,dayReading} from '../src/dayOverview.ts';
+import {dayValue,dayColor,smoothGrid,dayReading,dayLayerBounds} from '../src/dayOverview.ts';
 import {sampleSoundingDay} from '../src/sounding.ts';
 const p={timestamp:0,levels:[{heightM:100,temperatureC:20,dewPointC:20,windMps:5,windDirection:0},{heightM:1100,temperatureC:10,dewPointC:5,windMps:10,windDirection:90}],clouds:[{heightM:100,coverPct:0},{heightM:600},{heightM:1100,coverPct:80}]};
 test('overview preserves physical units, humidity, level gradients and missing coverage',()=>{
@@ -30,7 +30,7 @@ test('cloud percentages interpolate native levels while unknown samples break in
  const clouds={...p,clouds:[{heightM:100,coverPct:0},{heightM:1100,coverPct:100}]};
  assert.equal(dayValue(clouds,600,'cloud','m/s'),50);
  assert.equal(dayValue(p,350,'cloud','m/s'),undefined);
- assert.equal(dayValue(p,100,'thermal','m/s'),undefined);
+
 });
 
 test('cursor interpolates fractional hours and preserves missing hours',()=>{
@@ -48,4 +48,24 @@ test('surface wind fills lower profile above 10 m only, using vectors and no inv
  assert.equal(dayValue(profile,5,'wind','m/s'),undefined);
  assert.equal(dayValue(profile,55,'temperature','m/s'),undefined);
  assert.equal(dayValue({...profile,surfaceWind:undefined},55,'wind','m/s'),undefined);
+});
+
+test('near-surface thermodynamics complete temperature humidity and lapse without changing clouds',()=>{
+ const profile={...p,surfaceThermo:{heightM:2,temperatureC:22,dewPointC:20}};
+ assert.equal(dayValue(profile,2,'temperature','m/s'),22);
+ assert.equal(dayValue(profile,51,'temperature','m/s'),21);
+ assert.ok(dayValue(profile,51,'humidity','m/s')>90);
+ assert.ok(Math.abs(dayValue(profile,51,'lapse','m/s')-2000/98)<1e-6);
+ assert.equal(dayValue(profile,1,'temperature','m/s'),undefined);
+ assert.equal(dayValue(profile,51,'cloud','m/s'),undefined);
+});
+
+test('layer bounds include real surface data and clouds keep their own native vertical extent',()=>{
+ const profile={...p,surfaceThermo:{heightM:2,temperatureC:22,dewPointC:20},surfaceWind:{heightM:10,windMps:4}};
+ assert.equal(dayLayerBounds(profile,'humidity').bottom,2);
+ assert.equal(dayLayerBounds(profile,'wind').bottom,10);
+ assert.equal(dayLayerBounds(profile,'cloud').bottom,100);
+ assert.equal(dayLayerBounds({...profile,clouds:undefined},'cloud'),undefined);
+ const lowClouds={...p,clouds:[{heightM:50,coverPct:30},{heightM:1100,coverPct:30}]};
+ assert.equal(dayValue(lowClouds,50,'cloud','m/s'),30);
 });

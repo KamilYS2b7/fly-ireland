@@ -1,25 +1,20 @@
 import type {SoundingProfile} from './sounding';
-import {soundingAtHeight,soundingWindAtHeight} from './soundingInsights.ts';
-import {estimateThermalUpdraft,thermalAtHeight} from './thermalUpdraft.ts';
-const thermalCache=new WeakMap<SoundingProfile,ReturnType<typeof estimateThermalUpdraft>>();
+import {soundingWindAtHeight,soundingThermoAtHeight} from './soundingInsights.ts';
+
 import {saturationVaporPressure} from './vendor/flyxc/atmosphere.ts';
 import {convertWindSpeed} from './windUnits.ts';
 import type {WindUnit} from './windUnits';
-export type DayLayer='wind'|'temperature'|'humidity'|'cloud'|'lapse'|'thermal';
-export const dayLayers={thermal:{label:'Thermal strength (est.)',min:0,max:5},wind:{label:'Wind speed',min:0,max:40},temperature:{label:'Temperature',min:-20,max:30},humidity:{label:'Relative humidity',min:0,max:100},cloud:{label:'Cloud cover',min:0,max:100},lapse:{label:'Lapse rate',min:-3,max:12}};
+export type DayLayer='wind'|'temperature'|'humidity'|'cloud'|'lapse';
+export const dayLayers={wind:{label:'Wind speed',min:0,max:40},temperature:{label:'Temperature',min:-20,max:30},humidity:{label:'Relative humidity',min:0,max:100},cloud:{label:'Cloud cover',min:0,max:100},lapse:{label:'Lapse rate',min:-3,max:12}};
 export function dayValue(profile:SoundingProfile,height:number,layer:DayLayer,unit:WindUnit){
- if(layer==='thermal'){
-  let estimate=thermalCache.get(profile);if(!estimate){estimate=estimateThermalUpdraft(profile);thermalCache.set(profile,estimate);}
-  return estimate.status==='available'?thermalAtHeight(estimate,height)?.speedMps:undefined;
- }
  if(layer==='wind'){const wind=soundingWindAtHeight(profile,height);return wind?convertWindSpeed(wind.windMps*2.2369362921,unit):undefined;}
- const point=soundingAtHeight(profile,height);if(!point)return undefined;
+ const point=soundingThermoAtHeight(profile,height);
 
- if(layer==='temperature')return point.temperatureC;
- if(layer==='humidity')return point.dewPointC===undefined?undefined:Math.max(0,Math.min(100,100*saturationVaporPressure(point.dewPointC+273.15)/saturationVaporPressure(point.temperatureC+273.15)));
+ if(layer==='temperature')return point?.temperatureC;
+ if(layer==='humidity')return point?.dewPointC===undefined?undefined:Math.max(0,Math.min(100,100*saturationVaporPressure(point.dewPointC+273.15)/saturationVaporPressure(point.temperatureC+273.15)));
  if(layer==='lapse'){
-  const levels=profile.levels,index=levels.findIndex(l=>l.heightM>height),b=levels[index],a=levels[index-1];
-  return a&&b&&!b.gapBefore?(a.temperatureC-b.temperatureC)*1000/(b.heightM-a.heightM):undefined;
+  const levels=profile.surfaceThermo&&profile.surfaceThermo.heightM<profile.levels[0].heightM?[profile.surfaceThermo,...profile.levels]:profile.levels,index=levels.findIndex(l=>l.heightM>height),b=levels[index],a=levels[index-1];
+  return a&&b&&!('gapBefore' in b&&b.gapBefore)?(a.temperatureC-b.temperatureC)*1000/(b.heightM-a.heightM):undefined;
  }
  const clouds=profile.clouds??[],index=clouds.findIndex(l=>l.heightM>=height);
  if(index<0||height<(clouds[0]?.heightM??Infinity))return undefined;
@@ -29,7 +24,6 @@ export function dayValue(profile:SoundingProfile,height:number,layer:DayLayer,un
 }
 export function dayColor(value:number,layer:DayLayer,max?:number){
  const spec=dayLayers[layer],f=Math.max(0,Math.min(1,(value-spec.min)/((max??spec.max)-spec.min)));
- if(layer==='thermal')return `hsl(${120-f*120} 78% ${92-f*45}%)`;
  if(layer==='cloud')return `hsl(210 16% ${97-f*65}%)`;
  return `hsl(${240-f*240} 72% ${52+Math.sin(f*Math.PI)*8}%)`;
 }
@@ -47,7 +41,6 @@ export function renderDayHeatmap(grid:(number|undefined)[][],layer:DayLayer,max:
  const canvas=document.createElement('canvas');canvas.width=840;canvas.height=440;
  const context=canvas.getContext('2d');if(!context)return '';
  const image=context.createImageData(canvas.width,canvas.height),spec=dayLayers[layer];
- const bounds=grid.map(column=>{const valid=column.flatMap((v,i)=>v===undefined?[]:[i]);return valid.length?{low:valid[0],high:valid.at(-1)!}:undefined;});
  const palette=Array.from({length:256},(_,i)=>{
   context.fillStyle=dayColor(spec.min+(max-spec.min)*i/255,layer,max);context.fillRect(0,0,1,1);
   return context.getImageData(0,0,1,1).data.slice(0,3);
@@ -55,16 +48,6 @@ export function renderDayHeatmap(grid:(number|undefined)[][],layer:DayLayer,max:
  for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){
   const gx=Math.max(0,Math.min(grid.length-1,(x+.5)/canvas.width*(grid.length-1))),gy=(1-(y+.5)/canvas.height)*(grid[0]?.length??0)-.5;
   let value=smoothGrid(grid,gx,gy);
-  if(layer==='thermal'){
-   const a=Math.floor(gx),b=Math.min(grid.length-1,a+1),f=gx-a,lo=bounds[a],hi=bounds[b];
-   if(lo&&hi){
-    if(gy<lo.low*(1-f)+hi.low*f-.5||gy>lo.high*(1-f)+hi.high*f+.5)value=undefined;
-    else{
-     const va=smoothGrid(grid,a,Math.max(lo.low,Math.min(lo.high,gy))),vb=smoothGrid(grid,b,Math.max(hi.low,Math.min(hi.high,gy)));
-     value=va===undefined||vb===undefined?undefined:va*(1-f)+vb*f;
-    }
-   }
-  }
   if(value===undefined)continue;
   const color=palette[Math.round(Math.max(0,Math.min(1,(value-spec.min)/(max-spec.min)))*255)],offset=(y*canvas.width+x)*4;
   image.data.set(color,offset);image.data[offset+3]=255;
@@ -86,4 +69,17 @@ export function dayReading(profiles:SoundingProfile[],timestamp:number,height:nu
   if(layer==='wind')value=convertWindSpeed(speed*2.2369362921,unit);
  }
  return {value,direction};
+}
+
+export function dayLayerBounds(profile:SoundingProfile,layer:DayLayer){
+ if(layer==='cloud'){
+  const valid=(profile.clouds??[]).filter(l=>l.coverPct!==undefined);
+  return valid.length>1?{bottom:valid[0].heightM,top:valid.at(-1)!.heightM}:undefined;
+ }
+ const levels=profile.levels.filter(l=>layer==='wind'?l.windMps!==undefined:layer==='humidity'?l.dewPointC!==undefined:true);
+ if(!levels.length)return;
+ let bottom=levels[0].heightM;
+ if(layer==='wind'&&profile.surfaceWind)bottom=Math.min(bottom,profile.surfaceWind.heightM);
+ if(layer!=='wind'&&profile.surfaceThermo&&(layer!=='humidity'||profile.surfaceThermo.dewPointC!==undefined))bottom=Math.min(bottom,profile.surfaceThermo.heightM);
+ return {bottom,top:levels.at(-1)!.heightM};
 }

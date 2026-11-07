@@ -1,11 +1,12 @@
-import {parcelTrajectory,dewpoint,saturationVaporPressure} from './vendor/flyxc/atmosphere.ts';
+import {dewpoint,saturationVaporPressure} from './vendor/flyxc/atmosphere.ts';
 import {sampleLcl} from './lclForecast.ts';
 import type {ParcelData} from './vendor/flyxc/atmosphere';
 export type SoundingSite={id:string;name:string;lat:number;lon:number};
 export type SoundingLevel={pressureHpa:number;heightM:number;temperatureC:number;dewPointC?:number;windMps?:number;windDirection?:number;gapBefore?:boolean};
 export type SoundingCloudLevel={pressureHpa:number;heightM:number;coverPct?:number};
 export type SoundingSurfaceWind={heightM:number;windMps:number;windDirection?:number};
-export type SoundingProfile={surfaceWind?:SoundingSurfaceWind;levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number;clouds?:SoundingCloudLevel[]};
+export type SoundingSurfaceThermo={heightM:number;temperatureC:number;dewPointC?:number};
+export type SoundingProfile={surfaceThermo?:SoundingSurfaceThermo;surfaceWind?:SoundingSurfaceWind;levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number;clouds?:SoundingCloudLevel[]};
 export type SoundingState={open:boolean;site?:SoundingSite;model:string;timestamp:number;status:'loading'|'ready'|'error';profile?:SoundingProfile;day?:SoundingProfile[];error?:string};
 const finite=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value);
 export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
@@ -45,14 +46,6 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
         usable.push(level);
     }
     if(usable.length<2)throw Error('Not enough valid height and temperature levels for a sounding.');
-    let parcel:ParcelData|undefined;
-    // Use the lowest valid model level; never start a parcel below available data.
-    if(usable.length>=3&&!usable.some(l=>l.gapBefore)&&usable[0].dewPointC!==undefined){
-        try{
-            const candidate=parcelTrajectory(usable.map(l=>l.pressureHpa),usable.map(l=>l.heightM),usable.map(l=>l.temperatureC+273.15),3,Math.max(terrainM??usable[0].heightM,usable[0].heightM),usable[0].dewPointC+273.15,80);
-            if(candidate.dry.length>1&&finite(candidate.thermalTopElev)&&candidate.thermalTopElev>usable[0].heightM)parcel=candidate;
-        }catch{/* Incomplete thermodynamics must not prevent the observed model profile. */}
-    }
     const cloudKeys=Object.keys(sounding).filter(key=>/^cloud-\d+h$/.test(key));
     const clouds:SoundingCloudLevel[]=[];
     for(const key of cloudKeys){
@@ -69,7 +62,18 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
     }
     clouds.sort((a,b)=>a.heightM-b.heightM);
     // Surface fields have their own timestamps, independent of sounding levels.
+    const scalarFrom=(values:any,grid:any,valid:(n:number)=>boolean)=>{
+        if(!Array.isArray(grid)||!grid.length||!grid.every((t,i)=>finite(t)&&(!i||t>grid[i-1]))||timestamp<grid[0]||timestamp>grid.at(-1))return undefined;
+        const r=grid.findIndex(t=>t>=timestamp),l=grid[r]===timestamp?r:r-1,a=values?.[l],b=values?.[r];
+        return finite(a)&&finite(b)&&valid(a)&&valid(b)?a+(b-a)*(l===r?0:(timestamp-grid[l])/(grid[r]-grid[l])):undefined;
+    };
     const surface=data?.data,grid=surface?.ts;
+    const temperature=scalarFrom(surface?.temperature,grid,n=>n>150&&n<350);
+    let dew=scalarFrom(surface?.dewPoint,grid,n=>n>130&&n<350)??scalarFrom(data?.meteogram?.dewPoint,data?.meteogram?.ts,n=>n>130&&n<350);
+    if(dew===undefined&&temperature!==undefined){const rh=scalarFrom(surface?.rh,grid,n=>n>0&&n<=100);if(rh!==undefined)dew=dewpoint(saturationVaporPressure(temperature)*rh/100);}
+    if(dew!==undefined&&temperature!==undefined&&dew>temperature+.2)dew=undefined;
+    const surfaceThermo=terrainM!==undefined&&temperature!==undefined?{heightM:terrainM+2,temperatureC:temperature-273.15,dewPointC:dew===undefined?undefined:dew-273.15}:undefined;
+
     let surfaceWind:SoundingSurfaceWind|undefined;
     if(terrainM!==undefined&&Array.isArray(grid)&&grid.length&&grid.every((t,i)=>finite(t)&&(!i||t>grid[i-1]))&&timestamp>=grid[0]&&timestamp<=grid.at(-1)){
         const r=grid.findIndex(t=>t>=timestamp),l=grid[r]===timestamp?r:r-1,f=l===r?0:(timestamp-grid[l])/(grid[r]-grid[l]);
@@ -84,7 +88,7 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
         }
     }
     const surfaceLclM=sampleLcl(data,timestamp).lclAslM;
-    return{surfaceWind,clouds:cloudKeys.length?clouds.filter((l,i)=>!i||l.heightM>clouds[i-1].heightM):undefined,surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
+    return{surfaceThermo,surfaceWind,clouds:cloudKeys.length?clouds.filter((l,i)=>!i||l.heightM>clouds[i-1].heightM):undefined,surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp};
 }
 export function sampleSoundingDay(payload:any,timestamp:number):SoundingProfile[]{
     const start=Math.floor(timestamp/86400000)*86400000,profiles:SoundingProfile[]=[];

@@ -63,3 +63,13 @@ export function soundingWindAtHeight(profile:SoundingProfile,heightM:number){
  }
  return{windMps:surface.windMps+(first.windMps-surface.windMps)*f,windDirection:undefined};
 }
+
+export function soundingThermoAtHeight(profile:SoundingProfile,heightM:number){
+ const first=profile.levels[0],surface=profile.surfaceThermo;
+ if(heightM>=first.heightM)return soundingAtHeight(profile,heightM);
+ if(!surface||heightM<surface.heightM||surface.heightM>=first.heightM)return;
+ if(heightM===surface.heightM)return surface;
+ const f=(heightM-surface.heightM)/(first.heightM-surface.heightM);
+ return {heightM,temperatureC:surface.temperatureC+(first.temperatureC-surface.temperatureC)*f,
+  dewPointC:surface.dewPointC===undefined||first.dewPointC===undefined?undefined:surface.dewPointC+(first.dewPointC-surface.dewPointC)*f};
+}

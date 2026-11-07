@@ -294,7 +294,7 @@
           {/if}
           {#if !spot.toVerify || spot.youtube?.length || guideKeyForSite(spot) || (spot.country==='poland'&&spot.directionUnverified)}
           <div class="card-videos" role="group" aria-label={`Actions for ${spot.name}`}>
-            {#if !spot.toVerify}<button class="card-guide" type="button" aria-label={`Show sounding for ${spot.name}`} on:click|stopPropagation={()=>onSounding(spot)}><span aria-hidden="true">▥</span> Sounding</button>{/if}
+            {#if !spot.toVerify}<button class="card-guide" type="button" aria-label={`Show day overview for ${spot.name}`} on:click|stopPropagation={()=>onSounding(spot)}><span aria-hidden="true">▥</span> Day overview</button>{/if}
             {#if spot.country==='poland'&&spot.directionUnverified}<button class="card-guide direction-edit" type="button" on:click|stopPropagation={()=>onDirectionEdit(spot)}>{spot.windReviewConfirmed?'Edit saved wind range':'Set wind range'}</button>{/if}
             {#if guideKeyForSite(spot)}<button class="card-guide" type="button" aria-label={`Open site guide for ${spot.name}`} on:click|stopPropagation={()=>onGuide(spot)}><span aria-hidden="true">ⓘ</span> Site guide</button>{/if}
             {#each spot.youtube ?? [] as url, index (url)}

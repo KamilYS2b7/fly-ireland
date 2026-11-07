@@ -77,3 +77,14 @@ test('surface wind uses its own time grid and model ground without altering parc
  assert.equal(sampleSounding(payload(),time).surfaceWind,undefined);
  delete p.data.header.modelElevation;assert.equal(sampleSounding(p,time).surfaceWind,undefined);
 });
+
+test('surface temperature and meteogram dew point use independent clocks and remain at 2 m AGL',()=>{
+ const p=payload();p.data.header.modelElevation=0;
+ p.data.data={ts:[time-hour,time+hour],temperature:[280,284]};
+ p.data.meteogram={ts:[time,time+hour],dewPoint:[278,280]};
+ const result=sampleSounding(p,time);assert.equal(result.surfaceThermo.heightM,2);
+ assert.ok(Math.abs(result.surfaceThermo.temperatureC-8.85)<1e-6);
+ assert.ok(Math.abs(result.surfaceThermo.dewPointC-4.85)<1e-6);
+ p.data.meteogram.dewPoint=[290,290];assert.equal(sampleSounding(p,time).surfaceThermo.dewPointC,undefined);
+ delete p.data.data.temperature;assert.equal(sampleSounding(p,time).surfaceThermo,undefined);
+});

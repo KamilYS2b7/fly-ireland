@@ -1209,7 +1209,7 @@ function buildMenuHTML(spot:Spot, D:number){
         ${ytMenu}
         ${mapsMenu}
         ${infoMenu}
-        <button class="sounding-btn sounding-main" type="button" title="Show sounding" aria-label="Show atmospheric sounding">
+        <button class="sounding-btn sounding-main" type="button" title="Show day overview" aria-label="Show atmospheric day overview">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v17h17M7 16l4-7 3 3 6-8M8 19l4-5 4 2 4-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
