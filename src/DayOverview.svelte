@@ -3,7 +3,7 @@
  import type {WindUnit} from './windUnits';
  import {dayValue,dayColor,dayLayers,renderDayHeatmap,dayReading} from './dayOverview';
  import type {DayLayer} from './dayOverview';
- import {soundingAtHeight} from './soundingInsights';
+ import {soundingWindAtHeight} from './soundingInsights';
  export let profiles:SoundingProfile[]=[];
  export let timestamp=0;
  export let depthM=3000;
@@ -14,7 +14,7 @@
  const left=60,right=900,top=28,bottom=468,firstHour=8,lastHour=21,hourCount=lastHour-firstHour+1;
  $: start=Math.floor(timestamp/86400000)*86400000;
  $: ground=profiles[0]?.terrainM??profiles[0]?.levels[0].heightM??0;
- $: base=Math.floor(ground/250)*250;
+ $: base=ground;
  $: ceiling=Math.max(base+500,Math.min(7000,ground+Number(depthM)));
  $: selectedHeight=Math.max(base,Math.min(ceiling,selectedHeight));
  $: rows=Array.from({length:40},(_,i)=>base+(ceiling-base)*(i+.5)/40);
@@ -65,7 +65,7 @@
    {#if true}<text x={x(c.hour)} y={bottom+22} text-anchor="middle">{String(c.hour).padStart(2,'0')}:00</text>{/if}
    {#if c.profile}
     {#each rows.filter((_,i)=>i%4===2) as h}
-     {@const point=soundingAtHeight(c.profile,h)}
+     {@const point=soundingWindAtHeight(c.profile,h)}
      {#if point?.windDirection!==undefined&&point.windMps!==undefined&&point.windMps>.1}<g transform={`translate(${x(c.hour)},${y(h)}) rotate(${point.windDirection})`} class="wind-arrow"><path d="M0 -7V7M-3 3 0 7 3 3"/></g>{/if}
     {/each}
 
@@ -83,7 +83,7 @@
 <div class="reading" aria-live="polite">{#if active}<strong>{selectedTime} UTC · {Math.round(selectedHeight).toLocaleString('en-GB')} m ASL · {value===undefined?'No data':value.toFixed(1)+' '+unit}</strong><span>{reading.direction===undefined?'Wind direction unavailable':`Wind from ${Math.round(reading.direction)}°`}</span><button type="button" disabled={value===undefined} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {selectedTime} UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
 {#if layer==='thermal'}<p class="thermal-note">Experimental dry air updraft, not a SkySight or Windy thermal forecast. Assumes a +3°C parcel and 100 m radius; stops at condensation, stalled ascent or missing data. No terrain lift, cloud updraft or wing sink. Hatched areas mean no estimate, not zero lift.</p>{/if}
 <p class="key">{dayLayers[layer].label} ({unit}) · White line: estimated LCL · Dashed line: takeoff · Hatched areas: no data</p>
-<p class="help">Hourly forecast profiles, interpolated vertically between model levels. Colours are smoothly interpolated between valid hours and heights; missing cells remain blank. Cloud cover is interpolated between native cloud levels; LCL does not guarantee clouds. Humidity is derived from temperature and dew point. Lapse rate is the temperature decrease per km between model levels. Wind arrows show horizontal direction, not rising or sinking air.</p>
+<p class="help">Near-surface wind is at 10 m above model ground, with interpolation to the lowest pressure level. No data is extended below that height. Hourly forecast profiles, interpolated vertically between model levels. Colours are smoothly interpolated between valid hours and heights; missing cells remain blank. Cloud cover is interpolated between native cloud levels; LCL does not guarantee clouds. Humidity is derived from temperature and dew point. Lapse rate is the temperature decrease per km between model levels. Wind arrows show horizontal direction, not rising or sinking air.</p>
 <style>
  .thermal-note{font:11px/1.5 system-ui;color:#825c2d;}
  .tooltip{pointer-events:none;}.tooltip rect{fill:white;fill-opacity:.95;stroke:#90aab6;}.tooltip text{font-weight:600;}

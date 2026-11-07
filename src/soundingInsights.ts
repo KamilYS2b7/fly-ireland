@@ -48,3 +48,18 @@ export function soundingInsights(profile:SoundingProfile){
     }
     return{lcl,dryTopM,inversions,windChanges,freezingLevels:freezingLevels.sort((a,b)=>a-b)};
 }
+
+// Keep 10 m wind separate from pressure-level thermodynamics and parcel physics.
+export function soundingWindAtHeight(profile:SoundingProfile,heightM:number){
+ const first=profile.levels[0],surface=profile.surfaceWind;
+ if(heightM>=first.heightM){const point=soundingAtHeight(profile,heightM);return point?.windMps===undefined?undefined:{windMps:point.windMps,windDirection:point.windDirection};}
+ if(!surface||heightM<surface.heightM||surface.heightM>=first.heightM)return;
+ if(heightM===surface.heightM)return surface;
+ if(first.windMps===undefined)return;
+ const f=(heightM-surface.heightM)/(first.heightM-surface.heightM);
+ if(surface.windDirection!==undefined&&first.windDirection!==undefined){
+  const a=vector(surface.windMps,surface.windDirection),b=vector(first.windMps,first.windDirection),u=a.u+(b.u-a.u)*f,v=a.v+(b.v-a.v)*f,windMps=Math.hypot(u,v);
+  return{windMps,windDirection:windMps<1e-6?undefined:(Math.atan2(-u,-v)*180/Math.PI+360)%360};
+ }
+ return{windMps:surface.windMps+(first.windMps-surface.windMps)*f,windDirection:undefined};
+}

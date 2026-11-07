@@ -4,7 +4,8 @@ import type {ParcelData} from './vendor/flyxc/atmosphere';
 export type SoundingSite={id:string;name:string;lat:number;lon:number};
 export type SoundingLevel={pressureHpa:number;heightM:number;temperatureC:number;dewPointC?:number;windMps?:number;windDirection?:number;gapBefore?:boolean};
 export type SoundingCloudLevel={pressureHpa:number;heightM:number;coverPct?:number};
-export type SoundingProfile={levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number;clouds?:SoundingCloudLevel[]};
+export type SoundingSurfaceWind={heightM:number;windMps:number;windDirection?:number};
+export type SoundingProfile={surfaceWind?:SoundingSurfaceWind;levels:SoundingLevel[];terrainM?:number;takeoffM?:number;timestamp:number;parcel?:ParcelData;surfaceLclM?:number;clouds?:SoundingCloudLevel[]};
 export type SoundingState={open:boolean;site?:SoundingSite;model:string;timestamp:number;status:'loading'|'ready'|'error';profile?:SoundingProfile;day?:SoundingProfile[];error?:string};
 const finite=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value);
 export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
@@ -67,8 +68,23 @@ export function sampleSounding(payload:any,timestamp:number):SoundingProfile{
         clouds.push({pressureHpa,heightM,coverPct:sample(key,n=>n>=0&&n<=100)});
     }
     clouds.sort((a,b)=>a.heightM-b.heightM);
+    // Surface fields have their own timestamps, independent of sounding levels.
+    const surface=data?.data,grid=surface?.ts;
+    let surfaceWind:SoundingSurfaceWind|undefined;
+    if(terrainM!==undefined&&Array.isArray(grid)&&grid.length&&grid.every((t,i)=>finite(t)&&(!i||t>grid[i-1]))&&timestamp>=grid[0]&&timestamp<=grid.at(-1)){
+        const r=grid.findIndex(t=>t>=timestamp),l=grid[r]===timestamp?r:r-1,f=l===r?0:(timestamp-grid[l])/(grid[r]-grid[l]);
+        const a=surface.wind?.[l],b=surface.wind?.[r],da=surface.windDir?.[l],db=surface.windDir?.[r];
+        if(finite(a)&&finite(b)&&a>=0&&b>=0&&a<=150&&b<=150){
+            let windMps=a+(b-a)*f,windDirection:number|undefined;
+            if(finite(da)&&finite(db)&&da>=0&&da<=360&&db>=0&&db<=360){
+                const u=a*Math.sin(da*Math.PI/180)*(1-f)+b*Math.sin(db*Math.PI/180)*f,v=a*Math.cos(da*Math.PI/180)*(1-f)+b*Math.cos(db*Math.PI/180)*f;
+                windMps=Math.hypot(u,v);if(windMps>1e-6)windDirection=(Math.atan2(u,v)*180/Math.PI+360)%360;
+            }
+            surfaceWind={heightM:terrainM+10,windMps,windDirection};
+        }
+    }
     const surfaceLclM=sampleLcl(data,timestamp).lclAslM;
-    return{clouds:cloudKeys.length?clouds.filter((l,i)=>!i||l.heightM>clouds[i-1].heightM):undefined,surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
+    return{surfaceWind,clouds:cloudKeys.length?clouds.filter((l,i)=>!i||l.heightM>clouds[i-1].heightM):undefined,surfaceLclM,levels:usable,terrainM,takeoffM:finite(data?.header?.elevation)?data.header.elevation:undefined,timestamp,parcel};
 }
 export function sampleSoundingDay(payload:any,timestamp:number):SoundingProfile[]{
     const start=Math.floor(timestamp/86400000)*86400000,profiles:SoundingProfile[]=[];

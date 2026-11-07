@@ -1,5 +1,5 @@
 import type {SoundingProfile} from './sounding';
-import {soundingAtHeight} from './soundingInsights.ts';
+import {soundingAtHeight,soundingWindAtHeight} from './soundingInsights.ts';
 import {estimateThermalUpdraft,thermalAtHeight} from './thermalUpdraft.ts';
 const thermalCache=new WeakMap<SoundingProfile,ReturnType<typeof estimateThermalUpdraft>>();
 import {saturationVaporPressure} from './vendor/flyxc/atmosphere.ts';
@@ -12,8 +12,9 @@ export function dayValue(profile:SoundingProfile,height:number,layer:DayLayer,un
   let estimate=thermalCache.get(profile);if(!estimate){estimate=estimateThermalUpdraft(profile);thermalCache.set(profile,estimate);}
   return estimate.status==='available'?thermalAtHeight(estimate,height)?.speedMps:undefined;
  }
+ if(layer==='wind'){const wind=soundingWindAtHeight(profile,height);return wind?convertWindSpeed(wind.windMps*2.2369362921,unit):undefined;}
  const point=soundingAtHeight(profile,height);if(!point)return undefined;
- if(layer==='wind')return point.windMps===undefined?undefined:convertWindSpeed(point.windMps*2.2369362921,unit);
+
  if(layer==='temperature')return point.temperatureC;
  if(layer==='humidity')return point.dewPointC===undefined?undefined:Math.max(0,Math.min(100,100*saturationVaporPressure(point.dewPointC+273.15)/saturationVaporPressure(point.temperatureC+273.15)));
  if(layer==='lapse'){
@@ -77,7 +78,7 @@ export function dayReading(profiles:SoundingProfile[],timestamp:number,height:nu
  if(!a||!b)return {value:undefined,direction:undefined};
  const f=a===b?0:(timestamp-a.timestamp)/(b.timestamp-a.timestamp),va=dayValue(a,height,layer,unit),vb=dayValue(b,height,layer,unit);
  let value=va===undefined||vb===undefined?undefined:va+(vb-va)*f;
- const wa=soundingAtHeight(a,height),wb=soundingAtHeight(b,height);let direction:number|undefined;
+ const wa=soundingWindAtHeight(a,height),wb=soundingWindAtHeight(b,height);let direction:number|undefined;
  if(wa?.windMps!==undefined&&wb?.windMps!==undefined&&wa.windDirection!==undefined&&wb.windDirection!==undefined){
   const u=wa.windMps*Math.sin(wa.windDirection*Math.PI/180)*(1-f)+wb.windMps*Math.sin(wb.windDirection*Math.PI/180)*f;
   const v=wa.windMps*Math.cos(wa.windDirection*Math.PI/180)*(1-f)+wb.windMps*Math.cos(wb.windDirection*Math.PI/180)*f;

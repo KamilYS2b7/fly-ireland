@@ -67,3 +67,13 @@ test('cloud cover uses its own pressure levels and actual time grid, including c
  p.data.sounding['cloud-800h']=[120,120];assert.equal(sampleSounding(p,time).clouds.find(l=>l.pressureHpa===800).coverPct,undefined);
  assert.equal(sampleSounding(payload(),time).clouds,undefined);
 });
+
+test('surface wind uses its own time grid and model ground without altering parcel levels',()=>{
+ const p=payload();p.data.header.modelElevation=0;
+ p.data.data={ts:[time-hour,time+hour],wind:[4,8],windDir:[350,10]};
+ const r=sampleSounding(p,time);assert.equal(r.surfaceWind.heightM,10);
+ assert.ok(r.surfaceWind.windMps>5&&r.surfaceWind.windMps<6.1);
+ assert.equal(r.levels[0].heightM,100);assert.equal(r.levels.length,4);
+ assert.equal(sampleSounding(payload(),time).surfaceWind,undefined);
+ delete p.data.header.modelElevation;assert.equal(sampleSounding(p,time).surfaceWind,undefined);
+});

@@ -40,3 +40,12 @@ test('cursor interpolates fractional hours and preserves missing hours',()=>{
  assert.equal(dayReading([a],8.5*3600000,100,'temperature','m/s').value,undefined);
  assert.equal(dayReading([a],8*3600000,100,'temperature','m/s').value,20);
 });
+
+test('surface wind fills lower profile above 10 m only, using vectors and no invented thermodynamics',()=>{
+ const profile={...p,terrainM:0,surfaceWind:{heightM:10,windMps:5,windDirection:350}};
+ assert.ok(Math.abs(dayValue(profile,10,'wind','m/s')-5)<1e-6);
+ assert.ok(dayValue(profile,55,'wind','m/s')>4);
+ assert.equal(dayValue(profile,5,'wind','m/s'),undefined);
+ assert.equal(dayValue(profile,55,'temperature','m/s'),undefined);
+ assert.equal(dayValue({...profile,surfaceWind:undefined},55,'wind','m/s'),undefined);
+});

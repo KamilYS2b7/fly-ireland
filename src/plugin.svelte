@@ -781,7 +781,7 @@ let filteredPanel = scopeSitePanel(sitePanel, siteFilters);
 let sitePanelComponent: SitePanel | undefined;
 let soundingState:SoundingState={open:false,model:'',timestamp:0,status:'loading'};
 const soundingController=createSoundingController({
-  fetch:(site,model)=>getPointForecastData(model,{lat:site.lat,lon:site.lon,days:15,step:1},{header:true,celestial:true,sounding:true},{timeout:15000}),
+  fetch:(site,model)=>getPointForecastData(model,{lat:site.lat,lon:site.lon,days:15,step:1},{header:true,celestial:true,meteogram:true,sounding:true},{timeout:15000}),
   onChange:state=>{soundingState=state;},
 });
 function openSounding(spot:Spot){
