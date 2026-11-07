@@ -1,7 +1,7 @@
 <script lang="ts">
  import type {SoundingProfile} from './sounding';
  import type {WindUnit} from './windUnits';
- import {dayValue,dayColor,dayLayers,renderDayHeatmap} from './dayOverview';
+ import {dayValue,dayColor,dayLayers,renderDayHeatmap,dayReading} from './dayOverview';
  import type {DayLayer} from './dayOverview';
  import {soundingAtHeight} from './soundingInsights';
  export let profiles:SoundingProfile[]=[];
@@ -22,23 +22,23 @@
  $: cells=columns.flatMap(c=>rows.map((height,row)=>({hour:c.hour,row,height,value:c.profile?dayValue(c.profile,height,layer,windUnit):undefined})));
  $: scaleMax=layer==='wind'?Math.max(10,Math.ceil(Math.max(0,...cells.map(c=>c.value??0))/10)*10):dayLayers[layer].max;
  $: heatmap=typeof document!=='undefined'?renderDayHeatmap(columns.map(c=>rows.map(height=>c.profile?dayValue(c.profile,height,layer,windUnit):undefined)),layer,scaleMax):'';
- $: selected=columns[selectedHour-firstHour]?.profile;
- $: value=selected?dayValue(selected,selectedHeight,layer,windUnit):undefined;
- $: wind=selected?soundingAtHeight(selected,selectedHeight):undefined;
+ $: reading=dayReading(profiles,start+selectedHour*3600000,selectedHeight,layer,windUnit);
+ $: value=reading.value;
+ $: selectedTime=new Date(start+Math.round(selectedHour*60)*60000).toISOString().slice(11,16);
  $: unit=layer==='wind'?windUnit:layer==='thermal'?'m/s':layer==='temperature'?'°C':layer==='lapse'?'°C/km':'%';
  $: tickStep=ceiling-base<=1500?250:ceiling-base<=3500?500:1000;
  $: ticks=Array.from({length:Math.floor(ceiling/tickStep)-Math.ceil(base/tickStep)+1},(_,i)=>(Math.ceil(base/tickStep)+i)*tickStep);
  $: lclPath=columns.map((c,i)=>{
   const h=c.profile?.surfaceLclM;if(h===undefined)return '';
   const previous=columns[i-1]?.profile?.surfaceLclM;
-  return `${previous===undefined?'M':'L'}${left+(c.hour-firstHour+.5)*(right-left)/hourCount},${bottom-(h-base)/(ceiling-base)*(bottom-top)}`;
+  return `${previous===undefined?'M':'L'}${left+(c.hour-firstHour)*(right-left)/(lastHour-firstHour)},${bottom-(h-base)/(ceiling-base)*(bottom-top)}`;
  }).join(' ');
  const y=(h:number)=>bottom-(h-base)/(ceiling-base)*(bottom-top);
- const x=(hour:number)=>left+(hour-firstHour+.5)*(right-left)/hourCount;
+ const x=(hour:number)=>left+(hour-firstHour)*(right-left)/(lastHour-firstHour);
  function pointer(event:PointerEvent){
   const box=(event.currentTarget as SVGSVGElement).getBoundingClientRect(),px=(event.clientX-box.left)*960/box.width,py=(event.clientY-box.top)*520/box.height;
   if(px<left||px>right||py<top||py>bottom)return;
-  active=true;selectedHour=Math.max(firstHour,Math.min(lastHour,firstHour+Math.floor((px-left)/(right-left)*hourCount)));selectedHeight=base+(bottom-py)/(bottom-top)*(ceiling-base);
+  active=true;selectedHour=Math.max(firstHour,Math.min(lastHour,firstHour+(px-left)/(right-left)*(lastHour-firstHour)));selectedHeight=base+(bottom-py)/(bottom-top)*(ceiling-base);
  }
  function key(event:KeyboardEvent){
   if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Enter'].includes(event.key))return;
@@ -77,10 +77,10 @@
   <rect x="918" y={top} width="12" height={bottom-top} fill="url(#overview-scale)"/>
   {#each [0,.25,.5,.75,1] as f}<text x="934" y={bottom-f*(bottom-top)+4}>{Number((dayLayers[layer].min+(scaleMax-dayLayers[layer].min)*f).toFixed(1))}</text>{/each}
   {#if (timestamp-start)/3600000>=firstHour&&(timestamp-start)/3600000<=lastHour}<line x1={x((timestamp-start)/3600000)} x2={x((timestamp-start)/3600000)} y1={top} y2={bottom} class="current"/>{/if}
-  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/><g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{String(selectedHour).padStart(2,'0')}:00 UTC · {Math.round(selectedHeight)} m ASL</text><text x="8" y="31">{value===undefined?'No data':value.toFixed(1)+' '+unit}</text></g>{/if}
+  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/><g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{selectedTime} UTC · {Math.round(selectedHeight)} m ASL</text><text x="8" y="31">{value===undefined?'No data':value.toFixed(1)+' '+unit}</text></g>{/if}
  </svg>
 </div>
-<div class="reading" aria-live="polite">{#if active}<strong>{String(selectedHour).padStart(2,'0')}:00 UTC · {Math.round(selectedHeight).toLocaleString('en-GB')} m ASL · {value===undefined?'No data':value.toFixed(1)+' '+unit}</strong><span>{wind?.windMps===undefined?'Wind unavailable':`Wind from ${wind.windDirection===undefined?'—':Math.round(wind.windDirection)+'°'}`}</span><button type="button" disabled={!selected} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {String(selectedHour).padStart(2,'0')}:00 UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
+<div class="reading" aria-live="polite">{#if active}<strong>{selectedTime} UTC · {Math.round(selectedHeight).toLocaleString('en-GB')} m ASL · {value===undefined?'No data':value.toFixed(1)+' '+unit}</strong><span>{reading.direction===undefined?'Wind direction unavailable':`Wind from ${Math.round(reading.direction)}°`}</span><button type="button" disabled={value===undefined} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {selectedTime} UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
 {#if layer==='thermal'}<p class="thermal-note">Experimental dry air updraft, not a SkySight or Windy thermal forecast. Assumes a +3°C parcel and 100 m radius; stops at condensation, stalled ascent or missing data. No terrain lift, cloud updraft or wing sink. Hatched areas mean no estimate, not zero lift.</p>{/if}
 <p class="key">{dayLayers[layer].label} ({unit}) · White line: estimated LCL · Dashed line: takeoff · Hatched areas: no data</p>
 <p class="help">Hourly forecast profiles, interpolated vertically between model levels. Colours are smoothly interpolated between valid hours and heights; missing cells remain blank. Cloud cover is interpolated between native cloud levels; LCL does not guarantee clouds. Humidity is derived from temperature and dew point. Lapse rate is the temperature decrease per km between model levels. Wind arrows show horizontal direction, not rising or sinking air.</p>

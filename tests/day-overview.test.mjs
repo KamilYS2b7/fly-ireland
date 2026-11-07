@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {dayValue,dayColor,smoothGrid} from '../src/dayOverview.ts';
+import {dayValue,dayColor,smoothGrid,dayReading} from '../src/dayOverview.ts';
 import {sampleSoundingDay} from '../src/sounding.ts';
 const p={timestamp:0,levels:[{heightM:100,temperatureC:20,dewPointC:20,windMps:5,windDirection:0},{heightM:1100,temperatureC:10,dewPointC:5,windMps:10,windDirection:90}],clouds:[{heightM:100,coverPct:0},{heightM:600},{heightM:1100,coverPct:80}]};
 test('overview preserves physical units, humidity, level gradients and missing coverage',()=>{
@@ -31,4 +31,12 @@ test('cloud percentages interpolate native levels while unknown samples break in
  assert.equal(dayValue(clouds,600,'cloud','m/s'),50);
  assert.equal(dayValue(p,350,'cloud','m/s'),undefined);
  assert.equal(dayValue(p,100,'thermal','m/s'),undefined);
+});
+
+test('cursor interpolates fractional hours and preserves missing hours',()=>{
+ const a={...p,timestamp:8*3600000},b={...p,timestamp:9*3600000,levels:p.levels.map(l=>({...l,temperatureC:l.temperatureC+10}))};
+ assert.equal(dayReading([a,b],8.5*3600000,100,'temperature','m/s').value,25);
+ assert.equal(dayReading([a,b],8.25*3600000,100,'temperature','m/s').value,22.5);
+ assert.equal(dayReading([a],8.5*3600000,100,'temperature','m/s').value,undefined);
+ assert.equal(dayReading([a],8*3600000,100,'temperature','m/s').value,20);
 });

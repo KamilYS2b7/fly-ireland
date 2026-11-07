@@ -52,7 +52,7 @@ export function renderDayHeatmap(grid:(number|undefined)[][],layer:DayLayer,max:
   return context.getImageData(0,0,1,1).data.slice(0,3);
  });
  for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){
-  const gx=Math.max(0,Math.min(grid.length-1,(x+.5)/canvas.width*grid.length-.5)),gy=(1-(y+.5)/canvas.height)*(grid[0]?.length??0)-.5;
+  const gx=Math.max(0,Math.min(grid.length-1,(x+.5)/canvas.width*(grid.length-1))),gy=(1-(y+.5)/canvas.height)*(grid[0]?.length??0)-.5;
   let value=smoothGrid(grid,gx,gy);
   if(layer==='thermal'){
    const a=Math.floor(gx),b=Math.min(grid.length-1,a+1),f=gx-a,lo=bounds[a],hi=bounds[b];
@@ -69,4 +69,20 @@ export function renderDayHeatmap(grid:(number|undefined)[][],layer:DayLayer,max:
   image.data.set(color,offset);image.data[offset+3]=255;
  }
  context.putImageData(image,0,0);return canvas.toDataURL('image/png');
+}
+
+export function dayReading(profiles:SoundingProfile[],timestamp:number,height:number,layer:DayLayer,unit:WindUnit){
+ const a=profiles.find(p=>p.timestamp===Math.floor(timestamp/3600000)*3600000);
+ const b=timestamp%3600000===0?a:profiles.find(p=>p.timestamp===Math.ceil(timestamp/3600000)*3600000);
+ if(!a||!b)return {value:undefined,direction:undefined};
+ const f=a===b?0:(timestamp-a.timestamp)/(b.timestamp-a.timestamp),va=dayValue(a,height,layer,unit),vb=dayValue(b,height,layer,unit);
+ let value=va===undefined||vb===undefined?undefined:va+(vb-va)*f;
+ const wa=soundingAtHeight(a,height),wb=soundingAtHeight(b,height);let direction:number|undefined;
+ if(wa?.windMps!==undefined&&wb?.windMps!==undefined&&wa.windDirection!==undefined&&wb.windDirection!==undefined){
+  const u=wa.windMps*Math.sin(wa.windDirection*Math.PI/180)*(1-f)+wb.windMps*Math.sin(wb.windDirection*Math.PI/180)*f;
+  const v=wa.windMps*Math.cos(wa.windDirection*Math.PI/180)*(1-f)+wb.windMps*Math.cos(wb.windDirection*Math.PI/180)*f;
+  const speed=Math.hypot(u,v);if(speed>1e-6)direction=(Math.atan2(u,v)*180/Math.PI+360)%360;
+  if(layer==='wind')value=convertWindSpeed(speed*2.2369362921,unit);
+ }
+ return {value,direction};
 }
