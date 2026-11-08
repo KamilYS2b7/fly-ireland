@@ -1,5 +1,5 @@
 <script lang="ts">
- import {heightLabel,heightFactor,altitudeTicks,smoothHeightPath} from './overviewAltitude';
+ import {heightLabel,heightFactor,altitudeTicks,smoothHeightPath,sampleSmoothHeight} from './overviewAltitude';
  import type {HeightUnit} from './overviewAltitude';
  import type {SoundingProfile} from './sounding';
  import type {WindUnit} from './windUnits';
@@ -13,7 +13,7 @@
  export let heightUnit:HeightUnit='m';
  export let onTime:(delta:number)=>void=()=>{};
  const setLayer=(key:string)=>layer=key as DayLayer;
- let layer:DayLayer='wind',selectedHour=12,selectedHeight=1000,active=false;
+ let layer:DayLayer='wind',selectedHour=12,selectedHeight=1000,active=false,snapped=false;
  const left=60,right=900,top=28,bottom=468,firstHour=8,lastHour=21,hourCount=lastHour-firstHour+1;
  $: start=Math.floor(timestamp/86400000)*86400000;
  $: ground=profiles[0]?.terrainM??profiles[0]?.levels[0].heightM??0;
@@ -36,17 +36,25 @@
   const h=c.profile?.surfaceLclM;
   return h===undefined?undefined:{x:left+(c.hour-firstHour)*(right-left)/(lastHour-firstHour),y:bottom-(h-base)/(ceiling-base)*(bottom-top)};
  }));
+ $: lclSamples=columns.map(c=>c.profile?.surfaceLclM===undefined?undefined:{x:c.hour,y:c.profile.surfaceLclM});
+ $: cursorLcl=sampleSmoothHeight(lclSamples,selectedHour);
+ $: lclVisible=cursorLcl!==undefined&&cursorLcl>=base&&cursorLcl<=ceiling;
+ $: lclDelta=cursorLcl===undefined||profiles[0]?.takeoffM===undefined?undefined:cursorLcl-profiles[0].takeoffM;
+ $: lclBoxX=Math.max(left+5,Math.min(right-225,x(selectedHour)+13));
+ $: lclBoxY=cursorLcl===undefined?top:Math.max(top+3,Math.min(bottom-57,y(cursorLcl)-64));
  $: lclAnchor=columns.filter(c=>c.profile?.surfaceLclM!==undefined&&c.profile.surfaceLclM>=base&&c.profile.surfaceLclM<=ceiling).sort((a,b)=>Math.abs(a.hour-11)-Math.abs(b.hour-11))[0];
  const y=(h:number)=>bottom-(h-base)/(ceiling-base)*(bottom-top);
  const x=(hour:number)=>left+(hour-firstHour)*(right-left)/(lastHour-firstHour);
  function pointer(event:PointerEvent){
   const box=(event.currentTarget as SVGSVGElement).getBoundingClientRect(),px=(event.clientX-box.left)*960/box.width,py=(event.clientY-box.top)*520/box.height;
   if(px<left||px>right||py<top||py>bottom)return;
-  active=true;selectedHour=Math.max(firstHour,Math.min(lastHour,firstHour+(px-left)/(right-left)*(lastHour-firstHour)));selectedHeight=base+(bottom-py)/(bottom-top)*(ceiling-base);
+  active=true;selectedHour=Math.max(firstHour,Math.min(lastHour,firstHour+(px-left)/(right-left)*(lastHour-firstHour)));const lcl=sampleSmoothHeight(lclSamples,selectedHour);
+  snapped=lcl!==undefined&&lcl>=base&&lcl<=ceiling&&Math.abs(py-y(lcl))<=12;
+  selectedHeight=snapped?lcl!:base+(bottom-py)/(bottom-top)*(ceiling-base);
  }
  function key(event:KeyboardEvent){
   if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Enter'].includes(event.key))return;
-  event.preventDefault();active=true;
+  event.preventDefault();active=true;snapped=false;
   if(event.key==='ArrowLeft')selectedHour=Math.max(firstHour,selectedHour-1);
   if(event.key==='ArrowRight')selectedHour=Math.min(lastHour,selectedHour+1);
   if(event.key==='ArrowUp')selectedHeight=Math.min(ceiling,selectedHeight+100);
@@ -76,17 +84,30 @@
   {/each}
   <path d={lclPath} class="lcl" fill="none" clip-path="url(#overview-plot-clip)"/>
   {#if profiles[0]?.takeoffM!==undefined&&profiles[0].takeoffM>=base&&profiles[0].takeoffM<=ceiling}<line x1={left} x2={right} y1={y(profiles[0].takeoffM)} y2={y(profiles[0].takeoffM)} class="takeoff"/>{/if}
-  {#if lclAnchor?.profile?.surfaceLclM!==undefined}
-   <text class="line-caption lcl-caption" x={Math.min(right-400,Math.max(left+8,x(lclAnchor.hour)))} y={Math.max(top+14,y(lclAnchor.profile.surfaceLclM)-9)}>LCL · estimated condensation level · {heightLabel(lclAnchor.profile.surfaceLclM,heightUnit)} ASL</text>
+  {#if !active&&lclAnchor?.profile?.surfaceLclM!==undefined}
+   <g class="line-tag" transform={`translate(${Math.min(right-176,Math.max(left+8,x(lclAnchor.hour)))},${Math.max(top+2,y(lclAnchor.profile.surfaceLclM)-29)})`}><rect width="172" height="20" rx="4"/><text x="7" y="14">LCL · condensation level</text></g>
   {/if}
   {#if profiles[0]?.takeoffM!==undefined&&profiles[0].takeoffM>=base&&profiles[0].takeoffM<=ceiling}
-   <text class="line-caption takeoff-caption" x={right-8} y={Math.max(top+14,y(profiles[0].takeoffM)-9)} text-anchor="end">Takeoff height · {heightLabel(profiles[0].takeoffM,heightUnit)} ASL</text>
+   <g class="line-tag takeoff-tag" transform={`translate(${left+8},${Math.max(top+2,y(profiles[0].takeoffM)-28)})`}><rect width="170" height="20" rx="4"/><path d="M7 10h15"/><text x="28" y="14">Takeoff · {heightLabel(profiles[0].takeoffM,heightUnit)} ASL</text></g>
   {/if}
   <text x={left} y="16">{heightUnit} ASL</text><text x={(left+right)/2} y="510" text-anchor="middle">Forecast hour (UTC)</text>
   <rect x="918" y={top} width="12" height={bottom-top} fill="url(#overview-scale)"/>
   {#each [0,.25,.5,.75,1] as f}<text x="934" y={bottom-f*(bottom-top)+4}>{Number((dayLayers[layer].min+(scaleMax-dayLayers[layer].min)*f).toFixed(1))}</text>{/each}
   {#if (timestamp-start)/3600000>=firstHour&&(timestamp-start)/3600000<=lastHour}<line x1={x((timestamp-start)/3600000)} x2={x((timestamp-start)/3600000)} y1={top} y2={bottom} class="current"/>{/if}
-  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/><g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL</text><text x="8" y="31">{value===undefined?'No data':value.toFixed(1)+' '+unit}</text></g>{/if}
+  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/>{#if !snapped&&(!lclVisible||cursorLcl===undefined||Math.abs(y(selectedHeight)-y(cursorLcl))>90)}<g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL</text><text x="8" y="31">{value===undefined?'No data':value.toFixed(1)+' '+unit}</text></g>{/if}{/if}
+  {#if active&&lclVisible&&cursorLcl!==undefined}
+   <g class="lcl-tracker" aria-label="Condensation level relative to takeoff">
+    <circle class="lcl-halo" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?10:8}/>
+    <circle class="lcl-dot" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?5:4}/>
+    <path class="lcl-leader" d={`M${x(selectedHour)},${y(cursorLcl)} L${Math.max(lclBoxX+10,Math.min(lclBoxX+210,x(selectedHour)))},${lclBoxY+54}`}/>
+    <g transform={`translate(${lclBoxX},${lclBoxY})`} class="lcl-readout">
+     <rect width="220" height="54" rx="6"/>
+     <text x="9" y="15" class="lcl-title">Estimated condensation level · LCL</text>
+     <text x="9" y="31" class="lcl-height">{heightLabel(cursorLcl,heightUnit)} ASL</text>
+     <text x="9" y="46" class:above={lclDelta!==undefined&&lclDelta>0} class:below={lclDelta!==undefined&&lclDelta<0} class="takeoff-clearance">{lclDelta===undefined?'Takeoff height unavailable':Math.abs(lclDelta)<.5?'At takeoff height':`${heightLabel(Math.abs(lclDelta),heightUnit)} ${lclDelta>0?'above':'below'} takeoff`}</text>
+    </g>
+   </g>
+  {/if}
  </svg>
 </div>
 <div class="reading" aria-live="polite">{#if active}<strong>{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL · {value===undefined?'No data':value.toFixed(1)+' '+unit}</strong><span>{reading.direction===undefined?'Wind direction unavailable':`Wind from ${Math.round(reading.direction)}°`}</span><button type="button" disabled={value===undefined} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {selectedTime} UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
@@ -98,6 +119,7 @@
 <style>
 
  .chart-info{font:10px/1.5 system-ui;color:#647d87;}.chart-info summary{cursor:pointer;padding:3px 0;}.scroll svg{max-height:calc(100dvh - 205px);}@media(max-width:600px){.layers button{min-height:34px;font-size:10px;padding:4px 6px;}.scroll svg{max-height:none;}}
+ .line-tag{pointer-events:none;}.line-tag rect{fill:#fffffff2;stroke:#cad8de;stroke-width:.6;}.line-tag text{font-size:10px;font-weight:550;fill:#34545f;}.takeoff-tag path{stroke:#34545f;stroke-dasharray:3 2;}.lcl-tracker{pointer-events:none;}.lcl-halo{fill:#ffffff38;stroke:#ffffffaa;stroke-width:1;}.lcl-dot{fill:white;stroke:#315f70;stroke-width:2;}.lcl-leader{fill:none;stroke:#fff;stroke-width:1.1;}.lcl-readout rect{fill:white;stroke:#c2d5dd;stroke-width:.8;}.lcl-readout .lcl-title{font-size:9px;fill:#647d88;}.lcl-readout .lcl-height{font-size:12px;font-weight:650;fill:#284958;}.lcl-readout .takeoff-clearance{font-size:10px;font-weight:650;fill:#647d88;}.lcl-readout .above{fill:#15803d;}.lcl-readout .below{fill:#b91c1c;}
  .line-caption{font-size:10px;font-weight:650;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round;pointer-events:none;}.lcl{stroke-linejoin:round;stroke-linecap:round;}
  .coverage{font:10px/1.5 system-ui;color:#647d87;margin:6px 0 10px;}
  .tooltip{pointer-events:none;}.tooltip rect{fill:white;fill-opacity:.95;stroke:#90aab6;}.tooltip text{font-weight:600;}

@@ -25,3 +25,20 @@ export function smoothHeightPath(points:(Point|undefined)[]){
   return path;
  }).join(' ');
 }
+
+// Samples the same shape-preserving curve used by smoothHeightPath.
+export function sampleSmoothHeight(points:({x:number;y:number}|undefined)[],x:number){
+ const exact=points.find(p=>p?.x===x);if(exact)return exact.y;
+ const index=points.findIndex(p=>p!==undefined&&p.x>x);
+ if(index<1||!points[index-1])return undefined;
+ let first=index-1,last=index;
+ while(first>0&&points[first-1])first--;
+ while(last+1<points.length&&points[last+1])last++;
+ const p=points.slice(first,last+1) as {x:number;y:number}[],i=index-first-1,a=p[i],b=p[i+1];
+ if(x<a.x||x>b.x)return undefined;
+ const delta=p.slice(1).map((point,j)=>(point.y-p[j].y)/(point.x-p[j].x));
+ const slope=(j:number)=>!j?delta[0]:j===p.length-1?delta.at(-1)!:delta[j-1]*delta[j]<=0?0:2/(1/delta[j-1]+1/delta[j]);
+ const clamp=(v:number)=>Math.max(Math.min(a.y,b.y),Math.min(Math.max(a.y,b.y),v));
+ const c=clamp(a.y+slope(i)*(b.x-a.x)/3),d=clamp(b.y-slope(i+1)*(b.x-a.x)/3),t=(x-a.x)/(b.x-a.x);
+ return (1-t)**3*a.y+3*(1-t)**2*t*c+3*(1-t)*t*t*d+t**3*b.y;
+}

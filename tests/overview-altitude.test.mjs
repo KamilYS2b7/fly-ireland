@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {heightLabel,altitudeTicks,smoothHeightPath} from '../src/overviewAltitude.ts';
+import {heightLabel,altitudeTicks,smoothHeightPath,sampleSmoothHeight} from '../src/overviewAltitude.ts';
 test('feet conversion and readable altitude ticks preserve underlying metre coordinates',()=>{
  assert.equal(heightLabel(304.8,'ft'),'1,000 ft');assert.equal(heightLabel(304.8,'m'),'305 m');
  const ticks=altitudeTicks(100,1200,'ft');assert.ok(ticks.length>2);assert.ok(ticks.every(h=>h>=100&&h<=1200));
@@ -14,4 +14,14 @@ test('smooth LCL keeps samples, segment bounds and missing-data gaps',()=>{
  }
  assert.ok(path.includes('10,10'));assert.ok(path.includes('20,40'));assert.ok(path.includes('M40,25'));
  assert.equal(smoothHeightPath([]),'');
+});
+
+test('LCL tracking samples the rendered curve and never crosses a missing hour',()=>{
+ const points=[{x:8,y:200},{x:9,y:500},{x:10,y:300},undefined,{x:12,y:100}];
+ assert.equal(sampleSmoothHeight(points,9),500);
+ assert.ok(sampleSmoothHeight(points,8.5)>200&&sampleSmoothHeight(points,8.5)<500);
+ assert.equal(sampleSmoothHeight(points,10.5),undefined);
+ assert.equal(sampleSmoothHeight(points,7.5),undefined);
+ assert.equal(sampleSmoothHeight(points,12),100);
+ const line=[{x:8,y:100},{x:9,y:200}];assert.ok(Math.abs(sampleSmoothHeight(line,8.5)-150)<1e-6);
 });
