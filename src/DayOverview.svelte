@@ -43,7 +43,7 @@
  $: lclBoxX=Math.max(left+5,Math.min(right-225,x(selectedHour)+13));
  $: lclBoxY=cursorLcl===undefined?top:Math.max(top+3,Math.min(bottom-57,y(cursorLcl)-64));
  $: lclAnchor=columns.filter(c=>c.profile?.surfaceLclM!==undefined&&c.profile.surfaceLclM>=base&&c.profile.surfaceLclM<=ceiling).sort((a,b)=>Math.abs(a.hour-11)-Math.abs(b.hour-11))[0];
- const y=(h:number)=>bottom-(h-base)/(ceiling-base)*(bottom-top);
+ $: y=(h:number)=>bottom-(h-base)/(ceiling-base)*(bottom-top);
  const x=(hour:number)=>left+(hour-firstHour)*(right-left)/(lastHour-firstHour);
  function pointer(event:PointerEvent){
   const box=(event.currentTarget as SVGSVGElement).getBoundingClientRect(),px=(event.clientX-box.left)*960/box.width,py=(event.clientY-box.top)*520/box.height;
