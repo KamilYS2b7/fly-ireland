@@ -1,4 +1,5 @@
 <script lang="ts">
+ import {cloudSymbols} from './cloudSymbols';
  import {cloudContours} from './cloudContours';
  import {heightLabel,heightFactor,altitudeTicks,smoothHeightPath,sampleSmoothHeight} from './overviewAltitude';
  import type {HeightUnit} from './overviewAltitude';
@@ -26,6 +27,7 @@
  $: selectedHeight=Math.max(base,Math.min(ceiling,selectedHeight));
  $: rows=Array.from({length:40},(_,i)=>base+(ceiling-base)*(i+.5)/40);
  $: columns=Array.from({length:hourCount},(_,i)=>{const hour=firstHour+i;return{hour,profile:profiles.find(p=>p.timestamp===start+hour*3600000)};});
+ $: cloudIcons=layer==='cloud'?cloudSymbols(columns.map(c=>rows.map(height=>c.profile?dayValue(c.profile,height,'cloud',windUnit):undefined))):[];
  $: cloudLines=layer==='cloud'?cloudContours(columns.map(c=>rows.map(height=>c.profile?dayValue(c.profile,height,'cloud',windUnit):undefined))):[];
  $: cloudLabels=cloudLines.filter(line=>line.points.length>35).reduce((labels,line)=>{
   const p=line.points[Math.floor(line.points.length/2)],px=left+p.x*(right-left),py=top+p.y*(bottom-top);
@@ -76,13 +78,14 @@
 </div>
 <div class="scroll">
  <svg viewBox="0 0 960 520" role="application" tabindex="0" aria-label="Atmospheric day overview. Arrow keys choose hour and height; Enter selects forecast hour." on:pointermove={pointer} on:pointerdown={pointer} on:keydown={key} on:dblclick={()=>active&&onTime((start+selectedHour*3600000-timestamp)/3600000)}>
-  <defs><clipPath id="overview-plot-clip"><rect x={left} y={top} width={right-left} height={bottom-top}/></clipPath><pattern id="overview-missing" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8 8 0" stroke="#d6dfe3"/></pattern><linearGradient id="overview-scale" x1="0" y1="1" x2="0" y2="0">{#each [0,.2,.4,.6,.8,1] as f}<stop offset={f} stop-color={dayColor(dayLayers[layer].min+(scaleMax-dayLayers[layer].min)*f,layer,scaleMax)}/>{/each}</linearGradient></defs>
+  <defs><path id="overview-cloud-symbol" d="M-9 5C-15 5-15-3-9-3C-10-12 4-14 7-5C15-7 20 5 11 5Z"/><clipPath id="overview-plot-clip"><rect x={left} y={top} width={right-left} height={bottom-top}/></clipPath><pattern id="overview-missing" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8 8 0" stroke="#d6dfe3"/></pattern><linearGradient id="overview-scale" x1="0" y1="1" x2="0" y2="0">{#each (layer==='cloud'?[0,.249,.25,.5,.75,1]:[0,.2,.4,.6,.8,1]) as f}<stop offset={f} stop-color={dayColor(dayLayers[layer].min+(scaleMax-dayLayers[layer].min)*f,layer,scaleMax)}/>{/each}</linearGradient></defs>
   <rect x={left} y={top} width={right-left} height={bottom-top} fill="#f4f7f8"/>
   <rect x={left} y={top} width={right-left} height={bottom-top} fill="url(#overview-missing)"/>
   <image class="smooth-heatmap" href={heatmap} x={left} y={top} width={right-left} height={bottom-top} preserveAspectRatio="none"/>
   {#if layer==='cloud'}
    <g class="cloud-contours" clip-path="url(#overview-plot-clip)">
-    {#each cloudLines as line}<path d={line.points.map((p,i)=>`${i?'L':'M'}${left+p.x*(right-left)},${top+p.y*(bottom-top)}`).join(' ')} class="cloud-contour"/>{/each}
+    {#each cloudIcons as cloud}<use href="#overview-cloud-symbol" class="cloud-symbol" transform={`translate(${left+cloud.x*(right-left)},${top+cloud.y*(bottom-top)}) scale(${cloud.scale})`}/>{/each}
+    {#each cloudLines as line}<path d={line.points.map((p,i)=>`${i?'L':'M'}${left+p.x*(right-left)},${top+p.y*(bottom-top)}`).join(' ')} class="cloud-contour" class:cloud-edge={line.threshold===25}/>{/each}
     {#each cloudLabels as label}<text x={label.x} y={label.y} text-anchor="middle" class="cloud-percentage">{label.threshold}%</text>{/each}
    </g>
   {/if}
@@ -127,12 +130,15 @@
 </div>
 <div class="reading" aria-live="polite">{#if active}<strong>{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL · {value===undefined?'No data':(layer==='cloud'?'Cloud cover: ':'')+value.toFixed(1)+' '+unit}</strong><span>{reading.direction===undefined?'Wind direction unavailable':`Wind from ${Math.round(reading.direction)}°`}</span><button type="button" disabled={value===undefined} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {selectedTime} UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
 
+{#if layer==='cloud'}<p class="cloud-explanation">Blue: under 25% cloud cover · Grey: 25–100% · Cloud symbols illustrate coverage, not exact cloud shape or type. Boundaries are interpolated.</p>{/if}
 <p class="key">{dayLayers[layer].label} ({unit}) · White line: estimated LCL · Dashed line: takeoff{profiles[0]?.takeoffM===undefined?'':' ('+heightLabel(profiles[0].takeoffM,heightUnit)+' ASL)'} · Hatched areas: no data</p>
 <details class="chart-info"><summary>Chart details · UTC · Altitudes {heightUnit} ASL</summary><p class="help">Time × altitude · 08:00–21:00 UTC · Tap or hover for values. Double-click a column to select its forecast hour. On mobile, scroll sideways for the whole day.</p>
 <p class="coverage">Shared data range starts at {heightLabel(base,heightUnit)} ASL for {dayLayers[layer].label.toLowerCase()}. Surface temperature / dew point: {heightLabel(2,heightUnit)} above model ground; wind: {heightLabel(10,heightUnit)}. Values between those heights and the pressure profile are interpolated. Missing hours or internal gaps remain hatched.</p>
 <p class="help">Near-surface wind is at {heightLabel(10,heightUnit)} above model ground, with interpolation to the lowest pressure level. No data is extended below that height. Hourly forecast profiles, interpolated vertically between model levels. Colours are smoothly interpolated between valid hours and heights; missing cells remain blank. Cloud cover is interpolated between native cloud levels; LCL does not guarantee clouds. Humidity is derived from temperature and dew point. Lapse rate is the temperature decrease per km between model levels. Wind arrows show horizontal direction, not rising or sinking air.</p><p class="help">Mouse wheel: change forecast hour. Shift + wheel: change day.</p></details>
 <style>
 
+ .cloud-explanation{font:10px/1.5 system-ui;color:#607984;margin:4px 0;}
+ .cloud-symbol{fill:#f4f4f3;stroke:#454e54;stroke-width:.8;stroke-linejoin:round;}.cloud-edge{stroke:#283840!important;stroke-width:1.5!important;stroke-opacity:.9!important;}
  .cloud-contours{pointer-events:none;}.cloud-contour{fill:none;stroke:#244b66;stroke-width:.9;stroke-opacity:.65;stroke-linejoin:round;}.cloud-percentage{font-size:10px;font-weight:650;fill:#173a51;paint-order:stroke;stroke:#ffffffed;stroke-width:3.5px;stroke-linejoin:round;}.layers .wind-toggle{margin-left:auto;background:#edf4f7;color:#365f72;border-color:#c3d6df;}
  .chart-info{font:10px/1.5 system-ui;color:#647d87;}.chart-info summary{cursor:pointer;padding:3px 0;}.scroll svg{max-height:calc(100dvh - 205px);}@media(max-width:600px){.layers button{min-height:34px;font-size:10px;padding:4px 6px;}.scroll svg{max-height:none;}}
  .line-tag{pointer-events:none;}.line-tag rect{fill:#fffffff2;stroke:#cad8de;stroke-width:.6;}.line-tag text{font-size:10px;font-weight:550;fill:#34545f;}.takeoff-tag path{stroke:#34545f;stroke-dasharray:3 2;}.lcl-tracker{pointer-events:none;}.lcl-halo{fill:#ffffff38;stroke:#ffffffaa;stroke-width:1;}.lcl-dot{fill:white;stroke:#315f70;stroke-width:2;}.lcl-leader{fill:none;stroke:#fff;stroke-width:1.1;}.lcl-readout rect{fill:white;stroke:#c2d5dd;stroke-width:.8;}.lcl-readout .lcl-title{font-size:9px;fill:#647d88;}.lcl-readout .lcl-height{font-size:12px;font-weight:650;fill:#284958;}.lcl-readout .takeoff-clearance{font-size:10px;font-weight:650;fill:#647d88;}.lcl-readout .above{fill:#15803d;}.lcl-readout .below{fill:#b91c1c;}
