@@ -1,7 +1,7 @@
 <script lang="ts">
  import {cloudSymbols} from './cloudSymbols';
  import {cloudContours} from './cloudContours';
- import {heightLabel,heightFactor,altitudeTicks,smoothHeightPath,sampleSmoothHeight} from './overviewAltitude';
+ import {heightLabel,heightFactor,altitudeTicks,smoothHeightPath,sampleSmoothHeight,pairedReadoutPositions} from './overviewAltitude';
  import type {HeightUnit} from './overviewAltitude';
  import type {SoundingProfile} from './sounding';
  import type {WindUnit} from './windUnits';
@@ -50,8 +50,9 @@
  $: cursorLcl=sampleSmoothHeight(lclSamples,selectedHour);
  $: lclVisible=cursorLcl!==undefined&&cursorLcl>=base&&cursorLcl<=ceiling;
  $: lclDelta=cursorLcl===undefined||profiles[0]?.takeoffM===undefined?undefined:cursorLcl-profiles[0].takeoffM;
- $: lclBoxX=Math.max(left+5,Math.min(right-225,x(selectedHour)+13));
- $: lclBoxY=cursorLcl===undefined?top:Math.max(top+3,Math.min(bottom-57,y(cursorLcl)-64));
+ $: lclBoxX=Math.max(left+5,Math.min(right-265,x(selectedHour)+13));
+ $: readoutPositions=pairedReadoutPositions(y(selectedHeight),cursorLcl===undefined?y(selectedHeight):Math.max(top,Math.min(bottom,y(cursorLcl))),top,bottom);
+ $: lclBoxY=readoutPositions.lcl;
  $: lclAnchor=columns.filter(c=>c.profile?.surfaceLclM!==undefined&&c.profile.surfaceLclM>=base&&c.profile.surfaceLclM<=ceiling).sort((a,b)=>Math.abs(a.hour-11)-Math.abs(b.hour-11))[0];
  $: y=(h:number)=>bottom-(h-base)/(ceiling-base)*(bottom-top);
  const x=(hour:number)=>left+(hour-firstHour)*(right-left)/(lastHour-firstHour);
@@ -112,17 +113,25 @@
   <rect x="918" y={top} width="12" height={bottom-top} fill="url(#overview-scale)"/>
   {#each [0,.25,.5,.75,1] as f}<text x="934" y={bottom-f*(bottom-top)+4}>{Number((dayLayers[layer].min+(scaleMax-dayLayers[layer].min)*f).toFixed(1))}</text>{/each}
   {#if (timestamp-start)/3600000>=firstHour&&(timestamp-start)/3600000<=lastHour}<line x1={x((timestamp-start)/3600000)} x2={x((timestamp-start)/3600000)} y1={top} y2={bottom} class="current"/>{/if}
-  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/>{#if !snapped&&(!lclVisible||cursorLcl===undefined||Math.abs(y(selectedHeight)-y(cursorLcl))>90)}<g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL</text><text x="8" y="31">{value===undefined?'No data':(layer==='cloud'?'Cloud cover: ':'')+value.toFixed(1)+' '+unit}</text></g>{/if}{/if}
-  {#if active&&lclVisible&&cursorLcl!==undefined}
+  {#if active}
+   <line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/>
+   <line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/>
+   <circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/>
+   <g class="weather-readout inline-readout" transform={`translate(${lclBoxX},${readoutPositions.weather})`}>
+    <path class="readout-leader" d={`M${x(selectedHour)-lclBoxX},${y(selectedHeight)-readoutPositions.weather} L0,19`}/>
+    <text x="0" y="11" class="readout-context">{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL</text>
+    <text x="0" y="27" class="weather-value">{dayLayers[layer].label}: {value===undefined?'No data':value.toFixed(1)+' '+unit}</text>
+   </g>
    <g class="lcl-tracker" aria-label="Condensation level relative to takeoff">
-    <circle class="lcl-halo" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?10:8}/>
-    <circle class="lcl-dot" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?5:4}/>
-    <path class="lcl-leader" d={`M${x(selectedHour)},${y(cursorLcl)} L${Math.max(lclBoxX+10,Math.min(lclBoxX+210,x(selectedHour)))},${lclBoxY+54}`}/>
-    <g transform={`translate(${lclBoxX},${lclBoxY})`} class="lcl-readout">
-     <rect width="220" height="54" rx="6"/>
-     <text x="9" y="15" class="lcl-title">Estimated condensation level · LCL</text>
-     <text x="9" y="31" class="lcl-height">{heightLabel(cursorLcl,heightUnit)} ASL</text>
-     <text x="9" y="46" class:above={lclDelta!==undefined&&lclDelta>0} class:below={lclDelta!==undefined&&lclDelta<0} class="takeoff-clearance">{lclDelta===undefined?'Takeoff height unavailable':Math.abs(lclDelta)<.5?'At takeoff height':`${heightLabel(Math.abs(lclDelta),heightUnit)} ${lclDelta>0?'above':'below'} takeoff`}</text>
+    {#if lclVisible&&cursorLcl!==undefined}
+     <circle class="lcl-halo" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?10:8}/>
+     <circle class="lcl-dot" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?5:4}/>
+     <path class="lcl-leader" d={`M${x(selectedHour)},${y(cursorLcl)} L${lclBoxX},${lclBoxY+25}`}/>
+    {/if}
+    <g transform={`translate(${lclBoxX},${lclBoxY})`} class="lcl-readout inline-readout">
+     <text x="0" y="11" class="lcl-title">Estimated condensation level · LCL{cursorLcl!==undefined&&!lclVisible?' (outside view)':''}</text>
+     <text x="0" y="27" class="lcl-height">{cursorLcl===undefined?'No data':heightLabel(cursorLcl,heightUnit)+' ASL'}</text>
+     <text x="0" y="43" class:above={lclDelta!==undefined&&lclDelta>0} class:below={lclDelta!==undefined&&lclDelta<0} class="takeoff-clearance">{lclDelta===undefined?'Takeoff clearance unavailable':Math.abs(lclDelta)<.5?'At takeoff height':`${heightLabel(Math.abs(lclDelta),heightUnit)} ${lclDelta>0?'above':'below'} takeoff`}</text>
     </g>
    </g>
   {/if}
@@ -142,6 +151,7 @@
  .cloud-contours{pointer-events:none;}.cloud-contour{fill:none;stroke:#244b66;stroke-width:.9;stroke-opacity:.65;stroke-linejoin:round;}.cloud-percentage{font-size:10px;font-weight:650;fill:#173a51;paint-order:stroke;stroke:#ffffffed;stroke-width:3.5px;stroke-linejoin:round;}.layers .wind-toggle{margin-left:auto;background:#edf4f7;color:#365f72;border-color:#c3d6df;}
  .chart-info{font:10px/1.5 system-ui;color:#647d87;}.chart-info summary{cursor:pointer;padding:3px 0;}.scroll svg{max-height:calc(100dvh - 205px);}@media(max-width:600px){.layers button{min-height:34px;font-size:10px;padding:4px 6px;}.scroll svg{max-height:none;}}
  .line-tag{pointer-events:none;}.line-tag rect{fill:#fffffff2;stroke:#cad8de;stroke-width:.6;}.line-tag text{font-size:10px;font-weight:550;fill:#34545f;}.takeoff-tag path{stroke:#34545f;stroke-dasharray:3 2;}.lcl-tracker{pointer-events:none;}.lcl-halo{fill:#ffffff38;stroke:#ffffffaa;stroke-width:1;}.lcl-dot{fill:white;stroke:#315f70;stroke-width:2;}.lcl-leader{fill:none;stroke:#fff;stroke-width:1.1;}.lcl-readout rect{fill:white;stroke:#c2d5dd;stroke-width:.8;}.lcl-readout .lcl-title{font-size:9px;fill:#647d88;}.lcl-readout .lcl-height{font-size:12px;font-weight:650;fill:#284958;}.lcl-readout .takeoff-clearance{font-size:10px;font-weight:650;fill:#647d88;}.lcl-readout .above{fill:#15803d;}.lcl-readout .below{fill:#b91c1c;}
+ .inline-readout{pointer-events:none;}.inline-readout text{paint-order:stroke;stroke:#ffffffe8;stroke-width:2.2px;stroke-linejoin:round;}.inline-readout .readout-context,.lcl-readout .lcl-title{font-size:10px;fill:#385865;}.inline-readout .weather-value{font-size:12px;font-weight:650;fill:#193f53;}.readout-leader{fill:none;stroke:#e8f4f9;stroke-width:1;}
  .line-caption{font-size:10px;font-weight:650;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round;pointer-events:none;}.lcl{stroke-linejoin:round;stroke-linecap:round;}
  .coverage{font:10px/1.5 system-ui;color:#647d87;margin:6px 0 10px;}
  .tooltip{pointer-events:none;}.tooltip rect{fill:white;fill-opacity:.95;stroke:#90aab6;}.tooltip text{font-weight:600;}

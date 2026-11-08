@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {heightLabel,altitudeTicks,smoothHeightPath,sampleSmoothHeight} from '../src/overviewAltitude.ts';
+import {heightLabel,altitudeTicks,smoothHeightPath,sampleSmoothHeight,pairedReadoutPositions} from '../src/overviewAltitude.ts';
 test('feet conversion and readable altitude ticks preserve underlying metre coordinates',()=>{
  assert.equal(heightLabel(304.8,'ft'),'1,000 ft');assert.equal(heightLabel(304.8,'m'),'305 m');
  const ticks=altitudeTicks(100,1200,'ft');assert.ok(ticks.length>2);assert.ok(ticks.every(h=>h>=100&&h<=1200));
@@ -24,4 +24,13 @@ test('LCL tracking samples the rendered curve and never crosses a missing hour',
  assert.equal(sampleSmoothHeight(points,7.5),undefined);
  assert.equal(sampleSmoothHeight(points,12),100);
  const line=[{x:8,y:100},{x:9,y:200}];assert.ok(Math.abs(sampleSmoothHeight(line,8.5)-150)<1e-6);
+});
+
+test('both inline readouts remain separated and inside the plot at overlapping heights and edges',()=>{
+ for(const [a,b] of [[250,250],[28,28],[468,468],[35,460],[460,35]]){
+  const p=pairedReadoutPositions(a,b,28,468);
+  assert.ok(p.weather>=28&&p.weather+30<=468);
+  assert.ok(p.lcl>=28&&p.lcl+46<=468);
+  assert.ok(p.weather+30+9<=p.lcl||p.lcl+46+9<=p.weather);
+ }
 });

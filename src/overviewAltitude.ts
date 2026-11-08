@@ -42,3 +42,11 @@ export function sampleSmoothHeight(points:({x:number;y:number}|undefined)[],x:nu
  const c=clamp(a.y+slope(i)*(b.x-a.x)/3),d=clamp(b.y-slope(i+1)*(b.x-a.x)/3),t=(x-a.x)/(b.x-a.x);
  return (1-t)**3*a.y+3*(1-t)**2*t*c+3*(1-t)*t*t*d+t**3*b.y;
 }
+
+export function pairedReadoutPositions(cursorY:number,lclY:number,top:number,bottom:number){
+ const blocks=[{kind:'weather',height:30,y:cursorY-40},{kind:'lcl',height:46,y:lclY-56}].sort((a,b)=>a.y-b.y);
+ blocks[0].y=Math.max(top+4,Math.min(bottom-blocks[0].height-4,blocks[0].y));
+ blocks[1].y=Math.max(blocks[0].y+blocks[0].height+10,Math.min(bottom-blocks[1].height-4,blocks[1].y));
+ if(blocks[1].y+blocks[1].height>bottom-4){blocks[1].y=bottom-blocks[1].height-4;blocks[0].y=Math.min(blocks[0].y,blocks[1].y-blocks[0].height-10);}
+ return {weather:blocks.find(b=>b.kind==='weather')!.y,lcl:blocks.find(b=>b.kind==='lcl')!.y};
+}
