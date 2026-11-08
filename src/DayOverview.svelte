@@ -1,4 +1,5 @@
 <script lang="ts">
+ import {cloudContours} from './cloudContours';
  import {heightLabel,heightFactor,altitudeTicks,smoothHeightPath,sampleSmoothHeight} from './overviewAltitude';
  import type {HeightUnit} from './overviewAltitude';
  import type {SoundingProfile} from './sounding';
@@ -13,6 +14,7 @@
  export let heightUnit:HeightUnit='m';
  export let onTime:(delta:number)=>void=()=>{};
  const setLayer=(key:string)=>layer=key as DayLayer;
+ let cloudWind=false;
  let layer:DayLayer='wind',selectedHour=12,selectedHeight=1000,active=false,snapped=false;
  const left=60,right=900,top=28,bottom=468,firstHour=8,lastHour=21,hourCount=lastHour-firstHour+1;
  $: start=Math.floor(timestamp/86400000)*86400000;
@@ -24,6 +26,12 @@
  $: selectedHeight=Math.max(base,Math.min(ceiling,selectedHeight));
  $: rows=Array.from({length:40},(_,i)=>base+(ceiling-base)*(i+.5)/40);
  $: columns=Array.from({length:hourCount},(_,i)=>{const hour=firstHour+i;return{hour,profile:profiles.find(p=>p.timestamp===start+hour*3600000)};});
+ $: cloudLines=layer==='cloud'?cloudContours(columns.map(c=>rows.map(height=>c.profile?dayValue(c.profile,height,'cloud',windUnit):undefined))):[];
+ $: cloudLabels=cloudLines.filter(line=>line.points.length>35).reduce((labels,line)=>{
+  const p=line.points[Math.floor(line.points.length/2)],px=left+p.x*(right-left),py=top+p.y*(bottom-top);
+  if(px>left+24&&px<right-24&&py>top+14&&py<bottom-14&&!labels.some(l=>Math.abs(l.x-px)<95&&Math.abs(l.y-py)<30))labels.push({x:px,y:py,threshold:line.threshold});
+  return labels;
+ },[] as {x:number;y:number;threshold:number}[]);
  $: cells=columns.flatMap(c=>rows.map((height,row)=>({hour:c.hour,row,height,value:c.profile?dayValue(c.profile,height,layer,windUnit):undefined})));
  $: scaleMax=layer==='wind'?Math.max(10,Math.ceil(Math.max(0,...cells.map(c=>c.value??0))/10)*10):dayLayers[layer].max;
  $: heatmap=typeof document!=='undefined'?renderDayHeatmap(columns.map(c=>rows.map(height=>c.profile?dayValue(c.profile,height,layer,windUnit):undefined)),layer,scaleMax):'';
@@ -64,6 +72,7 @@
 </script>
 <div class="layers" aria-label="Overview weather layer">
  {#each Object.entries(dayLayers) as [key,item]}<button type="button" aria-pressed={layer===key} on:click={()=>setLayer(key)}>{item.label}</button>{/each}
+ {#if layer==='cloud'}<button class="wind-toggle" type="button" aria-pressed={cloudWind} on:click={()=>cloudWind=!cloudWind}>Wind arrows: {cloudWind?'on':'off'}</button>{/if}
 </div>
 <div class="scroll">
  <svg viewBox="0 0 960 520" role="application" tabindex="0" aria-label="Atmospheric day overview. Arrow keys choose hour and height; Enter selects forecast hour." on:pointermove={pointer} on:pointerdown={pointer} on:keydown={key} on:dblclick={()=>active&&onTime((start+selectedHour*3600000-timestamp)/3600000)}>
@@ -71,11 +80,17 @@
   <rect x={left} y={top} width={right-left} height={bottom-top} fill="#f4f7f8"/>
   <rect x={left} y={top} width={right-left} height={bottom-top} fill="url(#overview-missing)"/>
   <image class="smooth-heatmap" href={heatmap} x={left} y={top} width={right-left} height={bottom-top} preserveAspectRatio="none"/>
+  {#if layer==='cloud'}
+   <g class="cloud-contours" clip-path="url(#overview-plot-clip)">
+    {#each cloudLines as line}<path d={line.points.map((p,i)=>`${i?'L':'M'}${left+p.x*(right-left)},${top+p.y*(bottom-top)}`).join(' ')} class="cloud-contour"/>{/each}
+    {#each cloudLabels as label}<text x={label.x} y={label.y} text-anchor="middle" class="cloud-percentage">{label.threshold}%</text>{/each}
+   </g>
+  {/if}
   {#each ticks as h}<line x1={left} x2={right} y1={y(h)} y2={y(h)} class="grid"/><text x={left-8} y={y(h)+4} text-anchor="end">{Math.round(h*heightFactor(heightUnit)).toLocaleString('en-GB')}</text>{/each}
   {#each columns as c}
    {#if true}<text x={x(c.hour)} y={bottom+22} text-anchor="middle">{String(c.hour).padStart(2,'0')}:00</text>{/if}
-   {#if c.profile}
-    {#each rows.filter((_,i)=>i%4===2) as h}
+   {#if c.profile&&(layer!=='cloud'||cloudWind)&& (layer!=='cloud'||c.hour%2===0)}
+    {#each rows.filter((_,i)=>layer==='cloud'?i%8===4:i%4===2) as h}
      {@const point=soundingWindAtHeight(c.profile,h)}
      {#if point?.windDirection!==undefined&&point.windMps!==undefined&&point.windMps>.1}<g transform={`translate(${x(c.hour)},${y(h)}) rotate(${point.windDirection})`} class="wind-arrow"><path d="M0 -7V7M-3 3 0 7 3 3"/></g>{/if}
     {/each}
@@ -94,7 +109,7 @@
   <rect x="918" y={top} width="12" height={bottom-top} fill="url(#overview-scale)"/>
   {#each [0,.25,.5,.75,1] as f}<text x="934" y={bottom-f*(bottom-top)+4}>{Number((dayLayers[layer].min+(scaleMax-dayLayers[layer].min)*f).toFixed(1))}</text>{/each}
   {#if (timestamp-start)/3600000>=firstHour&&(timestamp-start)/3600000<=lastHour}<line x1={x((timestamp-start)/3600000)} x2={x((timestamp-start)/3600000)} y1={top} y2={bottom} class="current"/>{/if}
-  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/>{#if !snapped&&(!lclVisible||cursorLcl===undefined||Math.abs(y(selectedHeight)-y(cursorLcl))>90)}<g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL</text><text x="8" y="31">{value===undefined?'No data':value.toFixed(1)+' '+unit}</text></g>{/if}{/if}
+  {#if active}<line x1={left} x2={right} y1={y(selectedHeight)} y2={y(selectedHeight)} class="cursor"/><line x1={x(selectedHour)} x2={x(selectedHour)} y1={top} y2={bottom} class="cursor"/><circle cx={x(selectedHour)} cy={y(selectedHeight)} r="4" fill="white" stroke="#133449"/>{#if !snapped&&(!lclVisible||cursorLcl===undefined||Math.abs(y(selectedHeight)-y(cursorLcl))>90)}<g transform={`translate(${Math.min(right-190,Math.max(left,x(selectedHour)+10))},${Math.max(top+5,Math.min(bottom-45,y(selectedHeight)-46))})`} class="tooltip"><rect width="188" height="40" rx="4"/><text x="8" y="15">{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL</text><text x="8" y="31">{value===undefined?'No data':(layer==='cloud'?'Cloud cover: ':'')+value.toFixed(1)+' '+unit}</text></g>{/if}{/if}
   {#if active&&lclVisible&&cursorLcl!==undefined}
    <g class="lcl-tracker" aria-label="Condensation level relative to takeoff">
     <circle class="lcl-halo" cx={x(selectedHour)} cy={y(cursorLcl)} r={snapped?10:8}/>
@@ -110,7 +125,7 @@
   {/if}
  </svg>
 </div>
-<div class="reading" aria-live="polite">{#if active}<strong>{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL · {value===undefined?'No data':value.toFixed(1)+' '+unit}</strong><span>{reading.direction===undefined?'Wind direction unavailable':`Wind from ${Math.round(reading.direction)}°`}</span><button type="button" disabled={value===undefined} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {selectedTime} UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
+<div class="reading" aria-live="polite">{#if active}<strong>{selectedTime} UTC · {heightLabel(selectedHeight,heightUnit)} ASL · {value===undefined?'No data':(layer==='cloud'?'Cloud cover: ':'')+value.toFixed(1)+' '+unit}</strong><span>{reading.direction===undefined?'Wind direction unavailable':`Wind from ${Math.round(reading.direction)}°`}</span><button type="button" disabled={value===undefined} on:click={()=>onTime((start+selectedHour*3600000-timestamp)/3600000)}>Use {selectedTime} UTC</button>{:else}<span>Select a time and height on the chart.</span>{/if}</div>
 
 <p class="key">{dayLayers[layer].label} ({unit}) · White line: estimated LCL · Dashed line: takeoff{profiles[0]?.takeoffM===undefined?'':' ('+heightLabel(profiles[0].takeoffM,heightUnit)+' ASL)'} · Hatched areas: no data</p>
 <details class="chart-info"><summary>Chart details · UTC · Altitudes {heightUnit} ASL</summary><p class="help">Time × altitude · 08:00–21:00 UTC · Tap or hover for values. Double-click a column to select its forecast hour. On mobile, scroll sideways for the whole day.</p>
@@ -118,6 +133,7 @@
 <p class="help">Near-surface wind is at {heightLabel(10,heightUnit)} above model ground, with interpolation to the lowest pressure level. No data is extended below that height. Hourly forecast profiles, interpolated vertically between model levels. Colours are smoothly interpolated between valid hours and heights; missing cells remain blank. Cloud cover is interpolated between native cloud levels; LCL does not guarantee clouds. Humidity is derived from temperature and dew point. Lapse rate is the temperature decrease per km between model levels. Wind arrows show horizontal direction, not rising or sinking air.</p><p class="help">Mouse wheel: change forecast hour. Shift + wheel: change day.</p></details>
 <style>
 
+ .cloud-contours{pointer-events:none;}.cloud-contour{fill:none;stroke:#244b66;stroke-width:.9;stroke-opacity:.65;stroke-linejoin:round;}.cloud-percentage{font-size:10px;font-weight:650;fill:#173a51;paint-order:stroke;stroke:#ffffffed;stroke-width:3.5px;stroke-linejoin:round;}.layers .wind-toggle{margin-left:auto;background:#edf4f7;color:#365f72;border-color:#c3d6df;}
  .chart-info{font:10px/1.5 system-ui;color:#647d87;}.chart-info summary{cursor:pointer;padding:3px 0;}.scroll svg{max-height:calc(100dvh - 205px);}@media(max-width:600px){.layers button{min-height:34px;font-size:10px;padding:4px 6px;}.scroll svg{max-height:none;}}
  .line-tag{pointer-events:none;}.line-tag rect{fill:#fffffff2;stroke:#cad8de;stroke-width:.6;}.line-tag text{font-size:10px;font-weight:550;fill:#34545f;}.takeoff-tag path{stroke:#34545f;stroke-dasharray:3 2;}.lcl-tracker{pointer-events:none;}.lcl-halo{fill:#ffffff38;stroke:#ffffffaa;stroke-width:1;}.lcl-dot{fill:white;stroke:#315f70;stroke-width:2;}.lcl-leader{fill:none;stroke:#fff;stroke-width:1.1;}.lcl-readout rect{fill:white;stroke:#c2d5dd;stroke-width:.8;}.lcl-readout .lcl-title{font-size:9px;fill:#647d88;}.lcl-readout .lcl-height{font-size:12px;font-weight:650;fill:#284958;}.lcl-readout .takeoff-clearance{font-size:10px;font-weight:650;fill:#647d88;}.lcl-readout .above{fill:#15803d;}.lcl-readout .below{fill:#b91c1c;}
  .line-caption{font-size:10px;font-weight:650;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round;pointer-events:none;}.lcl{stroke-linejoin:round;stroke-linecap:round;}

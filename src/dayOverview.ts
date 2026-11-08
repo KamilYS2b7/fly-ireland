@@ -24,7 +24,7 @@ export function dayValue(profile:SoundingProfile,height:number,layer:DayLayer,un
 }
 export function dayColor(value:number,layer:DayLayer,max?:number){
  const spec=dayLayers[layer],f=Math.max(0,Math.min(1,(value-spec.min)/((max??spec.max)-spec.min)));
- if(layer==='cloud')return `hsl(210 16% ${97-f*65}%)`;
+ if(layer==='cloud')return `hsl(${205+f*10} ${60-f*35}% ${94-f*70}%)`;
  return `hsl(${240-f*240} 72% ${52+Math.sin(f*Math.PI)*8}%)`;
 }
 
