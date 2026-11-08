@@ -1,4 +1,6 @@
 <script lang="ts">
+ import {heightLabel} from './overviewAltitude';
+ import type {HeightUnit} from './overviewAltitude';
  import DayOverview from './DayOverview.svelte';
  import type {SoundingState} from './sounding';
  import type {WindUnit} from './windUnits';
@@ -8,6 +10,7 @@
  export let onClose:()=>void=()=>{};
  export let onRetry:()=>void=()=>{};
  export let onTime:(delta:number)=>void=()=>{};
+ let heightUnit:HeightUnit='m';
  let depthM=3000,wheelTotal=0,lastWheel=0;
  $: timeText=new Date(state.timestamp||0).toLocaleString('en-GB',{timeZone:'UTC',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' UTC';
  function wheel(event:WheelEvent){
@@ -50,9 +53,10 @@
    {:else if state.profile}
     <div class="toolbar">
      <nav aria-label="Forecast time"><button type="button" on:click={()=>onTime(-1)} aria-label="Previous forecast hour" title="Previous hour">← 1h</button><button type="button" on:click={()=>onTime(1)} aria-label="Next forecast hour" title="Next hour">1h →</button></nav>
-     <label class="height-range">Height<input aria-label="Height range above model ground" type="range" min="500" max="7000" step="250" bind:value={depthM}/><span>+{Number(depthM).toLocaleString('en-GB')} m above ground</span></label>
+     <label class="height-range">Height<input aria-label="Height range above model ground" type="range" aria-valuetext={`${heightLabel(Number(depthM),heightUnit)} above model ground`} min="500" max="7000" step="250" bind:value={depthM}/><span>+{heightLabel(Number(depthM),heightUnit)} above ground</span></label>
+     <div class="unit-switch" role="group" aria-label="Altitude units"><button type="button" aria-pressed={heightUnit==='m'} on:click={()=>heightUnit='m'}>m</button><button type="button" aria-pressed={heightUnit==='ft'} on:click={()=>heightUnit='ft'}>ft</button></div>
     </div>
-    <div on:wheel|nonpassive={wheel}><DayOverview profiles={state.day??[]} timestamp={state.timestamp} depthM={Number(depthM)} {windUnit} {onTime}/></div>
+    <div on:wheel|nonpassive={wheel}><DayOverview profiles={state.day??[]} timestamp={state.timestamp} depthM={Number(depthM)} {windUnit} {heightUnit} {onTime}/></div>
    {/if}
    <footer>Atmospheric calculations adapted from <a href="https://github.com/vicb/flyxc" target="_blank" rel="noopener noreferrer">flyXC · Victor Berchet</a> (MIT).</footer>
   </div>
@@ -65,6 +69,7 @@
  header{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 14px;border-bottom:1px solid #e2e9ea;}
  header>div{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 14px;}h2{font-size:19px;line-height:1.2;margin:0;}header p{margin:0;color:#60767d;font-size:11px;}.eyebrow{font-size:10px;font-weight:650;color:#48816f;order:3;}
  button{font:600 11px system-ui;min-height:32px;border:1px solid #cbded5;border-radius:6px;background:#f4f9f6;color:#245c47;padding:5px 9px;cursor:pointer;}.close{font-size:23px;line-height:1;width:32px;height:32px;padding:0;flex-shrink:0;}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #319dcc;outline-offset:2px;}
+ .unit-switch{display:flex;gap:3px;}.unit-switch button{min-width:34px;}.unit-switch button[aria-pressed="true"]{background:#276e85;color:white;border-color:#276e85;}
  .content{padding:6px 12px;overflow-y:auto;overscroll-behavior:contain;}.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:5px 20px;margin-bottom:6px;}nav{display:flex;gap:5px;}.height-range{display:flex;align-items:center;gap:6px;font-size:11px;color:#42616b;}.height-range input{width:155px;min-height:28px;accent-color:#347f69;}.height-range span{font-size:10px;white-space:nowrap;}
  footer{font-size:9px;color:#71858d;border-top:1px solid #e5ecee;padding-top:5px;margin-top:5px;}footer a{color:#347b65;}.message{padding:30px 8px;text-align:center;color:#60767d;}
  @media(max-width:600px){.sounding-overlay{padding:4px;}.sounding-dialog{max-height:calc(100dvh - 8px);border-radius:8px;}header{padding:6px 9px;}header>div{gap:2px 10px;}header h2{font-size:17px;}.eyebrow{display:none;}header p{font-size:10px;}.content{padding:5px 7px;}.toolbar{gap:4px 10px;}.height-range{gap:4px;font-size:10px;}.height-range input{width:90px;}.height-range span{font-size:9px;}button{min-height:36px;}.close{width:36px;height:36px;}}
