@@ -50,6 +50,7 @@ export function createSiteGuideMap({map,L,onSelect=()=>{},onChange=()=>{}}: {map
         }
         if(!desired.size){onChange();return;}
         const element = map.getPane(pane) || map.createPane(pane);
+        element.classList?.add('fly-ireland-guide-pane');
         element.style.zIndex='1000';
         for (const [id,{point,guide,signature}] of desired) {
             const existing=markers.get(id);
@@ -96,5 +97,7 @@ export function createSiteGuideMap({map,L,onSelect=()=>{},onChange=()=>{}}: {map
     return {show,focus,clear,setAutomatic,getObstacleRects,destroy(){
         closed=true;for(const {marker} of markers.values())marker.remove();
         markers.clear();automatic.clear();manual=undefined;
+        const element=map.getPane(pane);
+        if(element?.classList?.contains('fly-ireland-guide-pane')){element.remove();if(map.getPanes?.()[pane]===element)delete map.getPanes()[pane];}
     }};
 }

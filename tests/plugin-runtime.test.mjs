@@ -1,3 +1,4 @@
+import {createTaskScope} from '../src/pluginSession.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -32,9 +33,9 @@ import {createSoundingController} from '../src/sounding.ts';
 import {createWindDirectionReview,parseDirectionRanges} from '../src/windDirectionReview.ts';
 const guideSource=JSON.parse(readFileSync(new URL('../assets/assets/site_descriptions.json',import.meta.url),'utf8'));
 
-const source = readFileSync(new URL('../src/plugin.svelte', import.meta.url), 'utf8');
+const source = readFileSync(new URL('../src/FlyIrelandApp.svelte', import.meta.url), 'utf8');
 const script = source.match(/<script lang="ts">([\s\S]*?)<\/script>/)[1]
-    .replace(/^import .*;\r?$/gm, '');
+    .replace(/^import .*;\r?$/gm, '').replace(/^export /gm,'');
 const code = ts.transpileModule(script, {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
 }).outputText;
@@ -86,7 +87,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         getElement() {
             const classes = new Set();
             return this.root ??= { style: {setProperty(name,value){this[name]=value;}}, dataset:{}, handlers:new Map(),
-                addEventListener(name, callback) {this.handlers.set(name,callback);},
+                addEventListener(name, callback) {this.handlers.set(name,callback);},removeEventListener(name,callback){if(this.handlers.get(name)===callback)this.handlers.delete(name);},
                 click(target={closest:()=>null}) {this.handlers.get('click')?.({target,stopPropagation(){}});},
                 classList: { add: value => classes.add(value), remove: value => classes.delete(value),
                     contains: value => classes.has(value), toggle: (value, active) => active ? classes.add(value) : classes.delete(value) },
@@ -145,7 +146,7 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         unproject: p => ({ lat: -(p.y ?? p[1]) / 100, lng: (p.x ?? p[0]) / 100 }),
         project: p => ({ x: p.lng * 100 * projectionScale, y: -p.lat * 100 * projectionScale }),
         getPane: name => panes.get(name),
-        createPane: name => { const pane = { style: {} }; panes.set(name, pane); return pane; },
+        createPane: name => { const classes=new Set(); const pane = { style: {},classList:{add:name=>classes.add(name),contains:name=>classes.has(name)},remove:()=>panes.delete(name) }; panes.set(name, pane); return pane; },
         on(name, callback) {
             const callbacks = listeners.get(name) ?? new Set();
             callbacks.add(callback);
@@ -169,6 +170,8 @@ function runtime({ guidePoints = false, legacyPoint = false, windValues = [0, 5,
         tooltip: layer,
     };
     const context = vm.createContext({
+        createTaskScope:()=>createTaskScope(context),
+        requestAnimationFrame:callback=>{const id=++nextTimer;timers.set(id,()=>callback(0));return id;},cancelAnimationFrame:id=>timers.delete(id),
         map, L, console, store, broadcast: weatherEvents, AbortController, buildSitePanel, localStorage:filterStorage,
         guideKeyForSite,createSiteGuideMap,
         createSiteGuideLoader:()=>createSiteGuideLoader({fetch:async()=>{guideReads++;if(deferredGuides)await new Promise(resolve=>{resolveGuide=resolve;});if(guideReads<=guideFailures)return {ok:false,status:503};return {ok:true,json:async()=>guideSource};}}),

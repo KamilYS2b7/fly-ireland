@@ -23,6 +23,7 @@
   import type {VideoDecision} from './siteVideos';
   import {canonicalYouTubeUrl,videoPlaybackUrl} from './siteVideos';
   import {guideKeyForSite} from './siteGuides';
+  export let onClose:()=>void=()=>{};
   export let snapshot: ReturnType<typeof buildSitePanel>;
   export let onSelect: (spot: NamedSpot) => void;
   export let directionReviewRemaining=0;
@@ -148,7 +149,7 @@
   }
 </script>
 
-<aside class="site-panel" class:collapsed class:obscured={hiddenByWindy} aria-hidden={hiddenByWindy} inert={hiddenByWindy ? '' : undefined} use:mountPanel aria-label="Flying sites">
+<aside class="site-panel fly-ireland-scope" class:collapsed class:obscured={hiddenByWindy} aria-hidden={hiddenByWindy} inert={hiddenByWindy ? '' : undefined} use:mountPanel aria-label="Flying sites">
   <header>
     <div>
       <span class="eyebrow">FLY IRELAND</span>
@@ -163,6 +164,7 @@
     <button class="toggle" type="button" on:click={() => collapsed = !collapsed}
       aria-expanded={!collapsed} aria-controls="fly-ireland-site-list"
       aria-label={collapsed ? 'Expand site panel' : 'Collapse site panel'}>{collapsed ? '+' : '−'}</button>
+    <button class="close-plugin" type="button" on:click={onClose} aria-label="Close Fly Ireland" title="Close Fly Ireland">×</button>
   </header>
   <div id="fly-ireland-site-list" hidden={collapsed}>
     <div class="forecast-meta">
@@ -350,6 +352,8 @@
 </aside>
 
 <style>
+  .close-plugin{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;min-height:30px;padding:0;border:1px solid #bbd2c8;border-radius:6px;background:#f6faf8;color:#285b47;font:24px/1 system-ui;cursor:pointer;}
+
   .filters .video-review-filter{grid-column:1/-1;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;min-height:40px;padding:10px 13px;}
   .filters .direction-review-filter{grid-column:1/-1;border:1px solid #bfa7ef;background:#f5f3ff;color:#6d28d9;min-height:44px;}.filters .direction-review-filter.active{background:#6d28d9;border-color:#6d28d9;color:white;}
   .video-review-summary{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 14px 6px;font-size:10px;color:#526c75;flex-shrink:0;}

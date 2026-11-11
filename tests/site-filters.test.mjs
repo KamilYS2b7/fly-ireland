@@ -15,7 +15,7 @@ test('country availability follows the release switch without losing unrelated p
 });
 
 test('every source site has explicit metadata with the agreed region counts', () => {
-    const source=readFileSync(new URL('../src/plugin.svelte',import.meta.url),'utf8');
+    const source=readFileSync(new URL('../src/FlyIrelandApp.svelte',import.meta.url),'utf8');
     const names=[...source.matchAll(/\/\/\s*\r?\n([^\r\n]+)\r?\nLocation:/g)].map(match=>match[1].trim());
     assert.equal(names.length,98);
     const counts=Object.fromEntries(REGIONS.map(region=>[region.id,0]));

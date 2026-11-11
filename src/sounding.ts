@@ -97,8 +97,10 @@ export function sampleSoundingDay(payload:any,timestamp:number):SoundingProfile[
     }
     return profiles;
 }
-export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(site:SoundingSite,model:string)=>Promise<any>;onChange:(state:SoundingState)=>void;now?:()=>number}){
+export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(site:SoundingSite,model:string,signal?:AbortSignal)=>Promise<any>;onChange:(state:SoundingState)=>void;now?:()=>number}){
     let state:SoundingState={open:false,model:'',timestamp:0,status:'loading'},sequence=0,destroyed=false,wanted='';
+    const requests=new Set<AbortController>();
+    const abortPending=()=>{for(const request of requests)request.abort();requests.clear();pending.clear();};
     const cache=new Map<string,{payload:any;time:number}>(),pending=new Map<string,Promise<any>>();
     const keyFor=(site:SoundingSite,model:string)=>JSON.stringify([site.lat,site.lon,model]);
     function publish(next:SoundingState){state=next;if(!destroyed)onChange(state);}
@@ -113,7 +115,7 @@ export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(s
             const old=cache.get(key);let payload=old&&now()-old.time<10*60*1000?old.payload:undefined;
             if(!payload){
                 let work=pending.get(key);
-                if(!work){work=Promise.resolve().then(()=>fetch(site,model));pending.set(key,work);void work.finally(()=>{if(pending.get(key)===work)pending.delete(key);}).catch(()=>{});}
+                if(!work){const controller=new AbortController();requests.add(controller);work=Promise.resolve().then(()=>{if(controller.signal.aborted)throw Error('Sounding request cancelled.');return fetch(site,model,controller.signal);});pending.set(key,work);void work.finally(()=>{requests.delete(controller);if(pending.get(key)===work)pending.delete(key);}).catch(()=>{});}
                 payload=await work;
                 if(!destroyed){cache.delete(key);cache.set(key,{payload,time:now()});if(cache.size>4)cache.delete(cache.keys().next().value!);}
             }
@@ -125,7 +127,7 @@ export function createSoundingController({fetch,onChange,now=Date.now}:{fetch:(s
         open:(site:SoundingSite,model:string,timestamp:number)=>load(site,model,timestamp),
         sync:(model:string,timestamp:number)=>state.open&&state.site?load(state.site,model,timestamp):Promise.resolve(),
         retry:()=>state.open&&state.site?load(state.site,state.model,state.timestamp,true):Promise.resolve(),
-        close(){sequence++;wanted='';publish({...state,open:false});},
-        destroy(){destroyed=true;sequence++;cache.clear();pending.clear();state={...state,open:false};},
+        close(){sequence++;wanted='';abortPending();publish({...state,open:false});},
+        destroy(){destroyed=true;sequence++;abortPending();cache.clear();pending.clear();state={...state,open:false};},
     };
 }

@@ -1,6 +1,6 @@
 {
     "name": "windy-plugin-fly-ireland",
-    "version": "1.1.80",
+    "version": "1.1.81",
     "description": "Paragliding sites, wind roses and forecast matching across the island of Ireland for Windy.com.",
     "private": true,
     "main": "dist/plugin.min.js",
@@ -10,7 +10,8 @@
         "build:win": "npm run build",
         "start": "rollup -w -c",
         "package:github": "node scripts/package-github.mjs",
-        "test": "node --test tests/*.test.mjs"
+        "test": "node --test tests/*.test.mjs",
+        "test:browser:lifecycle": "node tests/browser/build-lifecycle.mjs && python tests/browser/check_lifecycle.py"
     },
     "repository": {
         "type": "git",
@@ -35,5 +36,8 @@
     },
     "dependencies": {
         "@windycom/plugin-devtools": "3.0.2"
+    },
+    "devDependencies": {
+        "leaflet": "^1.9.4"
     }
 }

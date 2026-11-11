@@ -88,3 +88,15 @@ test('surface temperature and meteogram dew point use independent clocks and rem
  p.data.meteogram.dewPoint=[290,290];assert.equal(sampleSounding(p,time).surfaceThermo.dewPointC,undefined);
  delete p.data.data.temperature;assert.equal(sampleSounding(p,time).surfaceThermo,undefined);
 });
+
+test('closing an overview aborts in-flight model requests and reopening starts a fresh request',async()=>{
+ let calls=0;const signals=[];
+ const c=createSoundingController({fetch:async(_s,_m,signal)=>{calls++;signals.push(signal);if(calls===1)await new Promise((_,reject)=>signal.addEventListener('abort',()=>reject(Error('aborted')),{once:true}));return payload();},onChange:()=>{}});
+ const first=c.open(site,'ukv',time);await Promise.resolve();c.close();await first;
+ assert.equal(signals[0].aborted,true);await c.open(site,'ukv',time);assert.equal(calls,2);c.destroy();
+});
+
+test('an immediate plugin close cancels scheduled sounding fetch before it starts',async()=>{
+ let calls=0;const c=createSoundingController({fetch:async()=>{calls++;return payload();},onChange:()=>{}});
+ const request=c.open(site,'ukv',time);c.destroy();await request;assert.equal(calls,0);
+});
